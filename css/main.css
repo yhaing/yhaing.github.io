@@ -1950,7 +1950,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #4dcd4e;
+  background: #833e86;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3140,4 +3140,18 @@ pre .javascript .function {
   border: 2px dashed #fff;
   animation: cycle 2s 0.5s forwards;
   transition: border-radius 2s;
+}
+.bg_content {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+#canvas {
+  width: 100%;
+  height: 100%;
+}
+.header {
+  background: transparent;
 }
