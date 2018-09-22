@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="阿里云," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="海阔天空">
-<meta property="og:url" content="https://yhaing.github.io/categories/随笔/index.html">
+<meta name="description" content="阿里云ESC服务器挂载 OSS 文件系统 ossfs 能让您在Linux/Mac OS X 系统中把Aliyun OSS bucket 挂载到本地文件 系统中，您能够便捷的通过本地文件系统操作OSS 上的对象，实现数据的共享。 阿里云oss官方：ossfs挂载，您可以理解为把挂载的bucket当做一个ecs目录来操作的，存储文件到挂载的bucket中是占用的这个bucket的内存，不会占用您ecs">
+<meta name="keywords" content="阿里云">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OSSFS 实现阿里云 OSS 文件系统数据共享">
+<meta property="og:url" content="https://yhaing.github.io/2015/01/24/OSSFS实现阿里云OSS文件系统数据共享/index.html">
 <meta property="og:site_name" content="海阔天空">
+<meta property="og:description" content="阿里云ESC服务器挂载 OSS 文件系统 ossfs 能让您在Linux/Mac OS X 系统中把Aliyun OSS bucket 挂载到本地文件 系统中，您能够便捷的通过本地文件系统操作OSS 上的对象，实现数据的共享。 阿里云oss官方：ossfs挂载，您可以理解为把挂载的bucket当做一个ecs目录来操作的，存储文件到挂载的bucket中是占用的这个bucket的内存，不会占用您ecs">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-22T02:29:12.242Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="海阔天空">
+<meta name="twitter:title" content="OSSFS 实现阿里云 OSS 文件系统数据共享">
+<meta name="twitter:description" content="阿里云ESC服务器挂载 OSS 文件系统 ossfs 能让您在Linux/Mac OS X 系统中把Aliyun OSS bucket 挂载到本地文件 系统中，您能够便捷的通过本地文件系统操作OSS 上的对象，实现数据的共享。 阿里云oss官方：ossfs挂载，您可以理解为把挂载的bucket当做一个ecs目录来操作的，存储文件到挂载的bucket中是占用的这个bucket的内存，不会占用您ecs">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/categories/随笔/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2015/01/24/OSSFS实现阿里云OSS文件系统数据共享/"/>
 
 
 
 
 
-  <title>分类: 随笔 | 海阔天空</title>
+  <title>OSSFS 实现阿里云 OSS 文件系统数据共享 | 海阔天空</title>
   
 
 
@@ -138,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -276,55 +281,300 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>随笔<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2015/01/24/OSSFS实现阿里云OSS文件系统数据共享/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2015/01/20/如何整理个人资料/" itemprop="url">
-              
-                <span itemprop="name">如何整理个人资料</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">OSSFS 实现阿里云 OSS 文件系统数据共享</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-01-20T10:15:12+08:00"
-              content="2015-01-20" >
-          01-20
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-24T09:15:12+08:00">
+                2015-01-24
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/阿里云/" itemprop="url" rel="index">
+                    <span itemprop="name">阿里云</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/01/24/OSSFS实现阿里云OSS文件系统数据共享/" class="leancloud_visitors" data-flag-title="OSSFS 实现阿里云 OSS 文件系统数据共享">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong><a href="https://github.com/aliyun/ossfs/blob/master/README-CN.md" target="_blank" rel="noopener">阿里云 ESC 服务器挂载 OSS 文件系统</a></strong></p>
+<p>ossfs 能让您在 Linux/Mac OS X 系统中把 Aliyun OSS bucket 挂载到本地文件 系统中，您能够便捷的通过本地文件系统操作 OSS 上的对象，实现数据的共享。</p>
+<p>阿里云 oss 官方：ossfs 挂载，您可以理解为把挂载的 bucket 当做一个 ecs 目录来操作的，存储文件到挂载的 bucket 中是占用的这个 bucket 的内存，不会占用您 ecs 的内存。</p>
+<a id="more"></a>
+<h2 id="安装"><a href="# 安装" class="headerlink" title="安装"></a>安装 </h2><p> 下载文件 <a href="https://github.com/aliyun/ossfs/releases" target="_blank" rel="noopener">ossfs_1.80.3_centos7.0_x86_64.rpm</a> 到阿里云</p>
+<p>安装<code>sudo yum localinstall ossfs_1.80.3_centos7.0_x86_64.rpm</code></p>
+<p>写入 oss 配置<code>echo my-bucket:my-access-key-id:my-access-key-secret &gt; /etc/passwd-ossfs</code>, 例：</p>
+<pre><code>echo ossfs-xuan:LTAIw5M5SHnIoNcm:ci1Oj7*******ZqDziBj &gt; /etc/passwd-ossfs
+</code></pre><p>更改配置文件权限<code>chmod 640 /etc/passwd-ossfs</code></p>
+<p>创建挂载目录<code>mkdir /ossfs</code></p>
+<p>挂载<code>ossfs ossfs-xuan /ossfs -ourl=oss-cn-shenzhen-internal.aliyuncs.com</code></p>
+<h2 id="额外的命令"><a href="# 额外的命令" class="headerlink" title="额外的命令"></a>额外的命令</h2><pre><code># 允许 linux 其他用户对改 oss 文件系统进行操作
+ossfs ossfs-xuan /ossfs -ourl=oss-cn-shenzhen-internal.aliyuncs.com -o allow_other
+#卸载挂载 oss 目录
+umount /ossfs
+</code></pre><h2 id="可能出现的错误"><a href="# 可能出现的错误" class="headerlink" title="可能出现的错误"></a>可能出现的错误 </h2><p><code>InvalidBucketName</code> 错误可以看出 BucketName 重复了</p>
+<pre><code>ossfs: bad request
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Error&gt;
+  &lt;Code&gt;InvalidBucketName&lt;/Code&gt;
+  &lt;Message&gt;The specified bucket is not valid.&lt;/Message&gt;
+  &lt;RequestId&gt;5A93BFD701A3E286AC09FDDD&lt;/RequestId&gt;
+  &lt;HostId&gt;ossfs-xuan.ossfs-xuan.oss-cn-shenzhen-internal.aliyuncs.com&lt;/HostId&gt;
+  &lt;BucketName&gt;ossfs-xuan.ossfs-xuan&lt;/BucketName&gt;
+&lt;/Error&gt;
+</code></pre><p>解决：<code>-ourl=oss-cn-shenzhen-internal.aliyuncs.com</code>不需要带<code>BucketName</code></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2015/01/24/OSSFS实现阿里云OSS文件系统数据共享/" title="OSSFS 实现阿里云 OSS 文件系统数据共享">https://yhaing.github.io/2015/01/24/OSSFS实现阿里云OSS文件系统数据共享/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/阿里云/" rel="tag"># 阿里云</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/23/CentOS7.4安装GlusterFS/" rel="next" title="CentOS7.4 安装 GlusterFS">
+                <i class="fa fa-chevron-left"></i> CentOS7.4 安装 GlusterFS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/24/Python 3爬取百度经验数据/" rel="prev" title="Python 3 爬取百度经验数据">
+                Python 3 爬取百度经验数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -332,6 +582,13 @@
 
 
           
+
+  
+    <div id="gitalk-container">
+	</div>
+  
+
+
 
         </div>
         
@@ -352,8 +609,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -417,6 +683,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#额外的命令"><span class="nav-number">2.</span> <span class="nav-text">额外的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能出现的错误"><span class="nav-number">3.</span> <span class="nav-text">可能出现的错误 </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -551,6 +833,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

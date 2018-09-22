@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CentOS," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="海阔天空">
-<meta property="og:url" content="https://yhaing.github.io/categories/随笔/index.html">
+<meta name="description" content="介绍Gluster是一个大尺度文件系统。 主要功能简单卷 distribute volume 分布式卷，两台主机的磁盘融合一个磁盘 stripe volume 条带卷，一个文件分成数据块存储到不同的地方 replica volume 复制卷，一个文件分别保存到两台主机">
+<meta name="keywords" content="CentOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7.4 安装 GlusterFS">
+<meta property="og:url" content="https://yhaing.github.io/2015/01/23/CentOS7.4安装GlusterFS/index.html">
 <meta property="og:site_name" content="海阔天空">
+<meta property="og:description" content="介绍Gluster是一个大尺度文件系统。 主要功能简单卷 distribute volume 分布式卷，两台主机的磁盘融合一个磁盘 stripe volume 条带卷，一个文件分成数据块存储到不同的地方 replica volume 复制卷，一个文件分别保存到两台主机">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-22T02:18:35.992Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="海阔天空">
+<meta name="twitter:title" content="CentOS7.4 安装 GlusterFS">
+<meta name="twitter:description" content="介绍Gluster是一个大尺度文件系统。 主要功能简单卷 distribute volume 分布式卷，两台主机的磁盘融合一个磁盘 stripe volume 条带卷，一个文件分成数据块存储到不同的地方 replica volume 复制卷，一个文件分别保存到两台主机">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/categories/随笔/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2015/01/23/CentOS7.4安装GlusterFS/"/>
 
 
 
 
 
-  <title>分类: 随笔 | 海阔天空</title>
+  <title>CentOS7.4 安装 GlusterFS | 海阔天空</title>
   
 
 
@@ -138,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -276,55 +281,342 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>随笔<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2015/01/23/CentOS7.4安装GlusterFS/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2015/01/20/如何整理个人资料/" itemprop="url">
-              
-                <span itemprop="name">如何整理个人资料</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">CentOS7.4 安装 GlusterFS</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-01-20T10:15:12+08:00"
-              content="2015-01-20" >
-          01-20
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-23T10:15:12+08:00">
+                2015-01-23
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务器/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/01/23/CentOS7.4安装GlusterFS/" class="leancloud_visitors" data-flag-title="CentOS7.4 安装 GlusterFS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="# 介绍" class="headerlink" title="介绍"></a>介绍 </h2><p><a href="https://www.gluster.org/" target="_blank" rel="noopener">Gluster</a> 是一个大尺度文件系统。</p>
+<h3 id="主要功能"><a href="# 主要功能" class="headerlink" title="主要功能"></a>主要功能 </h3><p><strong> 简单卷</strong></p>
+<pre><code>distribute volume 分布式卷，两台主机的磁盘融合一个磁盘
+stripe volume 条带卷，一个文件分成数据块存储到不同的地方
+replica volume 复制卷，一个文件分别保存到两台主机
+</code></pre><a id="more"></a>
+<p><strong>复合卷</strong></p>
+<p>1+2，1+3，2+3，1+2+3</p>
+<h2 id="总结常用命令"><a href="# 总结常用命令" class="headerlink" title="总结常用命令"></a>总结常用命令</h2><pre><code>gluster peer status #查看集群各主机连接状态
+gluster volume list# 查看挂载卷信息
+gluster volume list #查看卷列表
+#创建挂在卷，force 忽略在 root 目录创建挂在卷的警告
+gluster volume create swarm-volume replica 3 worker:/xuan/docker/gluster-volume home:/xuan/docker/gluster-volume xuanps:/xuan/docker/gluster-volume force
+gluster volume start swarm-volume #启动
+gluster volume stop swarm-volume #停止
+gluster volume delete swarm-volume #删除 ，了文件还会保留
+#挂载本地目录到 glusterfs 卷（swarm-volume），在本地目录添加的会自动同步到其他挂载卷
+#eg 在本机 mnt 添加文件，其他 volume-name 目录也会添加 mount [- 参数] [设备名称] [挂载点]
+mount -t glusterfs worker:/swarm-volume /mnt/
+umount worker:/swarm-volume  #卸载了就不会同步了
+#重置，删除所有数据
+systemctl stop glusterd
+rm -rf /var/lib/glusterd/
+systemctl start glusterd
+#删除节点
+gluster peer detach home
+</code></pre><h2 id="安装"><a href="# 安装" class="headerlink" title="安装"></a>安装 </h2><p> 准备工作：</p>
+<p>三台局域网主机（centos7 修改主机名 ）</p>
+<table><tr><th> hostname</th><th>ip</th><th>备注</th></tr><tr><td>xuanps</td><td>left-aligned</td><td>10.14.0.1</td></tr><tr><td> worker</td><td>centered</td><td>10.14.0.4</td></tr><tr><td>home</td><td>right-aligned</td><td>10.14.0.5</td></tr></table>
+
+
+<p>三台都需要安装 GlusterFS</p>
+<pre><code># 搜索 glusterfs 可安装的版本
+yum search centos-release-gluster
+#安装最新长期稳定版本 (Long Term Stable) 的 gluster 软件
+yum -y install centos-release-gluster
+#安装 glusterfs-server
+yum --enablerepo=centos-gluster*-test install glusterfs-server
+glusterfs -V #测试
+systemctl enable glusterd #开机启动
+systemctl start glusterd #启动
+systemctl status glusterd #查看是否正常运行
+#修改 hosts 不然不能通过主机名连接到对方
+vim /etc/hosts
+#---------- 三台都要添加如下设置 --------------------------
+10.14.0.1 xuanps
+10.14.0.4 worker
+10.14.0.5 home
+#------------------------------------------------------
+#从 xuanps 上执行下面两条，其他主机不用执行
+gluster peer probe worker
+gluster peer probe home
+#三台都执行该命令是否都是 connected
+gluster peer status
+#查看挂载卷信息
+gluster volume info
+#创建挂在卷，force 忽略在 root 目录创建挂在卷的警告
+gluster volume create volume-name replica 3 worker:/xuan/docker/gluster-volume/test home:/xuan/docker/gluster-volume/test xuanps:/xuan/docker/gluster-volume/test force
+#启动
+gluster volume start volume-name
+#启动 nfs 同步，测试需验证，这里要不要开启
+gluster volume set volume-name nfs.disable off
+#挂载本地目录到 glusterfs 卷（volume-name），在本地目录添加的会自动同步到其他挂载卷
+#eg 在本机 mnt 添加文件，其他 volume-name 目录也会添加
+mount -t glusterfs worker:/volume-name /mnt/
+</code></pre><h2 id="参考"><a href="# 参考" class="headerlink" title="参考"></a>参考 </h2><p><a href="http://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/" target="_blank" rel="noopener"> 官方文档</a></p>
+<p><a href="https://wiki.centos.org/SpecialInterestGroup/Storage/gluster-Quickstart" target="_blank" rel="noopener">centos 官方安装手册</a></p>
+<p><a href="https://www.ibm.com/developerworks/cn/opensource/os-cn-glusterfs-docker-volume/index.html" target="_blank" rel="noopener">基于 GlusterFS 实现 Docker 集群的分布式存储</a></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2015/01/23/CentOS7.4安装GlusterFS/" title="CentOS7.4 安装 GlusterFS">https://yhaing.github.io/2015/01/23/CentOS7.4安装GlusterFS/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/22/CentOS7.4安装OpenVpn/" rel="next" title="CentOS7.4 安装 OpenVpn">
+                <i class="fa fa-chevron-left"></i> CentOS7.4 安装 OpenVpn
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/24/OSSFS实现阿里云OSS文件系统数据共享/" rel="prev" title="OSSFS 实现阿里云 OSS 文件系统数据共享">
+                OSSFS 实现阿里云 OSS 文件系统数据共享 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/01/22/CentOS7修改网卡为eth0/">CentOS7 修改网卡为 eth0</a></li><li><a href="/2015/01/21/Centos7内核由3.10升级至4.12方法/">Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法</a></li><li><a href="/2015/01/22/CentOS7.4安装OpenVpn/">CentOS7.4 安装 OpenVpn</a></li></ul>
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -332,6 +624,13 @@
 
 
           
+
+  
+    <div id="gitalk-container">
+	</div>
+  
+
+
 
         </div>
         
@@ -352,8 +651,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -417,6 +725,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要功能"><span class="nav-number">1.1.</span> <span class="nav-text">主要功能 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结常用命令"><span class="nav-number">2.</span> <span class="nav-text">总结常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考 </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -551,6 +875,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
