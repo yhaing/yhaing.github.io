@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CentOS," />
 
 
 
@@ -79,13 +79,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="海阔天空">
-<meta property="og:url" content="https://yhaing.github.io/tags/Markdown/index.html">
+<meta name="description" content="【写在前面】公司打算上Docker服务，目前需要安装运行环境，Docker新的功能除了需要Centos 7系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。 【文章内容】关于内核版本的定义： 版本性质：主分支ml(mainline)，稳定版(stable)">
+<meta name="keywords" content="CentOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos 7&#x2F;6 内核版本由 3.10.0 升级至 4.12.4 方法">
+<meta property="og:url" content="https://yhaing.github.io/2015/01/21/Centos7内核由3.10升级至4.12方法/index.html">
 <meta property="og:site_name" content="海阔天空">
+<meta property="og:description" content="【写在前面】公司打算上Docker服务，目前需要安装运行环境，Docker新的功能除了需要Centos 7系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。 【文章内容】关于内核版本的定义： 版本性质：主分支ml(mainline)，稳定版(stable)">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/XdxdnmC.jpg">
+<meta property="og:image" content="https://i.imgur.com/6XuTzZM.jpg">
+<meta property="og:image" content="https://i.imgur.com/rdO1xZ3.jpg">
+<meta property="og:updated_time" content="2018-09-22T00:50:15.987Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="海阔天空">
+<meta name="twitter:title" content="Centos 7&#x2F;6 内核版本由 3.10.0 升级至 4.12.4 方法">
+<meta name="twitter:description" content="【写在前面】公司打算上Docker服务，目前需要安装运行环境，Docker新的功能除了需要Centos 7系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。 【文章内容】关于内核版本的定义： 版本性质：主分支ml(mainline)，稳定版(stable)">
+<meta name="twitter:image" content="https://i.imgur.com/XdxdnmC.jpg">
 
 
 
@@ -115,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/tags/Markdown/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2015/01/21/Centos7内核由3.10升级至4.12方法/"/>
 
 
 
 
 
-  <title>标签: Markdown | 海阔天空</title>
+  <title>Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法 | 海阔天空</title>
   
 
 
@@ -138,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -276,54 +285,325 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Markdown<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2015/01/21/Centos7内核由3.10升级至4.12方法/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2015/01/19/markdown常用编写语法/" itemprop="url">
-              
-                <span itemprop="name">Markdown 文件的常用编写语法</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-01-19T00:34:14+08:00"
-              content="2015-01-19" >
-          01-19
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-21T12:34:14+08:00">
+                2015-01-21
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务器/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/01/21/Centos7内核由3.10升级至4.12方法/" class="leancloud_visitors" data-flag-title="Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="【写在前面】"><a href="#【写在前面】" class="headerlink" title="【写在前面】"></a>【写在前面】</h2><p>公司打算上 Docker 服务，目前需要安装运行环境，Docker 新的功能除了需要 Centos 7 系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。<br><strong><br>注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。</strong></p>
+<h2 id="【文章内容】"><a href="#【文章内容】" class="headerlink" title="【文章内容】"></a>【文章内容】</h2><p><strong>关于内核版本的定义：</strong></p>
+<p>版本性质：主分支 ml(mainline)，稳定版(stable)，长期维护版 lt(longterm)<br><a id="more"></a></p>
+<p>版本命名格式为 “A.B.C”：</p>
+<p><strong>数字 A 是内核版本号 </strong>：版本号只有在代码和内核的概念有重大改变的时候才会改变，历史上有两次变化：<br> 第一次是 1994 年的 1.0 版，第二次是 1996 年的 2.0 版，第三次是 2011 年的 3.0 版发布，但这次在内核的概念上并没有发生大的变化</p>
+<p><strong>数字 B 是内核主版本号：</strong>主版本号根据传统的奇 - 偶系统版本编号来分配：奇数为开发版，偶数为稳定版</p>
+<p><strong>数字 C 是内核次版本号：</strong>次版本号是无论在内核增加安全补丁、修复 bug、实现新的特性或者驱动时都会改变</p>
+<h3 id="一、查看那系统内核版本"><a href="# 一、查看那系统内核版本" class="headerlink" title="一、查看那系统内核版本"></a>一、查看那系统内核版本</h3><pre><code>uname -r
+3.10.0-514.el7.x86_64
+cat /etc/redhat-release 
+CentOS Linux release 7.3.1611 (Core)
+</code></pre><h3 id="二、升级内核"><a href="# 二、升级内核" class="headerlink" title="二、升级内核"></a>二、升级内核</h3><p>Centos 6 和 Centos 7 的升级方法类似，只不过就是选择的 YUM 源或者 rpm 包不同罢了，下面主要是 Centos 7 的安装方法，中间也会有对于 Centos 6 升级的方法提示。</p>
+<p><strong>方法一：</strong></p>
+<p>Centos 6 YUM 源：<a href="http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm" target="_blank" rel="noopener">http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm</a><br>Centos 7 YUM 源：<a href="http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm" target="_blank" rel="noopener">http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm</a></p>
+<p>升级内核需要先导入 elrepo 的 key，然后安装 elrepo 的 yum 源：</p>
+<pre><code>rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+</code></pre><p>仓库启用后，你可以使用下面的命令列出可用的内核相关包，如下图：</p>
+<pre><code>yum --disablerepo=&quot;*&quot; --enablerepo=&quot;elrepo-kernel&quot; list available
+</code></pre><p><img src="https://i.imgur.com/XdxdnmC.jpg" alt=""></p>
+<p>上图可以看出，长期维护版本 lt 为 4.4，最新主线稳定版 ml 为 4.12，我们需要安装最新的主线稳定内核，使用如下命令：(以后这台机器升级内核直接运行这句就可升级为最新稳定版)</p>
+<pre><code>yum -y --enablerepo=elrepo-kernel install kernel-ml.x86_64 kernel-ml-devel.x86_64 
+</code></pre><p><strong>方法二：</strong></p>
+<p>对于一些无法上网的服务器，或者需要安装指定版本内核的需求，我们可以把 kernel image 的 rpm 包下载下来安装，下载地址如下：</p>
+<pre><code>下载指定版本 kernel： http://rpm.pbone.net/index.php3?stat=3&amp;limit=1&amp;srodzaj=3&amp;dl=40&amp;search=kernel
+下载指定版本 kernel-devel：http://rpm.pbone.net/index.php3?stat=3&amp;limit=1&amp;srodzaj=3&amp;dl=40&amp;search=kernel-devel
+
+官方 Centos 6: http://elrepo.org/linux/kernel/el6/x86_64/RPMS/
+
+官方 Centos 7: http://elrepo.org/linux/kernel/el7/x86_64/RPMS/
+</code></pre><p><img src="https://i.imgur.com/6XuTzZM.jpg" alt=""></p>
+<p>将 rpm 包下载上传到服务器上，使用下面的命令安装即可：</p>
+<pre><code>yum -y install kernel-ml-devel-4.12.4-1.el7.elrepo.x86_64.rpm 
+yum -y install kernel-ml-4.12.4-1.el7.elrepo.x86_64.rpm
+</code></pre><p><strong>方法三：</strong></p>
+<p>还可以通过源码包编译安装，这种方式可定制性强，但也比较复杂，有需要的可自行查找资料安装，下面只给出各系统版本内核源码包的下载地址：<a href="https://www.kernel.org/pub/linux/kernel/" target="_blank" rel="noopener">https://www.kernel.org/pub/linux/kernel/</a></p>
+<h3 id="三、修改 grub 中默认的内核版本"><a href="# 三、修改 grub 中默认的内核版本" class="headerlink" title="三、修改 grub 中默认的内核版本"></a>三、修改 grub 中默认的内核版本 </h3><p> 内核升级完毕后，目前内核还是默认的版本，如果此时直接执行 reboot 命令，重启后使用的内核版本还是默认的 3.10，不会使用新的 4.12.4，首先，我们可以通过命令查看默认启动顺序：</p>
+<pre><code>awk -F\&apos; &apos;$1==&quot;menuentry &quot; {print $2}&apos; /etc/grub2.cfg
+
+CentOS Linux (4.12.4-1.el7.elrepo.x86_64) 7 (Core)
+
+CentOS Linux (3.10.0-514.el7.x86_64) 7 (Core)
+
+CentOS Linux (0-rescue-a43cc2091b4557f1fd10a52ccffa5db2) 7 (Core)
+</code></pre><p>由上面可以看出新内核 (4.12.4) 目前位置在 0，原来的内核 (3.10.0) 目前位置在 1，所以如果想生效最新的内核，还需要我们修改内核的启动顺序为 0：</p>
+<p><code>vim /etc/default/grub</code></p>
+<p><img src="https://i.imgur.com/rdO1xZ3.jpg" alt=""></p>
+<p>注：Centos 6 更改的文件相同，使用命令确定新内核位置后，然后将参数 default 更改为 0 即可。</p>
+<p>接着运行 grub2-mkconfig 命令来重新创建内核配置，如下：</p>
+<pre><code>grub2-mkconfig -o /boot/grub2/grub.cfg
+</code></pre><h3 id="四、重启系统并查看系统内核"><a href="# 四、重启系统并查看系统内核" class="headerlink" title="四、重启系统并查看系统内核"></a>四、重启系统并查看系统内核</h3><pre><code>reboot
+</code></pre><p>系统启动完毕后，可以通过命令查看系统的内核版本，如下：</p>
+<pre><code>uname -r
+4.12.4-1.el7.elrepo.x86_64
+</code></pre><p>到此，Centos 7 内核升级完毕。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2015/01/21/Centos7内核由3.10升级至4.12方法/" title="Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法">https://yhaing.github.io/2015/01/21/Centos7内核由3.10升级至4.12方法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/20/Hexo NexT主题添加点击爱心效果/" rel="next" title="Hexo NexT 主题添加点击爱心效果">
+                <i class="fa fa-chevron-left"></i> Hexo NexT 主题添加点击爱心效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -331,6 +611,13 @@
 
 
           
+
+  
+    <div id="gitalk-container">
+	</div>
+  
+
+
 
         </div>
         
@@ -351,8 +638,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -416,6 +712,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#【写在前面】"><span class="nav-number">1.</span> <span class="nav-text">【写在前面】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【文章内容】"><span class="nav-number">2.</span> <span class="nav-text">【文章内容】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、查看那系统内核版本"><span class="nav-number">2.1.</span> <span class="nav-text">一、查看那系统内核版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、升级内核"><span class="nav-number">2.2.</span> <span class="nav-text">二、升级内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、修改 grub 中默认的内核版本"><span class="nav-number">2.3.</span> <span class="nav-text">三、修改 grub 中默认的内核版本 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、重启系统并查看系统内核"><span class="nav-number">2.4.</span> <span class="nav-text">四、重启系统并查看系统内核</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -550,6 +862,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
