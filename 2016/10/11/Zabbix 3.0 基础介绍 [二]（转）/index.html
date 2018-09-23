@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zabbix," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="zabbix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zabbix 3.0 部署监控 [二]（转）">
+<meta property="og:url" content="https://yhaing.github.io/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/8NOSdbF.png">
+<meta property="og:image" content="https://i.imgur.com/wXtti2z.png">
+<meta property="og:image" content="https://i.imgur.com/kACn1M5.png">
+<meta property="og:image" content="https://i.imgur.com/LFIPaOX.png">
+<meta property="og:image" content="https://i.imgur.com/4u2NHLG.png">
+<meta property="og:image" content="https://i.imgur.com/73QMhPM.png">
+<meta property="og:image" content="https://i.imgur.com/3hudHYL.png">
+<meta property="og:image" content="https://i.imgur.com/9KbrIww.png">
+<meta property="og:image" content="https://i.imgur.com/LL4rzh4.png">
+<meta property="og:image" content="https://i.imgur.com/AE1kmcp.png">
+<meta property="og:image" content="https://i.imgur.com/Rr1RTL5.png">
+<meta property="og:image" content="https://i.imgur.com/dKJRUO7.png">
+<meta property="og:image" content="https://i.imgur.com/ZOsjvyj.png">
+<meta property="og:image" content="https://i.imgur.com/Y8asoOq.png">
+<meta property="og:image" content="https://i.imgur.com/jGamdQU.png">
+<meta property="og:image" content="https://i.imgur.com/PU2i90h.png">
+<meta property="og:image" content="https://i.imgur.com/HQy4VCm.png">
+<meta property="og:image" content="https://i.imgur.com/2TxJOc1.png">
+<meta property="og:image" content="https://i.imgur.com/wZIZn8Q.png">
+<meta property="og:image" content="https://i.imgur.com/9cWv17r.png">
+<meta property="og:image" content="https://i.imgur.com/te8GA7w.png">
+<meta property="og:image" content="https://i.imgur.com/U4ouREh.png">
+<meta property="og:image" content="https://i.imgur.com/rQqdIh7.png">
+<meta property="og:image" content="https://i.imgur.com/Bx4w2Rf.png">
+<meta property="og:image" content="https://i.imgur.com/kMkoNsK.png">
+<meta property="og:image" content="https://i.imgur.com/K4sQRIt.png">
+<meta property="og:image" content="https://i.imgur.com/2y8NeW0.png">
+<meta property="og:image" content="https://i.imgur.com/IAvmsAj.png">
+<meta property="og:image" content="https://i.imgur.com/YizZlbM.png">
+<meta property="og:image" content="https://i.imgur.com/Jxf9phF.png">
+<meta property="og:image" content="https://i.imgur.com/XfOXKfJ.png">
+<meta property="og:image" content="https://i.imgur.com/qvmIqOc.png">
+<meta property="og:image" content="https://i.imgur.com/S1YCrHW.png">
+<meta property="og:image" content="https://i.imgur.com/uo2dbwl.png">
+<meta property="og:image" content="https://i.imgur.com/RwEiwRj.png">
+<meta property="og:image" content="https://i.imgur.com/B52CbQ2.png">
+<meta property="og:image" content="https://i.imgur.com/up6padf.png">
+<meta property="og:image" content="https://i.imgur.com/bSUfFot.png">
+<meta property="og:image" content="https://i.imgur.com/oL0Ybzo.png">
+<meta property="og:image" content="https://i.imgur.com/5HriOtl.png">
+<meta property="og:image" content="https://i.imgur.com/wqAxrE6.png">
+<meta property="og:image" content="https://i.imgur.com/IinJoVX.png">
+<meta property="og:image" content="https://i.imgur.com/0ZrDTPc.png">
+<meta property="og:image" content="https://i.imgur.com/cWxIVaR.png">
+<meta property="og:image" content="https://i.imgur.com/cBKA75W.png">
+<meta property="og:image" content="https://i.imgur.com/vLGECJ2.png">
+<meta property="og:image" content="https://i.imgur.com/pm0cBcj.png">
+<meta property="og:image" content="https://i.imgur.com/Qz26Jcf.png">
+<meta property="og:image" content="https://i.imgur.com/yrZHIeJ.png">
+<meta property="og:image" content="https://i.imgur.com/sUIs3O0.png">
+<meta property="og:image" content="https://i.imgur.com/APrvwHu.png">
+<meta property="og:image" content="https://i.imgur.com/ooOFZNn.png">
+<meta property="og:image" content="https://i.imgur.com/JZuXDar.png">
+<meta property="og:image" content="https://i.imgur.com/bWEv3xY.png">
+<meta property="og:image" content="https://i.imgur.com/Rt6xqBu.png">
+<meta property="og:image" content="https://i.imgur.com/aO4Kpk4.png">
+<meta property="og:image" content="https://i.imgur.com/mrIoY6n.png">
+<meta property="og:image" content="https://i.imgur.com/FQMHST9.png">
+<meta property="og:image" content="https://i.imgur.com/mGQs3PL.png">
+<meta property="og:image" content="https://i.imgur.com/xQP2yB1.png">
+<meta property="og:image" content="https://i.imgur.com/QW3BePX.png">
+<meta property="og:image" content="https://i.imgur.com/QYbUlBT.png">
+<meta property="og:image" content="https://i.imgur.com/s1pZDMQ.png">
+<meta property="og:image" content="https://i.imgur.com/pVOVGk8.png">
+<meta property="og:image" content="https://i.imgur.com/yjCeI3v.png">
+<meta property="og:image" content="https://i.imgur.com/OtZD5xQ.png">
+<meta property="og:image" content="https://i.imgur.com/O796AlV.png">
+<meta property="og:image" content="https://i.imgur.com/nShhJ0F.png">
+<meta property="og:image" content="https://i.imgur.com/8yxlYhw.png">
+<meta property="og:image" content="https://i.imgur.com/NCvBZlW.png">
+<meta property="og:image" content="https://i.imgur.com/dQHTj6a.png">
+<meta property="og:updated_time" content="2018-09-23T08:39:59.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zabbix 3.0 部署监控 [二]（转）">
+<meta name="twitter:image" content="https://i.imgur.com/8NOSdbF.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/"/>
+
+
+
+
+
+  <title>Zabbix 3.0 部署监控 [二]（转） | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">成长就是你主观世界遇到客观世界之间的那条沟，你掉进去了，叫挫折，爬出来了，叫成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Zabbix 3.0 部署监控 [二]（转）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-11T09:15:12+08:00">
+                2016-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/" class="leancloud_visitors" data-flag-title="Zabbix 3.0 部署监控 [二]（转）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/8NOSdbF.png" alt=""></p>
+<a id="more"></a>
+<h1 id="一、添加监控主机及设置"><a href="# 一、添加监控主机及设置" class="headerlink" title="一、添加监控主机及设置"></a>一、添加监控主机及设置</h1><h2 id="1- 创建主机"><a href="#1- 创建主机" class="headerlink" title="1. 创建主机"></a>1. 创建主机</h2><p><img src="https://i.imgur.com/wXtti2z.png" alt=""></p>
+<p><img src="https://i.imgur.com/kACn1M5.png" alt=""></p>
+<p>Agent 可以干一些 SNMP 无法干的事情，例如自定义监控项<br>snmp 相关文章：<a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=http://www.abcdocker.com/abcdocker/1376" target="_blank" rel="noopener">http://www.abcdocker.com/abcdocker/1376</a></p>
+<p><img src="https://i.imgur.com/LFIPaOX.png" alt=""></p>
+<p>这里我们先不着急点<code>add</code>，还需要设置其他选项 </p>
+<p><img src="https://i.imgur.com/4u2NHLG.png" alt=""></p>
+<h3 id="点击监控模板"><a href="# 点击监控模板" class="headerlink" title="点击监控模板"></a>点击监控模板 </h3><p>　　zabbix 监控是由<code> 监控项 </code> 组成（<code>cpu</code>使用率监控就是一个 <code> 监控项 / 内存使用率 </code> 就是一个监控项），如果是 <code>100</code> 台服务器就需要监控 <code> 模板 </code> 了。只需要将监控项和模板 <code> 关联 </code> 起来即可 <br> 举个例子：我们上面主机使用的是 SNMP，就可以直接搜索<code>SNMP</code>。提示：有的模板需要自己定义 </p>
+<p><img src="https://i.imgur.com/73QMhPM.png" alt=""></p>
+<p><strong>温馨提示</strong>：请点击下面的小<code>add</code> 然后在点大的。否则会出现问题哦 </p>
+<p><img src="https://i.imgur.com/3hudHYL.png" alt=""></p>
+<p><code>IPMI</code>如果有的话，需要在这里写上 <code> 用户名 </code> 和<code>密码</code> </p>
+<p><img src="https://i.imgur.com/9KbrIww.png" alt=""></p>
+<p>宏定义，这个宏其实就是一个变量。我们给可以给变量附一个值 </p>
+<p><img src="https://i.imgur.com/LL4rzh4.png" alt=""></p>
+<p>　　因为我们设置的是 <code>SNMP</code>，<code>SNMP</code> 有一个团体名。并且可以设置定义<br>　　团体名是中间的<code>abcdocker</code>，具体的可以看<a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=http://www.abcdocker.com/abcdocker/1376" target="_blank" rel="noopener">http://www.abcdocker.com/abcdocker/1376</a></p>
+<pre><code>[root@localhost ~]# cat /etc/snmp/snmpd.conf
+rocommunity abcdocker 192.168.56.11
+</code></pre><p><img src="https://i.imgur.com/AE1kmcp.png" alt=""></p>
+<p>值：<code>{$SNMP_COMMUNITY}</code></p>
+<p><img src="https://i.imgur.com/Rr1RTL5.png" alt=""></p>
+<p>主机资产设置分为 3 中 <br>1、关闭 Disabled<br>2、手动 Manual<br>3、自动 Automatic （自动代表的是你在定义监控项的时候，他有一个小箭头，勾上之后监控项的值就会填写在这里）<br>　　　我们这设置好模板就可以选择<code>add</code> 了 </p>
+<p><img src="https://i.imgur.com/dKJRUO7.png" alt=""></p>
+<p>等 <code>SNMP</code> 变绿就好了 </p>
+<p><img src="https://i.imgur.com/ZOsjvyj.png" alt=""></p>
+<p>　　现在的状态是用 <code>SNMP</code> 进行监控了，我们只是添加了一个 <code>SNMP OS LINUX</code> 的模板，但是出现了 4 个。这 4 个链接。可以和多个 <code> 模板 </code> 连起来用 </p>
+<p><img src="https://i.imgur.com/Y8asoOq.png" alt=""></p>
+<p>进入监控项，下面这个菜单是过滤搜索用的 </p>
+<p><img src="https://i.imgur.com/jGamdQU.png" alt=""></p>
+<p>下面全都是模板<br>　　我们可以随便点击一个，这里我们新建一个监控项 </p>
+<p><img src="https://i.imgur.com/PU2i90h.png" alt=""></p>
+<h3 id="点击创建"><a href="# 点击创建" class="headerlink" title="点击创建"></a>点击创建 </h3><p> 类型选择</p>
+<p>　　<strong>Zabbix agent 被动 </strong></p>
+<p>　<strong>　Zabbix agent (active 主动模式) </strong></p>
+<p>　　<strong>Simple check 简单检测 </strong></p>
+<p>　　<strong>SNMPv1 agent ……</strong></p>
+<p><img src="https://i.imgur.com/HQy4VCm.png" alt=""></p>
+<p>在 Key 这行点击 Select 可以进行选择 </p>
+<p><img src="https://i.imgur.com/2TxJOc1.png" alt=""></p>
+<p>我们随便选择一个，例如 agent.version。查看 agent 的版本<br>Numeric 是无符号整数型 </p>
+<p><img src="https://i.imgur.com/wZIZn8Q.png" alt=""></p>
+<h2 id="2- 图形说明"><a href="#2- 图形说明" class="headerlink" title="2. 图形说明"></a>2. 图形说明</h2><p><code>Configuration----hosts----Graphs</code> </p>
+<p><img src="https://i.imgur.com/9cWv17r.png" alt=""></p>
+<p>绘图靠的是 <code> 监控项</code>，我们可以随便打开一个看看 </p>
+<p><img src="https://i.imgur.com/te8GA7w.png" alt=""></p>
+<p>颜色等都是可以随意设置</p>
+<h2 id="3、聚合图形 screens 设置"><a href="#3、聚合图形 screens 设置" class="headerlink" title="3、聚合图形 screens 设置"></a>3、聚合图形 screens 设置</h2><p><img src="https://i.imgur.com/U4ouREh.png" alt=""></p>
+<p><strong>提示 </strong>：因为咱们用的版本是 3.0 当 2.4 的时候需要在<code>Configuration----</code> 下面来创建<code>screens</code></p>
+<p><font size="5"><strong>创建 Screens</strong></font><br> </p>
+<p><img src="https://i.imgur.com/rQqdIh7.png" alt=""></p>
+<p>我们创建一个 <code>2*2</code> 命名为<code>test screens</code> 的<code>screens</code> </p>
+<p><img src="https://i.imgur.com/Bx4w2Rf.png" alt=""></p>
+<p>然后我们点进去 <br> 点击 <code> 编辑</code> </p>
+<p><img src="https://i.imgur.com/kMkoNsK.png" alt=""></p>
+<p>点击 <code>Change</code> 进行设置 </p>
+<p><img src="https://i.imgur.com/K4sQRIt.png" alt=""></p>
+<p><img src="https://i.imgur.com/2y8NeW0.png" alt=""></p>
+<p>多添加几个之后就是以下结果 </p>
+<p><img src="https://i.imgur.com/IAvmsAj.png" alt=""></p>
+<h1 id="二、监控案例 - 自定义监控项"><a href="# 二、监控案例 - 自定义监控项" class="headerlink" title="二、监控案例 [自定义监控项]"></a> 二、监控案例 [自定义监控项]</h1><p><strong> 例如 </strong>：我们自己添加一个监控项来进行监控当前的活动连接数<br><code>nginx</code> 安装地址：<a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=http://www.abcdocker.com/abcdocker/1376" target="_blank" rel="noopener">http://www.abcdocker.com/abcdocker/1376</a><br>Nginx 状态模块配置如下，过于简单不说了</p>
+<pre><code>[root@localhost ~]# cat /usr/local/nginx/conf/nginx.conf
+listen   8080;
+location /status {
+stub_status on;
+access_log off;
+allow 192.168.56.0/24;
+deny all;
+}
+</code></pre><p>修改 <code>nginx</code> 端口并重启 <br> 测试：<code>http://192.168.56.11:8080/status</code> </p>
+<p><img src="https://i.imgur.com/YizZlbM.png" alt=""></p>
+<p><strong>解释说明</strong>：使用 zabbix 来监控活动连接数，通过 status 状态模块为前提 , 我们现在命令取出我们想要的值，例如：</p>
+<pre><code>[root@localhost ~]# curl -s http://192.168.56.11:8080/status|grep Active|awk -F &quot;[]&quot; &apos;{print $3}&apos;
+1
+</code></pre><p>因为我们是监控他的活动连接数，他的活动连接数为<code>1</code></p>
+<pre><code>[root@linux-node1 ~]# vim /etc/zabbix/zabbix_agentd.conf 
+Include=/etc/zabbix/zabbix_agentd.d/
+</code></pre><p>提示： 如果想要加自定义监控项，不要在配置文件中写入，可以在 <code>Include</code> 里面定义的目录写上 , 只要我们写在 Include 目录下，都可以识别到</p>
+<pre><code>[root@linux-node1 ~]# cd /etc/zabbix/zabbix_agentd.d/
+[root@linux-node1 zabbix_agentd.d]# ls
+userparameter_mysql.conf
+#默认有一个 MySQL 的，我们可以参考 MySQL 的进行操作
+UserParameter=mysql.ping,HOME=/var/lib/zabbix mysqladmin ping | grep -c alive
+#提示，前面是 key 的名称 后面的 key 的命令
+UserParameter=mysql.version,mysql -V
+</code></pre><p>我们自己编辑一个文件</p>
+<pre><code>[root@linux-node1 zabbix_agentd.d]# cat nginx.conf
+UserParameter=nginx.active,/usr/bin/curl -s http://192.168.56.11:8080/status|grep Active|awk -F &quot;[]&quot; &apos;{print $3}&apos;
+提示，此处配置文件的名字可以随便起
+</code></pre><p>　　如果是多个命令可以写一个 <code> 脚本 </code>，命令最好写<code> 绝对路径 </code>！这个过程其实就是我们定义监控的过程，前面是<code>key</code> 的名字，后面是命令 <br> 修改完配置文件之后需要重启<code>zabbix-agent</code></p>
+<pre><code>[root@linux-node1 zabbix_agentd.d]# systemctl restart zabbix-agent
+</code></pre><p>　　配置完成之后先在 <code>server</code> 端测试，是否可以获取到 <code>agent</code> 上的值。不要着急添加 , 我们现在只用了 1 台服务器，本机是 server 也是 agent。然后使用 <code>zabbix-get</code> 进行 <code> 测试</code></p>
+<pre><code>[root@linux-node1 zabbix_agentd.d]# yum list|grep zabbix
+zabbix-agent.x86_64 3.0.4-1.el7@zabbix  
+zabbix-release.noarch   3.0-1.el7  installed
+zabbix-server-mysql.x86_64  3.0.4-1.el7@zabbix  
+zabbix-web.noarch   3.0.4-1.el7@zabbix  
+zabbix-web-mysql.noarch 3.0.4-1.el7@zabbix  
+python-pyzabbix.noarch  0.7.3-2.el7epel 
+uwsgi-stats-pusher-zabbix.x86_642.0.13.1-2.el7 epel 
+zabbix-get.x86_64   3.0.4-1.el7zabbix 
+查看 zabbix_get
+[root@linux-node1 zabbix_agentd.d]# yum install -y zabbix-get
+</code></pre><p><code>zabbix-get</code>使用参数如下：</p>
+<pre><code>[root@linux-node1 zabbix_agentd.d]# zabbix_get -s 192.168.56.11 -p 10050 -k &quot;nginx.active&quot;
+-s 指定我们要查看的服务器
+-p 端口，可以不加。默认是 10050
+-k 监控项的名称（根据上面的配置来定义的）
+更多参数：zabbix_get --help
+</code></pre><p><font size="5"><strong>错误案例：</strong></font><br> </p>
+<p><strong>如果出现如下错误，大致意思是拒绝连接</strong></p>
+<pre><code>[root@linux-node1 zabbix_agentd.d]# zabbix_get -s 192.168.56.11 -p 10050 -k &quot;nginx.active&quot;
+zabbix_get [24234]: Check access restrictions in Zabbix agent configuration
+</code></pre><p><strong>解决方法：</strong></p>
+<pre><code>[root@linux-node1 ~]# vim /etc/zabbix/zabbix_agentd.conf 
+Server= 192.168.56.11
+</code></pre><p>因为我们当时只允许本机 127.0.0.1 进行连接。所以会出现这样问题</p>
+<pre><code>[root@linux-node1 ~]# systemctl restart zabbix-agent
+</code></pre><p>修改完配置文件都要 <code> 重启 </code><br><strong> 提示：</strong> zabbix-agent 的配置文件中指定允许那个 server 连接，那个才可以进行连接。</p>
+<pre><code>[root@linux-node1 zabbix_agentd.d]# zabbix_get -s 192.168.56.11 -p 10050 -k &quot;nginx.active&quot;
+1
+</code></pre><p>正确结果如上！<br>提示：如果在 <code>zabbix-agent</code> 上面修改了，还需要在网页上进行修改 </p>
+<p><img src="https://i.imgur.com/Jxf9phF.png" alt=""></p>
+<p>在 <code>/etc/zabbix/zabbix-agent.conf</code> 上面指定的 <code>Server</code> 是谁，就只会允许谁通过。如果有多个 <code>ip</code> 可以使用逗号进行分割</p>
+<p><font size="5"><strong>添加 item</strong></font><br> </p>
+<p><img src="https://i.imgur.com/XfOXKfJ.png" alt=""></p>
+<p>找到一个安装<code>zabbix-agent</code>，点击 </p>
+<p><img src="https://i.imgur.com/qvmIqOc.png" alt=""></p>
+<p>点击<code>items</code> </p>
+<p><img src="https://i.imgur.com/S1YCrHW.png" alt=""></p>
+<p>然后添加<code>Create item</code>（创建 item） </p>
+<p><img src="https://i.imgur.com/uo2dbwl.png" alt=""></p>
+<p><img src="https://i.imgur.com/RwEiwRj.png" alt=""></p>
+<p><code>Data type：</code>数据类型，这里我们选择 Decimal。其他的基本上用不上</p>
+<p><code>Units：</code>单位 超过 1 千就写成 1k 了。 可以在这里做一个单位的设置。默认就可以</p>
+<p><code>Use custom multiplier：</code>如果这里面设置了一个数，得出来的结果都需要乘以文本框设定的值<br><img src="https://i.imgur.com/B52CbQ2.png" alt=""></p>
+<p><code>Update interval（in sec）:</code>监控项刷新时间间隔（一般不要低于 60 秒）</p>
+<p><code>Custom intervals:</code>创建时间间隔（例如：1 点 -7 点每隔多少秒进行监控）格式大致为：周，时，分 </p>
+<p><img src="https://i.imgur.com/up6padf.png" alt=""></p>
+<p><code>History storage period:</code> 历史数据存储时间（根据业务来设置，默认就可以）</p>
+<p><code>Trend storage period:</code> 趋势图要保存多久</p>
+<p><code>New application:</code> 监控项的组 </p>
+<p><code>application:</code> 选择一个监控项组 </p>
+<p><code>Populates host inventory field:</code> 资产，可以设定一个监控项。把获取的值设置在资产上面 </p>
+<p><img src="https://i.imgur.com/bSUfFot.png" alt=""></p>
+<p>描述！必须要写。 要不你就是不负责任</p>
+<p><img src="https://i.imgur.com/oL0Ybzo.png" alt=""> </p>
+<p><font size="5"><strong>添加自定义监控项小结：</strong></font><br><br>　　　1、添加用户自定义参数（在 <code>/etc/zabbix/zabbix.agent.d/</code> 定义了一个 <code>nginx.conf</code> 步骤如上）</p>
+<p>　　　2、重启<code>zabbix-agent</code></p>
+<p>　　　3、在 <code>Server</code> 端使用 <code>zabbix_get</code> 测试 <code> 获取</code>（命令如上）</p>
+<p>　　　4、在 web 界面创建<code>item</code>（监控项）</p>
+<p>　　</p>
+<p><font size="5"><strong>自定义图形</strong></font><br> </p>
+<p><img src="https://i.imgur.com/5HriOtl.png" alt=""></p>
+<p><code>Name：</code>名字 </p>
+<p><code>Width：</code>宽度 </p>
+<p><code>Height：</code>高度</p>
+<p><code>Graph type：</code>图形类型</p>
+<p>其他 <strong> 默认 </strong> 即可 </p>
+<p><img src="https://i.imgur.com/wqAxrE6.png" alt=""></p>
+<p>然后我们点击 <code>Add</code> 添加 <code>Items</code> 监控项，找到我们刚刚设置的服务器 </p>
+<p><img src="https://i.imgur.com/IinJoVX.png" alt=""></p>
+<p>然后找到我们刚刚添加的 <code> 监控项</code> </p>
+<p><img src="https://i.imgur.com/0ZrDTPc.png" alt=""></p>
+<p>还可以选择颜色，添加其他的很多设置。不细说 </p>
+<p><img src="https://i.imgur.com/cWxIVaR.png" alt=""></p>
+<p>　　点击 <code>Prewview</code> 可以进行预览，如果出现字符乱码可以阅读我们另一篇文章（zabbix 默认不支持中文）, 确定没有问题，选择下方 <code>Add</code> 即可 </p>
+<p><img src="https://i.imgur.com/cBKA75W.png" alt=""></p>
+<p>出现我们添加的 </p>
+<p><img src="https://i.imgur.com/vLGECJ2.png" alt=""></p>
+<p>需要在 <code>Monitoring---&gt;Graphs---&gt;</code> 选择我们添加的主机即可 <br> 接下来我们需要进行 <code> 测试 </code>：<br> 测试前： </p>
+<p><img src="https://i.imgur.com/pm0cBcj.png" alt=""></p>
+<p>使用 <code>ab</code> 测试工具进行测试，设置 <code>100 万</code> 并发进行访问</p>
+<pre><code>[root@linux-node1 ~]# ab -c 1000 -n 1000000 http://192.168.56.11:8080/
+This is ApacheBench, Version 2.3 &lt;$Revision: 1430300 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+Benchmarking 192.168.56.11 (be patient)
+</code></pre><p>测试后： </p>
+<p><img src="https://i.imgur.com/Qz26Jcf.png" alt=""></p>
+<p>我们可以查看 zabbix 监控图标 </p>
+<p><img src="https://i.imgur.com/yrZHIeJ.png" alt=""></p>
+<p>我们中间设置了间隔 60 秒，说明每隔 <code>60 秒</code> 我们进行获取一次, 我们可以设置它的方式显示 <br> 找到 <code>Graph</code> 选择类型，<code>Stacked</code>是堆叠显示，其他的大家可以自行百度。不细说 <br> 堆叠显示如下： </p>
+<p><img src="https://i.imgur.com/sUIs3O0.png" alt=""></p>
+<p>如果我们想加多个图形都显示在一张图上，可以进行如下操作 </p>
+<p><img src="https://i.imgur.com/APrvwHu.png" alt=""></p>
+<p>找到<code>Graphs</code> </p>
+<p><img src="https://i.imgur.com/ooOFZNn.png" alt=""></p>
+<p>找到我们设置的图形 </p>
+<p><img src="https://i.imgur.com/JZuXDar.png" alt=""></p>
+<p>点击添加即可</p>
+<p>我们可以让多个图标显示在一个图片上 </p>
+<p><img src="https://i.imgur.com/bWEv3xY.png" alt=""></p>
+<p>点击我们创建一个聚合图形（<code>screens</code>）</p>
+<p><img src="https://i.imgur.com/Rt6xqBu.png" alt=""> </p>
+<p>点击进去 </p>
+<p><img src="https://i.imgur.com/aO4Kpk4.png" alt=""></p>
+<p>点击编辑 </p>
+<p><img src="https://i.imgur.com/mrIoY6n.png" alt=""></p>
+<p>选择 <code>item</code> 添加的地方，因为上面创建聚合图形的时候我们选择了 2X2 所以这里会显示 2 个 </p>
+<p><img src="https://i.imgur.com/FQMHST9.png" alt=""></p>
+<p>找到相对应的添加即可 <br> 我们可以多添加几个</p>
+<p><img src="https://i.imgur.com/mGQs3PL.png" alt=""></p>
+<p>结果如上图显示 <br> 除了显示图片还可以显示其他内容 </p>
+<p><img src="https://i.imgur.com/xQP2yB1.png" alt=""></p>
+<pre><code>Action log：日志
+Clock：时间
+Data overview：数据概述
+Graph：图形
+History of events：历史事件
+Host group issues：主机组问题
+Host issues：主机问题
+Hosts info：主机信息
+Plain text：文本
+Map：架构图
+Screen：屏幕
+Server info：服务器信息
+Simple graph：简单的图
+Simple graph prototype：简单的原型图
+System status：系统状态
+Triggers info：触发器信息
+Tiggers overview：概述
+URL：URL 地址
+</code></pre><p><font size="5"><strong>例如我们输入一个 URL：</strong></font><br> </p>
+<p><img src="https://i.imgur.com/QW3BePX.png" alt=""><br><img src="https://i.imgur.com/QYbUlBT.png"alt=""></p>
+<p>我们还可以自定义一个<code>Maps</code>，一张架构图。操作如下：</p>
+<p><img src="https://i.imgur.com/s1pZDMQ.png" alt=""> </p>
+<p>第二步：选择编辑<code>Edit map</code> </p>
+<p><img src="https://i.imgur.com/pVOVGk8.png" alt=""></p>
+<p>因为他默认图片比较小，我们可以点击下方，进行调整图片大小。</p>
+<p><img src="https://i.imgur.com/yjCeI3v.png" alt=""></p>
+<p>点击右上角 <code> 编辑</code>，然后我们点中图中的服务器即可 </p>
+<p><img src="https://i.imgur.com/OtZD5xQ.png" alt=""></p>
+<p>我们模拟有 2 台服务器 </p>
+<p><img src="https://i.imgur.com/O796AlV.png" alt=""></p>
+<p>然后我们选中新添加的服务器进行修改</p>
+<p><img src="https://i.imgur.com/nShhJ0F.png" alt=""> </p>
+<p>点击 <code>Apply</code> 就可以了。<br>按住 <code>Ctrl</code> 点中 <code>zabbix server</code> 和另一台服务器 </p>
+<p><img src="https://i.imgur.com/8yxlYhw.png" alt=""></p>
+<p>然后我们点击左上方的<code>Link</code>：他们就连接起来了 </p>
+<p><img src="https://i.imgur.com/NCvBZlW.png" alt=""></p>
+<p>温馨提示：修改完成后需要点击保存 [<code>update</code>] 如果不点后果就是从新在做一遍~</p>
+<p><img src="https://i.imgur.com/dQHTj6a.png" alt=""></p>
+<p>未完！</p>
+<p>转载自：<a href="https://www.abcdocker.com/abcdocker/1453" target="_blank" rel="noopener">Zabbix 3.0 部署监控 [二] | abcdocker 运维博客</a> </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/" title="Zabbix 3.0 部署监控 [二]（转）">https://yhaing.github.io/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/zabbix/" rel="tag"># zabbix</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/10/Zabbix 3.0 基础介绍 [一]（转）/" rel="next" title="Zabbix 3.0 基础介绍 [一]（转）">
+                <i class="fa fa-chevron-left"></i> Zabbix 3.0 基础介绍 [一]（转）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/11/Zabbix 3.0 部署监控 [三] （转）/" rel="prev" title="Zabbix 3.0 部署监控 [三]（转）">
+                Zabbix 3.0 部署监控 [三]（转） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2016/10/10/Zabbix 3.0 基础介绍 [一]（转）/">Zabbix 3.0 基础介绍 [一]（转）</a></li><li><a href="/2016/11/21/Zabbix 3.0 分布式监控 [九]/">Zabbix 3.0 分布式监控 [九]</a></li><li><a href="/2016/11/20/Zabbix 3.0 主备模式 [八]/">Zabbix 3.0 主备模式 [八]</a></li><li><a href="/2016/11/12/Zabbix 3.0 生产案例 [五]/">Zabbix 3.0 生产案例 [五]</a></li><li><a href="/2016/11/15/Zabbix 3.0 监控MySQL [六]/">Zabbix 3.0 监控 MySQL [六]</a></li><li><a href="/2016/11/15/Zabbix 3.0 监控Web [七]/">Zabbix 3.0 监控 Web [七]</a></li><li><a href="/2016/11/10/Zabbix 3.0 生产案例 [四]/">Zabbix 3.0 生产案例 [四]（转）</a></li><li><a href="/2016/10/11/Zabbix 3.0 部署监控 [三] （转）/">Zabbix 3.0 部署监控 [三]（转）</a></li><li><a href="/2016/11/10/Zabbix字符集乱码及Centos7补全设置/">Zabbix 字符集乱码及 Centos7 补全设置 [转]</a></li><li><a href="/2016/11/25/Zabbix 3.0 自动化监控 [十]/">Zabbix 3.0 自动化监控 [十]</a></li></ul>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container">
+	</div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、添加监控主机及设置"><span class="nav-number">1.</span> <span class="nav-text">一、添加监控主机及设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1- 创建主机"><span class="nav-number">1.1.</span> <span class="nav-text">1. 创建主机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#点击监控模板"><span class="nav-number">1.1.1.</span> <span class="nav-text">点击监控模板 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#点击创建"><span class="nav-number">1.1.2.</span> <span class="nav-text">点击创建 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2- 图形说明"><span class="nav-number">1.2.</span> <span class="nav-text">2. 图形说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、聚合图形 screens 设置"><span class="nav-number">1.3.</span> <span class="nav-text">3、聚合图形 screens 设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、监控案例 - 自定义监控项"><span class="nav-number">2.</span> <span class="nav-text"> 二、监控案例 [自定义监控项]</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+</body>
+</html>

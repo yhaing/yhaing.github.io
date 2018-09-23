@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ELK," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="ELK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】">
+<meta property="og:url" content="https://yhaing.github.io/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/GJquYqE.jpg">
+<meta property="og:image" content="https://i.imgur.com/dNaSaJq.png">
+<meta property="og:image" content="https://i.imgur.com/6IGDjU7.png">
+<meta property="og:image" content="https://i.imgur.com/413xWRz.png">
+<meta property="og:image" content="https://i.imgur.com/u357Qha.png">
+<meta property="og:image" content="https://i.imgur.com/qRdGjPw.png">
+<meta property="og:image" content="https://i.imgur.com/nt9CFBm.png">
+<meta property="og:image" content="https://i.imgur.com/5rNi48j.png">
+<meta property="og:image" content="https://i.imgur.com/oZU4l7i.png">
+<meta property="og:updated_time" content="2018-09-23T10:39:52.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】">
+<meta name="twitter:image" content="https://i.imgur.com/GJquYqE.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/"/>
+
+
+
+
+
+  <title>ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】 | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">成长就是你主观世界遇到客观世界之间的那条沟，你掉进去了，叫挫折，爬出来了，叫成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-12T10:15:12+08:00">
+                2018-09-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ELK/" itemprop="url" rel="index">
+                    <span itemprop="name">ELK</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/" class="leancloud_visitors" data-flag-title="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/GJquYqE.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="ELK-Filebeat-Kafka-ZooKeeper- 构建海量日志分析平台"><a href="#ELK-Filebeat-Kafka-ZooKeeper- 构建海量日志分析平台" class="headerlink" title="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台"></a>ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台 </h1><p> 原文链接：<a href="http://blog.51cto.com/tchuairen/1861167" target="_blank" rel="noopener">http://blog.51cto.com/tchuairen/1861167</a></p>
+<p>什么要做日志分析平台？</p>
+<p>随着业务量的增长，每天业务服务器将会产生上亿条的日志，单个日志文件达几个 GB，这时我们发现用 Linux 自带工具，cat grep awk 分析越来越力不从心了，而且除了服务器日志，还有程序报错日志，分布在不同的服务器，查阅繁琐。</p>
+<p><strong>待解决的痛点:</strong></p>
+<p>1、大量不同种类的日志成为了运维人员的负担，不方便管理;</p>
+<p>2、单个日志文件巨大，无法使用常用的文本工具分析，检索困难;</p>
+<p>3、日志分布在多台不同的服务器上，业务一旦出现故障，需要一台台查看日志。</p>
+<p>为了解决以上困扰:</p>
+<p>接下来我们要一步步构建这个日志分析平台，架构图如下:</p>
+<p><img src="https://i.imgur.com/dNaSaJq.png" alt=""></p>
+<p><strong>架构解读 : （整个架构从左到右，总共分为 5 层）</strong></p>
+<p><strong>第一层、数据采集层</strong></p>
+<p>最左边的是业务服务器集群，上面安装了 filebeat 做日志采集，同时把采集的日志分别发送给两个 logstash 服务。</p>
+<p><strong>第二层、数据处理层，数据缓存层</strong></p>
+<p>logstash 服务把接受到的日志经过格式处理，转存到本地的 kafka broker+zookeeper 集群中。</p>
+<p><strong>第三层、数据转发层</strong></p>
+<p>这个单独的 Logstash 节点会实时去 kafka broker 集群拉数据，转发至 ES DataNode。</p>
+<p><strong>第四层、数据持久化存储</strong></p>
+<p>ES DataNode 会把收到的数据，写磁盘，建索引库。</p>
+<p><strong>第五层、数据检索，数据展示</strong></p>
+<p>ES Master + Kibana 主要协调 ES 集群，处理数据检索请求，数据展示。</p>
+<p>笔者为了节约宝贵的服务器资源，把一些可拆分的服务合并在同一台主机。大家可以根据自己的实际业务环境自由拆分，延伸架构。</p>
+<p><strong>开 工 !</strong></p>
+<p>操作系统环境 : CentOS release 6.5</p>
+<p>各服务器角色分配 :</p>
+<p><img src="https://i.imgur.com/6IGDjU7.png" alt=""></p>
+<p>jdk-8u101-linux-x64.rpm</p>
+<p>logstash-2.3.2.tar.gz</p>
+<p>filebeat-1.2.3-x86_64.rpm</p>
+<p>kafka_2.11-0.10.0.1.tgz</p>
+<p>zookeeper-3.4.9.tar.gz</p>
+<p>elasticsearch-2.3.4.rpm</p>
+<p>kibana-4.5.3-linux-x64.tar.gz</p>
+<h2 id="一、安装部署 Elasticsearch 集群"><a href="# 一、安装部署 Elasticsearch 集群" class="headerlink" title="一、安装部署 Elasticsearch 集群"></a><strong>一、安装部署 Elasticsearch 集群 </strong></h2><p> 布置 ES Master 节点 10.10.1.244</p>
+<h3 id="1、安装 jdk1-8，elasticsearch-2-3-4"><a href="#1、安装 jdk1-8，elasticsearch-2-3-4" class="headerlink" title="1、安装 jdk1.8，elasticsearch-2.3.4"></a><strong>1、安装 jdk1.8，elasticsearch-2.3.4</strong></h3><p>oracle 官网 jdk 下载地址: <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+<p>elasticsearch 官网: <a href="https://www.elastic.co/" target="_blank" rel="noopener">https://www.elastic.co/</a></p>
+<p><strong>安装命令</strong></p>
+<pre><code>yum install jdk-8u101-linux-x64.rpm elasticsearch-2.3.4.rpm -y
+</code></pre><p><strong>ES 会被默认安装在 /usr/share/elasticsearch/</strong></p>
+<h3 id="2、系统调优，JVM 调优"><a href="#2、系统调优，JVM 调优" class="headerlink" title="2、系统调优，JVM 调优"></a><strong>2、系统调优，JVM 调优</strong></h3><pre><code># 配置系统最大打开文件描述符数
+
+vim /etc/sysctl.conf
+
+fs.file-max=65535
+
+配置进程最大打开文件描述符
+
+vim /etc/security/limits.conf
+
+# End of file
+
+\* soft nofile 65535
+
+\* hard nofile 65535
+
+# 配置 JVM 内存
+
+vim /etc/sysconfig/elasticsearch
+
+ES\_HEAP\_SIZE=4g
+
+# 这台机器的可用内存为 8G
+</code></pre><p><strong>3、编写 ES Master 节点配置文件</strong></p>
+<pre><code># /etc/elasticsearch/elasticsearch.yml
+
+# ---------------------------------- Cluster -----------------------------------
+
+# Use a descriptive name for your cluster:
+
+cluster.name: bigdata
+
+# ------------------------------------ Node ------------------------------------
+
+node.name: server1
+
+node.master: true
+
+node.data: false
+
+# ----------------------------------- Index ------------------------------------
+
+index.number\_of\_shards: 5
+
+index.number\_of\_replicas: 0
+
+index.refresh\_interval: 120s
+
+# ----------------------------------- Paths ------------------------------------
+
+path.data: /home/elk/data
+
+path.logs: /var/log/elasticsearch/elasticsearch.log
+
+# ----------------------------------- Memory -----------------------------------
+
+bootstrap.mlockall: true
+
+indices.fielddata.cache.size: 50mb
+
+#------------------------------------ Network And HTTP --------------------------
+
+network.host: 0.0.0.0
+
+http.port: 9200
+
+# ------------------------------------ Translog ----------------------------------
+
+index.translog.flush\_threshold\_ops: 50000
+
+# --------------------------------- Discovery ------------------------------------
+
+discovery.zen.minimum\_master\_nodes: 1
+
+discovery.zen.ping.timeout: 200s
+
+discovery.zen.fd.ping\_timeout: 200s
+
+discovery.zen.fd.ping.interval: 30s
+
+discovery.zen.fd.ping.retries: 6
+
+discovery.zen.ping.unicast.hosts: [&amp;quot;10.10.1.60:9300&amp;quot;,&amp;quot;10.10.1.90:9300&amp;quot;,&amp;quot;10.10.1.244:9300&amp;quot;,]
+
+discovery.zen.ping.multicast.enabled: false
+
+# --------------------------------- merge ------------------------------------------
+
+indices.store.throttle.max\_bytes\_per\_sec: 100mb
+</code></pre><p><strong>注: path.data、path.logs 这两个参数指定的路径，如果没有需要自己创建，还要赋予权限给 elasticsearch 用户。（后面的 ES DataNode 也同样）</strong></p>
+<h3 id="4、安装 head、kopf、bigdesk- 开源插件"><a href="#4、安装 head、kopf、bigdesk- 开源插件" class="headerlink" title="4、安装 head、kopf、bigdesk 开源插件"></a><strong>4、安装 head、kopf、bigdesk 开源插件 </strong></h3><p> 安装方法有两种 :</p>
+<h4 id="1、使用 ES 自带的命令 plugin"><a href="#1、使用 ES 自带的命令 plugin" class="headerlink" title="1、使用 ES 自带的命令 plugin"></a>1、使用 ES 自带的命令 plugin</h4><pre><code># head
+
+/usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+
+# kopf
+
+/usr/share/elasticsearch/bin/plugin install lmenezes/elasticsearch-kopf
+
+# bigdesk
+
+/usr/share/elasticsearch/bin/plugin install hlstudio/bigdesk
+</code></pre><h4 id="2、自行下载插件的源码包安装"><a href="#2、自行下载插件的源码包安装" class="headerlink" title="2、自行下载插件的源码包安装"></a>2、自行下载插件的源码包安装 </h4><p> 我们通过 plugin 命令安装的插件，其实是安装到了这个路径:/usr/share/elasticsearch/plugins</p>
+<p>而 plugin install 命令后面跟的这一串 mobz/elasticsearch-head 其实是 github 上的一个地址。</p>
+<p>前面加上 github 的官网地址就是 <a href="https://github.com/mobz/elasticsearch-head" target="_blank" rel="noopener">https://github.com/mobz/elasticsearch-head</a> 可以复制到浏览器中打开，找到该插件的源码仓库。</p>
+<p>现在知道了，想要找插件自己可以去 github 上搜一下出来一大堆。随便选一个然后取后面那串路径，用 ES 自带的命令安装。</p>
+<p>如果安装失败了，那么就手动下载该插件的源码包。 解压后直接整个目录 mv 到 ES 的插件安装路径下。</p>
+<p>也就是这里: /usr/share/elasticsearch/plugins/</p>
+<p>那如何访问安装好的插件呢？</p>
+<pre><code>http://ES\_server\_ip:port/\_plugin/plugin\_name
+
+Example:
+
+http://127.0.0.1:9200/\_plugin/head/
+
+http://127.0.0.1:9200/\_plugin/kopf/
+</code></pre><p><strong>这时，ES Master 已经配置好了。</strong></p>
+<h3 id="布置 ES-DataNode 节点 -10-10-1-60"><a href="# 布置 ES-DataNode 节点 -10-10-1-60" class="headerlink" title="布置 ES DataNode 节点 10.10.1.60"></a>布置 ES DataNode 节点 10.10.1.60</h3><p>安装和系统调优方法同上，插件不用安装，只是配置文件不同。</p>
+<p><strong>编写配置文件</strong></p>
+<pre><code># ---------------------------------- Cluster -----------------------------------
+
+# Use a descriptive name for your cluster:
+
+cluster.name: bigdata
+
+# ------------------------------------ Node ------------------------------------
+
+node.name: server2
+
+node.master: false
+
+node.data: true
+
+# ----------------------------------- Index ------------------------------------
+
+index.number\_of\_shards: 5
+
+index.number\_of\_replicas: 0
+
+index.refresh\_interval: 120s
+
+# ----------------------------------- Paths ------------------------------------
+
+path.data: /home/elk/data,/disk2/elk/data2
+
+path.logs: /var/log/elasticsearch/elasticsearch.log
+
+# ----------------------------------- Memory -----------------------------------
+
+bootstrap.mlockall: true
+
+indices.fielddata.cache.size: 50mb
+
+#------------------------------------ Network And HTTP --------------------------
+
+network.host: 0.0.0.0
+
+http.port: 9200
+
+# ------------------------------------ Translog ----------------------------------
+
+index.translog.flush\_threshold\_ops: 50000
+
+# --------------------------------- Discovery ------------------------------------
+
+discovery.zen.minimum\_master\_nodes: 1
+
+discovery.zen.ping.timeout: 200s
+
+discovery.zen.fd.ping\_timeout: 200s
+
+discovery.zen.fd.ping.interval: 30s
+
+discovery.zen.fd.ping.retries: 6
+
+discovery.zen.ping.unicast.hosts: [&amp;quot;10.10.1.244:9300&amp;quot;,]
+
+discovery.zen.ping.multicast.enabled: false
+
+# --------------------------------- merge ------------------------------------------
+
+indices.store.throttle.max\_bytes\_per\_sec: 100mb
+</code></pre><p><strong>10.10.1.60 也准备好了。</strong></p>
+<p>布置另一台 ES DataNode 节点 10.10.1.90</p>
+<p><strong>编写配置文件</strong></p>
+<pre><code># ---------------------------------- Cluster -----------------------------------
+
+# Use a descriptive name for your cluster:
+
+cluster.name: bigdata
+
+# ------------------------------------ Node ------------------------------------
+
+node.name: server3
+
+node.master: false
+
+node.data: true
+
+# ----------------------------------- Index ------------------------------------
+
+index.number\_of\_shards: 5
+
+index.number\_of\_replicas: 0
+
+index.refresh\_interval: 120s
+
+# ----------------------------------- Paths ------------------------------------
+
+path.data: /home/elk/single
+
+path.logs: /var/log/elasticsearch/elasticsearch.log
+
+# ----------------------------------- Memory -----------------------------------
+
+bootstrap.mlockall: true
+
+indices.fielddata.cache.size: 50mb
+
+#------------------------------------ Network And HTTP --------------------------
+
+network.host: 0.0.0.0
+
+http.port: 9200
+
+# ------------------------------------ Translog ----------------------------------
+
+index.translog.flush\_threshold\_ops: 50000
+
+# --------------------------------- Discovery ------------------------------------
+
+discovery.zen.minimum\_master\_nodes: 1
+
+discovery.zen.ping.timeout: 200s
+
+discovery.zen.fd.ping\_timeout: 200s
+
+discovery.zen.fd.ping.interval: 30s
+
+discovery.zen.fd.ping.retries: 6
+
+discovery.zen.ping.unicast.hosts: [&amp;quot;10.10.1.244:9300&amp;quot;,]
+
+discovery.zen.ping.multicast.enabled: false
+
+# --------------------------------- merge ------------------------------------------
+
+indices.store.throttle.max\_bytes\_per\_sec: 100mb
+</code></pre><h3 id="5、现在三台 ES 节点已经准备就绪，分别启动服务"><a href="#5、现在三台 ES 节点已经准备就绪，分别启动服务" class="headerlink" title="5、现在三台 ES 节点已经准备就绪，分别启动服务"></a><strong>5、现在三台 ES 节点已经准备就绪，分别启动服务</strong></h3><pre><code># 10.10.1.244
+
+/etc/init.d/elasticsearch start
+
+# 10.10.1.60
+
+/etc/init.d/elasticsearch start
+
+# 10.10.1.90
+
+/etc/init.d/elasticsearch start
+</code></pre><h3 id="6、访问 head 插件，查看集群状态"><a href="#6、访问 head 插件，查看集群状态" class="headerlink" title="6、访问 head 插件，查看集群状态"></a><strong>6、访问 head 插件，查看集群状态</strong></h3><p><img src="https://i.imgur.com/413xWRz.png" alt=""></p>
+<p><strong>此时 Elasticsearch 集群已经准备完成</strong></p>
+<h2 id="二、配置位于架构图中第二层的 ZooKeeper 集群"><a href="# 二、配置位于架构图中第二层的 ZooKeeper 集群" class="headerlink" title="二、配置位于架构图中第二层的 ZooKeeper 集群"></a><strong>二、配置位于架构图中第二层的 ZooKeeper 集群 </strong></h2><p> 配置 10.10.1.30 节点</p>
+<p><strong>1、安装，配置 zookeeper</strong></p>
+<p>zookeeper 官网: <a href="http://zookeeper.apache.org/" target="_blank" rel="noopener">http://zookeeper.apache.org/</a></p>
+<pre><code># zookeeper 依赖 java，如果之前没安装过 JDK，则需要安装.
+
+rpm -ivh jdk-8u101-linux-x64.rpm
+
+# 解压程序
+
+tar xf zookeeper-3.4.9.tar.gz
+</code></pre><p><strong>编写配置文件</strong></p>
+<pre><code># conf/zoo.cfg
+
+# The number of milliseconds of each tick
+
+tickTime=2000
+
+# The number of ticks that the initial
+
+# synchronization phase can take
+
+initLimit=10
+
+# The number of ticks that can pass between
+
+# sending a request and getting an acknowledgement
+
+syncLimit=5
+
+# the directory where the snapshot is stored.
+
+# do not use /tmp for storage, /tmp here is just
+
+# example sakes.
+
+dataDir=/u01/zookeeper/zookeeper-3.4.9/data
+
+# the port at which the clients will connect
+
+clientPort=2181
+
+# the maximum number of client connections.
+
+# increase this if you need to handle more clients
+
+#maxClientCnxns=60
+
+server.11=10.10.1.30:2888:3888
+
+server.12=10.10.1.31:2888:3888
+
+server.13=10.10.1.32:2888:3888
+
+# Be sure to read the maintenance section of the
+
+# administrator guide before turning on autopurge.
+
+#
+
+# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc\_maintenance
+
+#
+
+# The number of snapshots to retain in dataDir
+
+# autopurge.snapRetainCount=3
+
+# Purge task interval in hours
+
+# Set to &amp;quot;0&amp;quot; to disable auto purge feature
+
+# autopurge.purgeInterval=1
+</code></pre><p><strong>同步配置文件到其他两台节点</strong></p>
+<p>注: zookeeper 集群，每个节点的配置文件都是一样的。所以直接同步过去，不需要做任何修改。</p>
+<p>不熟悉 zookeeper 的朋友，可以参考这里: <a href="http://tchuairen.blog.51cto.com/3848118/1859494" target="_blank" rel="noopener">http://tchuairen.blog.51cto.com/3848118/1859494</a></p>
+<pre><code>scp zoo.cfg 10.10.1.31:/usr/local/zookeeper-3.4.9/conf/
+
+scp zoo.cfg 10.10.1.32:/usr/local/zookeeper-3.4.9/conf/
+</code></pre><p><strong>2、创建 myid 文件</strong></p>
+<pre><code># 10.10.1.30
+
+echo 11 \&amp;gt;/usr/local/zookeeper-3.4.9/data/myid
+
+# 10.10.1.31
+
+echo 12 \&amp;gt;/usr/local/zookeeper-3.4.9/data/myid
+
+# 10.10.1.32
+
+echo 13 \&amp;gt;/usr/local/zookeeper-3.4.9/data/myid
+</code></pre><p><strong>3、启动服务 &amp; 查看节点状态</strong></p>
+<pre><code># 10.10.1.30
+
+bin/zkServer.sh start
+
+bin/zkServer.sh status
+
+ZooKeeper JMX enabled by default
+
+Using config: /usr/local/zookeeper/zookeeper-3.4.9/bin/../conf/zoo.cfg
+
+Mode: leader
+
+# 10.10.1.31
+
+bin/zkServer.sh start
+
+bin/zkServer.sh status
+
+ZooKeeper JMX enabled by default
+
+Using config: /usr/local/zookeeper/zookeeper-3.4.9/bin/../conf/zoo.cfg
+
+Mode: follower
+
+# 10.10.1.32
+
+bin/zkServer.sh start
+
+bin/zkServer.sh status
+
+ZooKeeper JMX enabled by default
+
+Using config: /usr/local/zookeeper/zookeeper-3.4.9/bin/../conf/zoo.cfg
+
+Mode: follower
+</code></pre><p><strong>此时 zookeeper 集群配置完成</strong></p>
+<h2 id="三、配置位于架构图中第二层的 Kafka-Broker 集群"><a href="# 三、配置位于架构图中第二层的 Kafka-Broker 集群" class="headerlink" title="三、配置位于架构图中第二层的 Kafka Broker 集群"></a><strong>三、配置位于架构图中第二层的 Kafka Broker 集群</strong></h2><p>Kafka 官网: <a href="http://kafka.apache.org/" target="_blank" rel="noopener">http://kafka.apache.org/</a></p>
+<p>不熟悉 Kafka 的朋友可以参考: <a href="http://tchuairen.blog.51cto.com/3848118/1855090" target="_blank" rel="noopener">http://tchuairen.blog.51cto.com/3848118/1855090</a></p>
+<p>配置 10.10.1.30 节点</p>
+<p><strong>1、安装，配置 kafka</strong></p>
+<pre><code># 解压程序
+
+tar xf kafka\_2.11-0.10.0.1.tgz
+</code></pre><p><strong>编写配置文件</strong></p>
+<pre><code>############################# Server Basics #############################
+
+broker.id=1
+
+############################# Socket Server Settings #############################
+
+num.network.threads=3
+
+# The number of threads doing disk I/O
+
+num.io.threads=8
+
+# The send buffer (SO\_SNDBUF) used by the socket server
+
+socket.send.buffer.bytes=102400
+
+# The receive buffer (SO\_RCVBUF) used by the socket server
+
+socket.receive.buffer.bytes=102400
+
+# The maximum size of a request that the socket server will accept (protection against OOM)
+
+socket.request.max.bytes=104857600
+
+############################# Log Basics #############################
+
+log.dirs=/usr/local/kafka/kafka\_2.11-0.10.0.1/data
+
+num.partitions=6
+
+num.recovery.threads.per.data.dir=1
+
+############################# Log Flush Policy #############################
+
+# The number of messages to accept before forcing a flush of data to disk
+
+#log.flush.interval.messages=10000
+
+# The maximum amount of time a message can sit in a log before we force a flush
+
+#log.flush.interval.ms=1000
+
+############################# Log Retention Policy #############################
+
+log.retention.hours=60
+
+log.segment.bytes=1073741824
+
+log.retention.check.interval.ms=300000
+
+############################# Zookeeper #############################
+
+zookeeper.connect=10.10.1.30:2181,10.10.1.31:2181,10.10.1.32:2181
+
+zookeeper.connection.timeout.ms=6000
+</code></pre><p>注: 其他两个节点的配置文件也基本相同，只有一个参数需要修改 broker.id 。 它用于唯一标识节点，所以绝对不能相同，不然会节点冲突。</p>
+<p><strong>同步配置文件到其他两台节点</strong></p>
+<pre><code>scp server.properties 10.10.1.31:/usr/local/kafka/kafka\_2.11-0.10.0.1/config/
+
+scp server.properties 10.10.1.32:/usr/local/kafka/kafka\_2.11-0.10.0.1/config/
+
+# 修改 broker.id
+
+# 10.10.1.31
+
+broker.id=2
+
+# 10.10.1.32
+
+broker.id=3
+</code></pre><p><strong>2、配置主机名对应 IP 的解析</strong></p>
+<pre><code>vim /etc/hosts
+
+10.10.1.30 server1
+
+10.10.1.31 server2
+
+10.10.1.32 server3
+
+# 记得同步到其他两台节点
+</code></pre><p><strong>3、启动服务 </strong></p>
+<pre><code>bin/kafka-server-start.sh config/server.properties
+
+# 其他两台节点启动方式相同
+</code></pre><p><strong>Kafka+ZooKeeper 集群配置完成</strong></p>
+<h2 id="四、配置位于架构图中第二层的 Logstash 服务"><a href="# 四、配置位于架构图中第二层的 Logstash 服务" class="headerlink" title="四、配置位于架构图中第二层的 Logstash 服务"></a><strong>四、配置位于架构图中第二层的 Logstash 服务 </strong></h2><p> 配置 10.10.1.30 节点</p>
+<p><strong>1、安装，配置 logstash</strong></p>
+<pre><code># 解压程序
+
+tar xf logstash-2.3.2.tar.gz
+</code></pre><p><strong>配置 GeoLiteCity ， 用于地图显示 IP 访问的城市</strong></p>
+<p>官网地址: <a href="http://dev.maxmind.com/geoip/legacy/geolite/" target="_blank" rel="noopener">http://dev.maxmind.com/geoip/legacy/geolite/</a></p>
+<p>下载地址: <a href="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz" target="_blank" rel="noopener">http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz</a></p>
+<p>解压</p>
+<p>gunzip GeoLiteCity.dat.gz</p>
+<p><strong>编写配置文件</strong></p>
+<p>input {</p>
+<p>beats {</p>
+<p>port =\&gt; 5044</p>
+<p>codec =\&gt;&quot;json&quot;</p>
+<p>}</p>
+<p>}</p>
+<p>filter {</p>
+<p>if[type]==&quot;nginxacclog&quot;{</p>
+<p>geoip {</p>
+<p>source=\&gt;&quot;clientip&quot;# 与日志中访问地址的 key 要对应</p>
+<p>target =\&gt;&quot;geoip&quot;</p>
+<p>database =\&gt;&quot;/usr/local/logstash/GeoLiteCity.dat&quot;</p>
+<p>add_field =\&gt;[&quot;[geoip][coordinates]&quot;,&quot;%{[geoip][longitude]}&quot;]</p>
+<p>add_field =\&gt;[&quot;[geoip][coordinates]&quot;,&quot;%{[geoip][latitude]}&quot;]</p>
+<p>}</p>
+<p>mutate {</p>
+<p>convert =\&gt;[&quot;[geoip][coordinates]&quot;,&quot;float&quot;]</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>output {</p>
+<p>  kafka {</p>
+<p>workers =\&gt; 2</p>
+<p>bootstrap_servers =\&gt;&quot;10.10.1.30:9092,10.10.1.31:9092,10.10.1.32:9092&quot;</p>
+<p>topic_id =\&gt;&quot;peiyinlog&quot;</p>
+<p>}</p>
+<p>}</p>
+<p><strong>2、启动服务</strong></p>
+<p>/usr/local/logstash/bin/logstash agent -f logstash_in_kafka.conf &amp;</p>
+<p>10.10.1.31 节点的这块配置，与上述完全相同。（略）</p>
+<p><strong>位于第二层、数据处理层的 Logstash 配置完成</strong></p>
+<h2 id="五、配置数据采集层，业务服务器 -Filebeat"><a href="# 五、配置数据采集层，业务服务器 -Filebeat" class="headerlink" title="五、配置数据采集层，业务服务器 +Filebeat"></a><strong>五、配置数据采集层，业务服务器 +Filebeat</strong></h2><p><strong>1、定制 Nginx 日志格式</strong></p>
+<pre><code>log\_format json &amp;#39;{&amp;quot;@timestamp&amp;quot;:&amp;quot;$time\_iso8601&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;slbip&amp;quot;:&amp;quot;$remote\_addr&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;clientip&amp;quot;:&amp;quot;$http\_x\_forwarded\_for&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;serverip&amp;quot;:&amp;quot;$server\_addr&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;size&amp;quot;:$body\_bytes\_sent,&amp;#39;
+
+ &amp;#39;&amp;quot;responsetime&amp;quot;:$request\_time,&amp;#39;
+
+ &amp;#39;&amp;quot;domain&amp;quot;:&amp;quot;$host&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;method&amp;quot;:&amp;quot;$request\_method&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;requesturi&amp;quot;:&amp;quot;$request\_uri&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;url&amp;quot;:&amp;quot;$uri&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;appversion&amp;quot;:&amp;quot;$HTTP\_APP\_VERSION&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;referer&amp;quot;:&amp;quot;$http\_referer&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;agent&amp;quot;:&amp;quot;$http\_user\_agent&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;status&amp;quot;:&amp;quot;$status&amp;quot;,&amp;#39;
+
+ &amp;#39;&amp;quot;devicecode&amp;quot;:&amp;quot;$HTTP\_HA&amp;quot;}&amp;#39;;
+
+# 在虚拟主机配置中调用
+
+access\_log  /alidata/log/nginx/access/access.log json;
+</code></pre><p><strong>2、安装 Filebeat</strong></p>
+<p>Filebeat 也是 Elasticsearch 公司的产品，在官网可以下载。</p>
+<pre><code># rpm 包安装
+
+yum install filebeat-1.2.3-x86\_64.rpm -y
+</code></pre><p><strong>3、编写 Filebeat 配置文件</strong></p>
+<pre><code>################### Filebeat Configuration Example #########################
+
+############################# Filebeat ######################################
+
+filebeat:
+
+  prospectors:
+
+-
+
+  paths:
+
+- /var/log/messages
+
+  input\_type: log
+
+  document\_type: messages
+
+-
+
+  paths:
+
+- /alidata/log/nginx/access/access.log
+
+  input\_type: log
+
+  document\_type: nginxacclog
+
+-
+
+  paths:
+
+- /alidata/www/logs/laravel.log
+
+  input\_type: log
+
+  document\_type: larlog
+
+-
+
+  paths:
+
+- /alidata/www/logs/500\_error.log
+
+  input\_type: log
+
+  document\_type: peiyinlar\_500error
+
+-
+
+  paths:
+
+- /alidata/www/logs/deposit.log
+
+  input\_type: log
+
+  document\_type: lar\_deposit
+
+-
+
+  paths:
+
+- /alidata/www/logs/call\_error.log
+
+  input\_type: log
+
+  document\_type: call\_error
+
+-
+
+  paths:
+
+- /alidata/log/php/php-fpm.log.slow
+
+  input\_type: log
+
+  document\_type: phpslowlog
+
+  multiline:
+
+  pattern: &amp;#39;^[[:space:]]&amp;#39;
+
+  negate: true
+
+  match: after
+
+  registry\_file: /var/lib/filebeat/registry
+
+############################# Output ##########################################
+
+output:
+
+  logstash:
+
+hosts: [&amp;quot;10.26.95.215:5044&amp;quot;]
+
+############################# Shipper #########################################
+
+shipper:
+
+  name: &amp;quot;host\_6&amp;quot;
+
+
+
+############################# Logging #########################################
+
+logging:
+
+  files:
+
+rotateeverybytes: 10485760 # = 10MB
+</code></pre><p><strong>4、启动服务</strong></p>
+<p>/etc/init.d/filebeat start</p>
+<p><strong>数据采集层，Filebeat 配置完成。</strong></p>
+<p>现在业务服务器上的日志数据已经在源源不断的写入缓存了。</p>
+<h2 id="六、配置位于架构图中的第三层，数据转发层"><a href="# 六、配置位于架构图中的第三层，数据转发层" class="headerlink" title="六、配置位于架构图中的第三层，数据转发层"></a><strong>六、配置位于架构图中的第三层，数据转发层</strong></h2><p>Logstash 安装上面已经讲过（略）</p>
+<p><strong>编写 Logstash 配置文件</strong></p>
+<pre><code># kafka\_to\_es.conf
+
+input{
+
+kafka {
+
+zk\_connect =\&amp;gt;&amp;quot;10.10.1.30:2181,10.10.1.31:2181,10.10.1.32:2181&amp;quot;
+
+group\_id =\&amp;gt;&amp;quot;logstash&amp;quot;
+
+topic\_id =\&amp;gt;&amp;quot;peiyinlog&amp;quot;
+
+reset\_beginning =\&amp;gt;false
+
+consumer\_threads =\&amp;gt; 50
+
+decorate\_events =\&amp;gt;true
+
+}
+
+}
+
+# 删除一些不需要的字段
+
+filter {if[type]==&amp;quot;nginxacclog&amp;quot;{
+
+ mutate {remove\_field =\&amp;gt;[&amp;quot;slbip&amp;quot;,&amp;quot;kafka&amp;quot;,&amp;quot;domain&amp;quot;,&amp;quot;serverip&amp;quot;,&amp;quot;url&amp;quot;,&amp;quot;@version&amp;quot;,&amp;quot;offset&amp;quot;,&amp;quot;input\_type&amp;quot;,&amp;quot;count&amp;quot;,&amp;quot;source&amp;quot;,&amp;quot;fields&amp;quot;,&amp;quot;beat.hostname&amp;quot;,&amp;quot;host&amp;quot;,&amp;quot;tags&amp;quot;]
+
+}
+
+}
+
+}
+
+output {if[type]==&amp;quot;nginxacclog&amp;quot;{# stdout {codec =\&amp;gt; rubydebug}
+
+elasticsearch {hosts =\&amp;gt;[&amp;quot;10.10.1.90:9200&amp;quot;,&amp;quot;10.10.1.60:9200&amp;quot;]
+
+index =\&amp;gt;&amp;quot;logstash-nginxacclog-%{+YYYY.MM.dd}&amp;quot;
+
+manage\_template =\&amp;gt;true
+
+flush\_size =\&amp;gt; 50000
+
+idle\_flush\_time =\&amp;gt; 10
+
+workers =\&amp;gt; 2
+
+}
+
+}
+
+if[type]==&amp;quot;messages&amp;quot;{
+
+elasticsearch {hosts =\&amp;gt;[&amp;quot;10.10.1.90:9200&amp;quot;,&amp;quot;10.10.1.60:9200&amp;quot;]
+
+index =\&amp;gt;&amp;quot;logstash-messages-%{+YYYY.MM.dd}&amp;quot;
+
+manage\_template =\&amp;gt;true
+
+flush\_size =\&amp;gt; 50000
+
+idle\_flush\_time =\&amp;gt; 30
+
+workers =\&amp;gt; 1
+
+}
+
+}
+
+if[type]==&amp;quot;larlog&amp;quot;{
+
+elasticsearch {hosts =\&amp;gt;[&amp;quot;10.10.1.90:9200&amp;quot;,&amp;quot;10.10.1.60:9200&amp;quot;]
+
+index =\&amp;gt;&amp;quot;logstash-larlog-%{+YYYY.MM.dd}&amp;quot;
+
+manage\_template =\&amp;gt;true
+
+flush\_size =\&amp;gt; 2000
+
+idle\_flush\_time =\&amp;gt; 10
+
+}
+
+}
+
+if[type]==&amp;quot;deposit&amp;quot;{
+
+elasticsearch {hosts =\&amp;gt;[&amp;quot;10.10.1.90:9200&amp;quot;,&amp;quot;10.10.1.60:9200&amp;quot;]
+
+index =\&amp;gt;&amp;quot;logstash-deposit-%{+YYYY.MM.dd}&amp;quot;
+
+manage\_template =\&amp;gt;true
+
+flush\_size =\&amp;gt; 2000
+
+idle\_flush\_time =\&amp;gt; 10
+
+}
+
+}
+
+if[type]==&amp;quot;phpslowlog&amp;quot;{
+
+elasticsearch {hosts =\&amp;gt;[&amp;quot;10.10.1.90:9200&amp;quot;,&amp;quot;10.10.1.60:9200&amp;quot;]
+
+index =\&amp;gt;&amp;quot;logstash-phpslowlog-%{+YYYY.MM.dd}&amp;quot;
+
+manage\_template =\&amp;gt;true
+
+flush\_size =\&amp;gt; 2000
+
+idle\_flush\_time =\&amp;gt; 10
+
+}
+
+}
+
+}
+</code></pre><p><strong>启动服务</strong></p>
+<pre><code>/usr/local/logstash/bin/logstash agent -f kafka\_to\_es.conf &amp;amp;
+</code></pre><p><strong>数据转发层已经配置完成</strong></p>
+<p>这时数据已经陆陆续续的从 kafka 取出，转存到 ES DataNode。</p>
+<p>我们登陆到任意一台 kafka 主机，查看数据的缓存和消费情况</p>
+<p><img src="https://i.imgur.com/u357Qha.png" alt=""></p>
+<h2 id="七、修改 ES 的索引模版配置"><a href="# 七、修改 ES 的索引模版配置" class="headerlink" title="七、修改 ES 的索引模版配置"></a><strong>七、修改 ES 的索引模版配置 </strong></h2><p> 为什么要做这一步呢？ 因为 logstash 写入数据到 ES 时，会自动选用一个索引模版。 我们可以看一下</p>
+<p> <img src="https://i.imgur.com/qRdGjPw.png" alt=""></p>
+<p>这个模版其实也挺好，不过有一个参数，我标记出来了。 &quot;refresh_interval&quot;:&quot;5s&quot;  这个参数用于控制，索引的刷新频率。 索引的刷新频率越快，你搜索到的数据就实时。  这里是 5 秒。 一般我们日志场景不需要这么高的实时性。 可以适当降低该参数，提高 ES 索引库的写入速度。</p>
+<p><strong>上传自定义模版</strong></p>
+<pre><code>curl -XPUT http://10.10.1.244:9200/\_template/logstash2 -d &amp;#39;
+
+{
+
+&amp;quot;order&amp;quot;:1,
+
+&amp;quot;template&amp;quot;:&amp;quot;logstash-\*&amp;quot;,
+
+&amp;quot;settings&amp;quot;:{
+
+&amp;quot;index&amp;quot;:{&amp;quot;refresh\_interval&amp;quot;:&amp;quot;120s&amp;quot;}
+
+},
+
+&amp;quot;mappings&amp;quot;:{
+
+&amp;quot;\_default\_&amp;quot;:{
+
+&amp;quot;\_all&amp;quot;:{&amp;quot;enabled&amp;quot;:false}
+
+}
+
+}
+
+}&amp;#39;
+</code></pre><p>由于这个自定义模版，我把优先级 order 定义的比 logstash 模版高，而模版的匹配规则又一样，所以这个自定义模版的配置会覆盖原 logstash 模版。</p>
+<p>我这里只是简单描述。 如果要详细理解其中道理，请查看我的 ES 调优篇。</p>
+<h2 id="八、配置 -Kibana- 数据展示层"><a href="# 八、配置 -Kibana- 数据展示层" class="headerlink" title="八、配置 Kibana 数据展示层"></a><strong>八、配置 Kibana 数据展示层</strong></h2><p>10.10.1.244 节点</p>
+<p>Kibana 是 ELK 套件中的一员，也属于 elasticsearch 公司，在官网提供下载。</p>
+<h3 id="安装"><a href="# 安装" class="headerlink" title="安装"></a><strong>安装</strong></h3><pre><code>tar xf kibana-4.5.3-linux-x64.tar.gz
+
+# 很简单，只要解压就可以用。
+</code></pre><p><strong>修改配置文件</strong></p>
+<pre><code># vim kibana-4.5.3-linux-x64/config/kibana.yml
+
+# Kibana is served by a back end server. This controls which port to use.
+
+server.port: 5601
+
+# The host to bind the server to.
+
+server.host: &amp;quot;0.0.0.0&amp;quot;
+
+# The Elasticsearch instance to use for all your queries.
+
+elasticsearch.url: &amp;quot;
+
+# 修改这三个参数就好了
+</code></pre><p><strong>启动服务</strong></p>
+<p><img src="https://i.imgur.com/nt9CFBm.png" alt=""><br>打开浏览器访问: <a href="http://10.10.1.244:5601/"target="_blank"rel="noopener">http://10.10.1.244:5601/</a></p>
+<p><strong>定制 Elasticsearch 索引的 Index pattern</strong></p>
+<p>默认情况下，Kibana 认为你要访问的是通过 Logstash 导入 Elasticsearch 的数据，这时候你可以用默认的 logstash-* 作为你的 index pattern。 通配符（*）匹配索引名中任意字符任意个数。</p>
+<p>选择一个包含了时间戳的索引字段（字段类型为 date 的字段），可以用来做基于时间的处理。Kibana 会读取索引的</p>
+<p>映射，然后列出所有包含了时间戳的字段。如果你的索引没有基于时间的数据.</p>
+<p>关闭 Index contains time-based events 参数。</p>
+<p>如果一个新索引是定期生成，而且索引名中带有时间戳，选择 Use event times to create index names 选项，</p>
+<p>然后再选择 Index pattern interval 。这可以提高搜索性能，Kibana 会至搜索你指定的时间范围内的索引。在你用 Logstash 输出数据给 Elasticsearch 的情况下尤其有效。</p>
+<p>由于我们的索引是用日期命名，按照每天分割的。 index pattern 如下</p>
+<p><img src="https://i.imgur.com/5rNi48j.png" alt=""></p>
+<p><strong>数据展示</strong></p>
+<p><img src="https://i.imgur.com/oZU4l7i.png" alt=""></p>
+<p><strong>完 工 !</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/" title="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】">https://yhaing.github.io/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ELK/" rel="tag"># ELK</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/20/Maven私库Nexus3搭建使用/" rel="next" title="Maven 私库 Nexus3 搭建使用">
+                <i class="fa fa-chevron-left"></i> Maven 私库 Nexus3 搭建使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container">
+	</div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ELK-Filebeat-Kafka-ZooKeeper- 构建海量日志分析平台"><span class="nav-number">1.</span> <span class="nav-text">ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台 </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、安装部署 Elasticsearch 集群"><span class="nav-number">1.1.</span> <span class="nav-text">一、安装部署 Elasticsearch 集群 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装 jdk1-8，elasticsearch-2-3-4"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、安装 jdk1.8，elasticsearch-2.3.4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、系统调优，JVM 调优"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、系统调优，JVM 调优</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、安装 head、kopf、bigdesk- 开源插件"><span class="nav-number">1.1.3.</span> <span class="nav-text">4、安装 head、kopf、bigdesk 开源插件 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、使用 ES 自带的命令 plugin"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1、使用 ES 自带的命令 plugin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、自行下载插件的源码包安装"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">2、自行下载插件的源码包安装 </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布置 ES-DataNode 节点 -10-10-1-60"><span class="nav-number">1.1.4.</span> <span class="nav-text">布置 ES DataNode 节点 10.10.1.60</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、现在三台 ES 节点已经准备就绪，分别启动服务"><span class="nav-number">1.1.5.</span> <span class="nav-text">5、现在三台 ES 节点已经准备就绪，分别启动服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、访问 head 插件，查看集群状态"><span class="nav-number">1.1.6.</span> <span class="nav-text">6、访问 head 插件，查看集群状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、配置位于架构图中第二层的 ZooKeeper 集群"><span class="nav-number">1.2.</span> <span class="nav-text">二、配置位于架构图中第二层的 ZooKeeper 集群 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、配置位于架构图中第二层的 Kafka-Broker 集群"><span class="nav-number">1.3.</span> <span class="nav-text">三、配置位于架构图中第二层的 Kafka Broker 集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置位于架构图中第二层的 Logstash 服务"><span class="nav-number">1.4.</span> <span class="nav-text">四、配置位于架构图中第二层的 Logstash 服务 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、配置数据采集层，业务服务器 -Filebeat"><span class="nav-number">1.5.</span> <span class="nav-text">五、配置数据采集层，业务服务器 +Filebeat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、配置位于架构图中的第三层，数据转发层"><span class="nav-number">1.6.</span> <span class="nav-text">六、配置位于架构图中的第三层，数据转发层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、修改 ES 的索引模版配置"><span class="nav-number">1.7.</span> <span class="nav-text">七、修改 ES 的索引模版配置 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、配置 -Kibana- 数据展示层"><span class="nav-number">1.8.</span> <span class="nav-text">八、配置 Kibana 数据展示层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.8.1.</span> <span class="nav-text">安装</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+</body>
+</html>

@@ -89,14 +89,13 @@
 
 
 
-<meta name="description" content="摘要本文主要讲述Zabbix的简介以及Zabbix安装及页面设置 Zabbix 3.0 基础介绍 [一]一、Zabbix介绍zabbix 简介    Zabbix 是一个高度集成的网络监控解决方案，可以提供企业级的开源分布式监控解决方案，由一个国外的团队持续维护更新，软件可以自由下载使用，运作团队靠提供收费的技术支持赢利  zabbix是一个基于Web界面的，提供分布式系统监控以及网络监视功能的企">
 <meta name="keywords" content="zabbix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zabbix 3.0 基础介绍 [一]（转）">
 <meta property="og:url" content="https://yhaing.github.io/2016/10/10/Zabbix 3.0 基础介绍 [一]（转）/index.html">
 <meta property="og:site_name" content="海阔天空">
-<meta property="og:description" content="摘要本文主要讲述Zabbix的简介以及Zabbix安装及页面设置 Zabbix 3.0 基础介绍 [一]一、Zabbix介绍zabbix 简介    Zabbix 是一个高度集成的网络监控解决方案，可以提供企业级的开源分布式监控解决方案，由一个国外的团队持续维护更新，软件可以自由下载使用，运作团队靠提供收费的技术支持赢利  zabbix是一个基于Web界面的，提供分布式系统监控以及网络监视功能的企">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/8NOSdbF.png">
 <meta property="og:image" content="https://i.imgur.com/M9pzlrg.png">
 <meta property="og:image" content="https://i.imgur.com/Y0FbhLO.png">
 <meta property="og:image" content="https://i.imgur.com/dpTGdps.png">
@@ -128,11 +127,10 @@
 <meta property="og:image" content="https://i.imgur.com/pyyrI8b.png">
 <meta property="og:image" content="https://i.imgur.com/x89VF1o.png">
 <meta property="og:image" content="https://i.imgur.com/mKtz4Hj.png">
-<meta property="og:updated_time" content="2018-09-22T07:58:51.214Z">
+<meta property="og:updated_time" content="2018-09-23T01:48:06.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zabbix 3.0 基础介绍 [一]（转）">
-<meta name="twitter:description" content="摘要本文主要讲述Zabbix的简介以及Zabbix安装及页面设置 Zabbix 3.0 基础介绍 [一]一、Zabbix介绍zabbix 简介    Zabbix 是一个高度集成的网络监控解决方案，可以提供企业级的开源分布式监控解决方案，由一个国外的团队持续维护更新，软件可以自由下载使用，运作团队靠提供收费的技术支持赢利  zabbix是一个基于Web界面的，提供分布式系统监控以及网络监视功能的企">
-<meta name="twitter:image" content="https://i.imgur.com/M9pzlrg.png">
+<meta name="twitter:image" content="https://i.imgur.com/8NOSdbF.png">
 
 
 
@@ -468,10 +466,12 @@
       
 
       
-        <h3 id="摘要"><a href="# 摘要" class="headerlink" title="摘要"></a>摘要 </h3><p> 本文主要讲述 Zabbix 的简介以及 Zabbix 安装及页面设置</p>
+        <p><img src="https://i.imgur.com/8NOSdbF.png" alt=""></p>
+<a id="more"></a>
+<h3 id="摘要"><a href="# 摘要" class="headerlink" title="摘要"></a>摘要 </h3><p> 本文主要讲述 Zabbix 的简介以及 Zabbix 安装及页面设置</p>
 <h2 id="Zabbix-3-0- 基础介绍 - 一"><a href="#Zabbix-3-0- 基础介绍 - 一" class="headerlink" title="Zabbix 3.0 基础介绍 [一]"></a>Zabbix 3.0 基础介绍 [一]</h2><h3 id="一、Zabbix 介绍"><a href="# 一、Zabbix 介绍" class="headerlink" title="一、Zabbix 介绍"></a>一、Zabbix 介绍</h3><p>zabbix 简介</p>
 <blockquote>
-<p>  Zabbix 是一个高度集成的网络监控解决方案，可以提供企业级的开源分布式监控解决方案，由一个国外的团队持续维护更新，软件可以自由下载使用，运作团队靠提供收费的技术支持赢利<br>  zabbix 是一个基于 Web 界面的，提供分布式系统监控以及网络监视功能的企业级的开源解决方案。<br>  zabbix 能监视各种网络参数，保证服务器系统的安全运营，并提供灵活的通知机制以让系统管理员快速定位 / 解决存在的各种问题<br><a id="more"></a><br>  zabbix 主要由 2 部分构成 zabbix server 和 zabbix agent，可选组建 zabbix proxy<br>  zabbix server 可以通过 SNMP，zabbix agent，fping 端口监视等方法对远程服务器或网络状态完成监视，数据收集等功能。同时支持 Linux 以及 Unix 平台，Windows 平台只能安装客户端</p>
+<p>  Zabbix 是一个高度集成的网络监控解决方案，可以提供企业级的开源分布式监控解决方案，由一个国外的团队持续维护更新，软件可以自由下载使用，运作团队靠提供收费的技术支持赢利<br>  zabbix 是一个基于 Web 界面的，提供分布式系统监控以及网络监视功能的企业级的开源解决方案。<br>  zabbix 能监视各种网络参数，保证服务器系统的安全运营，并提供灵活的通知机制以让系统管理员快速定位 / 解决存在的各种问题<br><!--more--><br>  zabbix 主要由 2 部分构成 zabbix server 和 zabbix agent，可选组建 zabbix proxy<br>  zabbix server 可以通过 SNMP，zabbix agent，fping 端口监视等方法对远程服务器或网络状态完成监视，数据收集等功能。同时支持 Linux 以及 Unix 平台，Windows 平台只能安装客户端</p>
 </blockquote>
 <p><font size="6"><strong>Zabbix 功能</strong></font><br></p>
 <p>　　①具备常见的商业监控软件所具备的功能（主机的性能监控、网络设备性能监控、数据库、性能监控、FTP 等通用协议监控、多种告警方式、详细的报表图表绘制）</p>
@@ -774,8 +774,8 @@ zabbix_agentd.log  zabbix_server.log
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/10/Java-JVM/" rel="prev" title="Java-JVM 参数详解">
-                Java-JVM 参数详解 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/" rel="prev" title="Zabbix 3.0 部署监控 [二]（转）">
+                Zabbix 3.0 部署监控 [二]（转） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -785,7 +785,7 @@ zabbix_agentd.log  zabbix_server.log
       
       
 	  
-	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2016/11/21/Zabbix 3.0 分布式监控 [九]/">Zabbix 3.0 分布式监控 [九]</a></li><li><a href="/2016/11/20/Zabbix 3.0 主备模式 [八]/">Zabbix 3.0 主备模式 [八]</a></li><li><a href="/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/">Zabbix 3.0 部署监控 [二]（转）</a></li><li><a href="/2016/11/12/Zabbix 3.0 生产案例 [五]/">Zabbix 3.0 生产案例 [五]</a></li><li><a href="/2016/11/15/Zabbix 3.0 监控MySQL [六]/">Zabbix 3.0 监控 MySQL [六]</a></li><li><a href="/2016/11/15/Zabbix 3.0 监控Web [七]/">Zabbix 3.0 监控 Web [七]</a></li><li><a href="/2016/11/10/Zabbix 3.0 生产案例 [四]/">Zabbix 3.0 生产案例 [四]（转）</a></li><li><a href="/2016/10/11/Zabbix 3.0 部署监控 [三] （转）/">Zabbix 3.0 部署监控 [三]（转）</a></li><li><a href="/2016/11/10/Zabbix字符集乱码及Centos7补全设置/">Zabbix 字符集乱码及 Centos7 补全设置 [转]</a></li><li><a href="/2016/11/25/Zabbix 3.0 自动化监控 [十]/">Zabbix 3.0 自动化监控 [十]</a></li></ul>
       
     </footer>
   </div>
@@ -863,7 +863,7 @@ zabbix_agentd.log  zabbix_server.log
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -874,7 +874,7 @@ zabbix_agentd.log  zabbix_server.log
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -885,7 +885,7 @@ zabbix_agentd.log  zabbix_server.log
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
