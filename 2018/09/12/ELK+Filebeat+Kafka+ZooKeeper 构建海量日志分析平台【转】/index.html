@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://i.imgur.com/nt9CFBm.png">
 <meta property="og:image" content="https://i.imgur.com/5rNi48j.png">
 <meta property="og:image" content="https://i.imgur.com/oZU4l7i.png">
-<meta property="og:updated_time" content="2018-09-23T10:39:52.036Z">
+<meta property="og:updated_time" content="2018-09-24T04:20:43.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】">
 <meta name="twitter:image" content="https://i.imgur.com/GJquYqE.jpg">
@@ -471,6 +471,7 @@
 <p>操作系统环境 : CentOS release 6.5</p>
 <p>各服务器角色分配 :</p>
 <p><img src="https://i.imgur.com/6IGDjU7.png" alt=""></p>
+<blockquote>
 <p>jdk-8u101-linux-x64.rpm</p>
 <p>logstash-2.3.2.tar.gz</p>
 <p>filebeat-1.2.3-x86_64.rpm</p>
@@ -478,6 +479,7 @@
 <p>zookeeper-3.4.9.tar.gz</p>
 <p>elasticsearch-2.3.4.rpm</p>
 <p>kibana-4.5.3-linux-x64.tar.gz</p>
+</blockquote>
 <h2 id="一、安装部署 Elasticsearch 集群"><a href="# 一、安装部署 Elasticsearch 集群" class="headerlink" title="一、安装部署 Elasticsearch 集群"></a><strong>一、安装部署 Elasticsearch 集群 </strong></h2><p> 布置 ES Master 节点 10.10.1.244</p>
 <h3 id="1、安装 jdk1-8，elasticsearch-2-3-4"><a href="#1、安装 jdk1-8，elasticsearch-2-3-4" class="headerlink" title="1、安装 jdk1.8，elasticsearch-2.3.4"></a><strong>1、安装 jdk1.8，elasticsearch-2.3.4</strong></h3><p>oracle 官网 jdk 下载地址: <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
 <p>elasticsearch 官网: <a href="https://www.elastic.co/" target="_blank" rel="noopener">https://www.elastic.co/</a></p>
@@ -976,36 +978,58 @@ tar xf logstash-2.3.2.tar.gz
 <p>解压</p>
 <p>gunzip GeoLiteCity.dat.gz</p>
 <p><strong>编写配置文件</strong></p>
-<p>input {</p>
-<p>beats {</p>
-<p>port =\&gt; 5044</p>
-<p>codec =\&gt;&quot;json&quot;</p>
-<p>}</p>
-<p>}</p>
-<p>filter {</p>
-<p>if[type]==&quot;nginxacclog&quot;{</p>
-<p>geoip {</p>
-<p>source=\&gt;&quot;clientip&quot;# 与日志中访问地址的 key 要对应</p>
-<p>target =\&gt;&quot;geoip&quot;</p>
-<p>database =\&gt;&quot;/usr/local/logstash/GeoLiteCity.dat&quot;</p>
-<p>add_field =\&gt;[&quot;[geoip][coordinates]&quot;,&quot;%{[geoip][longitude]}&quot;]</p>
-<p>add_field =\&gt;[&quot;[geoip][coordinates]&quot;,&quot;%{[geoip][latitude]}&quot;]</p>
-<p>}</p>
-<p>mutate {</p>
-<p>convert =\&gt;[&quot;[geoip][coordinates]&quot;,&quot;float&quot;]</p>
-<p>}</p>
-<p>}</p>
-<p>}</p>
-<p>output {</p>
-<p>  kafka {</p>
-<p>workers =\&gt; 2</p>
-<p>bootstrap_servers =\&gt;&quot;10.10.1.30:9092,10.10.1.31:9092,10.10.1.32:9092&quot;</p>
-<p>topic_id =\&gt;&quot;peiyinlog&quot;</p>
-<p>}</p>
-<p>}</p>
-<p><strong>2、启动服务</strong></p>
-<p>/usr/local/logstash/bin/logstash agent -f logstash_in_kafka.conf &amp;</p>
-<p>10.10.1.31 节点的这块配置，与上述完全相同。（略）</p>
+<pre><code>input {
+
+beats {
+
+port =\&amp;gt; 5044
+
+codec =\&amp;gt;&amp;quot;json&amp;quot;
+
+}
+
+}
+
+filter {if[type]==&amp;quot;nginxacclog&amp;quot;{
+
+geoip {
+
+source=\&amp;gt;&amp;quot;clientip&amp;quot;# 与日志中访问地址的 key 要对应
+
+target =\&amp;gt;&amp;quot;geoip&amp;quot;
+
+database =\&amp;gt;&amp;quot;/usr/local/logstash/GeoLiteCity.dat&amp;quot;
+
+add\_field =\&amp;gt;[&amp;quot;[geoip][coordinates]&amp;quot;,&amp;quot;%{[geoip][longitude]}&amp;quot;]
+
+add\_field =\&amp;gt;[&amp;quot;[geoip][coordinates]&amp;quot;,&amp;quot;%{[geoip][latitude]}&amp;quot;]
+
+}
+
+mutate {convert =\&amp;gt;[&amp;quot;[geoip][coordinates]&amp;quot;,&amp;quot;float&amp;quot;]
+
+}
+
+}
+
+}
+
+output {
+
+  kafka {
+
+workers =\&amp;gt; 2
+
+bootstrap\_servers =\&amp;gt;&amp;quot;10.10.1.30:9092,10.10.1.31:9092,10.10.1.32:9092&amp;quot;
+
+topic\_id =\&amp;gt;&amp;quot;peiyinlog&amp;quot;
+
+}
+
+}
+</code></pre><p><strong>2、启动服务</strong></p>
+<pre><code>/usr/local/logstash/bin/logstash agent -f logstash\_in\_kafka.conf &amp;amp;
+</code></pre><p>10.10.1.31 节点的这块配置，与上述完全相同。（略）</p>
 <p><strong>位于第二层、数据处理层的 Logstash 配置完成</strong></p>
 <h2 id="五、配置数据采集层，业务服务器 -Filebeat"><a href="# 五、配置数据采集层，业务服务器 -Filebeat" class="headerlink" title="五、配置数据采集层，业务服务器 +Filebeat"></a><strong>五、配置数据采集层，业务服务器 +Filebeat</strong></h2><p><strong>1、定制 Nginx 日志格式</strong></p>
 <pre><code>log\_format json &amp;#39;{&amp;quot;@timestamp&amp;quot;:&amp;quot;$time\_iso8601&amp;quot;,&amp;#39;
@@ -1159,8 +1183,8 @@ logging:
 
 rotateeverybytes: 10485760 # = 10MB
 </code></pre><p><strong>4、启动服务</strong></p>
-<p>/etc/init.d/filebeat start</p>
-<p><strong>数据采集层，Filebeat 配置完成。</strong></p>
+<pre><code>/etc/init.d/filebeat start
+</code></pre><p><strong>数据采集层，Filebeat 配置完成。</strong></p>
 <p>现在业务服务器上的日志数据已经在源源不断的写入缓存了。</p>
 <h2 id="六、配置位于架构图中的第三层，数据转发层"><a href="# 六、配置位于架构图中的第三层，数据转发层" class="headerlink" title="六、配置位于架构图中的第三层，数据转发层"></a><strong>六、配置位于架构图中的第三层，数据转发层</strong></h2><p>Logstash 安装上面已经讲过（略）</p>
 <p><strong>编写 Logstash 配置文件</strong></p>
