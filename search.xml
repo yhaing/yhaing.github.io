@@ -45,6 +45,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Zabbix-3.0.X 安装 Graphtree【转】]]></title>
+    <url>%2F2016%2F12%2F05%2FZabbix-3.0.X%20%E5%AE%89%E8%A3%85Graphtree%2F</url>
+    <content type="text"><![CDATA[Zabbix-3.0.X 安装 Graphtreezabbix本文转载http://blog.csdn.net/wh211212/article/details/52735180 Zabbix 中，想要集中展示图像，唯一的选择是 screen，后来zatree 解决了 screen 的问题，但性能不够好。Graphtree 由 OneOaaS 开发并开源出来，用来解决 Zabbix 的图形展示问题，性能较好。 提示：zatree 不支持 3.x 和 3.2 暂时只支持 2.4 一、Graphtree 功能概述 ▲ 集中展示所有分组设备 ▲ 集中展示一个分组图像 ▲ 集中展示一个设备图像 ▲ 展示设备下的 Application ▲ 展示每个应用下的图像 ▲ 展示每个应用下的日志 ▲ 对原声无图的监控项进行绘图 注意事项： 主机和组级别下，默认只显示系统初始的图形 二、Zabbix 版本要求：3.0.x提示：暂时只支持 3.0 版本，根据测试不支持 3.2 版本 1、插件安装 Zabbix-web 目录 提示：如果是 yum 安装并且是 centos7 目录会在 /usr/share/zabbix 可以使用 find 进行查找 cd /usr/local/nginx/html/zabbix 下载 Graphtree 补丁包 wget https://raw.githubusercontent.com/OneOaaS/graphtrees/master/graphtree3-0-1.patch 安装 Linux 下打补丁命令 patch yum -y install patch 打补丁 patch -Np0 &lt; graphtree3-0-1.patch 三、Graphtree 效果图1、删除提示信息vim /usr/local/nginx/html/zabbix/graphtree.right.php 根据自己的路径进行修改 d7d #删除 344-350 行 2、重启载入 Zabbix-web，可以看到 Graphtree 已出效果 转自：Zabbix-3.0.X 安装 Graphtree]]></content>
+      <categories>
+        <category>zabbix</category>
+      </categories>
+      <tags>
+        <tag>zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Zabbix_sender 介绍及配置【转】]]></title>
     <url>%2F2016%2F11%2F28%2FZabbix_sender%E4%BB%8B%E7%BB%8D%E5%8F%8A%E9%85%8D%E7%BD%AE%2F</url>
     <content type="text"><![CDATA[Zabbix_sender 是什么? 有什么作用？ zabbix 获取 key 值 有超时时间，如果自定义的 key 脚本一般需要执行很长时间，这根本没法去做监控，那怎么办呢？这时候就需要使用 zabbix 监控类型 zabbix trapper，配合zabbix_sender 给它传递数据。所以说 zabbix_sender 是更新 items 值 最快的方式 安装 在 centos5 上安装rpm -ivh http://mirrors.aliyun.com/zabbix/zabbix/3.0/rhel/5/x86_64/zabbix-sender-3.0.5-1.el5.x86_64.rpm 在 centos6 上安装 zabbix_senderrpm -ivh http://mirrors.aliyun.com/zabbix/zabbix/3.0/rhel/6/x86_64/zabbix-sender-3.0.5-1.el6.x86_64.rpm 在 centos7 上安装 zabbix_senderrpm -ivh http://mirrors.aliyun.com/zabbix/zabbix/3.0/rhel/7/x86_64/zabbix-sender-3.0.5-1.el7.x86_64.rpm 命令解释 zabbix_sender 命令详解 最简易使用方法一: zabbix_sender -z server -s host -k key -o value 最简易使用方法二： zabbix_sender -c config-file -k key -o value 最简易使用方法三： zabbix_sender -z server -i file 更多的使用方法可以man zabbix_sender 主要的使用参数 -c --config &lt;file&gt; zabbix_agent 配置文件绝对路径 -z --zabbix-server &lt;server&gt; zabbix server 的 IP 地址 -p --port &lt;server port&gt; zabbix server 端口. 默认 10051 -s --host &lt;hostname&gt; 主机名，与 zabbix_server web 上主机的 hostname 一致 例如 -I --source-address &lt;IP address&gt; 源 IP -k --key &lt;key&gt; 监控项的 key -o --value &lt;key value&gt;key 值 -i --input-file &lt;input file&gt; 从文件里面读取 hostname、key、value 一行为一条数据，使用空格作为分隔符，如果主机名带空格，那么请使用双引号包起来 -r --real-time 将数据实时提交给服务器 -v --verbose 详细模式, -vv 更详细 案例 下面：我们创建一个监控项item zabbix_sender -z 192.168.56.11 -s 192.168.56.100 -k login.users -o 111 如下图所示 检验 -o的值也可以引用命令： [root@muban ~]# zabbix_sender -z 192.168.56.11 -s 192.168.56.100 -k login.users -o $(w|sed &apos;1,2d&apos;|wc -l) 使用 zabbix_sender 批量发送 首先多准备几个 zabbix_trapper 类型的监控项 编写批量列表，每行以 hostname、key、value 的方式 [root@muban ~]# cat f.txt 192.168.56.100 login.users 12 192.168.56.100 login.users1 13 192.168.56.100 login.users2 14 192.168.56.100 login.users3 15 测试 zabbix_sender -z 192.168.56.11 -i f.txt 转自：Zabbix_sender 介绍及配置]]></content>
