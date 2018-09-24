@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="zabbix," />
 
 
 
@@ -89,13 +89,47 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="海阔天空">
-<meta property="og:url" content="https://yhaing.github.io/categories/ELK/index.html">
+<meta name="keywords" content="zabbix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zabbix-3.2.3 实现微信（WeChat）告警【转】">
+<meta property="og:url" content="https://yhaing.github.io/2016/12/10/Zabbix-3.2.3实现微信（WeChat）告警【转】/index.html">
 <meta property="og:site_name" content="海阔天空">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/HNonS5h.jpg">
+<meta property="og:image" content="https://i.imgur.com/U5HuvbE.png">
+<meta property="og:image" content="https://i.imgur.com/SIdNbvs.png">
+<meta property="og:image" content="https://i.imgur.com/7JIT89m.png">
+<meta property="og:image" content="https://i.imgur.com/OQxYuIQ.png">
+<meta property="og:image" content="https://i.imgur.com/Yq58MU3.png">
+<meta property="og:image" content="https://i.imgur.com/FDejvSZ.png">
+<meta property="og:image" content="https://i.imgur.com/1jfCkLL.png">
+<meta property="og:image" content="https://i.imgur.com/JXeWkUG.png">
+<meta property="og:image" content="https://i.imgur.com/8I22VQT.png">
+<meta property="og:image" content="https://i.imgur.com/A1PGqwc.png">
+<meta property="og:image" content="https://i.imgur.com/IrbL6s1.png">
+<meta property="og:image" content="https://i.imgur.com/iMYQqTV.png">
+<meta property="og:image" content="https://i.imgur.com/5uphI1w.png">
+<meta property="og:image" content="https://i.imgur.com/9aZyYlt.png">
+<meta property="og:image" content="https://i.imgur.com/AFaAEmi.png">
+<meta property="og:image" content="https://i.imgur.com/87Roqju.png">
+<meta property="og:image" content="https://i.imgur.com/t6Br864.png">
+<meta property="og:image" content="https://i.imgur.com/kDhcLqV.png">
+<meta property="og:image" content="https://i.imgur.com/nsqaDhn.png">
+<meta property="og:image" content="https://i.imgur.com/MSPKLMF.png">
+<meta property="og:image" content="https://i.imgur.com/BIEqkbr.png">
+<meta property="og:image" content="https://i.imgur.com/n2twuWo.png">
+<meta property="og:image" content="https://i.imgur.com/UvpCbY7.png">
+<meta property="og:image" content="https://i.imgur.com/Niob5by.png">
+<meta property="og:image" content="https://i.imgur.com/ioxSige.png">
+<meta property="og:image" content="https://i.imgur.com/9cQPSTk.png">
+<meta property="og:image" content="https://i.imgur.com/U7kcKkT.png">
+<meta property="og:image" content="https://i.imgur.com/uj6ve3L.png">
+<meta property="og:image" content="https://i.imgur.com/5YsnPxl.png">
+<meta property="og:image" content="https://i.imgur.com/JCmhU83.jpg">
+<meta property="og:updated_time" content="2018-09-24T05:56:49.494Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="海阔天空">
+<meta name="twitter:title" content="Zabbix-3.2.3 实现微信（WeChat）告警【转】">
+<meta name="twitter:image" content="https://i.imgur.com/HNonS5h.jpg">
 
 
 
@@ -125,13 +159,13 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/categories/ELK/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2016/12/10/Zabbix-3.2.3实现微信（WeChat）告警【转】/"/>
 
 
 
 
 
-  <title>分类: ELK | 海阔天空</title>
+  <title>Zabbix-3.2.3 实现微信（WeChat）告警【转】 | 海阔天空</title>
   
 
 
@@ -148,7 +182,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -286,55 +320,430 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>ELK<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2016/12/10/Zabbix-3.2.3实现微信（WeChat）告警【转】/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/" itemprop="url">
-              
-                <span itemprop="name">ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Zabbix-3.2.3 实现微信（WeChat）告警【转】</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-12T10:15:12+08:00"
-              content="2018-09-12" >
-          09-12
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-10T10:15:12+08:00">
+                2016-12-10
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/12/10/Zabbix-3.2.3实现微信（WeChat）告警【转】/" class="leancloud_visitors" data-flag-title="Zabbix-3.2.3 实现微信（WeChat）告警【转】">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/HNonS5h.jpg" alt=""></p>
+<a id="more"></a>
+<blockquote>
+<p>摘要</p>
+<p>Zabbix 可以通过多种方式把告警信息发送到指定人，常用的有邮件，短信报警方式，但是越来越多的企业开始使用 zabbix 结合微信作为主要的告警方式，这样可以及时有效的把告警信息推送到接收人，方便告警的及时处理。</p>
+</blockquote>
+<h2 id="Zabbix-3-2-3 实现微信（WeChat）告警"><a href="#Zabbix-3-2-3 实现微信（WeChat）告警" class="headerlink" title="Zabbix-3.2.3 实现微信（WeChat）告警"></a>Zabbix-3.2.3 实现微信（WeChat）告警</h2><p>　Zabbix 可以通过多种方式把告警信息发送到指定人，常用的有邮件，短信报警方式，但是越来越多的企业开始使用 zabbix 结合微信作为主要的告警方式，这样可以及时有效的把告警信息推送到接收人，方便告警的及时处理。</p>
+<p>关于邮件报警可以参考：<a href="https://www.abcdocker.com/abcdocker/1704" target="_blank" rel="noopener">Zabbix Web 邮件报警</a></p>
+<h2 id="一、微信企业号申请"><a href="# 一、微信企业号申请" class="headerlink" title="一、微信企业号申请"></a>一、微信企业号申请 </h2><p> 地址： <a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=https://qy.weixin.qq.com/" target="_blank" rel="noopener">https://qy.weixin.qq.com/</a></p>
+<h3 id="第一步注册"><a href="# 第一步注册" class="headerlink" title="第一步注册"></a>第一步注册</h3><p><img src="https://i.imgur.com/U5HuvbE.png" alt=""></p>
+<p><strong>提示：这里简单的说一下，微信企业号和微信公众号是不一样的！</strong></p>
+<p><img src="https://i.imgur.com/SIdNbvs.png" alt=""></p>
+<p>到邮件查看邮件，继续下一步 </p>
+<p><img src="https://i.imgur.com/7JIT89m.png" alt=""></p>
+<p>提示一下：注册以后就不可以修改微信号类型 </p>
+<p><img src="https://i.imgur.com/OQxYuIQ.png" alt=""></p>
+<p>我们选择注册团队 </p>
+<p><img src="https://i.imgur.com/Yq58MU3.png" alt=""></p>
+<p>由于我已经注册了，下一步就不继续操作了 </p>
+<p><img src="https://i.imgur.com/FDejvSZ.png" alt=""></p>
+<h2 id="二、配置微信企业号"><a href="# 二、配置微信企业号" class="headerlink" title="二、配置微信企业号"></a>二、配置微信企业号 </h2><p> 当我们设置完微信号的信息之后，请继续跟我操作 </p>
+<p><img src="https://i.imgur.com/1jfCkLL.png" alt=""></p>
+<p>我们点击通讯录–&gt; 创建子部门–&gt; 运维组 </p>
+<p><img src="https://i.imgur.com/JXeWkUG.png" alt=""></p>
+<p>提示： 我们需要记录运维组的 ID，用于脚本接收报警 </p>
+<p><img src="https://i.imgur.com/8I22VQT.png" alt=""></p>
+<p>我们点击运维–&gt; 添加成员 </p>
+<p><img src="https://i.imgur.com/A1PGqwc.png" alt=""></p>
+<p>关于认证可以参考官方说明： </p>
+<p><img src="https://i.imgur.com/IrbL6s1.png" alt=""></p>
+<p><img src="https://i.imgur.com/iMYQqTV.png" alt=""></p>
+<p>我们可以使用扫描二维码认证或者邀请认证 </p>
+<p><img src="https://i.imgur.com/5uphI1w.png" alt=""></p>
+<p>我们点击创建应用 </p>
+<p><img src="https://i.imgur.com/9aZyYlt.png" alt=""></p>
+<p>选择消息型 </p>
+<p><img src="https://i.imgur.com/AFaAEmi.png" alt=""></p>
+<p>设置组合用户，将运维整个组添加进去 </p>
+<p><img src="https://i.imgur.com/87Roqju.png" alt=""></p>
+<p>设置完成之后如下图所示！<br><strong>提示：我们需要记录应用 ID，在接收邮件时会使用</strong> </p>
+<p><img src="https://i.imgur.com/t6Br864.png" alt=""></p>
+<p>设置权限，让运维组有查看的选项。管理员可以不进行设置 </p>
+<p><img src="https://i.imgur.com/kDhcLqV.png" alt=""></p>
+<p><strong>需要确定管理员有权限使用应用发送消息，需要管理员的 CorpID 和 Sercrt。（重要）</strong></p>
+<h3 id="准备事项："><a href="# 准备事项：" class="headerlink" title="准备事项："></a>准备事项：</h3><p>微信企业号 </p>
+<p>企业号已经被部门成员关注 </p>
+<p>企业号有一个可以发送消息的应用，一个授权管理员，可以使用应用给成员发送消息</p>
+<h3 id="需要得到的信息"><a href="# 需要得到的信息" class="headerlink" title="需要得到的信息"></a>需要得到的信息</h3><blockquote>
+<p>成员账号</p>
+<p>组织部门 ID</p>
+<p>应用 ID</p>
+<p>CorpID 和 Secret</p>
+</blockquote>
+<h2 id="三、修改 Zabbix-conf"><a href="# 三、修改 Zabbix-conf" class="headerlink" title="三、修改 Zabbix.conf"></a>三、修改 Zabbix.conf</h2><pre><code>[root@abcdocker ~]# grep alertscripts /etc/zabbix/zabbix_server.conf 
+AlertScriptsPath=/usr/lib/zabbix/alertscripts
+我们设置 zabbix 默认脚本路径，这样在 web 端就可以获取到脚本
+</code></pre><h2 id="四、设置 python 脚本"><a href="# 四、设置 python 脚本" class="headerlink" title="四、设置 python 脚本"></a>四、设置 python 脚本</h2><p># 安装 simplejson</p>
+<pre><code>wget https://pypi.python.org/packages/f0/07/26b519e6ebb03c2a74989f7571e6ae6b82e9d7d81b8de6fcdbfc643c7b58/simplejson-3.8.2.tar.gz
+tar zxvf simplejson-3.8.2.tar.gz &amp;&amp; cd simplejson-3.8.2
+python setup.py build
+python setup.py install
+</code></pre><p>下载 wechat.py 脚本</p>
+<pre><code>git clone https://github.com/X-Mars/Zabbix-Alert-WeChat.git
+cp Zabbix-Alert-WeChat/wechat.py /usr/lib/zabbix/alertscripts/
+cd /usr/lib/zabbix/alertscripts/
+chmod +x wechat.py &amp;&amp; chown zabbix:zabbix wechat.py
+</code></pre><p><strong>提示：这里需要修改 py 脚本 </strong><br> 看注释，这就不解释了</p>
+<pre><code>[root@abcdocker ~]# cat /usr/lib/zabbix/alertscripts/wechat.py 
+#!/usr/bin/python
+#_*_coding:utf-8 _*_
+import urllib,urllib2
+import json
+import sys
+import simplejson
+reload(sys)
+sys.setdefaultencoding(&apos;utf-8&apos;)
+def gettoken(corpid,corpsecret):
+gettoken_url = &apos;https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=&apos; + corpid + &apos;&amp;corpsecret=&apos; + corpsecret
+print  gettoken_url
+try:
+token_file = urllib2.urlopen(gettoken_url)
+except urllib2.HTTPError as e:
+print e.code
+print e.read().decode(&quot;utf8&quot;)
+sys.exit()
+token_data = token_file.read().decode(&apos;utf-8&apos;)
+token_json = json.loads(token_data)
+token_json.keys()
+token = token_json[&apos;access_token&apos;]
+return token
+def senddata(access_token,user,subject,content):
+send_url = &apos;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=&apos; + access_token
+send_values = {
+&quot;touser&quot;:user,# 企业号中的用户帐号，在 zabbix 用户 Media 中配置，如果配置不正常，将按部门发送。
+&quot;toparty&quot;:&quot;2&quot;,# 企业号中的部门 id。
+&quot;msgtype&quot;:&quot;text&quot;, #消息类型。
+&quot;agentid&quot;:&quot;2&quot;,# 企业号中的应用 id。
+&quot;text&quot;:{&quot;content&quot;:subject + &apos;\n&apos; + content},
+&quot;safe&quot;:&quot;0&quot;
+}
+#send_data = json.dumps(send_values, ensure_ascii=False)
+send_data = simplejson.dumps(send_values, ensure_ascii=False).encode(&apos;utf-8&apos;)
+send_request = urllib2.Request(send_url, send_data)
+response = json.loads(urllib2.urlopen(send_request).read())
+print str(response)
+if __name__ == &apos;__main__&apos;:
+user = str(sys.argv[1]) #zabbix 传过来的第一个参数
+subject = str(sys.argv[2])  #zabbix 传过来的第二个参数
+content = str(sys.argv[3])  #zabbix 传过来的第三个参数
+corpid =  &apos;11111111111111&apos;   #CorpID 是企业号的标识
+corpsecret = &apos;222222222222222222&apos;  #corpsecretSecret 是管理组凭证密钥
+accesstoken = gettoken(corpid,corpsecret)
+senddata(accesstoken,user,subject,content)
+</code></pre><p>执行 py 脚本，进行测试</p>
+<pre><code>[root@abcdocker alertscripts]# ./wechat.py www www 123
+https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=wx6dadb9cc293b793e&amp;corpsecret=JjesoeixbFt6dDur7_eXtamVBx2SjPBuXMQ0Jte3YLkz8l-VBnr0JvU12P0kvpGJ
+{u&apos;invaliduser&apos;: u&apos;all user invalid&apos;, u&apos;errcode&apos;: 0, u&apos;errmsg&apos;: u&apos;ok&apos;}
+</code></pre><p><img src="https://i.imgur.com/nsqaDhn.png" alt=""></p>
+<h2 id="五、zabbix-web- 界面配置"><a href="# 五、zabbix-web- 界面配置" class="headerlink" title="五、zabbix web 界面配置"></a>五、zabbix web 界面配置 </h2><p> 创建报警媒介 </p>
+<p><img src="https://i.imgur.com/MSPKLMF.png" alt=""></p>
+<p><img src="https://i.imgur.com/BIEqkbr.png" alt=""></p>
+<p>创建报警用户 </p>
+<p><img src="https://i.imgur.com/n2twuWo.png" alt=""></p>
+<p><img src="https://i.imgur.com/UvpCbY7.png" alt=""></p>
+<p>这里填写运维组 ID </p>
+<p><img src="https://i.imgur.com/Niob5by.png" alt=""></p>
+<p>设置报警动作 </p>
+<p><img src="https://i.imgur.com/ioxSige.png" alt=""></p>
+<p><img src="https://i.imgur.com/9cQPSTk.png" alt=""></p>
+<p>报警消息设置如下：</p>
+<pre><code>hostname: ({HOST.NAME}
+Time:{EVENT.DATE} {EVENT.TIME}
+level:{TRIGGER.SEVERITY}
+message:{TRIGGER.NAME}
+event:{ITEM.NAME}:{ITEM.VALUE}
+url:www.abcdocker.com
+</code></pre><p>恢复报警如下：</p>
+<pre><code>hostname: ({HOST.NAME}
+Time:{EVENT.DATE} {EVENT.TIME}
+level:{TRIGGER.SEVERITY}
+message:{TRIGGER.NAME}
+event:{ITEM.NAME}:{ITEM.VALUE}
+url:www.abcdocker.com
+</code></pre><p>报警配置如下 </p>
+<p><img src="https://i.imgur.com/U7kcKkT.png" alt=""></p>
+<p>恢复配置如下 </p>
+<p><img src="https://i.imgur.com/uj6ve3L.png" alt=""></p>
+<p>提示： 不要忘记先点小的<code>add--&gt; 小的 update--&gt;Update</code></p>
+<h2 id="六、测试"><a href="# 六、测试" class="headerlink" title="六、测试"></a>六、测试 </h2><p> 为了验证效果我们停掉 zabbix-agent, 进行查看报警</p>
+<pre><code>[root@abcdocker ~]# systemctl stop zabbix-agent
+</code></pre><p>报警如下 </p>
+<p><img src="https://i.imgur.com/5YsnPxl.png" alt=""></p>
+<p><img src="https://i.imgur.com/JCmhU83.jpg" alt=""></p>
+<p>本文参考：</p>
+<p><a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=http://www.linuxprobe.com/zabbix-alert-with-wechat.html" target="_blank" rel="noopener">Zabbix-3.0.3 实现微信（WeChat）告警</a></p>
+<p>转自：<a href="https://www.abcdocker.com/abcdocker/2472" target="_blank" rel="noopener">Zabbix-3.2.3 实现微信（WeChat）告警</a></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2016/12/10/Zabbix-3.2.3实现微信（WeChat）告警【转】/" title="Zabbix-3.2.3 实现微信（WeChat）告警【转】">https://yhaing.github.io/2016/12/10/Zabbix-3.2.3实现微信（WeChat）告警【转】/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/zabbix/" rel="tag"># zabbix</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/05/Zabbix-3.0.X 安装Graphtree/" rel="next" title="Zabbix-3.0.X 安装 Graphtree【转】">
+                <i class="fa fa-chevron-left"></i> Zabbix-3.0.X 安装 Graphtree【转】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/10/Java-JVM/" rel="prev" title="Java-JVM 参数详解">
+                Java-JVM 参数详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2016/11/15/Zabbix 3.0 监控Web [七]/">Zabbix 3.0 监控 Web [七]【转】</a></li><li><a href="/2016/11/21/Zabbix 3.0 分布式监控 [九]/">Zabbix 3.0 分布式监控 [九]【转】</a></li><li><a href="/2016/10/10/Zabbix 3.0 基础介绍 [一]（转）/">Zabbix 3.0 基础介绍 [一]（转）</a></li><li><a href="/2016/11/12/Zabbix 3.0 生产案例 [五]/">Zabbix 3.0 生产案例 [五]【转】</a></li><li><a href="/2016/10/11/Zabbix 3.0 基础介绍 [二]（转）/">Zabbix 3.0 部署监控 [二]（转）</a></li><li><a href="/2016/11/15/Zabbix 3.0 监控MySQL [六]/">Zabbix 3.0 监控 MySQL [六]【转】</a></li><li><a href="/2016/11/10/Zabbix 3.0 生产案例 [四]/">Zabbix 3.0 生产案例 [四]（转）</a></li><li><a href="/2016/11/20/Zabbix 3.0 主备模式 [八]/">Zabbix 3.0 主备模式 [八]【转】</a></li><li><a href="/2016/11/25/Zabbix 3.0 自动化监控 [十]/">Zabbix 3.0 自动化监控 [十]【转】</a></li><li><a href="/2016/10/11/Zabbix 3.0 部署监控 [三] （转）/">Zabbix 3.0 部署监控 [三]（转）</a></li></ul>
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -342,6 +751,13 @@
 
 
           
+
+  
+    <div id="gitalk-container">
+	</div>
+  
+
+
 
         </div>
         
@@ -362,8 +778,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -427,6 +852,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Zabbix-3-2-3 实现微信（WeChat）告警"><span class="nav-number">1.</span> <span class="nav-text">Zabbix-3.2.3 实现微信（WeChat）告警</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、微信企业号申请"><span class="nav-number">2.</span> <span class="nav-text">一、微信企业号申请 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步注册"><span class="nav-number">2.1.</span> <span class="nav-text">第一步注册</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、配置微信企业号"><span class="nav-number">3.</span> <span class="nav-text">二、配置微信企业号 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备事项："><span class="nav-number">3.1.</span> <span class="nav-text">准备事项：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需要得到的信息"><span class="nav-number">3.2.</span> <span class="nav-text">需要得到的信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、修改 Zabbix-conf"><span class="nav-number">4.</span> <span class="nav-text">三、修改 Zabbix.conf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、设置 python 脚本"><span class="nav-number">5.</span> <span class="nav-text">四、设置 python 脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、zabbix-web- 界面配置"><span class="nav-number">6.</span> <span class="nav-text">五、zabbix web 界面配置 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、测试"><span class="nav-number">7.</span> <span class="nav-text">六、测试 </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -561,6 +1002,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
