@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Jenkins," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="Jenkins">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持续集成之 Jenkins+Gitlab 简介 [一]【转】">
+<meta property="og:url" content="https://yhaing.github.io/2017/03/20/持续集成之Jenkins+Gitlab简介 [一]/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/m3ECCmT.jpg">
+<meta property="og:image" content="https://i.imgur.com/RfWel13.png">
+<meta property="og:image" content="https://i.imgur.com/24dMDLu.png">
+<meta property="og:image" content="https://i.imgur.com/lYzYHRU.png">
+<meta property="og:image" content="https://i.imgur.com/y1GdxnH.png">
+<meta property="og:image" content="https://i.imgur.com/qb3g0tK.png">
+<meta property="og:image" content="https://i.imgur.com/7p3RFBr.png">
+<meta property="og:image" content="https://i.imgur.com/IZcyIjE.png">
+<meta property="og:image" content="https://i.imgur.com/o2zUf1f.png">
+<meta property="og:image" content="https://i.imgur.com/3iuJAYf.png">
+<meta property="og:image" content="https://i.imgur.com/tqcdM9L.png">
+<meta property="og:image" content="https://i.imgur.com/R7y4GO6.png">
+<meta property="og:image" content="https://i.imgur.com/c2XdGQn.png">
+<meta property="og:image" content="https://i.imgur.com/cd8GLto.png">
+<meta property="og:image" content="https://i.imgur.com/YqqjDvY.png">
+<meta property="og:image" content="https://i.imgur.com/O8Dt9Af.png">
+<meta property="og:image" content="https://i.imgur.com/jl4wHw7.png">
+<meta property="og:image" content="https://i.imgur.com/FXhIGXG.png">
+<meta property="og:image" content="https://i.imgur.com/Nvslgz7.png">
+<meta property="og:image" content="https://i.imgur.com/407Swmi.png">
+<meta property="og:image" content="https://i.imgur.com/YNyNmLL.png">
+<meta property="og:image" content="https://i.imgur.com/KecV0I7.png">
+<meta property="og:image" content="https://i.imgur.com/yeg6d5y.png">
+<meta property="og:image" content="https://i.imgur.com/44dP3MX.png">
+<meta property="og:image" content="https://i.imgur.com/D1CQc9u.png">
+<meta property="og:image" content="https://i.imgur.com/eSapsiw.png">
+<meta property="og:image" content="https://i.imgur.com/Tk23Mbm.png">
+<meta property="og:image" content="https://i.imgur.com/yA05XAm.png">
+<meta property="og:image" content="https://i.imgur.com/lwlcDrw.png">
+<meta property="og:image" content="https://i.imgur.com/EnXeKav.png">
+<meta property="og:image" content="https://i.imgur.com/W8xjAfv.png">
+<meta property="og:image" content="https://i.imgur.com/7ap9hWc.png">
+<meta property="og:image" content="https://i.imgur.com/tn2OVmU.png">
+<meta property="og:image" content="https://i.imgur.com/lv97wtU.png">
+<meta property="og:image" content="https://i.imgur.com/nEKZGNh.png">
+<meta property="og:image" content="https://i.imgur.com/UhCOscZ.png">
+<meta property="og:image" content="https://i.imgur.com/eFKavON.png">
+<meta property="og:image" content="https://i.imgur.com/zVsSb65.png">
+<meta property="og:image" content="https://i.imgur.com/1Kvs6T8.png">
+<meta property="og:image" content="https://i.imgur.com/GS2Codu.png">
+<meta property="og:image" content="https://i.imgur.com/awLpI0s.png">
+<meta property="og:image" content="https://i.imgur.com/ZxchxVo.png">
+<meta property="og:image" content="https://i.imgur.com/nhlLdM0.png">
+<meta property="og:image" content="https://i.imgur.com/ZGghvdJ.png">
+<meta property="og:image" content="https://i.imgur.com/BhA5crz.png">
+<meta property="og:image" content="https://i.imgur.com/EzTmoxh.png">
+<meta property="og:image" content="https://i.imgur.com/3r1X7vm.png">
+<meta property="og:updated_time" content="2018-09-24T09:14:38.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="持续集成之 Jenkins+Gitlab 简介 [一]【转】">
+<meta name="twitter:image" content="https://i.imgur.com/m3ECCmT.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2017/03/20/持续集成之Jenkins+Gitlab简介 [一]/"/>
+
+
+
+
+
+  <title>持续集成之 Jenkins+Gitlab 简介 [一]【转】 | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">成长就是你主观世界遇到客观世界之间的那条沟，你掉进去了，叫挫折，爬出来了，叫成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2017/03/20/持续集成之Jenkins+Gitlab简介 [一]/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">持续集成之 Jenkins+Gitlab 简介 [一]【转】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T10:15:12+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">Jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/20/持续集成之Jenkins+Gitlab简介 [一]/" class="leancloud_visitors" data-flag-title="持续集成之 Jenkins+Gitlab 简介 [一]【转】">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/m3ECCmT.jpg" alt=""></p>
+<a id="more"></a>
+<blockquote>
+<p>摘要</p>
+<p>DevOps（英文 Development（开发）和 Operations（技术运营）的组合）是一组过程、方法与系统的统称，用于促进开发（应用程序 / 软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。它的出现是由于软件行业日益清晰地认识到：为了按时交付软件产品和服务，开发和运营工作必须紧密合作</p>
+</blockquote>
+<h1 id="持续集成之 Jenkins-Gitlab 简介 - 一"><a href="# 持续集成之 Jenkins-Gitlab 简介 - 一" class="headerlink" title="持续集成之 Jenkins+Gitlab 简介 [一]"></a>持续集成之 Jenkins+Gitlab 简介 [一]</h1><h2 id="持续集成概念"><a href="# 持续集成概念" class="headerlink" title="持续集成概念"></a>持续集成概念</h2><blockquote>
+<p>持续集成 Continuous Integration—-CI</p>
+<p>持续交付 Continuous Delivery—-CD</p>
+<p>持续部署 Continuous Deployment—–CD</p>
+</blockquote>
+<h3 id="1-1- 什么是持续集成："><a href="#1-1- 什么是持续集成：" class="headerlink" title="1.1 什么是持续集成："></a>1.1 什么是持续集成：</h3><p>持续集成是指开发者在代码的开发过程中，可以频繁的将代码部署集成到主干，并进程自动化测试 </p>
+<p><img src="https://i.imgur.com/RfWel13.png" alt=""></p>
+<h3 id="1-2- 什么是持续交付："><a href="#1-2- 什么是持续交付：" class="headerlink" title="1.2 什么是持续交付："></a>1.2 什么是持续交付：</h3><p>持续交付指的是在持续集成的环境基础之上，将代码部署到预生产环境 </p>
+<p><img src="https://i.imgur.com/24dMDLu.png" alt=""></p>
+<h3 id="1-3- 持续部署："><a href="#1-3- 持续部署：" class="headerlink" title="1.3 持续部署："></a>1.3 持续部署：</h3><p>在持续交付的基础上，把部署到生产环境的过程自动化，持续部署和持续交付的区别就是最终部署到生产环境是自动化的。 </p>
+<p><img src="https://i.imgur.com/lYzYHRU.png" alt=""></p>
+<h3 id="1-4- 部署代码上线流程"><a href="#1-4- 部署代码上线流程" class="headerlink" title="1.4 部署代码上线流程"></a>1.4 部署代码上线流程</h3><blockquote>
+<p>1. 代码获取（直接了拉取）</p>
+<p>2. 编译  （可选）</p>
+<p>3. 配置文件放进去</p>
+<p>4. 打包</p>
+<p>5.scp 到目标服务器</p>
+<p>6. 将目标服务器移除集群</p>
+<p>7. 解压并放置到 Webroot</p>
+<p>8.Scp 差异文件</p>
+<p>9. 重启  （可选）</p>
+<p>10. 测试</p>
+<p>11. 加入集群</p>
+</blockquote>
+<h2 id="运维必知 OWASP"><a href="# 运维必知 OWASP" class="headerlink" title="运维必知 OWASP"></a><font size="5">运维必知 OWASP</font><br></h2><p><strong>Jenkins 上 OWASP 插件介绍 </strong>： 它是开放式 Web 应用程序安全项目[OWASP,Open Web Application Secunity Project]<br> 它每年会出一个 top10 的安全漏洞，我们需要知道当前 top10 的漏洞有哪些 </p>
+<p><img src="https://i.imgur.com/y1GdxnH.png" alt=""></p>
+<p><a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=https://www.owasp.org/images/5/57/OWASP_Proactive_Controls_2.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/5/57/OWASP_Proactive_Controls_2.pdf</a></p>
+<p><a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=https://www.owasp.org/index.php/Top_10_2013-Top_10" target="_blank" rel="noopener">https://www.owasp.org/index.php/Top_10_2013-Top_10</a></p>
+<h2 id="Gitlab 介绍"><a href="#Gitlab 介绍" class="headerlink" title="Gitlab 介绍"></a>Gitlab 介绍</h2><p>　　GitLab 是一个利用 <code>Ruby on Rails</code> 开发的开源应用程序，实现一个自托管的 Git 项目仓库，可通过 Web 界面进行访问公开的或者私人项目。 </p>
+<p>　　GitLab 拥有与 Github 类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。</p>
+<h3 id="环境准备"><a href="# 环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><pre><code>[root@linux-node1 ~]# cat /etc/redhat-release 
+CentOS Linux release 7.3.1611 (Core) 
+[root@linux-node1 ~]# uname -r
+3.10.0-514.2.2.el7.x86_64
+下载 epel 源
+[root@linux-node1 ~]# wget http://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm 
+[root@linux-node1 ~]# wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo 
+关闭 NetworkManager 和防火墙 
+[root@linux-node1 ~]#systemctl stop firewalld.service
+systemctl disable firewalld 
+systemctl disable NetworkManager
+关闭 SELinux 并确认处于关闭状态 
+sed -i &apos;s/SELINUX=enforcing/SELINUX=disabled/&apos; /etc/selinux/config
+grep SELINUX=disabled /etc/selinux/config
+setenforce 0
+更新系统并重启
+[root@linux-node1 ~]# yum update -y &amp;&amp; reboot
+</code></pre><p>我们一共有 2 台：<code>192.168.56.11</code>和 <code>192.168.56.12</code> 我们安装在 <code>192.168.56.11</code> 上</p>
+<pre><code>[root@linux-node1 /]# yum install curl policycoreutils openssh-server openssh-clients postfix -y
+[root@linux-node1 /]# systemctl start postfix
+[root@linux-node1 /]# curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+[root@linux-node1 /]# yum install -y gitlab-ce
+</code></pre><p><strong>由于网络问题，国内用户，建议使用清华大学的镜像源进行安装</strong></p>
+<pre><code>[root@linux-node1 ~]# cat /etc/yum.repos.d/gitlab-ce.repo
+[gitlab-ce]
+name=gitlab-ce
+baseurl=http://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7
+repo_gpgcheck=0
+gpgcheck=0
+enabled=1
+gpgkey=https://packages.gitlab.com/gpg.key
+[root@linux-node1 ~]# yum makecache
+[root@linux-node1 /]#  yum install -y gitlab-ce
+</code></pre><p>在安装一个 <code>git</code> 客户端</p>
+<pre><code>[root@linux-node1 /]#  yum install -y git
+</code></pre><p>配置并启动<code>gitlab-ce</code></p>
+<pre><code>[root@linux-node1 ~]# gitlab-ctl reconfigure
+#时间可能比较长，耐心你等待即可！----
+gitlab 常用命令：
+关闭 gitlab：[root@linux-node2 ~]# gitlab-ctl stop
+启动 gitlab：[root@linux-node2 ~]# gitlab-ctl start
+重启 gitlab：[root@linux-node2 ~]# gitlab-ctl restart
+重载配置文件: gitlab-ctl reconfigure
+</code></pre><p>可以使用 <code>gitlab-ctl</code> 管理<code>gitlab</code>，例如查看<code>gitlab 状态</code>：</p>
+<pre><code>[root@linux-node1 /]#  gitlab-ctl status
+run: gitlab-workhorse: (pid 7437) 324s; run: log: (pid 7436) 324s
+run: logrotate: (pid 7452) 316s; run: log: (pid 7451) 316s
+run: nginx: (pid 8168) 2s; run: log: (pid 7442) 318s
+run: postgresql: (pid 7293) 363s; run: log: (pid 7292) 363s
+run: redis: (pid 7210) 369s; run: log: (pid 7209) 369s
+run: sidekiq: (pid 7479) 265s; run: log: (pid 7426) 326s
+run: unicorn: (pid 7396) 327s; run: log: (pid 7395) 327s
+</code></pre><p>提示： 我们要保证 <code>80</code> 端口不被占用</p>
+<p>我们可以查看一下端口</p>
+<pre><code>[root@linux-node1 /]# gitlab-ctl restart
+ok: run: gitlab-workhorse: (pid 8353) 0s
+ok: run: logrotate: (pid 8360) 1s
+ok: run: nginx: (pid 8367) 0s
+timeout: down: postgresql: 0s, normally up, want up
+ok: run: redis: (pid 8437) 0s
+ok: run: sidekiq: (pid 8445) 0s
+ok: run: unicorn: (pid 8450) 0s
+[root@linux-node1 /]# lsof -i:80
+COMMAND  PID   USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+nginx   8367   root7u  IPv4  54972  0t0  TCP *:http (LISTEN)
+nginx   8368 gitlab-www7u  IPv4  54972  0t0  TCP *:http (LISTEN)
+</code></pre><p><strong>Web</strong>：访问：192.168.56.11 </p>
+<p><img src="https://i.imgur.com/qb3g0tK.png" alt=""></p>
+<p><strong>提示：</strong>启动 gitlab 需要时间！</p>
+<p><code>Web</code>页面提示我们需要设置一个账号密码（我们要设置最少 <code>8 位数</code> 的一个账号密码）我们设置密码为：<code>12345678</code></p>
+<p>　我们在后面的页面设置用户名 </p>
+<p><img src="https://i.imgur.com/7p3RFBr.png" alt=""></p>
+<p>我们现在是以管理员的身份登陆 </p>
+<p><img src="https://i.imgur.com/IZcyIjE.png" alt=""></p>
+<p>我们点击右上角管理区域</p>
+<p><strong>第一步：</strong>我们关闭自动注册，因为我们内部使用不需要用户自己注册，由运维分配用户即可 </p>
+<p><img src="https://i.imgur.com/o2zUf1f.png" alt=""></p>
+<p>提示：<code>Save</code>在页面最下放！！！！！！ 记得点保存！！！！！！！！！！！！</p>
+<p><img src="https://i.imgur.com/3iuJAYf.png" alt=""></p>
+<p>现在在查看首页就没有注册页面了</p>
+<p><strong>第二步：</strong>我们创建一个用户，在创建一个项目</p>
+<p>先创建一个组<br><img src="https://i.imgur.com/tqcdM9L.png" alt=""></p>
+<p><strong>提示：</strong>gitlab 上面有一个项目跟组的概念，我们要创建一个组，才可以在创建一个项目。因为 gitlab 的路径上首先是 ip 地址，其次是组 </p>
+<p><img src="https://i.imgur.com/R7y4GO6.png" alt=""></p>
+<p>点击下方<code>Create group</code></p>
+<p><img src="https://i.imgur.com/c2XdGQn.png" alt=""></p>
+<p>然后我们在组里面创建项目</p>
+<p><img src="https://i.imgur.com/cd8GLto.png" alt=""></p>
+<p>下一步： </p>
+<p><img src="https://i.imgur.com/YqqjDvY.png" alt=""></p>
+<p><img src="https://i.imgur.com/O8Dt9Af.png" alt=""></p>
+<p>创建完成之后它提示我们可以创建一个 <code>key</code> 对它进行管理</p>
+<p>我们点击上面的 <code>README</code> 然后我们随便在里面写点东西<br><img src="https://i.imgur.com/jl4wHw7.png" alt=""></p>
+<p><img src="https://i.imgur.com/FXhIGXG.png" alt=""></p>
+<p>填写完成我们点击前面进行查看</p>
+<p>我们要做免密验证，现在去 192.168.56.11 复制下面的.ssh/id_rsa.pub</p>
+<pre><code>[www@linux-node1 ~]$ cat .ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8wfTSQcSyhlsGYDSUtuxZNb1Gl3VU56nAPuxAEF2wP2ZWZ2yva354ZdKOOb6rZx2yZxqy5XIj7opBJPbhraXap+NtCH5qWyktR7dH19RBmCS7vUGgvk/5RQC0mVFrC8cztBp0M/5HxMuhVir6mD1rhbDvvaLL6S5y4gljzC1Gr2VRHIb4Et9go/38c2tqMjYCike7WWbFRyL9wTal6/146+9uREZ/r69TBTKrGuRqF44fROQP8/ly02XFjlXyl6J5NnGTk6AU855pwasX0W9aNPce3Ynrpe1TBTubmfQhrH1BwteEmg+ZXNRupxjumA+tPWfBUX+u51r/w7W/d4PD www@linux-node1
+#提示：需要提前做秘钥认证
+</code></pre><p><img src="https://i.imgur.com/Nvslgz7.png" alt=""></p>
+<p>设置<code>Keys</code> </p>
+<p><img src="https://i.imgur.com/407Swmi.png" alt=""></p>
+<p><img src="https://i.imgur.com/YNyNmLL.png" alt=""></p>
+<p><img src="https://i.imgur.com/KecV0I7.png" alt=""></p>
+<p>添加完之后我们就可以使用 <code>www</code> 用户，就可以拉了 </p>
+<p><img src="https://i.imgur.com/yeg6d5y.png" alt=""></p>
+<p>点击<code>Projects</code> 选择<code>SSH</code>，我们要将代码拉去下来</p>
+<pre><code>[www@linux-node1 ~]$ cd /deploy/code/
+[www@linux-node1 code]$ ls
+web-demo
+[www@linux-node1 code]$ rm -rf web-demo/
+[www@linux-node1 ~]$ git clone  git@linux-node1:web/web-demo.git
+Cloning into &apos;web-demo&apos;...
+The authenticity of host &apos;linux-node1 (192.168.56.11)&apos; can&apos;t be established.
+ECDSA key fingerprint is b5:74:8f:f1:03:2d:cb:7d:01:28:30:12:34:9c:35:8c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &apos;linux-node1&apos; (ECDSA) to the list of known hosts.
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (3/3), done.
+[www@linux-node1 ~]$ ls web-demo/
+README.md
+#git clone 是克隆的意思
+</code></pre><p>我们来模拟开发继续写代码提交</p>
+<pre><code>[www@linux-node1 ~]$ mkdir -p /web-demo
+[www@linux-node1 ~]$ vim web-demo/index.html
+[www@linux-node1 ~]$ cd web-demo/
+[www@linux-node1 web-demo]$
+[www@linux-node1 web-demo]$ ls
+index.html  README.md
+[www@linux-node1 web-demo]$ git add *
+[www@linux-node1 web-demo]$ git commit -m &quot;add index.html&quot;
+*** Please tell me who you are.
+Run
+  git config --global user.email &quot;you@example.com&quot;
+  git config --global user.name &quot;Your Name&quot;
+to set your account&apos;s default identity.
+Omit --global to set the identity only in this repository.
+fatal: empty ident name (for &lt;www@linux-node1.(none)&gt;) not allowed
+</code></pre><p>需要身份验证：</p>
+<pre><code>[www@linux-node1 web-demo]$ git config --global user.email &quot;you@example.com&quot;
+[www@linux-node1 web-demo]$   git config --global user.name &quot;Your Name&quot;
+[www@linux-node1 web-demo]$ git commit -m &quot;add index.html&quot;
+[master be8a547] add index.html
+ 1 file changed, 169 insertions(+)
+ create mode 100644 index.html
+</code></pre><p><code>git push</code>命令用于将本地分支的更新，推送到远程主机。它的格式与 git pull 命令相仿。</p>
+<pre><code>[www@linux-node1 web-demo]$ git push
+warning: push.default is unset; its implicit value is changing in
+Git 2.0 from &apos;matching&apos; to &apos;simple&apos;. To squelch this message
+and maintain the current behavior after the default changes, use:
+  git config --global push.default matching
+To squelch this message and adopt the new behavior now, use:
+  git config --global push.default simple
+See &apos;git help config&apos; and search for &apos;push.default&apos; for further information.
+(the &apos;simple&apos; mode was introduced in Git 1.7.11. Use the similar mode
+&apos;current&apos; instead of &apos;simple&apos; if you sometimes use older versions of Git)
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 7.66 KiB | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@linux-node1:web/web-demo.git
+   0c1d357..be8a547  master -&gt; master
+</code></pre><p>我们的 <code>gitlab</code> 安装在 <code>opt/gitlab</code><br><code>gitlab 配置文件</code> 存放在<code>etc/gitlab/gitlab.rb</code> </p>
+<p><img src="https://i.imgur.com/44dP3MX.png" alt=""></p>
+<p># 现在 git 需要加上主机名，我们可以修改配置文件，让它使用 IP 进行访问</p>
+<p>编辑配置文件</p>
+<pre><code>[root@linux-node1 ~]# vim /etc/gitlab/gitlab.rb
+external_url &apos;http://192.168.56.11&apos;
+[root@linux-node1 ~]# gitlab-ctl reconfigure
+#提示：修改完需要使用 reconfigure 重载配置才会生效
+</code></pre><p>我们从新登陆进行查看 </p>
+<p><img src="https://i.imgur.com/D1CQc9u.png" alt=""></p>
+<p>咦！ 为啥还没改呢！ 我们从新创建一个项目在试一下</p>
+<p><img src="https://i.imgur.com/eSapsiw.png" alt=""></p>
+<p><strong>友情提示：</strong></p>
+<p>　关于 Git 可以查看 <a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=http://www.xuliangwei.com/xubusi/385.html" target="_blank" rel="noopener"> 徐布斯博客 </a> or <a href="https://www.abcdocker.com/wp-content/themes/begin/inc/go.php?url=http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener"> 廖雪峰 Git</a></p>
+<h2 id="自动化运维之 DevOps"><a href="# 自动化运维之 DevOps" class="headerlink" title="自动化运维之 DevOps"></a>自动化运维之 DevOps</h2><p>　　DevOps（英文 Development（<code>开发 </code>）和 Operations（<code> 技术运营</code>）的组合）是一组过程、方法与系统的统称，用于促进开发（应用程序 / 软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。<br>　　它的出现是由于软件行业日益清晰地认识到：为了按时交付软件产品和服务，开发和运营工作必须紧密合作</p>
+<p><strong>简单的来说 DevOps 是一种文化，是让开发开发、运维、测试能够之间沟通和交流</strong></p>
+<p>　　自动化运维工具：saltstack、jenkins、等。因为他们的目标一样，为了我们的软件、构建、测试、发布更加的敏捷、频繁、可靠<br>　　如果运维对 git 不熟，是无法做自动化部署。因为所有的项目都受制于开发</p>
+<h3 id="Jenkins- 介绍"><a href="#Jenkins- 介绍" class="headerlink" title="Jenkins 介绍"></a>Jenkins 介绍 </h3><p><code>Jenkins</code> 只是一个平台，真正运作的都是插件。这就是 jenkins 流行的原因，因为 <code>jenkins</code> 什么插件都有 <br><code>Hudson</code> 是<code>Jenkins</code>的前身，是基于 <code>Java</code> 开发的一种持续集成工具，用于监控程序重复的工作，<code>Hudson</code>后来被收购，成为商业版。后来创始人又写了一个 <code>jenkins</code>，<code>jenkins</code> 在功能上远远超过<code>hudson</code></p>
+<p>Jenkins 官网：<a href="https://jenkins.io/" target="_blank" rel="noopener">https://jenkins.io/</a></p>
+<h4 id="安装"><a href="# 安装" class="headerlink" title="安装"></a>安装 </h4><p><strong> 安装 JDK</strong></p>
+<p>　　Jenkins 是 Java 编写的，所以需要先安装 JDK，这里采用 yum 安装，如果对版本有需求，可以直接在 Oracle 官网下载 JDK。</p>
+<pre><code>[root@linux-node1 ~]# yum install -y java-1.8.0
+</code></pre><p><strong>安装 jenkins</strong></p>
+<pre><code>[root@linux-node1 ~]# cd /etc/yum.repos.d/
+[root@linux-node1 yum.repos.d]# wget http://pkg.jenkins.io/redhat/jenkins.repo
+[root@linux-node1 ~]# rpm --import http://pkg.jenkins.io/redhat/jenkins.io.key
+[root@linux-node1 ~]# yum install -y jenkins
+[root@linux-node1 ~]# systemctl start jenkins
+#本文使用 yum 进行安装，大家也可以使用编译安装。
+</code></pre><p>新版本的 jenkins 为了保证安全，在安装之后有一个锁，需要设置密码之后才可以解锁</p>
+<p><code>Jenkins Web</code>访问地址：192.168.56.11:8080</p>
+<p><strong>友情提示：jenkins 如果跟 gitlab 在一台服务器需要将 jenkins 的端口进行修改，需要将 jenkins 的 8080 修改为 8081</strong> </p>
+<p><img src="https://i.imgur.com/Tk23Mbm.png" alt=""></p>
+<pre><code>[root@linux-node1 ~]# cat /var/lib/jenkins/secrets/initialAdminPassword
+490a2f35a2df49b6b8787ecb27122a3a
+</code></pre><p>复制这个文件下面的 ID，否则不可以进行安装。</p>
+<p>我们选择推荐安装即可</p>
+<p><img src="https://i.imgur.com/yA05XAm.png" alt=""></p>
+<p>它会给我们安装一些基础的插件 </p>
+<p><img src="https://i.imgur.com/lwlcDrw.png" alt=""></p>
+<p>设置用户名密码： </p>
+<p><img src="https://i.imgur.com/EnXeKav.png" alt=""></p>
+<p>点击保存并退出 </p>
+<p><img src="https://i.imgur.com/W8xjAfv.png" alt=""></p>
+<p>早期 jenkins 默认是不需要登陆的 </p>
+<p><img src="https://i.imgur.com/7ap9hWc.png" alt=""></p>
+<h4 id="我们先来介绍一下 jenkins 基础功能"><a href="# 我们先来介绍一下 jenkins 基础功能" class="headerlink" title="我们先来介绍一下 jenkins 基础功能"></a>我们先来介绍一下 jenkins 基础功能 </h4><p> 我们点击 <code> 新建</code> </p>
+<p><img src="https://i.imgur.com/tn2OVmU.png" alt=""></p>
+<p>这里就是构建一个项目</p>
+<p><strong>用户界面</strong>：主要是一些用户的管理 </p>
+<p><img src="https://i.imgur.com/lv97wtU.png" alt=""></p>
+<p>可以看到当前登陆用户及用户权限等</p>
+<p><strong>任务历史：</strong>可以查看到所有构建过的项目的历史 </p>
+<p><img src="https://i.imgur.com/nEKZGNh.png" alt=""></p>
+<p># 之所以叫构建，是因为都是 java，因为如果不是 java 程序就没有构建这个词。但是我们也可以把一些工作称之为构建</p>
+<p><strong>系统管理：</strong>存放 jenkins 所有的配置 </p>
+<p><img src="https://i.imgur.com/UhCOscZ.png" alt=""></p>
+<p><strong>My Views：</strong>视图功能，我们可以自己创建一个自己的视图 </p>
+<p><img src="https://i.imgur.com/eFKavON.png" alt=""></p>
+<p><strong>构建队列：</strong>如果当前有视图任务都会显示在这里 </p>
+<p><img src="https://i.imgur.com/zVsSb65.png" alt=""></p>
+<p><strong>构建执行状态：</strong>显示在正构建的任务 </p>
+<p><img src="https://i.imgur.com/1Kvs6T8.png" alt=""></p>
+<p><strong>系统管理</strong>：- 系统设置</p>
+<p>设置 Jenkins 全局设置 &amp; 路径 </p>
+<p><img src="https://i.imgur.com/GS2Codu.png" alt=""></p>
+<p><img src="https://i.imgur.com/awLpI0s.png" alt=""></p>
+<p>Jenkins 系统管理比较重要的就是插件管理了 </p>
+<p><img src="https://i.imgur.com/ZxchxVo.png" alt=""></p>
+<p># 因为 jenkins 所有的东西都需要靠插件来完成，</p>
+<p>点击已安装可以查看我们的安装 </p>
+<p><img src="https://i.imgur.com/nhlLdM0.png" alt=""></p>
+<p>我们想安装什么插件，我们可以选择可选插件</p>
+<p><img src="https://i.imgur.com/ZGghvdJ.png" alt=""></p>
+<p>我们为了和 gitlab 和在一起，我们需要安装一个插件 </p>
+<p><img src="https://i.imgur.com/BhA5crz.png" alt=""></p>
+<p><img src="https://i.imgur.com/EzTmoxh.png" alt=""></p>
+<p>查看还可以去 jenkins 官网下载，然后上传插件 </p>
+<p><img src="https://i.imgur.com/3r1X7vm.png" alt=""></p>
+<p>因为很多插件需要翻墙才可以继续下载，jenkins 还提供了代理的设置</p>
+<blockquote>
+<p>还是在服务器目录下进行上传插件</p>
+<p>目录路径 = /var/lib/jenkins/plugins/</p>
+<p>这个目录下是我们安装所有的插件</p>
+</blockquote>
+<p>转自：<a href="https://www.abcdocker.com/abcdocker/2041" target="_blank" rel="noopener">持续集成之 Jenkins+Gitlab 简介 [一]</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2017/03/20/持续集成之Jenkins+Gitlab简介 [一]/" title="持续集成之 Jenkins+Gitlab 简介 [一]【转】">https://yhaing.github.io/2017/03/20/持续集成之Jenkins+Gitlab简介 [一]/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Jenkins/" rel="tag"># Jenkins</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/10/Zabbix-3.2.3实现微信（WeChat）告警【转】/" rel="next" title="Zabbix-3.2.3 实现微信（WeChat）告警【转】">
+                <i class="fa fa-chevron-left"></i> Zabbix-3.2.3 实现微信（WeChat）告警【转】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/持续集成之Jenkins+Gitlab实现持续集成 [二]/" rel="prev" title="持续集成之 Jenkins+Gitlab 简介 [二]【转】">
+                持续集成之 Jenkins+Gitlab 简介 [二]【转】 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2017/03/20/持续集成之Jenkins+Gitlab实现持续集成 [二]/">持续集成之 Jenkins+Gitlab 简介 [二]【转】</a></li></ul>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container">
+	</div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#持续集成之 Jenkins-Gitlab 简介 - 一"><span class="nav-number">1.</span> <span class="nav-text">持续集成之 Jenkins+Gitlab 简介 [一]</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#持续集成概念"><span class="nav-number">1.1.</span> <span class="nav-text">持续集成概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1- 什么是持续集成："><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 什么是持续集成：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2- 什么是持续交付："><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 什么是持续交付：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3- 持续部署："><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 持续部署：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4- 部署代码上线流程"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 部署代码上线流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运维必知 OWASP"><span class="nav-number">1.2.</span> <span class="nav-text">运维必知 OWASP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitlab 介绍"><span class="nav-number">1.3.</span> <span class="nav-text">Gitlab 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.3.1.</span> <span class="nav-text">环境准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化运维之 DevOps"><span class="nav-number">1.4.</span> <span class="nav-text">自动化运维之 DevOps</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Jenkins- 介绍"><span class="nav-number">1.4.1.</span> <span class="nav-text">Jenkins 介绍 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">安装 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#我们先来介绍一下 jenkins 基础功能"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">我们先来介绍一下 jenkins 基础功能 </span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+</body>
+</html>
