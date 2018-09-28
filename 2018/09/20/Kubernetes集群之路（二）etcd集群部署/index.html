@@ -116,7 +116,7 @@
 
 
 
-  <meta name="keywords" content="CentOS," />
+  <meta name="keywords" content="K8S," />
 
 
 
@@ -127,17 +127,17 @@
 
 
 
-<meta name="keywords" content="CentOS">
+<meta name="keywords" content="K8S">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CentOS7 修改网卡为 eth0">
-<meta property="og:url" content="https://yhaing.github.io/2015/01/22/CentOS7修改网卡为eth0/index.html">
+<meta property="og:title" content="Kubernetes 集群之路（二）etcd 集群部署">
+<meta property="og:url" content="https://yhaing.github.io/2018/09/20/Kubernetes集群之路（二）etcd集群部署/index.html">
 <meta property="og:site_name" content="海阔天空">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/zJGIIlO.jpg">
-<meta property="og:updated_time" content="2018-09-28T05:53:51.772Z">
+<meta property="og:image" content="https://i.imgur.com/WeCYdWD.png">
+<meta property="og:updated_time" content="2018-09-28T08:05:34.891Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CentOS7 修改网卡为 eth0">
-<meta name="twitter:image" content="https://i.imgur.com/zJGIIlO.jpg">
+<meta name="twitter:title" content="Kubernetes 集群之路（二）etcd 集群部署">
+<meta name="twitter:image" content="https://i.imgur.com/WeCYdWD.png">
 
 
 
@@ -167,13 +167,13 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/2015/01/22/CentOS7修改网卡为eth0/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2018/09/20/Kubernetes集群之路（二）etcd集群部署/"/>
 
 
 
 
 
-  <title>CentOS7 修改网卡为 eth0 | 海阔天空</title>
+  <title>Kubernetes 集群之路（二）etcd 集群部署 | 海阔天空</title>
   
 
 
@@ -343,7 +343,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2015/01/22/CentOS7修改网卡为eth0/">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/09/20/Kubernetes集群之路（二）etcd集群部署/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hai Yang">
@@ -360,7 +360,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CentOS7 修改网卡为 eth0</h1>
+          <h1 class="post-title" itemprop="name headline">Kubernetes 集群之路（二）etcd 集群部署</h1>
         
 
         <div class="post-meta">
@@ -372,8 +372,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-22T09:15:12+08:00">
-                2015-01-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T10:15:12+08:00">
+                2018-09-20
               </time>
             
 
@@ -395,8 +395,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/服务器/" itemprop="url" rel="index">
-                    <span itemprop="name">服务器</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -412,7 +412,7 @@
 
           
           
-             <span id="/2015/01/22/CentOS7修改网卡为eth0/" class="leancloud_visitors" data-flag-title="CentOS7 修改网卡为 eth0">
+             <span id="/2018/09/20/Kubernetes集群之路（二）etcd集群部署/" class="leancloud_visitors" data-flag-title="Kubernetes 集群之路（二）etcd 集群部署">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -442,7 +442,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.5k
                 </span>
               
 
@@ -458,7 +458,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -479,117 +479,111 @@
       
 
       
-        <p><img src="https://i.imgur.com/zJGIIlO.jpg" alt=""></p>
+        <p><img src="https://i.imgur.com/WeCYdWD.png" alt=""></p>
 <a id="more"></a>
-<p>使用 CentOS-7 最直观的变化就是服务管理了。这里介绍一下。</p>
-<p><strong>services 使用了 systemd 来代替 sysvinit 管理</strong></p>
 <blockquote>
-<p>systemd 是 Linux 下的一种 init 软件，由 Lennart Poettering 带头开发，并在 LGPL 2.1 及其后续版本许可证下开源发布。其开发目标是提供更优秀的框架以表示系统服务间的依赖关系，并依此实现系统初始化时服务的并行启动，同时达到降低 Shell 的系统开销的效果，最终代替现在常用的 System V 与 BSD 风格 init 程序。</p>
+<p>在前面我们生成了所有 kubernetes 相关的 TLS 证书，kubernetes 集群自身所有配置相关信息都存储在 etcd 之中，而 flannel 也将网络子网网段注册到 etcd 之中并为集群中节点的 pod 提供了加入同一局域网的能力。因此接下来我们安装部署 etcd 集群。</p>
 </blockquote>
+<p>因为 flannel 插件也依赖于 etcd 存储信息，所以我们首先需要安装 etcd 集群，使之实现高可用。</p>
+<p>在开始之前请确保在上一篇文章中生成的 TLS 证书都分发到需要部署的 <code> 所有机器节点 </code> 的以下位置：</p>
+<pre><code>/etc/kubernetes/ssl/etcd.pem
+/etc/kubernetes/ssl/etcd-key.pem
+/etc/kubernetes/ssl/ca.pem
+</code></pre><h2 id="部署 etcd"><a href="# 部署 etcd" class="headerlink" title="部署 etcd"></a>部署 etcd</h2><p>我们采用纯二进制安装 etcd, 因此不使用默认的包管理器中的安装文件。在每台需要部署的 etcd 的节点上，通过官方仓库下载你需要的版本的 etcd 二进制安装包：</p>
+<p><a href="https://github.com/coreos/etcd/releases" target="_blank" rel="noopener">https://github.com/coreos/etcd/releases</a></p>
+<h3 id="下载安装二进制文件"><a href="# 下载安装二进制文件" class="headerlink" title="下载安装二进制文件"></a>下载安装二进制文件 </h3><p> 目前最新版本是<a href="https://github.com/coreos/etcd/releases/tag/v3.3.4" target="_blank" rel="noopener">v3.3.4</a>（截止到我写这篇文章的时候），而 kubernetes v1.10 验证过的版本为<code>3.1.12</code>, 如果没有特殊需求请尽量使用验证版本（如果你是不升级不舒服斯基当我没说）找到对应的系统架构并直接下载: <a href="https://github.com/coreos/etcd/releases/download/v3.1.12/etcd-v3.1.12-linux-amd64.tar.gz" target="_blank" rel="noopener">https://github.com/coreos/etcd/releases/download/v3.1.12/etcd-v3.1.12-linux-amd64.tar.gz</a></p>
+<p>在所有需要安装 etcd 节点执行以下命令来安装 <code>etcd</code> 和<code>etcdctl</code>(注意:etcd 目前不支持降级，如果你初始安装版本过高，后续像降级到验证版是比较麻烦的):</p>
+<pre><code>wget https://github.com/coreos/etcd/releases/download/v3.1.12/etcd-v3.1.12-linux-amd64.tar.gz
+tar zxvf etcd-v3.1.12-linux-amd64.tar.gz
+cd etcd-v3.1.12-linux-amd64
+sudo mv etcd etcdctl /usr/local/bin/
+</code></pre><h3 id="配置 systemd-unit"><a href="# 配置 systemd-unit" class="headerlink" title="配置 systemd unit"></a>配置 systemd unit</h3><p>接着，我们需要编辑对应的 <code>systemd unit service</code> 文件，我们需要新建一个 <code>etcd.service</code> 文件并放置于以下路径：<code>/usr/lib/systemd/system/etcd.service</code>并键入以下内容：</p>
+<pre><code>[Unit]
+Description=Etcd Server
+After=network.target
+After=network-online.target
+Wants=network-online.target
+Documentation=https://github.com/coreos
+
+[Service]
+Type=notify
+WorkingDirectory=/var/lib/etcd/
+EnvironmentFile=-/etc/etcd/etcd.conf
+ExecStart=/usr/local/bin/etcd \
+  --name ${ETCD_NAME} \
+  --cert-file=${ETCD_TRUST_CERT_FILE} \
+  --key-file=${ETCD_TRUST_CERT_KEY} \
+  --peer-cert-file=${ETCD_TRUST_CERT_FILE} \
+  --peer-key-file=${ETCD_TRUST_CERT_KEY} \
+  --trusted-ca-file=${ETCD_TRUST_CA_FILE} \
+  --peer-trusted-ca-file=${ETCD_TRUST_CA_FILE} \
+  --initial-advertise-peer-urls ${ETCD_INITIAL_ADVERTISE_PEER_URLS} \
+  --listen-peer-urls ${ETCD_LISTEN_PEER_URLS} \
+  --listen-client-urls ${ETCD_LISTEN_CLIENT_URLS} \
+  --advertise-client-urls ${ETCD_ADVERTISE_CLIENT_URLS} \
+  --initial-cluster-token ${ETCD_INITIAL_CLUSTER_TOKEN} \
+  --initial-cluster ${ETCD_CLUSTER_NODE_LIST} \
+  --initial-cluster-state new \
+  --data-dir=${ETCD_DATA_DIR}
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><blockquote>
+<p><code>WorkingDirectory</code>: 指定 etcd 的工作目录和数据目录为 <code>/var/lib/etcd</code>，需在启动服务前创建这个目录。</p>
+<p>为了保证通信安全，需要指定 etcd 的公私钥 (<code>cert-file</code> 和<code>key-file</code>)、Peers 通信的公私钥和 CA 证书(<code>peer-cert-file、peer-key-file、peer-trusted-ca-file</code>)、客户端的 CA 证书（<code>trusted-ca-file</code>）。</p>
+<p><code>--initial-cluster-state</code> 值为 <code>new</code> 时，<code>--name</code> 的参数值必须位于 <code>--initial-cluster</code> 列表中。</p>
+<p>我们将其中一些参数的设置抽取为环境变量，以便于我们修改参数的时候不需要再次 systemctl daemon-reload。</p>
+<p>带有 <code>--peer-xxx</code> 前缀的配置为 etcd 与其它 etcd 节点通信的相关配置，不带有的该前缀的则为客户端（例如：etcdctl）与 etcd 节点（作为服务器）通信的相关配置。</p>
+</blockquote>
+<p>对应的，我们在 <code>/etc/etcd/etcd.conf</code> 路径中新建一个 <code>etcd.conf</code> 文件并键入以下内容:</p>
+<pre><code># [member]
+ETCD_NAME=node1
+ETCD_DATA_DIR=&quot;/var/lib/etcd&quot;
+ETCD_LISTEN_PEER_URLS=&quot;https://0.0.0.0:2380&quot;
+ETCD_LISTEN_CLIENT_URLS=&quot;https://0.0.0.0:2379&quot;
+
+ETCD_TRUST_CA_FILE=&quot;/etc/kubernetes/ssl/ca.pem&quot;
+ETCD_TRUST_CERT_FILE=&quot;/etc/kubernetes/ssl/etcd.pem&quot;
+ETCD_TRUST_CERT_KEY=&quot;/etc/kubernetes/ssl/etcd-key.pem&quot;
+
+#[cluster]
+ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;https://10.138.148.161:2380&quot;
+ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster&quot;
+ETCD_ADVERTISE_CLIENT_URLS=&quot;https://10.138.148.161:2379&quot;
+
+ETCD_CLUSTER_NODE_LIST=&quot;node1=https://10.138.148.161:2380,node2=https://10.138.196.180:2380,node3=https://10.138.212.68:2380&quot;
+</code></pre><blockquote>
+<p>这是节点 IP 为 10.138.148.161 的环境变量配置文件内容，对于其他节点，修改对应的 <code>ETCD_NAME</code> 为对应的 node1、node2、node3，并将 <code>ETCD_INITIAL_ADVERTISE_PEER_URLS</code> 和<code>ETCD_INITIAL_ADVERTISE_PEER_URLS</code>修改为对应的节点的 ip。</p>
+<p>此处需要特别说明的是：<code>ETCD_CLUSTER_NODE_LIST</code>中的 ip 必须在生成 etcd TLS 证书时在 <code>etcd-csr.json</code> 中的 <code>hosts</code> 字段中指定（<code>Subject Alternative Name（SAN）</code>），否则可能会得到 (<code>error &quot;remote error: tls: bad certificate&quot;, ServerName &quot;&quot;</code>) 这样的错误。</p>
+<p>所有需要加入的节点都需要在 <code>ETCD_CLUSTER_NODE_LIST</code> 中指定，并正确配置其<code>ETCD_NAME</code>。</p>
+</blockquote>
+<hr>
+<h3 id="验证 etcd 安装"><a href="# 验证 etcd 安装" class="headerlink" title="验证 etcd 安装"></a>验证 etcd 安装 </h3><p> 在所有的节点上完成了上述两步之后，我们分别执行以下命令来启动 etcd（初始可能会阻塞一段时间）:</p>
+<pre><code>sudo systemctl daemon-reload
+sudo systemctl start etcd
+</code></pre><p>如果配置正确，那么上述命令执行结果应该是任何输出的。如果结果有错，请参照上述配置和环境变量文件检查配置。一旦我们顺利启动 etcd 服务，我们还需要正确检查我们的 <code>etcd</code> 集群是否可用，在 <code>etcd 集群</code> 中任一节点中执行以下命令：</p>
+<pre><code>etcdctl --endpoint https://127.0.0.1:2379   \
+--ca-file=/etc/kubernetes/ssl/ca.pem\
+--cert-file=/etc/kubernetes/ssl/etcd.pem\
+--key-file=/etc/kubernetes/ssl/etcd-key.pem \
+cluster-health
+</code></pre><p>在一切正常情况下，你会得到类似如下的输出结果:</p>
+<pre><code>member 245a74588a3e85d0 is healthy: got healthy result from https://xxx.xxx.xxx.xxx:2379
+member 953bacee4a009939 is healthy: got healthy result from https://xxx.xxx.xxx.xxx:2379
+member f43a05b0ce1a8ed6 is healthy: got healthy result from https://xxx.xxx.xxx.xxx:2379
+cluster is healthy
+</code></pre><hr>
+<h3 id="后记"><a href="# 后记" class="headerlink" title="后记"></a>后记 </h3><p> 需要特别说明的是：<code>etcd</code>集群是否和 <code>kubernetes</code> 部署在同样的服务器节点上是 <code> 可选的 </code>。也就是说<code>etcd</code> 集群可以脱离 <code>kubernetes</code> 部署的集群而单独部署在其他单独的服务器上，且并不需要和 <code>kubernetes</code> 节点数对应。经过我的实践如果有条件的话请务必：</p>
 <blockquote>
-<p>与多数发行版使用的 System V 风格 init 相比，systemd 采用了以下新技术：<br>采用 Socket 激活式与总线激活式服务，以提高相互依赖的各服务的并行运行性能；<br>用 cgroups 代替 PID 来追踪进程，以此即使是两次 fork 之后生成的守护进程也不会脱离 systemd 的控制。<br>从设计构思上说，由于 systemd 使用了 cgroup 与 fanotify 等组件以实现其特性，所以只适用于 Linux。<br>systemd 的服务管理程序：<br>systemctl 是主要的工具，它融合之前 service 和 chkconfig 的功能于一体。可以使用它永久性或只在当前会话中启用 / 禁用服务。</p>
+<p>将 etcd 部署在 kubernetes 的 Node 节点之外负载比较低的服务器节点上。</p>
+<p>etcd 的集群数量尽量为奇数，以确保某些情况下部分 etcd 节点挂掉的选举问题。</p>
 </blockquote>
-<pre><code>启动一个服务：systemctl start postfix.service
-关闭一个服务：systemctl stop postfix.service
-重启一个服务：systemctl restart postfix.service
-显示一个服务的状态：systemctl status postfix.service
-在开机时启用一个服务：systemctl enable postfix.service
-在开机时禁用一个服务：systemctl disable postfix.service
-查看服务是否开机启动：systemctl is-enabled postfix.service;echo $?
-查看已启动的服务列表：systemctl list-unit-files|grep enabled
-</code></pre><h2 id="CentOS7 修改网卡为 eth0"><a href="#CentOS7 修改网卡为 eth0" class="headerlink" title="CentOS7 修改网卡为 eth0"></a>CentOS7 修改网卡为 eth0</h2><h3 id="编辑网卡信息"><a href="# 编辑网卡信息" class="headerlink" title="编辑网卡信息"></a>编辑网卡信息</h3><pre><code>[root@linux-node2~]# cd /etc/sysconfig/network-scripts/  #进入网卡目录
-[root@linux-node2network-scripts]# mv ifcfg-eno16777728 ifcfg-eth0  #重命名网卡名称
-[root@linux-node2network-scripts]# cat ifcfg-eth0  #编辑网卡信息
-TYPE=Ethernet
-BOOTPROTO=static
-DEFROUTE=yes
-PEERDNS=yes
-PEERROUTES=yes
-IPV4_FAILURE_FATAL=no
-NAME=eth0  #name 修改为 eth0
-ONBOOT=yes
-IPADDR=192.168.56.12
-NETMASK=255.255.255.0
-GATEWAY=192.168.56.2
-DNS1=192.168.56.2
-</code></pre><h3 id="修改 grub"><a href="# 修改 grub" class="headerlink" title="修改 grub"></a>修改 grub</h3><pre><code>[root@linux-node2~]# cat /etc/sysconfig/grub  #编辑内核信息, 添加红色字段的
-GRUB_TIMEOUT=5
-GRUB_DEFAULT=saved
-GRUB_DISABLE_SUBMENU=true
-GRUB_TERMINAL_OUTPUT=&quot;console&quot;
-GRUB_CMDLINE_LINUX=&quot;crashkernel=auto rhgb net.ifnames=0 biosdevname=0 quiet&quot;
-GRUB_DISABLE_RECOVERY=&quot;true&quot;
-[root@linux-node2~]# grub2-mkconfig -o /boot/grub2/grub.cfg  #生成启动菜单
-Generatinggrub configuration file ...
-Foundlinux image: /boot/vmlinuz-3.10.0-229.el7.x86_64
-Foundinitrd image: /boot/initramfs-3.10.0-229.el7.x86_64.img
-Foundlinux image: /boot/vmlinuz-0-rescue-1100f7e6c97d4afaad2e396403ba7f61
-Foundinitrd image: /boot/initramfs-0-rescue-1100f7e6c97d4afaad2e396403ba7f61.img
-Done
-</code></pre><p>也可以在开机启动加载安装系统界面设置。</p>
-<h3 id="验证是否修改成功"><a href="# 验证是否修改成功" class="headerlink" title="验证是否修改成功"></a>验证是否修改成功</h3><pre><code>[root@linux-node2~]# reboot  #必须重启系统生效
-[root@linux-node2~]# yum install net-tools #默认 centos7 不支持 ifconfig 需要看装 net-tools 包
-[root@linux-node2~]# ifconfig eth0  #在次查看网卡信息
-eth0:flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
-inet 192.168.56.12  netmask 255.255.255.0  broadcast 192.168.56.255
-inet6 fe80::20c:29ff:fe5c:7bb1  prefixlen 64 scopeid 0x20&lt;link&gt;
-ether 00:0c:29:5c:7b:b1  txqueuelen 1000  (Ethernet)
-RX packets 152  bytes 14503 (14.1 KiB)
-RX errors 0  dropped 0 overruns 0  frame 0
-TX packets 98  bytes 14402 (14.0 KiB)
-TX errors 0  dropped 0 overruns 0  carrier 0 collisions 0
-</code></pre><h3 id="设置主机名解析"><a href="# 设置主机名解析" class="headerlink" title="设置主机名解析"></a>设置主机名解析</h3><pre><code>[root@linux-node1 ~]# cat /etc/hosts
+<p>至此，我们的 <code>etcd</code> 集群已经顺利安装完成。接下来安装 flannel 插件。</p>
+<p>参考资料 <br><a href="https://jimmysong.io/kubernetes-handbook/practice/install-kubernetes-on-centos.html" target="_blank" rel="noopener"> 在 CentOS 上部署 kubernetes 集群</a></p>
 
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-
-::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-192.168.56.11 linux-node1 linux-node1.example.com
-
-192.168.56.12 linux-node2 linux-node2.example.com
-</code></pre><h3 id="centos-7- 修改主机名的方法"><a href="#centos-7- 修改主机名的方法" class="headerlink" title="centos 7 修改主机名的方法"></a>centos 7 修改主机名的方法 </h3><p>hostnamectl 命令<br> 在 7 版本中，hostname 有三种形式 <br> 静态 (Static host name)<br> 动态 (Transient/dynamic host name)<br> 别名(Pretty host name)</p>
-<p>查询主机名</p>
-<pre><code>hostnamectl 或 hostctl status 查询主机名
-hostnamectl status [--static|--transient|--pretty]
-</code></pre><p>修改 hostname</p>
-<pre><code>hostnamectl set-hostname servername [--static|--transient|--pretty]
-</code></pre><p>删除 hostname</p>
-<pre><code>hostnamectl set-hostname &quot;&quot;
-hostnamectl set-hostname &quot;&quot; --static
-hostnamectl set-hostname &quot;&quot; --pretty
-</code></pre><p>修改配置文件</p>
-<pre><code>hostname  name
-vim /etc/hostname 
-</code></pre><p>通过 nmtui 修改，之后重启 hostnamed</p>
-<pre><code>systemctl restart systemd-hostnamed
-</code></pre><p>通过 nmcui 修改，之后重启 hostnamed</p>
-<pre><code>nmcli general hostname servername
-systemctl restart systemd-hostnamed
-</code></pre><h3 id="安装 EPEL 仓库和常用命令"><a href="# 安装 EPEL 仓库和常用命令" class="headerlink" title="安装 EPEL 仓库和常用命令"></a>安装 EPEL 仓库和常用命令</h3><pre><code>[root@linux-node1 ~]# rpm -ivh http://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
-
-[root@linux-node1 ~]# yum install -y net-tools vim lrzsz tree screen lsof tcpdump
-</code></pre><h3 id="关闭 NetworkManager 和防火墙"><a href="# 关闭 NetworkManager 和防火墙" class="headerlink" title="关闭 NetworkManager 和防火墙"></a>关闭 NetworkManager 和防火墙</h3><pre><code>[root@linux-node1 ~]# systemctl stop firewalld  #关闭防火墙
-[root@linux-node1 ~]# systemctl disable firewalld   #设置开机不启动
-
-[root@linux-node1 ~]# systemctl stop NetworkManager
-</code></pre><h3 id="关闭 SELinux"><a href="# 关闭 SELinux" class="headerlink" title="关闭 SELinux"></a>关闭 SELinux</h3><pre><code>[root@linux-node1 ~]# vim /etc/sysconfig/selinux
-
-SELINUX=disabled #修改为 disabled
-</code></pre><p>检查结果如下</p>
-<pre><code>[root@linux-node1 ~]# getsebool 
-
-getsebool:  SELinux is disabled
-</code></pre><h3 id="更新系统并重启"><a href="# 更新系统并重启" class="headerlink" title="更新系统并重启"></a>更新系统并重启</h3><pre><code>[root@linux-node1 ~]# yum update -y &amp;&amp; reboot
-</code></pre><h2 id="centos7 设置开机脚本"><a href="#centos7 设置开机脚本" class="headerlink" title="centos7 设置开机脚本"></a>centos7 设置开机脚本 </h2><p> 新建开机脚本<code>vim /root/Dropbox/save/bootstartscript.sh</code></p>
-<pre><code># 添加开机启动脚本
-#开机启动 dropbox
-dropbox start -d
-</code></pre><p>添加开机脚本到启动文件<code>vim /etc/rc.d/rc.local</code></p>
-<pre><code># 开机启动脚本
-/bin/sh /root/Dropbox/save/bootstartscript.sh
-</code></pre><p>设置启动脚本生效</p>
-<pre><code>chmod +x /etc/rc.d/rc.local
-</code></pre>
       
     </div>
     
@@ -638,7 +632,7 @@ dropbox start -d
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yhaing.github.io/2015/01/22/CentOS7修改网卡为eth0/" title="CentOS7 修改网卡为 eth0">https://yhaing.github.io/2015/01/22/CentOS7修改网卡为eth0/</a>
+    <a href="https://yhaing.github.io/2018/09/20/Kubernetes集群之路（二）etcd集群部署/" title="Kubernetes 集群之路（二）etcd 集群部署">https://yhaing.github.io/2018/09/20/Kubernetes集群之路（二）etcd集群部署/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -663,7 +657,7 @@ dropbox start -d
       
         <div class="post-tags">
           
-            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
           
         </div>
       
@@ -676,8 +670,8 @@ dropbox start -d
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/01/21/Centos7内核由3.10升级至4.12方法/" rel="next" title="Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法">
-                <i class="fa fa-chevron-left"></i> Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法
+              <a href="/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/" rel="next" title="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】">
+                <i class="fa fa-chevron-left"></i> ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】
               </a>
             
           </div>
@@ -686,8 +680,8 @@ dropbox start -d
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/01/22/CentOS7.4安装OpenVpn/" rel="prev" title="CentOS7.4 安装 OpenVpn">
-                CentOS7.4 安装 OpenVpn <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/20/Kubernetes集群之路（一）TLS证书配置/" rel="prev" title="Kubernetes 集群之路（一）TLS 证书配置">
+                Kubernetes 集群之路（一）TLS 证书配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -697,7 +691,7 @@ dropbox start -d
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/01/23/CentOS7.4安装GlusterFS/">CentOS7.4 安装 GlusterFS</a></li><li><a href="/2015/01/22/CentOS7.4安装OpenVpn/">CentOS7.4 安装 OpenVpn</a></li><li><a href="/2015/01/21/Centos7内核由3.10升级至4.12方法/">Centos 7/6 内核版本由 3.10.0 升级至 4.12.4 方法</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/09/20/Kubernetes集群之路（一）TLS证书配置/">Kubernetes 集群之路（一）TLS 证书配置</a></li></ul>
       
     </footer>
   </div>
@@ -884,7 +878,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS7 修改网卡为 eth0"><span class="nav-number">1.</span> <span class="nav-text">CentOS7 修改网卡为 eth0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑网卡信息"><span class="nav-number">1.1.</span> <span class="nav-text">编辑网卡信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改 grub"><span class="nav-number">1.2.</span> <span class="nav-text">修改 grub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证是否修改成功"><span class="nav-number">1.3.</span> <span class="nav-text">验证是否修改成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置主机名解析"><span class="nav-number">1.4.</span> <span class="nav-text">设置主机名解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#centos-7- 修改主机名的方法"><span class="nav-number">1.5.</span> <span class="nav-text">centos 7 修改主机名的方法 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装 EPEL 仓库和常用命令"><span class="nav-number">1.6.</span> <span class="nav-text">安装 EPEL 仓库和常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭 NetworkManager 和防火墙"><span class="nav-number">1.7.</span> <span class="nav-text">关闭 NetworkManager 和防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭 SELinux"><span class="nav-number">1.8.</span> <span class="nav-text">关闭 SELinux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新系统并重启"><span class="nav-number">1.9.</span> <span class="nav-text">更新系统并重启</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos7 设置开机脚本"><span class="nav-number">2.</span> <span class="nav-text">centos7 设置开机脚本 </span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署 etcd"><span class="nav-number">1.</span> <span class="nav-text">部署 etcd</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装二进制文件"><span class="nav-number">1.1.</span> <span class="nav-text">下载安装二进制文件 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置 systemd-unit"><span class="nav-number">1.2.</span> <span class="nav-text">配置 systemd unit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证 etcd 安装"><span class="nav-number">1.3.</span> <span class="nav-text">验证 etcd 安装 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">1.4.</span> <span class="nav-text">后记 </span></a></li></ol></li></ol></div>
             
 
           </div>
