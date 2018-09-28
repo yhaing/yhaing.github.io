@@ -1949,7 +1949,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #730359;
+  background: #372fd2;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3301,4 +3301,10 @@ html {
 ::selection {
   background: #262a30;
   color: #fff;
+}
+#days {
+  display: block;
+  color: #07b39b;
+  font-size: 13px;
+  margin-top: 15px;
 }
