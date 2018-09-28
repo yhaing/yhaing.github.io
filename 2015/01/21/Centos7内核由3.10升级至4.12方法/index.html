@@ -127,22 +127,20 @@
 
 
 
-<meta name="description" content="【写在前面】公司打算上Docker服务，目前需要安装运行环境，Docker新的功能除了需要Centos 7系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。 【文章内容】关于内核版本的定义： 版本性质：主分支ml(mainline)，稳定版(stable)">
 <meta name="keywords" content="CentOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Centos 7&#x2F;6 内核版本由 3.10.0 升级至 4.12.4 方法">
 <meta property="og:url" content="https://yhaing.github.io/2015/01/21/Centos7内核由3.10升级至4.12方法/index.html">
 <meta property="og:site_name" content="海阔天空">
-<meta property="og:description" content="【写在前面】公司打算上Docker服务，目前需要安装运行环境，Docker新的功能除了需要Centos 7系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。 【文章内容】关于内核版本的定义： 版本性质：主分支ml(mainline)，稳定版(stable)">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/xmziP0K.jpg">
 <meta property="og:image" content="https://i.imgur.com/XdxdnmC.jpg">
 <meta property="og:image" content="https://i.imgur.com/6XuTzZM.jpg">
 <meta property="og:image" content="https://i.imgur.com/rdO1xZ3.jpg">
-<meta property="og:updated_time" content="2018-09-22T00:50:15.987Z">
+<meta property="og:updated_time" content="2018-09-28T05:53:23.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos 7&#x2F;6 内核版本由 3.10.0 升级至 4.12.4 方法">
-<meta name="twitter:description" content="【写在前面】公司打算上Docker服务，目前需要安装运行环境，Docker新的功能除了需要Centos 7系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。 【文章内容】关于内核版本的定义： 版本性质：主分支ml(mainline)，稳定版(stable)">
-<meta name="twitter:image" content="https://i.imgur.com/XdxdnmC.jpg">
+<meta name="twitter:image" content="https://i.imgur.com/xmziP0K.jpg">
 
 
 
@@ -484,9 +482,11 @@
       
 
       
-        <h2 id="【写在前面】"><a href="#【写在前面】" class="headerlink" title="【写在前面】"></a>【写在前面】</h2><p>公司打算上 Docker 服务，目前需要安装运行环境，Docker 新的功能除了需要 Centos 7 系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。<br><strong><br>注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。</strong></p>
+        <p><img src="https://i.imgur.com/xmziP0K.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="【写在前面】"><a href="#【写在前面】" class="headerlink" title="【写在前面】"></a>【写在前面】</h2><p>公司打算上 Docker 服务，目前需要安装运行环境，Docker 新的功能除了需要 Centos 7 系统之外，内核的版本高低也决定着使用的效果，所以在此记录下系统内核版本升级过程。<br><strong><br>注：对于线上环境的内核版本还需要根据实际情况谨慎选择，越新的版本未来可能遇到的问题越多，此文只是记录升级方法而已。</strong></p>
 <h2 id="【文章内容】"><a href="#【文章内容】" class="headerlink" title="【文章内容】"></a>【文章内容】</h2><p><strong>关于内核版本的定义：</strong></p>
-<p>版本性质：主分支 ml(mainline)，稳定版(stable)，长期维护版 lt(longterm)<br><a id="more"></a></p>
+<p>版本性质：主分支 ml(mainline)，稳定版(stable)，长期维护版 lt(longterm)</p>
 <p>版本命名格式为 “A.B.C”：</p>
 <p><strong>数字 A 是内核版本号 </strong>：版本号只有在代码和内核的概念有重大改变的时候才会改变，历史上有两次变化：<br> 第一次是 1994 年的 1.0 版，第二次是 1996 年的 2.0 版，第三次是 2011 年的 3.0 版发布，但这次在内核的概念上并没有发生大的变化</p>
 <p><strong>数字 B 是内核主版本号：</strong>主版本号根据传统的奇 - 偶系统版本编号来分配：奇数为开发版，偶数为稳定版</p>
@@ -647,7 +647,7 @@ CentOS Linux (0-rescue-a43cc2091b4557f1fd10a52ccffa5db2) 7 (Core)
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/01/22/CentOS7.4安装OpenVpn/">CentOS7.4 安装 OpenVpn</a></li><li><a href="/2015/01/23/CentOS7.4安装GlusterFS/">CentOS7.4 安装 GlusterFS</a></li><li><a href="/2015/01/22/CentOS7修改网卡为eth0/">CentOS7 修改网卡为 eth0</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/01/23/CentOS7.4安装GlusterFS/">CentOS7.4 安装 GlusterFS</a></li><li><a href="/2015/01/22/CentOS7.4安装OpenVpn/">CentOS7.4 安装 OpenVpn</a></li><li><a href="/2015/01/22/CentOS7修改网卡为eth0/">CentOS7 修改网卡为 eth0</a></li></ul>
       
     </footer>
   </div>

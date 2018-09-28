@@ -127,18 +127,20 @@
 
 
 
-<meta name="description" content="给 NexT 主题内添加页面点击出现爱心的效果 创建 js 文件  在/themes/next/source/js/src下新建文件 clicklove.js，接着把该链接下的代码拷贝粘贴到clicklove.js 文件中。代码如下： !function(e,t,a){function n(){c(&amp;quot;.heart{width: 10px;height: 10px;position: fi">
+<meta name="description" content="给 NexT 主题内添加页面点击出现爱心的效果 创建 js 文件  在/themes/next/source/js/src下新建文件 clicklove.js，接着把该链接下的代码拷贝粘贴到clicklove.js 文件中。代码如下： !function(e,t,a){function n(){c(&amp;quot;.heart{width: 10px;height: 10px;position: f">
 <meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo NexT 主题添加点击爱心效果">
 <meta property="og:url" content="https://yhaing.github.io/2015/01/20/Hexo NexT主题添加点击爱心效果/index.html">
 <meta property="og:site_name" content="海阔天空">
-<meta property="og:description" content="给 NexT 主题内添加页面点击出现爱心的效果 创建 js 文件  在/themes/next/source/js/src下新建文件 clicklove.js，接着把该链接下的代码拷贝粘贴到clicklove.js 文件中。代码如下： !function(e,t,a){function n(){c(&amp;quot;.heart{width: 10px;height: 10px;position: fi">
+<meta property="og:description" content="给 NexT 主题内添加页面点击出现爱心的效果 创建 js 文件  在/themes/next/source/js/src下新建文件 clicklove.js，接着把该链接下的代码拷贝粘贴到clicklove.js 文件中。代码如下： !function(e,t,a){function n(){c(&amp;quot;.heart{width: 10px;height: 10px;position: f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-21T23:46:23.803Z">
+<meta property="og:image" content="https://i.imgur.com/Bvp5Ytx.jpg">
+<meta property="og:updated_time" content="2018-09-28T05:45:24.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo NexT 主题添加点击爱心效果">
-<meta name="twitter:description" content="给 NexT 主题内添加页面点击出现爱心的效果 创建 js 文件  在/themes/next/source/js/src下新建文件 clicklove.js，接着把该链接下的代码拷贝粘贴到clicklove.js 文件中。代码如下： !function(e,t,a){function n(){c(&amp;quot;.heart{width: 10px;height: 10px;position: fi">
+<meta name="twitter:description" content="给 NexT 主题内添加页面点击出现爱心的效果 创建 js 文件  在/themes/next/source/js/src下新建文件 clicklove.js，接着把该链接下的代码拷贝粘贴到clicklove.js 文件中。代码如下： !function(e,t,a){function n(){c(&amp;quot;.heart{width: 10px;height: 10px;position: f">
+<meta name="twitter:image" content="https://i.imgur.com/Bvp5Ytx.jpg">
 
 
 
@@ -480,7 +482,8 @@
       
 
       
-        <p>给 NexT 主题内添加页面点击出现爱心的效果</p>
+        <p><img src="https://i.imgur.com/Bvp5Ytx.jpg" alt=""></p>
+<p>给 NexT 主题内添加页面点击出现爱心的效果</p>
 <p>创建 js 文件 <br> 在<code>/themes/next/source/js/src</code>下新建文件 <code>clicklove.js</code>，接着把该链接下的代码拷贝粘贴到<code>clicklove.js</code> 文件中。<br>代码如下：</p>
 <pre><code>!function(e,t,a){function n(){c(&quot;.heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: &apos;&apos;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}&quot;),o(),r()}function r(){for(var e=0;e&lt;d.length;e++)d[e].alpha&lt;=0?(t.body.removeChild(d[e].el),d.splice(e,1)):(d[e].y--,d[e].scale+=.004,d[e].alpha-=.013,d[e].el.style.cssText=&quot;left:&quot;+d[e].x+&quot;px;top:&quot;+d[e].y+&quot;px;opacity:&quot;+d[e].alpha+&quot;;transform:scale(&quot;+d[e].scale+&quot;,&quot;+d[e].scale+&quot;) rotate(45deg);background:&quot;+d[e].color+&quot;;z-index:99999&quot;);requestAnimationFrame(r)}function o(){var t=&quot;function&quot;==typeof e.onclick&amp;&amp;e.onclick;e.onclick=function(e){t&amp;&amp;t(),i(e)}}function i(e){var a=t.createElement(&quot;div&quot;);a.className=&quot;heart&quot;,d.push({el:a,x:e.clientX-5,y:e.clientY-5,scale:1,alpha:1,color:s()}),t.body.appendChild(a)}function c(e){var a=t.createElement(&quot;style&quot;);a.type=&quot;text/css&quot;;try{a.appendChild(t.createTextNode(e))}catch(t){a.styleSheet.cssText=e}t.getElementsByTagName(&quot;head&quot;)[0].appendChild(a)}function s(){return&quot;rgb(&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;)&quot;}var d=[];e.requestAnimationFrame=function(){return e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||function(e){setTimeout(e,1e3/60)}}(),n()}(window,document);
 </code></pre><p>修改_layout.swig<br>在 <code>\themes\next\layout\_layout.swig</code> 文件末尾添加：</p>
@@ -594,7 +597,7 @@
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/02/26/Hexo NexT主题内接入网页在线联系功能/">Hexo NexT 主题内接入网页在线联系功能</a></li><li><a href="/2015/02/25/Hexo NexT主题内加入动态背景/">Hexo NexT 主题内加入动态背景</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/02/25/Hexo NexT主题内加入动态背景/">Hexo NexT 主题内加入动态背景</a></li><li><a href="/2015/02/26/Hexo NexT主题内接入网页在线联系功能/">Hexo NexT 主题内接入网页在线联系功能</a></li></ul>
       
     </footer>
   </div>
