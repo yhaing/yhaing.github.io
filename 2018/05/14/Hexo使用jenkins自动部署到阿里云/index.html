@@ -141,12 +141,15 @@
 <meta property="og:image" content="https://i.imgur.com/S7ftvsg.png">
 <meta property="og:image" content="https://i.imgur.com/gdTpy2b.png">
 <meta property="og:image" content="https://i.imgur.com/mSSvdPL.png">
+<meta property="og:image" content="https://i.imgur.com/8aoQAHb.png">
 <meta property="og:image" content="https://i.imgur.com/dMAFqRK.png">
 <meta property="og:image" content="https://i.imgur.com/H38MFTH.png">
+<meta property="og:image" content="https://i.imgur.com/qH6TTuh.png">
+<meta property="og:image" content="https://i.imgur.com/RLYYV38.png">
 <meta property="og:image" content="https://i.imgur.com/eST7STo.png">
-<meta property="og:image" content="https://i.imgur.com/cdTsGu4.png">
-<meta property="og:image" content="https://i.imgur.com/tdqLY3A.png">
-<meta property="og:updated_time" content="2018-09-30T05:55:46.409Z">
+<meta property="og:image" content="https://i.imgur.com/1mkXBzO.png">
+<meta property="og:image" content="https://i.imgur.com/2NfRqfB.png">
+<meta property="og:updated_time" content="2018-09-30T07:03:09.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 使用 jenkins 自动部署到阿里云">
 <meta name="twitter:image" content="https://i.imgur.com/4Pv3OSL.jpg">
@@ -454,7 +457,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.2k
                 </span>
               
 
@@ -470,7 +473,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -505,32 +508,39 @@ rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 yum install jenkins
 </code></pre><p>安装完成之后运行如下命令启动</p>
 <pre><code>systemctl start jenkins
-</code></pre><h2 id="安装 nginx"><a href="# 安装 nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h2><ul>
-<li><p>1. 安装 nginx 依赖</p>
-<p>  yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel<br>  wget <a href="http://nginx.org/download/nginx-1.13.10.tar.gz" target="_blank" rel="noopener">http://nginx.org/download/nginx-1.13.10.tar.gz</a><br>  tar xvf nginx-1.13.10.tar.gz<br>  ./configure –prefix=/usr/local/nginx<br>  make<br>  make install<br>  cd /usr/local/nginx/sbin<br>  ./nginx -s reload<br>  nginx: [error] open() “/usr/local/nginx/logs/nginx.pid” failed (2: No such file or direc</p>
-</li>
-</ul>
-<p>需要设置 nginx.conf</p>
+</code></pre><h2 id="安装 nginx"><a href="# 安装 nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h2><p>1. 安装 nginx 依赖</p>
+<pre><code>yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
+wget http://nginx.org/download/nginx-1.13.10.tar.gz
+tar xvf nginx-1.13.10.tar.gz
+./configure --prefix=/usr/local/nginx
+make
+make install
+cd /usr/local/nginx/sbin
+./nginx -s reload
+nginx: [error] open() &quot;/usr/local/nginx/logs/nginx.pid&quot; failed (2: No such file or direc
+</code></pre><p>需要设置 nginx.conf</p>
 <pre><code>./nginx -c /usr/local/nginx/conf/nginx.conf
-</code></pre><ul>
-<li><p>2.nginx.conf 配置</p>
-<p>  upstream jenkins {<br>  server 127.0.0.1:8081;<br>  keepalive 64;<br>  }<br>  server {</p>
-<pre><code> listen   80;
- server_name  jenkins.XXXXXX.com;
- client_max_body_size 60M;
- client_body_buffer_size 512k;
- location / {
-port_in_redirect on;
-proxy_pass  http://jenkins/;
-proxy_set_headerHost $host:$server_port;
-proxy_set_headerX-Real-IP $remote_addr;
-proxy_set_headerX-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_headerX-Forwarded-Proto $scheme;
+</code></pre><p>2.nginx.conf 配置</p>
+<pre><code>upstream jenkins {
+server 127.0.0.1:8081;
+keepalive 64;
 }
-</code></pre><p>  }</p>
-</li>
-</ul>
-<p>以上通过 nginx 反向代理 jenkins，在浏览器输入 jenkins.XXXXXX.club 就能够进入 jenkins 管理后台。</p>
+server {
+   listen   80;
+   server_name  jenkins.XXXXXX.com;
+   client_max_body_size 60M;
+   client_body_buffer_size 512k;
+   location / {
+  port_in_redirect on;
+  proxy_pass  http://jenkins/;
+  proxy_set_headerHost $host:$server_port;
+  proxy_set_headerX-Real-IP $remote_addr;
+  proxy_set_headerX-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_headerX-Forwarded-Proto $scheme;
+  }
+
+}
+</code></pre><p>以上通过 nginx 反向代理 jenkins，在浏览器输入 jenkins.XXXXXX.club 就能够进入 jenkins 管理后台。</p>
 <h2 id="配置 jenkins"><a href="# 配置 jenkins" class="headerlink" title="配置 jenkins"></a>配置 jenkins</h2><p>在 jenkins 页面提示目录中找到默认密码，输入 jenkis 域名，登陆 jenkins。</p>
 <p><img src="https://i.imgur.com/Sh6A0aQ.png" alt=""></p>
 <p>安装 jenkins 社区推荐的插件</p>
@@ -538,51 +548,74 @@ proxy_set_headerX-Forwarded-Proto $scheme;
 <p><strong>注意：</strong>到这一步会有一个坑，简直是神坑，因为 Jenkins 自身的原因，导致默认安装一到这一步就会报错：Jenkins 是离线状态，这是因为伟大的墙导致的。具体解决方法可以看我的另一篇博客：</p>
 <p><a href="https://yhaing.github.io/2018/05/14/jenkins%E5%AE%9E%E4%BE%8B%E4%BC%BC%E4%B9%8E%E5%B7%B2%E7%A6%BB%E7%BA%BF%E9%97%AE%E9%A2%98/">jenkins 实例似乎已离线问题</a></p>
 <p><img src="https://i.imgur.com/vQsTdro.png" alt=""></p>
-<h2 id="配置 github"><a href="# 配置 github" class="headerlink" title="配置 github"></a>配置 github</h2><h3 id="获取 sercret-text"><a href="# 获取 sercret-text" class="headerlink" title="获取 sercret text"></a>获取 sercret text</h3><p>登陆 github 网站，进入 github-&gt;Settings-&gt;Developer settings-&gt; Generate new token，点击生成完毕一定记录下下面的 secret text。<br>secret text 一定要记住，忘记的话只能重新生成。</p>
+<h2 id="配置 github"><a href="# 配置 github" class="headerlink" title="配置 github"></a>配置 github</h2><h3 id="获取 sercret-text"><a href="# 获取 sercret-text" class="headerlink" title="获取 sercret text"></a>获取 sercret text</h3><p>登陆 github 网站，进入 <code>github-&gt;Settings-&gt;Developer settings-&gt; Generate new token</code>，点击生成完毕一定记录下下面的<code>secret text</code>。<br>secret text 一定要记住，忘记的话只能重新生成。</p>
 <p><img src="https://i.imgur.com/6QWTNVe.png" alt=""></p>
-<h3 id="GitHub-webhooks- 设置"><a href="#GitHub-webhooks- 设置" class="headerlink" title="GitHub webhooks 设置"></a>GitHub webhooks 设置 </h3><p> 进入 GitHub 上指定的项目（hexo 仓库） –&gt; setting –&gt; WebHooks&amp;Services –&gt; add webhook –&gt; 输入刚刚部署 jenkins 的服务器的 IP</p>
+<h3 id="GitHub-webhooks- 设置"><a href="#GitHub-webhooks- 设置" class="headerlink" title="GitHub webhooks 设置"></a>GitHub webhooks 设置 </h3><p> 进入 GitHub 上指定的项目（hexo 仓库） –&gt; <code>setting --&gt; WebHooks&amp;Services --&gt; add webhook</code> –&gt; 输入刚刚部署 jenkins 的服务器的 IP</p>
 <p><img src="https://i.imgur.com/S7ftvsg.png" alt=""></p>
 <p>图片中标红区域是变化的，后缀都是一样的为<code>github-webhook</code>。</p>
 <h3 id="jenkins 中的 github 配置"><a href="#jenkins 中的 github 配置" class="headerlink" title="jenkins 中的 github 配置"></a>jenkins 中的 github 配置 </h3><h4 id="配置 GitHub-Plugin"><a href="# 配置 GitHub-Plugin" class="headerlink" title="配置 GitHub Plugin"></a> 配置 GitHub Plugin</h4><p>系统管理 –&gt; 系统设置 –&gt; GitHub –&gt; Add GitHub Sever</p>
 <p><img src="https://i.imgur.com/gdTpy2b.png" alt=""></p>
-<p>API URL 输入 <a href="https://api.github.com，Credentials 点击 Add 添加，Kind 选择 Secret" target="_blank" rel="noopener">https://api.github.com，Credentials 点击 Add 添加，Kind 选择 Secret</a> Text, 具体如下图所示。</p>
+<p><code>API URL</code> 输入 <code>https://api.github.com</code>，<code>Credentials</code>点击 Add 添加，<code>Kind</code>选择<code>Secret Text</code>, 具体如下图所示。</p>
 <p><img src="https://i.imgur.com/mSSvdPL.png" alt=""></p>
-<p>设置完成后，点击 TestConnection, 提示<code>Credentials verified for user UUserName, rate limit: xxx</code>, 则表明有效。</p>
-<h4 id="创建一个 freestyle 任务"><a href="# 创建一个 freestyle 任务" class="headerlink" title="创建一个 freestyle 任务"></a>创建一个 freestyle 任务</h4><ol>
+<p>设置完成后，点击<code>Test Connection</code>, 提示<code>Credentials verified for user UUserName, rate limit: xxx</code>, 则表明有效。</p>
+<p><img src="https://i.imgur.com/8aoQAHb.png" alt=""></p>
+<h4 id="创建一个 freestyle 任务"><a href="# 创建一个 freestyle 任务" class="headerlink" title="创建一个 freestyle 任务"></a>创建一个 freestyle 任务</h4><ul>
+<li><ol>
 <li>General 设置</li>
 </ol>
-<p>填写 GitHub project URL, 也就是你的项目主页<br>eg. <a href="https://github.com/your_name/your_repo_name" target="_blank" rel="noopener">https://github.com/your_name/your_repo_name</a></p>
+</li>
+</ul>
+<p>填写 GitHub project URL, 也就是你的项目主页 eg.<br><code>https://github.com/your_name/your_repo_name</code></p>
 <p><img src="https://i.imgur.com/dMAFqRK.png" alt=""></p>
-<ol start="2">
+<p>项目名称自定义。</p>
+<ul>
+<li><ol start="2">
 <li>配置源码管理</li>
 </ol>
+</li>
+</ul>
 <p><img src="https://i.imgur.com/H38MFTH.png" alt=""></p>
-<ol start="3">
+<p>这里有几点要注意：<br>（1）要加入一个有写权限的账号，点击 Add 后选择创建用户</p>
+<p><img src="https://i.imgur.com/qH6TTuh.png" alt=""></p>
+<p>创建完需要去 <code> 系统管理 --- 全局安全配置 ---- 项目矩阵授权策略 </code> 里分配用户需要的写权限。</p>
+<p><img src="https://i.imgur.com/RLYYV38.png" alt=""></p>
+<p>（2）要监听的 Branch 根据自己需要填写</p>
+<ul>
+<li><ol start="3">
 <li>构建触发器，构建环境</li>
 </ol>
+</li>
+</ul>
 <p><img src="https://i.imgur.com/eST7STo.png" alt=""></p>
-<ol start="4">
+<ul>
+<li><ol start="4">
 <li>构建</li>
 </ol>
-<p><img src="https://i.imgur.com/cdTsGu4.png" alt=""></p>
-<ol start="5">
-<li>构建脚本</li>
-</ol>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/1mkXBzO.png" alt=""></p>
+<p>构建脚本</p>
 <p>将上图的构建脚本替换如下：</p>
 <pre><code>cd /var/www/blog（hexo 目录）
 git pull
 hexo clean
 hexo g -d
-</code></pre><ol start="6">
+</code></pre><ul>
+<li><ol start="5">
 <li>构建后操作</li>
 </ol>
-<p><img src="https://i.imgur.com/tdqLY3A.png" alt=""></p>
-<ol start="7">
+</li>
+</ul>
+<p><img src="https://i.imgur.com/2NfRqfB.png" alt=""></p>
+<ul>
+<li><ol start="6">
 <li><p>构建前 clone hexo<br>将 hexo 初始代码拉取到 /var/www/blog 目录中，以后 jenkins 会监控 github 的 push 操作，一旦发现 push 会自动更新。</p>
-<p> cd /var/www</p>
-<p> git clone <a href="https://github.com/dumingcode/dumingcode.github.io.git" target="_blank" rel="noopener">https://github.com/dumingcode/dumingcode.github.io.git</a> blog</p>
+<p>cd /var/www</p>
+<p>git clone <a href="https://github.com/dumingcode/dumingcode.github.io.git" target="_blank" rel="noopener">https://github.com/dumingcode/dumingcode.github.io.git</a> blog</p>
 </li>
 </ol>
+</li>
+</ul>
 <h3 id="nginx 反向代理 hexo"><a href="#nginx 反向代理 hexo" class="headerlink" title="nginx 反向代理 hexo"></a>nginx 反向代理 hexo</h3><p>hexo 为静态网站，所以直接用 nginx 反向代理即可,nginx 脚本如下：注意 root 指向的是 hexo 部署目录。<br>server<br>{<br>    listen 80;<br>    server_name blog.buyasset.club;<br>    index index.html index.htm index.php default.html default.htm default.php;<br>    root  /var/www/blog;  </p>
 <pre><code>#error_page   404   /404.html;
 location ~ .*\.(ico|gif|jpg|jpeg|png|bmp|swf)$
@@ -696,8 +729,8 @@ Site updated: 2018-04-21 13:35:51
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/10/Java-JVM/" rel="next" title="Java-JVM 参数详解">
-                <i class="fa fa-chevron-left"></i> Java-JVM 参数详解
+              <a href="/2018/05/14/jenkins实例似乎已离线问题/" rel="next" title="jenkins 实例似乎已离线问题">
+                <i class="fa fa-chevron-left"></i> jenkins 实例似乎已离线问题
               </a>
             
           </div>
@@ -706,8 +739,8 @@ Site updated: 2018-04-21 13:35:51
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/14/jenkins实例似乎已离线问题/" rel="prev" title="jenkins 实例似乎已离线问题">
-                jenkins 实例似乎已离线问题 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/24/Python 3爬取百度经验数据/" rel="prev" title="Python 3 爬取百度经验数据">
+                Python 3 爬取百度经验数据 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
