@@ -149,7 +149,8 @@
 <meta property="og:image" content="https://i.imgur.com/eST7STo.png">
 <meta property="og:image" content="https://i.imgur.com/1mkXBzO.png">
 <meta property="og:image" content="https://i.imgur.com/2NfRqfB.png">
-<meta property="og:updated_time" content="2018-09-30T07:03:09.832Z">
+<meta property="og:image" content="https://i.imgur.com/So3MkQG.png">
+<meta property="og:updated_time" content="2018-09-30T07:13:26.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 使用 jenkins 自动部署到阿里云">
 <meta name="twitter:image" content="https://i.imgur.com/4Pv3OSL.jpg">
@@ -457,7 +458,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.4k
                 </span>
               
 
@@ -579,6 +580,8 @@ server {
 <p><img src="https://i.imgur.com/qH6TTuh.png" alt=""></p>
 <p>创建完需要去 <code> 系统管理 --- 全局安全配置 ---- 项目矩阵授权策略 </code> 里分配用户需要的写权限。</p>
 <p><img src="https://i.imgur.com/RLYYV38.png" alt=""></p>
+<p>具体可以参考：</p>
+<p><a href="https://www.cnblogs.com/kevingrace/p/6019707.html" target="_blank" rel="noopener">jenkins 配置记录（1）–添加用户权限</a></p>
 <p>（2）要监听的 Branch 根据自己需要填写</p>
 <ul>
 <li><ol start="3">
@@ -637,7 +640,16 @@ location / {try_files $uri $uri/ =404;}
 Commit 76f3c530d077782fd66a8ca375afaa17cd188286 by duming
 Site updated: 2018-04-21 13:35:51
  (commit: 76f3c53)
-</code></pre><h3 id="参考链接"><a href="# 参考链接" class="headerlink" title="参考链接"></a>参考链接 </h3><p><a href="https://link.juejin.im/?target=https%3A%2F%2Fblog.csdn.net%2Fu011904605%2Farticle%2Fdetails%2F54590383" target="_blank" rel="noopener"> 手把手教你搭建 Jenkins+Github 持续集成环境</a></p>
+</code></pre><p>当配置完成测试构建时如果碰到 Jenkins 控制台报错：<code>error: cannot open .git/FETCH_HEAD: Permission denied</code>, 可先登录服务器查看 <code>.git/FETCH_HEAD</code> 文件的权限是否正确，</p>
+<p><img src="https://i.imgur.com/So3MkQG.png" alt=""></p>
+<p>我最后的解决方法是：</p>
+<pre><code>[root@blog var]# cd /var/www/
+[root@blog www]# ll
+total 4
+drwxr-xr-x 17 root root 4096 Sep 30 15:04 blog
+[root@blog www]# chown -R jenkins.jenkins blog
+</code></pre><p>因为最开始创建这个目录使用的 root 创建，Jenkins 对这个目录没有权限，导致最后纠结了好久。</p>
+<h3 id="参考链接"><a href="# 参考链接" class="headerlink" title="参考链接"></a>参考链接 </h3><p><a href="https://link.juejin.im/?target=https%3A%2F%2Fblog.csdn.net%2Fu011904605%2Farticle%2Fdetails%2F54590383" target="_blank" rel="noopener"> 手把手教你搭建 Jenkins+Github 持续集成环境</a></p>
 <p><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.jianshu.com%2Fp%2Fb2ed4d23a3a9" target="_blank" rel="noopener">Jenkins+Github 持续集成</a></p>
 <p><a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.cnblogs.com%2Fitech%2Farchive%2F2011%2F11%2F23%2F2260009.html" target="_blank" rel="noopener">Jenkins 最佳实践</a></p>
 <p><a href="https://link.juejin.im/?target=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000005723321" target="_blank" rel="noopener">hexo 自动部署</a></p>
@@ -729,8 +741,8 @@ Site updated: 2018-04-21 13:35:51
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/14/jenkins实例似乎已离线问题/" rel="next" title="jenkins 实例似乎已离线问题">
-                <i class="fa fa-chevron-left"></i> jenkins 实例似乎已离线问题
+              <a href="/2018/04/10/Java-JVM/" rel="next" title="Java-JVM 参数详解">
+                <i class="fa fa-chevron-left"></i> Java-JVM 参数详解
               </a>
             
           </div>
@@ -739,8 +751,8 @@ Site updated: 2018-04-21 13:35:51
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/24/Python 3爬取百度经验数据/" rel="prev" title="Python 3 爬取百度经验数据">
-                Python 3 爬取百度经验数据 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/14/jenkins实例似乎已离线问题/" rel="prev" title="jenkins 实例似乎已离线问题">
+                jenkins 实例似乎已离线问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
