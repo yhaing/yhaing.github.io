@@ -134,6 +134,9 @@
 <meta property="og:site_name" content="海阔天空">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/4Pv3OSL.jpg">
+<meta property="og:image" content="https://i.imgur.com/u4ObTzE.png">
+<meta property="og:image" content="https://i.imgur.com/drhgg2l.png">
+<meta property="og:image" content="https://i.imgur.com/kVIgaTD.png">
 <meta property="og:image" content="https://i.imgur.com/Sh6A0aQ.png">
 <meta property="og:image" content="https://i.imgur.com/XA3pqdf.png">
 <meta property="og:image" content="https://i.imgur.com/vQsTdro.png">
@@ -150,7 +153,7 @@
 <meta property="og:image" content="https://i.imgur.com/1mkXBzO.png">
 <meta property="og:image" content="https://i.imgur.com/2NfRqfB.png">
 <meta property="og:image" content="https://i.imgur.com/So3MkQG.png">
-<meta property="og:updated_time" content="2018-09-30T07:13:26.146Z">
+<meta property="og:updated_time" content="2018-09-30T07:47:40.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 使用 jenkins 自动部署到阿里云">
 <meta name="twitter:image" content="https://i.imgur.com/4Pv3OSL.jpg">
@@ -458,7 +461,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.4k
+                  2.2k
                 </span>
               
 
@@ -474,7 +477,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  9
                 </span>
               
             </div>
@@ -503,45 +506,120 @@
 <p><a href="http://www.swiftyper.com/2016/04/17/deploy-hexo-with-git-hook/" target="_blank" rel="noopener">使用 Git Hook 自动部署 Hexo 到个人 VPS</a></p>
 <p><a href="https://juejin.im/entry/59882cc56fb9a03c615fc43b" target="_blank" rel="noopener">配合 TRAVIS CI，将 HEXO 博客自动部署到你的服务器上</a></p>
 <p>注：个人觉得使用 Travis 不太方便，还是 Jenkins 的 WEB 页面配置来得直观，纯属个人观点</p>
-<h2 id="下载并运行 jenkins"><a href="# 下载并运行 jenkins" class="headerlink" title="下载并运行 jenkins"></a>下载并运行 jenkins</h2><p>注意端口使用的是 8081</p>
+<h2 id="下载并运行 jenkins"><a href="# 下载并运行 jenkins" class="headerlink" title="下载并运行 jenkins"></a>下载并运行 jenkins</h2><p>注意端口使用的是默认 8080</p>
 <pre><code>wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
 rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 yum install jenkins
 </code></pre><p>安装完成之后运行如下命令启动</p>
 <pre><code>systemctl start jenkins
-</code></pre><h2 id="安装 nginx"><a href="# 安装 nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h2><p>1. 安装 nginx 依赖</p>
-<pre><code>yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
-wget http://nginx.org/download/nginx-1.13.10.tar.gz
-tar xvf nginx-1.13.10.tar.gz
-./configure --prefix=/usr/local/nginx
-make
-make install
-cd /usr/local/nginx/sbin
-./nginx -s reload
-nginx: [error] open() &quot;/usr/local/nginx/logs/nginx.pid&quot; failed (2: No such file or direc
-</code></pre><p>需要设置 nginx.conf</p>
-<pre><code>./nginx -c /usr/local/nginx/conf/nginx.conf
-</code></pre><p>2.nginx.conf 配置</p>
-<pre><code>upstream jenkins {
-server 127.0.0.1:8081;
-keepalive 64;
-}
-server {
-   listen   80;
-   server_name  jenkins.XXXXXX.com;
-   client_max_body_size 60M;
-   client_body_buffer_size 512k;
-   location / {
-  port_in_redirect on;
-  proxy_pass  http://jenkins/;
-  proxy_set_headerHost $host:$server_port;
-  proxy_set_headerX-Real-IP $remote_addr;
-  proxy_set_headerX-Forwarded-For $proxy_add_x_forwarded_for;
-  proxy_set_headerX-Forwarded-Proto $scheme;
-  }
+</code></pre><h2 id="git 环境搭建"><a href="#git 环境搭建" class="headerlink" title="git 环境搭建"></a>git 环境搭建 </h2><h3 id="git 安装"><a href="#git 安装" class="headerlink" title="git 安装"></a>git 安装</h3><p> 参考资料：</p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.liaoxuefeng.com%2Fwiki%2F0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖雪峰老师的 git 教程</a></p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fgitforwindows.org%2F" target="_blank" rel="noopener">git 官网下载</a></p>
+<h3 id="生成 ssh 认证，执行如下命令"><a href="# 生成 ssh 认证，执行如下命令" class="headerlink" title="生成 ssh 认证，执行如下命令"></a>生成 ssh 认证，执行如下命令 </h3><p> 参考资料：</p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fblog.csdn.net%2FYan_Less%2Farticle%2Fdetails%2F72866395" target="_blank" rel="noopener">Git 提交时报错 warning: LF will be replaced by CRLF in</a></p>
+<pre><code>git config --global user.name &quot;yourname&quot;
+git config --global user.email youremail@example.com
+ssh-keygen -t rsa -C &quot;youremail@example.com&quot;
+git config --global core.autocrlf false  // 禁用自动转换，这个不设置后面上传时会出现警告，如下
+</code></pre><p><img src="https://i.imgur.com/u4ObTzE.png" alt=""></p>
+<p>最后获取到的 <code>ssh</code> 认证在 <code>C:\Users\yourname\.ssh</code> 中</p>
+<h3 id="服务器端配置"><a href="# 服务器端配置" class="headerlink" title="服务器端配置"></a>服务器端配置 </h3><p> 搭建远程 Git 私库</p>
+<p>1. 登录到远程服务器，建议使用<code>Xshell 5</code></p>
+<p>2. 安装 git，执行如下命令</p>
+<pre><code>git --version // 如无，则安装
+yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
+yum install -y git
+</code></pre><p>3. 创建用户并配置其仓库，执行如下命令</p>
+<p>参考资料：</p>
+<p><a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.swiftyper.com%2F2016%2F04%2F17%2Fdeploy-hexo-with-git-hook%2F" target="_blank" rel="noopener">使用 Git Hook 自动部署 Hexo 到个人 VPS</a></p>
+<pre><code>useradd git
+passwd git // 设置密码
+su git // 这步很重要，不切换用户后面会很麻烦
+cd /home/git/
+mkdir -p projects/blog // 项目存在的真实目录
+mkdir repos &amp;&amp; cd repos
+git init --bare blog.git // 创建一个裸露的仓库
+cd blog.git/hooks
+vi post-receive // 创建 hook 钩子函数，输入了内容如下（原理可以参考上面的链接）
 
-}
-</code></pre><p>以上通过 nginx 反向代理 jenkins，在浏览器输入 jenkins.XXXXXX.club 就能够进入 jenkins 管理后台。</p>
+
+#!/bin/sh
+git --work-tree=/home/git/projects/blog --git-dir=/home/git/repos/blog.git checkout -f
+</code></pre><p>添加完毕后修改权限，执行如下命令</p>
+<pre><code>chmod +x post-receive
+exit // 退出到 root 登录
+chown -R git:git /home/git/repos/blog.git // 添加权限
+</code></pre><p>4. 测试 git 仓库是否可用，在 Windows 端另找空白文件夹，执行如下命令</p>
+<pre><code>git clone git@server_ip:/home/git/repos/blog.git
+</code></pre><p>如果能把空仓库拉下来，就说明 git 仓库搭建成功了</p>
+<p>5. 建立 ssh 信任关系，在本地电脑，执行如下命令</p>
+<p>参考资料：</p>
+<p><a href="https://link.juejin.im/?target=http%3A%2F%2Froclinux.cn%2F%3Fp%3D2551" target="_blank" rel="noopener">ssh-copy-id 帮你建立信任</a></p>
+<pre><code>ssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip
+ssh git@server_ip // 测试能否登录
+</code></pre><p><strong>注：此时的 ssh 登录 git 用户不需要密码！否则就有错，请仔细重复步骤 3-4</strong></p>
+<p>6. 如果第 5 步能成功，为了安全起见禁用 <code>git 用户</code> 的 shell 登录权限，从而只能用 <code>git clone</code>,<code>git push</code> 等登录，执行如下命令</p>
+<p>参考资料：</p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fblog.csdn.net%2Flgyaxx%2Farticle%2Fdetails%2F72954121" target="_blank" rel="noopener">Git Server - 限制 Git 用户使用 SSH 登陆操作</a></p>
+<pre><code>cat /etc/shells // 查看 `git-shell` 是否在登录方式里面，有则跳过
+which git-shell // 查看是否安装
+vi /etc/shells
+添加上 2 步显示出来的路劲，通常在 /usr/bin/git-shell
+</code></pre><p>修改 <code>/etc/passwd</code> 中的权限，将原来的</p>
+<pre><code>git:x:1000:1000::/home/git:/bin/bash
+</code></pre><p>修改为</p>
+<pre><code>git:x:1000:1000:,,,:/home/git:/usr/bin/git-shell
+</code></pre><h2 id="搭建 nginx 服务器"><a href="# 搭建 nginx 服务器" class="headerlink" title="搭建 nginx 服务器"></a>搭建 nginx 服务器</h2><p>1. 下载并安装 nginx，执行如下命令</p>
+<p>参考资料：</p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.jianshu.com%2Fp%2F4134a44a09c2" target="_blank" rel="noopener">Nginx 源码安装和简单的配置</a></p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Faotu.io%2Fnotes%2F2016%2F08%2F16%2Fnginx-https%2Findex.html" target="_blank" rel="noopener">Nginx 配置 HTTPS 服务器</a></p>
+<pre><code>cd /usr/local/src
+wget http://nginx.org/download/nginx-1.15.2.tar.gz
+tar xzvf nginx-1.15.2.tar.gz
+cd nginx-1.15.2
+./configure // 如果后面还想要配置 SSL 协议，就执行后面一句！
+./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-file-aio --with-http_realip_module
+make &amp;&amp; make install
+设置开机自启动
+vim /usr/lib/systemd/system/nginx.service
+[Unit]
+Description=The nginx HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/usr/local/nginx/logs/nginx.pid 
+ExecStartPre=/usr/local/nginx/sbin/nginx -t 
+ExecStart=/usr/local/nginx/sbin/nginx 
+ExecReload=/bin/kill -s HUP /usr/local/nginx/logs/nginx.pid 
+ExecStop=/bin/kill -s QUIT /usr/local/nginx/logs/nginx.pid 
+PrivateTmp=true 
+
+[Install] 
+WantedBy=multi-user.target
+
+
+启动 nginx
+systemctl enable nginx.service
+systemctl restart nginx.service
+systemctl status nginx.service
+ss -lntup
+</code></pre><p>2. 配置 nginx 文件</p>
+<p>参考资料：</p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fblog.csdn.net%2Fyang_xu_1987%2Farticle%2Fdetails%2F77929658" target="_blank" rel="noopener">Linux 中 nginx 基本操作命令</a></p>
+<p>先启动是否安装成功，执行如下命令</p>
+<pre><code>nginx // 直接来！浏览器查看 server_ip，默认是 80 端口
+</code></pre><p>配置文件，执行如下命令</p>
+<pre><code>nginx -s stop // 先停止 nginx
+cd /usr/local/nginx/conf
+vi nginx.conf
+修改 root 解析路径，如下图
+同时将 user 改为 root 如下图，不然 nginx 无法访问 /home/git/project/blog
+nginx -s reload
+</code></pre><p><img src="https://i.imgur.com/drhgg2l.png" alt=""></p>
+<p><img src="https://i.imgur.com/kVIgaTD.png" alt=""></p>
+<p>参考：</p>
+<p><a href="https://juejin.im/post/5b70d68ae51d45665d383281" target="_blank" rel="noopener">带你跳过各种坑，一次性把 Hexo 博客部署到自己的服务器</a></p>
 <h2 id="配置 jenkins"><a href="# 配置 jenkins" class="headerlink" title="配置 jenkins"></a>配置 jenkins</h2><p>在 jenkins 页面提示目录中找到默认密码，输入 jenkis 域名，登陆 jenkins。</p>
 <p><img src="https://i.imgur.com/Sh6A0aQ.png" alt=""></p>
 <p>安装 jenkins 社区推荐的插件</p>
@@ -741,8 +819,8 @@ drwxr-xr-x 17 root root 4096 Sep 30 15:04 blog
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/10/Java-JVM/" rel="next" title="Java-JVM 参数详解">
-                <i class="fa fa-chevron-left"></i> Java-JVM 参数详解
+              <a href="/2018/05/14/jenkins实例似乎已离线问题/" rel="next" title="jenkins 实例似乎已离线问题">
+                <i class="fa fa-chevron-left"></i> jenkins 实例似乎已离线问题
               </a>
             
           </div>
@@ -751,8 +829,8 @@ drwxr-xr-x 17 root root 4096 Sep 30 15:04 blog
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/14/jenkins实例似乎已离线问题/" rel="prev" title="jenkins 实例似乎已离线问题">
-                jenkins 实例似乎已离线问题 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/24/Python 3爬取百度经验数据/" rel="prev" title="Python 3 爬取百度经验数据">
+                Python 3 爬取百度经验数据 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -762,7 +840,7 @@ drwxr-xr-x 17 root root 4096 Sep 30 15:04 blog
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/02/25/Hexo NexT主题内加入动态背景/">Hexo NexT 主题内加入动态背景</a></li><li><a href="/2015/02/26/Hexo NexT主题内接入网页在线联系功能/">Hexo NexT 主题内接入网页在线联系功能</a></li><li><a href="/2015/01/20/Hexo NexT主题添加点击爱心效果/">Hexo NexT 主题添加点击爱心效果</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/02/26/Hexo NexT主题内接入网页在线联系功能/">Hexo NexT 主题内接入网页在线联系功能</a></li><li><a href="/2015/02/25/Hexo NexT主题内加入动态背景/">Hexo NexT 主题内加入动态背景</a></li><li><a href="/2015/01/20/Hexo NexT主题添加点击爱心效果/">Hexo NexT 主题添加点击爱心效果</a></li></ul>
       
     </footer>
   </div>
@@ -949,7 +1027,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载并运行 jenkins"><span class="nav-number">1.</span> <span class="nav-text">下载并运行 jenkins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装 nginx"><span class="nav-number">2.</span> <span class="nav-text">安装 nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置 jenkins"><span class="nav-number">3.</span> <span class="nav-text">配置 jenkins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置 github"><span class="nav-number">4.</span> <span class="nav-text">配置 github</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取 sercret-text"><span class="nav-number">4.1.</span> <span class="nav-text">获取 sercret text</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub-webhooks- 设置"><span class="nav-number">4.2.</span> <span class="nav-text">GitHub webhooks 设置 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jenkins 中的 github 配置"><span class="nav-number">4.3.</span> <span class="nav-text">jenkins 中的 github 配置 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置 GitHub-Plugin"><span class="nav-number">4.3.1.</span> <span class="nav-text"> 配置 GitHub Plugin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个 freestyle 任务"><span class="nav-number">4.3.2.</span> <span class="nav-text">创建一个 freestyle 任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx 反向代理 hexo"><span class="nav-number">4.4.</span> <span class="nav-text">nginx 反向代理 hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试 CICD 效果"><span class="nav-number">4.5.</span> <span class="nav-text">测试 CICD 效果 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">4.6.</span> <span class="nav-text">参考链接 </span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载并运行 jenkins"><span class="nav-number">1.</span> <span class="nav-text">下载并运行 jenkins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git 环境搭建"><span class="nav-number">2.</span> <span class="nav-text">git 环境搭建 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git 安装"><span class="nav-number">2.1.</span> <span class="nav-text">git 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成 ssh 认证，执行如下命令"><span class="nav-number">2.2.</span> <span class="nav-text">生成 ssh 认证，执行如下命令 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器端配置"><span class="nav-number">2.3.</span> <span class="nav-text">服务器端配置 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建 nginx 服务器"><span class="nav-number">3.</span> <span class="nav-text">搭建 nginx 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置 jenkins"><span class="nav-number">4.</span> <span class="nav-text">配置 jenkins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置 github"><span class="nav-number">5.</span> <span class="nav-text">配置 github</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取 sercret-text"><span class="nav-number">5.1.</span> <span class="nav-text">获取 sercret text</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub-webhooks- 设置"><span class="nav-number">5.2.</span> <span class="nav-text">GitHub webhooks 设置 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jenkins 中的 github 配置"><span class="nav-number">5.3.</span> <span class="nav-text">jenkins 中的 github 配置 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置 GitHub-Plugin"><span class="nav-number">5.3.1.</span> <span class="nav-text"> 配置 GitHub Plugin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个 freestyle 任务"><span class="nav-number">5.3.2.</span> <span class="nav-text">创建一个 freestyle 任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx 反向代理 hexo"><span class="nav-number">5.4.</span> <span class="nav-text">nginx 反向代理 hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试 CICD 效果"><span class="nav-number">5.5.</span> <span class="nav-text">测试 CICD 效果 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">5.6.</span> <span class="nav-text">参考链接 </span></a></li></ol></li></ol></div>
             
 
           </div>
