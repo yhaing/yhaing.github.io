@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deployment," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="Deployment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蓝绿发布、滚动发布、灰度发布等部署方案对比与总结">
+<meta property="og:url" content="https://yhaing.github.io/2018/04/15/蓝绿发布、滚动发布、灰度发布等部署方案对比与总结/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/WxE4w3x.jpg">
+<meta property="og:image" content="https://i.imgur.com/JnqCa7n.jpg">
+<meta property="og:image" content="https://i.imgur.com/K2eC0XZ.jpg">
+<meta property="og:image" content="https://i.imgur.com/E3Erd6u.jpg">
+<meta property="og:image" content="https://i.imgur.com/ZVXs93w.jpg">
+<meta property="og:image" content="https://i.imgur.com/QO3Eifm.jpg">
+<meta property="og:image" content="https://i.imgur.com/odShniN.jpg">
+<meta property="og:image" content="https://i.imgur.com/kdfQMb5.jpg">
+<meta property="og:image" content="https://i.imgur.com/FHx0Otf.jpg">
+<meta property="og:image" content="https://i.imgur.com/nwOQ72J.jpg">
+<meta property="og:image" content="https://i.imgur.com/9cEnhHM.jpg">
+<meta property="og:image" content="https://i.imgur.com/1CecHg9.jpg">
+<meta property="og:image" content="https://i.imgur.com/r5AMWQi.jpg">
+<meta property="og:image" content="https://i.imgur.com/ukfS8Fa.jpg">
+<meta property="og:image" content="https://i.imgur.com/NfLyFeU.jpg">
+<meta property="og:image" content="https://i.imgur.com/jMWd3iW.jpg">
+<meta property="og:image" content="https://i.imgur.com/1gENOZu.jpg">
+<meta property="og:image" content="https://i.imgur.com/W4015NR.jpg">
+<meta property="og:image" content="https://i.imgur.com/cc5yKKB.jpg">
+<meta property="og:image" content="https://i.imgur.com/f5iuoaC.jpg">
+<meta property="og:image" content="https://i.imgur.com/GxFK8wX.png">
+<meta property="og:image" content="https://i.imgur.com/FA0waks.jpg">
+<meta property="og:image" content="https://i.imgur.com/s8qSVRn.jpg">
+<meta property="og:image" content="https://i.imgur.com/yyun1cX.jpg">
+<meta property="og:image" content="https://i.imgur.com/V8cr3sa.jpg">
+<meta property="og:updated_time" content="2018-10-03T08:27:10.277Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="蓝绿发布、滚动发布、灰度发布等部署方案对比与总结">
+<meta name="twitter:image" content="https://i.imgur.com/WxE4w3x.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2018/04/15/蓝绿发布、滚动发布、灰度发布等部署方案对比与总结/"/>
+
+
+
+
+
+  <title>蓝绿发布、滚动发布、灰度发布等部署方案对比与总结 | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yhaing"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">成长就是你主观世界遇到客观世界之间的那条沟，你掉进去了，叫挫折，爬出来了，叫成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/04/15/蓝绿发布、滚动发布、灰度发布等部署方案对比与总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">蓝绿发布、滚动发布、灰度发布等部署方案对比与总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T08:34:14+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deployment/" itemprop="url" rel="index">
+                    <span itemprop="name">Deployment</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/04/15/蓝绿发布、滚动发布、灰度发布等部署方案对比与总结/" class="leancloud_visitors" data-flag-title="蓝绿发布、滚动发布、灰度发布等部署方案对比与总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  21
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/WxE4w3x.jpg" alt=""></p>
+<a id="more"></a>
+<p>在项目迭代的过程中，不可避免需要进行项目上线。上线对应着部署或者重新部署，部署对应着修改，修改则意味着风险。<br>目前有很多用于部署的技术，有的简单，有的复杂，有的得停机，有的不需要停机即可完成部署。作为技术人员，大家可能听说过“滚动发布”和“蓝绿发布”等术语，但是很多人并不清楚这些术语背后的原理。本文试图总结当前主流的发布策略，每个的优劣，适用性，让开发人员特别是架构师对现代发布技术有一个更为清晰全面的认识，让大家能够根据自己的企业上下文，对发布策略做出正确的选型和实践。</p>
+<h1 id="单服务器组发布"><a href="# 单服务器组发布" class="headerlink" title="单服务器组发布"></a>单服务器组发布 </h1><p> 先解释下单服务器组的概念，早先我们机器资源比较紧张，不像现在云计算和虚拟化（包括容器技术）这么发达，所以应用机器基本是预先静态分配好的（一般由运维负责分配），原来应用 A 住在这 n 台机器上，那么下次升级发布的应用 A 也住在这 n 台机器上，所以称为单服务器组发布方式。</p>
+<h2 id="蛮力发布"><a href="# 蛮力发布" class="headerlink" title="蛮力发布"></a>蛮力发布 </h2><p> 如下图所示，这种发布方式比较简单粗暴，有点像我们传统的软件升级方式，主要靠手工完成，先将老版本 V1 全部下掉，再将新版本发到机器上去。这种方式会引入服务中断（停机），在开发测试环境是可行的，但对于生产环境发布，其会直接影响用户的使用体验，这种方式一般是不建议的。</p>
+<p><img src="https://i.imgur.com/JnqCa7n.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/K2eC0XZ.jpg" alt=""></p>
+<h3 id="优势和适用场合"><a href="# 优势和适用场合" class="headerlink" title="优势和适用场合"></a>优势和适用场合 </h3><p> 优势：</p>
+<p>•简单成本低</p>
+<p>不足：</p>
+<p>•服务中断用户受影响，出了问题回退也慢</p>
+<p>适用场合：</p>
+<p>•开发测试环境</p>
+<p>•非关键应用（用户影响面小）</p>
+<p>•初创公司什么都缺，找夜深人静用户访问量小的时间干</p>
+<p><img src="https://i.imgur.com/E3Erd6u.jpg" alt=""> </p>
+<p>蛮力发布会引入服务中断时间</p>
+<h2 id="金丝雀发布（单服务器组）"><a href="# 金丝雀发布（单服务器组）" class="headerlink" title="金丝雀发布（单服务器组）"></a>金丝雀发布（单服务器组）</h2><p>在蛮力发布基础上的一种简单改进发布方式，目前仍然是不少成长型技术组织的主流发布方式。单服务器组下的金丝雀发布的简化步骤如下图所示：</p>
+<p><img src="https://i.imgur.com/ZVXs93w.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/QO3Eifm.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/odShniN.jpg" alt=""></p>
+<h3 id="部署过程"><a href="# 部署过程" class="headerlink" title="部署过程"></a>部署过程</h3><p>1. 金丝雀发布一般先发 1 台，或者一个小比例，例如 2% 的服务器，主要做流量验证用，也称为金丝雀 (Canary) 测试（国内常称灰度测试）。以前旷工开矿下矿洞前，先会放一只金丝雀进去探是否有有毒气体，看金丝雀能否活下来，金丝雀发布由此得名。简单的金丝雀测试一般通过手工测试验证，复杂的金丝雀测试需要比较完善的监控基础设施配合，通过监控指标反馈，观察金丝雀的健康状况，作为后续发布或回退的依据。</p>
+<p>2. 如果金丝测试通过，则把剩余的 V1 版本全部升级为 V2 版本。如果金丝雀测试失败，则直接回退金丝雀，发布失败。</p>
+<p><img src="https://i.imgur.com/kdfQMb5.jpg" alt=""></p>
+<p>灰度发布／金丝雀发布由以下几个步骤组成：</p>
+<p>•    准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。</p>
+<p>•    从负载均衡列表中移除掉「金丝雀」服务器。</p>
+<p>•    升级「金丝雀」应用（排掉原有流量并进行部署）。</p>
+<p>•    对应用进行自动化测试。</p>
+<p>•    将「金丝雀」服务器重新添加到负载均衡列表中（连通性和健康检查）。</p>
+<p>•    如果「金丝雀」在线使用测试成功，升级剩余的其他服务器（否则就回滚）。</p>
+<p>除此之外灰度发布还可以设置路由权重，动态调整不同的权重来进行新老版本的验证。</p>
+<h3 id="优势和适用场合 -1"><a href="# 优势和适用场合 -1" class="headerlink" title="优势和适用场合"></a>优势和适用场合 </h3><p> 优势：</p>
+<p>•用户体验影响小，金丝雀发布过程出现问题只影响少量用户</p>
+<p>不足：</p>
+<p>•发布自动化程度不够，发布期间可引发服务中断</p>
+<p>适用场合：</p>
+<p>•对新版本功能或性能缺乏足够信心</p>
+<p>•用户体验要求较高的网站业务场景</p>
+<p>•缺乏足够的自动化发布工具研发能力</p>
+<p><img src="https://i.imgur.com/FHx0Otf.jpg" alt=""></p>
+<p>少量金丝雀先接受流量，再全量发布</p>
+<h2 id="滚动式发布（单服务器组）"><a href="# 滚动式发布（单服务器组）" class="headerlink" title="滚动式发布（单服务器组）"></a>滚动式发布（单服务器组）</h2><ol>
+<li>定义</li>
+</ol>
+<p>滚动发布：一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。</p>
+<ol start="2">
+<li>特点</li>
+</ol>
+<p>这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的 20% 进行升级。</p>
+<p>滚动发布是在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。单服务器组下的滚动发布的简化步骤如下图所示：</p>
+<p><img src="https://i.imgur.com/nwOQ72J.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/9cEnhHM.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/1CecHg9.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/r5AMWQi.jpg" alt=""></p>
+<h3 id="部署过程 -1"><a href="# 部署过程 -1" class="headerlink" title="部署过程"></a>部署过程</h3><p>1. 滚动式发布一般先发 1 台，或者一个小比例，如 2% 服务器，主要做流量验证用，类似金丝雀 (Canary) 测试。</p>
+<p>2. 滚动式发布需要比较复杂的发布工具和智能 LB，支持平滑的版本替换和流量拉入拉出。</p>
+<p>3. 每次发布时，先将老版本 V1 流量从 LB 上摘除，然后清除老版本，发新版本 V2，再将 LB 流量接入新版本。这样可以尽量保证用户体验不受影响。</p>
+<p>4. 一次滚动式发布一般由若干个发布批次组成，每批的数量一般是可以配置的（可以通过发布模板定义）。例如第一批 1 台（金丝雀），第二批 10%，第三批 50%，第四批 100%。每个批次之间留观察间隔，通过手工验证或监控反馈确保没有问题再发下一批次，所以总体上滚动式发布过程是比较缓慢的 (其中金丝雀的时间一般会比后续批次更长，比如金丝雀 10 分钟，后续间隔 2 分钟)。</p>
+<p>5. 回退是发布的逆过程，将新版本流量从 LB 上摘除，清除新版本，发老版本，再将 LB 流量接入老版本。和发布过程一样，回退过程一般也比较慢的。</p>
+<p>6. 滚动式发布国外术语通常叫 Rolling Update Deployment。</p>
+<h3 id="优势和适用场合 -2"><a href="# 优势和适用场合 -2" class="headerlink" title="优势和适用场合"></a>优势和适用场合 </h3><p> 优势：</p>
+<p>•用户体验影响小，体验较平滑</p>
+<p>不足：</p>
+<p>•发布和回退时间比较缓慢</p>
+<p>•发布工具比较复杂，LB 需要平滑的流量摘除和拉入能力</p>
+<p>适用场合：</p>
+<p>•用户体验不能中断的网站业务场景</p>
+<p>•有一定的复杂发布工具研发能力；</p>
+<p><img src="https://i.imgur.com/ukfS8Fa.jpg" alt=""></p>
+<p>滚动式发布，流量平滑过渡，图片来自附录 6.1</p>
+<h1 id="双服务器组发布"><a href="# 双服务器组发布" class="headerlink" title="双服务器组发布"></a>双服务器组发布 </h1><p> 随着云计算和虚拟化技术的成熟，特别是容器等轻量级虚拟化技术的引入，计算资源受限和申请缓慢问题已经逐步解决，可以做到弹性按需分配。为一次发布分配两组服务器，一组运行现有的 V1 老版本，一组运行待上线的 V2 新版本，再通过 LB 切换流量方式完成发布，这就是所谓的双服务器组发布方式。</p>
+<h2 id="蓝绿发布（双服务器组）"><a href="# 蓝绿发布（双服务器组）" class="headerlink" title="蓝绿发布（双服务器组）"></a>蓝绿发布（双服务器组）</h2><p>蓝绿发布仅适用于双服务器组发布，可以认为是对蛮力发布的一种简单优化发布方式。简化过程如下图所示：</p>
+<p><img src="https://i.imgur.com/NfLyFeU.jpg" alt=""></p>
+<h3 id="部署过程 -2"><a href="# 部署过程 -2" class="headerlink" title="部署过程"></a>部署过程</h3><p>1.V1 版本称为蓝组，V2 版本称为绿组，发布时通过 LB 一次性将流量从蓝组直接切换到绿组，不经过金丝雀和滚动发布，蓝绿发布由此得名；</p>
+<p>2. 出现问题回退也很直接，通过 LB 直接将流量切回蓝组。</p>
+<p>3. 发布初步成功后，蓝组机器一般不直接回收，而是留一个待观察期，视具体情况观察期的时间可长可短，观察期过后确认发布无问题，则可以回收蓝组机器。</p>
+<p>从过程不难发现，在部署的过程中，我们的应用始终在线。并且新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响，这样风险很小。并且只要老版本的资源不被删除，理论上，我们可以在任何时间回滚到老版本。</p>
+<p><strong>蓝绿发布的注意事项</strong></p>
+<p>当你切换到蓝色环境时，需要妥当处理未完成的业务和新的业务。如果你的数据库后端无法处理，会是一个比较麻烦的问题。<br>•    可能会出现需要同时处理微服务架构应用和传统架构应用的情况，如果在蓝绿部署中协调不好这两者，还是有可能会导致服务停止。<br>•    需要提前考虑数据库与应用部署同步迁移 / 回滚的问题。<br>•    蓝绿部署需要有基础设施支持。<br>•    在非隔离基础架构（ VM 、 Docker 等）上执行蓝绿部署，蓝色环境和绿色环境有被摧毁的风险。</p>
+<h3 id="优势和适用场合 -3"><a href="# 优势和适用场合 -3" class="headerlink" title="优势和适用场合"></a>优势和适用场合 </h3><p> 优势：</p>
+<p>•升级切换和回退速度非常快</p>
+<p>不足：</p>
+<p>•切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响；</p>
+<p>•需要两倍机器资源；</p>
+<p>适用场合：</p>
+<p>•对用户体验有一定容忍度的场景</p>
+<p>•机器资源有富余或者可以按需分配（AWS 云，或自建容器云）</p>
+<p>•暂不具备复杂滚动发布工具研发能力；</p>
+<p><img src="https://i.imgur.com/jMWd3iW.jpg" alt=""> </p>
+<p>蓝绿发布一次完成流程切换</p>
+<h2 id="金丝雀发布（双服务器组）"><a href="# 金丝雀发布（双服务器组）" class="headerlink" title="金丝雀发布（双服务器组）"></a>金丝雀发布（双服务器组）</h2><p>对蓝绿部署的一种简单优化，发布时先从绿组拉入 1 台金丝雀，待金丝雀验证通过再发全量。对比蓝绿发布，该发布方式的优势是有一个生产流量的金丝雀验证过程，可以减轻 V2 可能有问题的风险和影响面。简化发布过程如下图所示：</p>
+<p><img src="https://i.imgur.com/1gENOZu.jpg" alt=""></p>
+<h2 id="滚动式发布（双服务器组）"><a href="# 滚动式发布（双服务器组）" class="headerlink" title="滚动式发布（双服务器组）"></a>滚动式发布（双服务器组）</h2><p>滚动式发布是对上面的蓝绿和金丝雀发布的进一步优化，按批次增量滚动发布，提供更平滑的用户体验。</p>
+<p><img src="https://i.imgur.com/W4015NR.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/cc5yKKB.jpg" alt=""></p>
+<h3 id="部署过程 -3"><a href="# 部署过程 -3" class="headerlink" title="部署过程"></a>部署过程</h3><p>1. 发布前先申请一批新服务器，数量一般和 V1 版本相同，将 V2 版本应用发布到新服务器上。例如如果在 AWS 云上，则可以直接调用 API 申请一批新 VM，如果用容器云 Kubernetes，则可以直接启动一批新容器（使用 V2 版本容器镜像）。</p>
+<p>2. 一般会先通过 LB 拉入 1 台 V2 版本的机器，这台机器也相当于金丝雀，用于流量验证。</p>
+<p>3. 逐步按批次完成发布，每批只需要通过 LB 拉入 V2 版本，再拉出对应数量的 V1 版本。批次之间留有观察间隔，通过手工或监控反馈确保没有问题再继续发布。</p>
+<p>4. 发布有问题回退很快，直接通过 LB 将流量切回 V1 即可。</p>
+<p>5. 完成发布后，一般 V1 版本要保留观察以备万一，比如留 1 天，1 天后没有问题则回收 V1 机器资源。</p>
+<p>优势和适用场合 </p>
+<p>优势：</p>
+<p>•用户体验影响小；</p>
+<p>•升级切换和回退（rollback）速度比单服务器组滚动发布要快，LB 切流量即可；</p>
+<p>不足：</p>
+<p>•需要两倍机器资源；</p>
+<p>•发布工具比较复杂，LB 需要流量切换能力</p>
+<p>适用场合：</p>
+<p>•用户体验不能中断的网站业务场景</p>
+<p>•机器资源有富余或者可以按需分配（AWS 云，或自建容器云）</p>
+<p>•有一定的发布工具研发能力；</p>
+<p><img src="https://i.imgur.com/f5iuoaC.jpg" alt=""> </p>
+<p>滚动式发布，流量平滑过渡</p>
+<h1 id="其它发布方式"><a href="# 其它发布方式" class="headerlink" title="其它发布方式"></a>其它发布方式 </h1><p> 上述都是偏传统的发布方式，能覆盖大部分应用发布场景。针对一些关键新功能的上线发布，或者一些特定的场景，还有一些特殊的发布方式。</p>
+<h2 id="功能开关发布"><a href="# 功能开关发布" class="headerlink" title="功能开关发布"></a>功能开关发布 </h2><p> 利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：</p>
+<p><img src="https://i.imgur.com/GxFK8wX.png" alt=""></p>
+<ol>
+<li>部署过程</li>
+</ol>
+<p>•    功能开关发布需要一个配置中心或者开关中心这样的服务支持，例如携程的 <code>Apollo</code> 配置中心或者开源的 <code>FF4J</code>，这些都支持开关发布。业界还有专门的功能开关 SaaS 服务，例如 <code>LaunchDarkly</code>。通过配置中心，运维或研发人员可以在运行期动态配置功能开关的值。当然，功能开关发布只是配置中心的一种使用场景，配置中心还能支持其它很多动态配置场景。</p>
+<p>•    功能开关服务一般提供客户端 SDK，方便开发人员集成。在运行期，客户端 SDK 会同步最新的开关值，技术实现有推方式 (push)，也有拉方式 (pull)，或者推拉结合方式。</p>
+<p>•    新功能（V2 new feature）和老功能（V1 old feature）住在同一套代码中，新功能隐藏在开关后面，如果开关没有打开，则走老代码逻辑，如果开关打开，则走新代码逻辑。技术实现上可以理解为一个简单的 if/else 逻辑。</p>
+<p>•    应用上线后，开关先不打开，然后运维或研发人员通过开关中心打开新功能，经过流量验证新功能没有问题，则发布完成；如果有问题，则随时可以通过开关中心切回老功能逻辑。</p>
+<ol start="2">
+<li>优势和不足</li>
+</ol>
+<p>•    优势</p>
+<p>升级切换和回退速度非常快。<br>相对于复杂的发布工具，实施比较简单，成本相对低廉。<br>研发能够灵活定制发布逻辑，支持 DevOps 自助发布。</p>
+<p>•    不足</p>
+<p>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响。<br>对代码有侵入，代码逻辑会变复杂，需要定期清理老版本逻辑，维护成本变高。</p>
+<p>适用场合：</p>
+<p>•对用户体验有一定容忍度的场景</p>
+<p>•已有配置中心或开关中心服务</p>
+<p>•暂不具备研发复杂发布工具能力；</p>
+<h2 id="影子测试"><a href="# 影子测试" class="headerlink" title="影子测试"></a>影子测试 </h2><p> 对于一些涉及核心业务的遗留系统的升级改造，为了确保万无一失，有一种称为影子测试的大招，采用比较复杂的流量复制、回放和比对技术实现。下面是影子测试的一个样例架构图：</p>
+<p><img src="https://i.imgur.com/FA0waks.jpg" alt=""></p>
+<ol>
+<li>部署过程</li>
+</ol>
+<p>影子测试一般适用于遗留系统的等价重构迁移，例如 .net 转 Java，或者 SQLServer 数据库升级为 MySQL 数据库，且外部依赖不能太多，否则需要开发很多 mock，测试部署成本会很高，且比对测试更加复杂和不稳定。</p>
+<p>•    目标实现老的 legacy 服务迁移升级到新的 experimental 服务。</p>
+<p>•    测试开始前，需要在测试环境部署一份 legacy 服务和 experimental 服务，同时将生产数据库复制两份到测试环境。同时需要将生产请求日志收集起来，一般可以通过 kafka 队列收集，然后通过类似 goreplay 这样的工具，消费 kafka 里头的请求日志，复制回放，将请求分发到 legacy 服务和 experimental 服务，收到响应后进行比对，如果所有响应比对成功，则可以认为 legacy 服务和 experimental 服务在功能逻辑上是等价的；如果有响应比对失败，则认为两者在功能逻辑上不等价，需要修复 experimental 并重新进行影子测试，直到全部比对成功。根据系统复杂度和关键性不同，比对测试时间短的可能需要几周，长的可达半年之久。</p>
+<p>•    影子测试因为旁路在独立测试环境中进行，可以对生产流量完全无影响。</p>
+<ol start="2">
+<li>优势和不足</li>
+</ol>
+<p>•    优势</p>
+<p>对生产用户体验完全无影响。<br>可以使用生产真实流量进行测试（复制比对）。</p>
+<p>•    不足</p>
+<p>搭建复杂度很高，技术门槛高，数据库的导出复制是难点。<br>外部依赖不能太多，否则测试部署成本很高，且比对测试更加复杂和不稳定。</p>
+<p>适用场合：</p>
+<p>•核心关键业务，比如涉及资金的</p>
+<p>•具备一定影子测试平台研发能力，包括流量复制、数据库导出复制和分发比对系统。</p>
+<h2 id="A-B- 测试"><a href="#A-B- 测试" class="headerlink" title="A/B 测试"></a>A/B 测试 </h2><p> 灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。AB Test 就是一种灰度发布方式，让一部分用户继续用 A，一部分用户开始用 B，如果用户对 B 没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到 B 上面来。灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度</p>
+<p>A/B 测试原来主要用于产品功能的比对测试的方法，收集用户反馈和对比数据做产品功能设计的决策，例如可用性、受欢迎程度、可见性等等。 A/B 测试通常用在应用的前端上，不过当然需要后端来支持。实际上，A/B 测试也可以作为一种新功能发布技术。下图展示基于 LB 实现的一种 A/B 测试发布。</p>
+<p><img src="https://i.imgur.com/s8qSVRn.jpg" alt=""></p>
+<p>实践要点 </p>
+<p>1. 上图中，原来 PC 端和手机端都访问老版本 V1 服务（也称 A 组或控制组），当 V2 新版本（也称 B 组或实验组）发布以后，为了验证 V2 的功能正确性，同时也为了避免 V2 有问题时影响所有用户，先通过 LB 将手机端的流量切换到 V2 版本，经过一段时间的 A/B 比对测试和观察（主要通过用户和监控反馈），确保 V2 正常，则通过 LB 将全部流量切换到 V2。</p>
+<p>2. 基于 LB 方式实现 A/B 测试，LB 需要能够通过某种条件做流量路由，例如通过 client ip，设备类型，浏览器类型，甚至是定制的 HTTP Header 或查询字符串。</p>
+<p>3. 高级的 A/B 测试需要专门的平台支撑，wasabi 附录 6.6 就是 intuit 开源的一个支持高级 A/B 测试的平台，这类平台可以细粒度到针对某类用户做 A/B 测试，例如针对某个地区的用户，某个年龄段的用户，公司内部用户等等。举了例子，假设一个关键业务的新功能上线，为了降低风险采用 A/B 测试，可以做到先只让公司内部员工能访问到新功能，待新功能验证过，再全量放开给外部用户使用。</p>
+<p>4. 功能开关和 A/B 测试有点相似，但功能开关一般是无状态和全量的，无法做到针对某类特定用户进行测试，而 A/B 测试一般是有状态的，能够跟踪事务和用户级别的状态，可以实现针对某类特定用户进行测试。</p>
+<p>A/B 测试与蓝绿部署的区别在于， A/B 测试目的在于通过科学的实验设计、采样样本代表性、流量分割与小流量测试等方式来获得具有代表性的实验结论，并确信该结论在推广到全部流量可信；蓝绿部署的目的是安全稳定地发布新版本应用，并在必要时回滚。A/B 测试原来主要用于产品功能的比对测试，收集用户反馈和对比数据做产品功能设计的决策。实际上，A/B 测试也可以作为一种新功能发布技术。下图展示基于 LB 实现的一种 A/B 测试发布。</p>
+<p>优势和适用场合 </p>
+<p>优势：</p>
+<p>•用户体验影响小；</p>
+<p>•可以使用生产流量测试；</p>
+<p>•可以做到针对某类特定目标用户进行测试；</p>
+<p>不足：</p>
+<p>•搭建复杂度相对高，有一定技术门槛</p>
+<p>适用场合：</p>
+<p>•核心关键业务，比如涉及资金的</p>
+<p>•具备一定的 A/B 测试平台研发能力</p>
+<p><img src="https://i.imgur.com/yyun1cX.jpg" alt=""></p>
+<p>针对某类目标用户进行 A/B 测试</p>
+<h1 id="比较"><a href="# 比较" class="headerlink" title="比较"></a>比较 </h1><p> 下表对各种发布策略，从各个维度进行综合比较，供参考：</p>
+<p><img src="https://i.imgur.com/V8cr3sa.jpg" alt=""></p>
+<h1 id="结论和建议"><a href="# 结论和建议" class="headerlink" title="结论和建议"></a>结论和建议 </h1><p> 下面是对发布策略的一些选型建议，供不同阶段公司参考：</p>
+<p>1. 蛮力发布一般是不建议采用的，除非是开发测试环境，用户体验不敏感的非关键应用，或者是创业期什么都缺时候的无奈之举。</p>
+<p>2. 如果暂时还不具备研发较复杂的滚动发布工具和配套智能 LB，则功能开关是一种不错的轻量级发布技术，投入相对较小的成本，可以让研发人员灵活定制发布逻辑。</p>
+<p>3. 金丝雀发布通过少量新版本服务器接收生产流量的方式去验证新版本，可以显著降低风险。金丝雀发布适用于大部分场景，一般成长型公司就可以采用。</p>
+<p>4. 对于达到一定业务体量的公司，考虑到用户体验对业务的关键性，则需要投入研发资源开发支持滚动式发布的工具和配套的智能 LB，实现自动化和零停机的发布。滚动式发布一般和金丝雀发布配合，先发一台金丝雀去验证流量，再按批次增量发布。</p>
+<p>5. 随着轻量级虚拟化（例如容器）的普及，双服务器组发布方式具有更快的发布和回退速度，是值得投入的高级发布技术。蓝绿部署仅适用于双服务器组，滚动式发布既可以在单服务器组上实现，也可以在双服务器组上实现。</p>
+<p>6. 对于涉及关键核心业务的新功能上线，采用 A/B 测试，可以显著降低发布风险，A/B 测试是唯一一种支持针对特定用户组进行生产测试的高级发布技术。当然 A/B 测试的投入不低，建议有一定研发能力的组织采用。</p>
+<p>7. 对于关键核心业务的迁移重构，为确保万无一失，最后的一个大招是影子测试，影子测试对生产流量和用户完全无影响。当然这个大招的投入成本和门槛都高，建议有足够业务体量和研发能力的组织投入。</p>
+<p>8. 上述的各种发布策略并不是非此即彼的，一个公司常常会综合采用多种发布技术作为互补，实现灵活的发布能力。例如主流的发布手段是金丝雀 + 滚动式发布，某些业务线可能根据业务场景需要采用功能开关发布，还有一些业务线则可能采用高级的 A/B 测试发布手段。</p>
+<h1 id="参考文章"><a href="# 参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://www.google.com" target="_blank" rel="noopener">https://www.google.com</a></p>
+<p><a href="https://www.jianshu.com/p/022685baba7d" target="_blank" rel="noopener">微服务部署：蓝绿部署、滚动部署、灰度发布、金丝雀发布</a></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzI4MTY5NTk4Ng==&amp;mid=2247489100&amp;idx=1&amp;sn=eab291eb345c074114d946b732e037eb&amp;source=41#wechat_redirect" target="_blank" rel="noopener">金丝雀发布、滚动发布、蓝绿发布到底有什么差别？</a></p>
+<p><a href="https://github.com/ContainerSolutions/k8s-deployment-strategies" target="_blank" rel="noopener">https://github.com/ContainerSolutions/k8s-deployment-strategies</a></p>
+<p><a href="https://opensource.com/article/18/2/feature-flags-ring-deployment-model" target="_blank" rel="noopener">https://opensource.com/article/18/2/feature-flags-ring-deployment-model</a></p>
+<p><a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></p>
+<p><a href="http://www.ff4j.org/" target="_blank" rel="noopener">http://www.ff4j.org/</a></p>
+<p><a href="https://launchdarkly.com/" target="_blank" rel="noopener">https://launchdarkly.com/</a></p>
+<p><a href="https://github.com/intuit/wasabi" target="_blank" rel="noopener">https://github.com/intuit/wasabi</a></p>
+<p><a href="https://blog.zenika.com/2017/04/19/migration-dun-legacy-avec-goreplay/" target="_blank" rel="noopener">https://blog.zenika.com/2017/04/19/migration-dun-legacy-avec-goreplay/</a></p>
+<p><a href="https://github.com/buger/goreplay" target="_blank" rel="noopener">https://github.com/buger/goreplay</a></p>
+<p><a href="http://blog.shurenyun.com/untitled-9/" target="_blank" rel="noopener">http://blog.shurenyun.com/untitled-9/</a></p>
+<p><a href="https://en.wikipedia.org/wiki/A/B_testing" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/A/B_testing</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2018/04/15/蓝绿发布、滚动发布、灰度发布等部署方案对比与总结/" title="蓝绿发布、滚动发布、灰度发布等部署方案对比与总结">https://yhaing.github.io/2018/04/15/蓝绿发布、滚动发布、灰度发布等部署方案对比与总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deployment/" rel="tag"># Deployment</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/10/Java-JVM/" rel="next" title="Java-JVM 参数详解">
+                <i class="fa fa-chevron-left"></i> Java-JVM 参数详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/14/Hexo使用jenkins自动部署到阿里云/" rel="prev" title="Hexo 使用 jenkins 自动部署到阿里云">
+                Hexo 使用 jenkins 自动部署到阿里云 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTk3MS8xNjQ5OA=="></div>
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yhaing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yh198812@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.cnblogs.com/yhaing/" target="_blank" title="cnblogs">
+                      
+                        <i class="fa fa-fw fa-globe"></i>cnblogs</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5b6256396fb9a04fbf2729fb/collections" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-globe"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("01/19/2015 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单服务器组发布"><span class="nav-number">1.</span> <span class="nav-text">单服务器组发布 </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#蛮力发布"><span class="nav-number">1.1.</span> <span class="nav-text">蛮力发布 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优势和适用场合"><span class="nav-number">1.1.1.</span> <span class="nav-text">优势和适用场合 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#金丝雀发布（单服务器组）"><span class="nav-number">1.2.</span> <span class="nav-text">金丝雀发布（单服务器组）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署过程"><span class="nav-number">1.2.1.</span> <span class="nav-text">部署过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优势和适用场合 -1"><span class="nav-number">1.2.2.</span> <span class="nav-text">优势和适用场合 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滚动式发布（单服务器组）"><span class="nav-number">1.3.</span> <span class="nav-text">滚动式发布（单服务器组）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署过程 -1"><span class="nav-number">1.3.1.</span> <span class="nav-text">部署过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优势和适用场合 -2"><span class="nav-number">1.3.2.</span> <span class="nav-text">优势和适用场合 </span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双服务器组发布"><span class="nav-number">2.</span> <span class="nav-text">双服务器组发布 </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#蓝绿发布（双服务器组）"><span class="nav-number">2.1.</span> <span class="nav-text">蓝绿发布（双服务器组）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署过程 -2"><span class="nav-number">2.1.1.</span> <span class="nav-text">部署过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优势和适用场合 -3"><span class="nav-number">2.1.2.</span> <span class="nav-text">优势和适用场合 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#金丝雀发布（双服务器组）"><span class="nav-number">2.2.</span> <span class="nav-text">金丝雀发布（双服务器组）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滚动式发布（双服务器组）"><span class="nav-number">2.3.</span> <span class="nav-text">滚动式发布（双服务器组）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署过程 -3"><span class="nav-number">2.3.1.</span> <span class="nav-text">部署过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其它发布方式"><span class="nav-number">3.</span> <span class="nav-text">其它发布方式 </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#功能开关发布"><span class="nav-number">3.1.</span> <span class="nav-text">功能开关发布 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#影子测试"><span class="nav-number">3.2.</span> <span class="nav-text">影子测试 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-B- 测试"><span class="nav-number">3.3.</span> <span class="nav-text">A/B 测试 </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比较"><span class="nav-number">4.</span> <span class="nav-text">比较 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论和建议"><span class="nav-number">5.</span> <span class="nav-text">结论和建议 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+
+<!-- 添加背景图片 -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+    $("body").backstretch("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538127512866&di=2f9d3ddd0c3a21af7c277add296ec5ea&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F56dfebba2e60b.jpg");
+  </script>
+   -->
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
