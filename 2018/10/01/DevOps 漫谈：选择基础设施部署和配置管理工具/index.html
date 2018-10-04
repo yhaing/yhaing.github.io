@@ -135,16 +135,16 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/Im4cvH7.jpg">
 <meta property="og:image" content="https://i.imgur.com/2a0oAnF.jpg">
-<meta property="og:image" content="https://i.imgur.com/c4CIVin.jpg">
-<meta property="og:image" content="https://i.imgur.com/Le0eKWq.jpg">
-<meta property="og:image" content="https://i.imgur.com/fN9Us6k.jpg">
-<meta property="og:image" content="https://i.imgur.com/Dj8oNNR.jpg">
-<meta property="og:image" content="https://i.imgur.com/gQz33Rh.jpg">
-<meta property="og:image" content="https://i.imgur.com/8iXqMne.jpg">
-<meta property="og:image" content="https://i.imgur.com/Q0I3lcP.jpg">
-<meta property="og:image" content="https://i.imgur.com/GtMUxQm.jpg">
-<meta property="og:image" content="https://i.imgur.com/mBu5MlB.jpg">
-<meta property="og:updated_time" content="2018-10-04T07:53:01.087Z">
+<meta property="og:image" content="https://i.imgur.com/PRPSXuT.png">
+<meta property="og:image" content="https://i.imgur.com/zgFBlhi.jpg">
+<meta property="og:image" content="https://i.imgur.com/lERUYTi.jpg">
+<meta property="og:image" content="https://i.imgur.com/79gxlPz.jpg">
+<meta property="og:image" content="https://i.imgur.com/PitU53v.jpg">
+<meta property="og:image" content="https://i.imgur.com/aYaGiDN.png">
+<meta property="og:image" content="https://i.imgur.com/4JHyGtC.png">
+<meta property="og:image" content="https://i.imgur.com/FEuBjvk.jpg">
+<meta property="og:image" content="https://i.imgur.com/UeeThLO.jpg">
+<meta property="og:updated_time" content="2018-10-04T09:04:55.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DevOps 漫谈：选择基础设施部署和配置管理工具">
 <meta name="twitter:image" content="https://i.imgur.com/Im4cvH7.jpg">
@@ -518,8 +518,8 @@
 <li>输入，输出和配置文件格式之间缺乏一致性</li>
 <li>性能存在一定瓶颈</li>
 </ul>
-<p><img src="https://i.imgur.com/c4CIVin.jpg" alt=""></p>
-<h2 id="2-Chef"><a href="#2-Chef" class="headerlink" title="2. Chef"></a>2. Chef</h2><p><img src="https://i.imgur.com/Le0eKWq.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/PRPSXuT.png" alt=""></p>
+<h2 id="2-Chef"><a href="#2-Chef" class="headerlink" title="2. Chef"></a>2. Chef</h2><p><img src="https://i.imgur.com/zgFBlhi.jpg" alt=""></p>
 <p>Chef 是一个配置管理开源工具，用户群专注面向开发者。Chef 作为 master-client 模式运行，需要一个单独的工作站来控制 master 。Chef 基于 Ruby 开发，纯 Ruby 可以支持大多数元素。Chef 的设计是透明的，并遵循给定的指示，这意味着你必须确保你的指示是清楚的。</p>
 <p><strong>何时使用它</strong>：在考虑 Chef 之前，需要确保你熟悉 Git ，因为它需要配置 Git ，你必须编写 Ruby 代码。Chef 适合以开发为中心（development-focused ）的团队和环境。对于寻求更成熟异构环境解决方案的企业来说，这是一件好事。</p>
 <p>价格：提供免费的开源版本，标准版和高级版计划以每年节点为单位定价。 Chef Automate 的价格为每个节点 137 美元，或者采用 Hosted Chef 每个节点每年节省 72 美元。</p>
@@ -536,8 +536,8 @@
 <li>这不是一个简单的工具，可能需要维护大量的代码库和复杂的环境</li>
 <li>不支持推送功能</li>
 </ul>
-<p><img src="https://i.imgur.com/fN9Us6k.jpg" alt=""></p>
-<h2 id="3-Fabric"><a href="#3-Fabric" class="headerlink" title="3. Fabric"></a>3. Fabric</h2><p><img src="https://i.imgur.com/Dj8oNNR.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/lERUYTi.jpg" alt=""></p>
+<h2 id="3-Fabric"><a href="#3-Fabric" class="headerlink" title="3. Fabric"></a>3. Fabric</h2><p><img src="https://i.imgur.com/79gxlPz.jpg" alt=""></p>
 <p>Fabric 是一个基于 Python 的应用程序部署工具。Fabric 的主要用途是在多个远程系统上运行任务，但它也可以通过插件的方式进行扩展，以提供更高级的功能。 Fabric 将配置您的操作系统，进行操作系统 / 服务器管理，自动化部署您的应用。</p>
 <p><strong>何时使用它</strong>：如果您刚刚开始进入部署自动化领域，Fabric 是一个良好的开端。如果您的环境至少包含一点 Python，它都会有所帮助。</p>
 <p>价格：免费</p>
@@ -553,8 +553,8 @@
 <li>使用 PUSH 模型，因此不如其他工具那样适合流水线部署模型</li>
 <li>虽然它是用于在大多数语言中部署应用程序的绝佳工具，但它确实需要运行 Python，所以您的环境中必须至少有一个适用于 Fabric 的 Python 环境</li>
 </ul>
-<p><img src="https://i.imgur.com/gQz33Rh.jpg" alt=""></p>
-<h2 id="4-Puppet"><a href="#4-Puppet" class="headerlink" title="4. Puppet"></a>4. Puppet</h2><p><img src="https://i.imgur.com/8iXqMne.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/PitU53v.jpg" alt=""></p>
+<h2 id="4-Puppet"><a href="#4-Puppet" class="headerlink" title="4. Puppet"></a>4. Puppet</h2><p><img src="https://i.imgur.com/aYaGiDN.png" alt=""></p>
 <p>Puppet 长期依赖是全面配置管理领域的标准工具之一。Puppet 是一个开源工具，但是考虑到它已经存在了多长时间，它已经在一些最大和最苛刻的环境中进行了部署和验证。 Puppet 基于 Ruby 开发，但使用更接近 JSON 的领域专用语言（Domain Specific Language，DSL）。Puppet 采用 master-client 模式运行，并采用模型驱动 (model-driven) 的方法。 Puppet 将工作设计为一系列依赖关系列表，根据您的设置，这可以使事情变得更容易或更容易混淆。</p>
 <p><strong>何时使用它</strong>： 如果稳定性和成熟度对您来说是最关键的因素，Puppet 是一个不错的选择。对于具有异构环境的大型企业和涉及多种技能范围的 DevOps 团队而言而言，这是一件好事。</p>
 <p>价格：Puppet 分为免费的开源版本和付费的企业版本，商业版每年每个节点 120 美元（提供批量折扣）。</p>
@@ -573,8 +573,8 @@
 <li>Puppet 代码库可能会变得庞大，新人需要更多的帮助</li>
 <li>与代码驱动方法相比，模型驱动方法意味着用户的控制更少</li>
 </ul>
-<p><img src="https://i.imgur.com/Q0I3lcP.jpg" alt=""></p>
-<h2 id="5-Saltstack"><a href="#5-Saltstack" class="headerlink" title="5. Saltstack"></a>5. Saltstack</h2><p><img src="https://i.imgur.com/GtMUxQm.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/4JHyGtC.png" alt=""></p>
+<h2 id="5-Saltstack"><a href="#5-Saltstack" class="headerlink" title="5. Saltstack"></a>5. Saltstack</h2><p><img src="https://i.imgur.com/FEuBjvk.jpg" alt=""></p>
 <p>SaltStack（或 Salt）是一种基于 CLI 的工具，可以将其设置为 master-client 模型或非集中模型。 Salt 基于 Python 开发，提供了 PUSH 和 SSH 两种方法与客户端通讯。 Salt 允许对客户端和配置模板进行分组，以简化对环境的控制。</p>
 <p><strong>何时使用它</strong>： 如果可扩展性和弹性是一个大问题，则 Salt 是一个不错的选择。对系统管理员来说，Salt 提供的可用性非常重要。</p>
 <p>价格：提供免费的开源版本，以及基于年度 / 节点订阅的 SaltStack Enterprise 版本。具体的价格没有在他们的网站上列出，据说每个节点每年的起步价为 150 美元。</p>
@@ -594,7 +594,7 @@
 <li>Web UI 比同领域的其他工具更新、更轻量</li>
 <li>对非 Linux 操作系统没有很好的支持</li>
 </ul>
-<p><img src="https://i.imgur.com/mBu5MlB.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/UeeThLO.jpg" alt=""></p>
 <h2 id="比较"><a href="# 比较" class="headerlink" title="比较"></a>比较 </h2><p> 您使用的配置管理或部署自动化工具取决于您的环境需求和偏好。 Chef 和 Puppet 是一些较老的、更成熟的选项，它们适用于那些重视成熟性和稳定性而非简单性的大型企业和环境。 Ansible 和 SaltStack 是寻求快速和简约解决方案人士的理想选择，同时在不需要支持某些特殊功能或具有大量操作系统的环境中工作。Fabric 对于小型环境和那些正在寻求更低门槛和入门级解决方案的人来说是一个很好的工具。</p>
 <h2 id="WordBook"><a href="#WordBook" class="headerlink" title="WordBook"></a>WordBook</h2><p><a href="http://yaml.org/" target="_blank" rel="noopener">YAML</a></p>
 <p>YAML 语言（发音 /ˈjæməl/ ）实质上是一种通用的数据串行化格式。基本语法规则如下:</p>
