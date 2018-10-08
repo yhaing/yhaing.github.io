@@ -129,18 +129,26 @@
 
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一起学 Docker（一）- 初识">
-<meta property="og:url" content="https://yhaing.github.io/2018/01/19/一起学Docker（一）-初识/index.html">
+<meta property="og:title" content="一起学 Docker（二）-- 核心概念和安装">
+<meta property="og:url" content="https://yhaing.github.io/2018/05/20/一起学Docker（二）--核心概念和安装/index.html">
 <meta property="og:site_name" content="海阔天空">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/CmsuYgR.jpg">
-<meta property="og:image" content="https://i.imgur.com/p1qCpM4.jpg">
-<meta property="og:image" content="https://i.imgur.com/WUp1QHA.jpg">
-<meta property="og:image" content="https://i.imgur.com/49eXVZQ.jpg">
-<meta property="og:image" content="https://i.imgur.com/gTvFwKR.jpg">
-<meta property="og:updated_time" content="2018-10-05T03:05:43.472Z">
+<meta property="og:image" content="https://i.imgur.com/neYqgAy.jpg">
+<meta property="og:image" content="https://i.imgur.com/9MNumOI.jpg">
+<meta property="og:image" content="https://i.imgur.com/xunz8Qn.jpg">
+<meta property="og:image" content="https://i.imgur.com/CuLcekp.jpg">
+<meta property="og:image" content="https://i.imgur.com/IpXNXAj.jpg">
+<meta property="og:image" content="https://i.imgur.com/ELcOAjh.jpg">
+<meta property="og:image" content="https://i.imgur.com/fjpGCKo.jpg">
+<meta property="og:image" content="https://i.imgur.com/wKTrgF8.png">
+<meta property="og:image" content="https://i.imgur.com/PK525fk.png">
+<meta property="og:image" content="https://i.imgur.com/4830dpC.png">
+<meta property="og:image" content="https://i.imgur.com/C7zhZAC.png">
+<meta property="og:image" content="https://i.imgur.com/y4jDgrX.png">
+<meta property="og:updated_time" content="2018-10-05T08:30:02.503Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一起学 Docker（一）- 初识">
+<meta name="twitter:title" content="一起学 Docker（二）-- 核心概念和安装">
 <meta name="twitter:image" content="https://i.imgur.com/CmsuYgR.jpg">
 
 
@@ -171,13 +179,13 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/2018/01/19/一起学Docker（一）-初识/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2018/05/20/一起学Docker（二）--核心概念和安装/"/>
 
 
 
 
 
-  <title>一起学 Docker（一）- 初识 | 海阔天空</title>
+  <title>一起学 Docker（二）-- 核心概念和安装 | 海阔天空</title>
   
 
 
@@ -211,7 +219,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">成长就是你主观世界遇到客观世界之间的那条沟，你掉进去了，叫挫折，爬出来了，叫成长</p>
+        <p class="site-subtitle">当你发现自己的才华撑不起野心时，就请安静下来学习吧！</p>
       
   </div>
 
@@ -347,7 +355,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/01/19/一起学Docker（一）-初识/">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/05/20/一起学Docker（二）--核心概念和安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hai Yang">
@@ -364,7 +372,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一起学 Docker（一）- 初识</h1>
+          <h1 class="post-title" itemprop="name headline">一起学 Docker（二）-- 核心概念和安装</h1>
         
 
         <div class="post-meta">
@@ -376,8 +384,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T00:34:14+08:00">
-                2018-01-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-20T00:34:14+08:00">
+                2018-05-20
               </time>
             
 
@@ -416,7 +424,7 @@
 
           
           
-             <span id="/2018/01/19/一起学Docker（一）-初识/" class="leancloud_visitors" data-flag-title="一起学 Docker（一）- 初识">
+             <span id="/2018/05/20/一起学Docker（二）--核心概念和安装/" class="leancloud_visitors" data-flag-title="一起学 Docker（二）-- 核心概念和安装">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -446,7 +454,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  3.9k
                 </span>
               
 
@@ -462,7 +470,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  14
                 </span>
               
             </div>
@@ -485,54 +493,185 @@
       
         <p><img src="https://i.imgur.com/CmsuYgR.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="1- 什么是 docker"><a href="#1- 什么是 docker" class="headerlink" title="1. 什么是 docker"></a>1. 什么是 docker</h2><p>Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub 上进行维护。</p>
-<p>Docker 自开源后受到广泛的关注和讨论，以至于 dotCloud 公司后来都改名为 Docker Inc。Redhat 已经在其 RHEL6.5 中集中支持 Docker；Google 也在其 PaaS 产品中广泛应用。</p>
-<p><strong>Docker 的主要目标</strong>：</p>
-<p>通过对应用组件的封装、分发、部署、运行等生命周期的管理，达到应用级别的一次封装，到处运行。</p>
-<p>小贴士：这里的应用组件，可以是 WEB 应用，也可以是一套数据库服务，甚至可以是一个操作系统编译器</p>
-<h2 id="2- 为什么使用 docker"><a href="#2- 为什么使用 docker" class="headerlink" title="2. 为什么使用 docker"></a>2. 为什么使用 docker</h2><p>Docker 容器虚拟化的优点 </p>
-<p><strong>环境隔离</strong>；</p>
-<p>通过 cgroups 和 namesapce 进行实现资源隔离，实现一台机器运行多个容器互不影响。</p>
-<p><strong>更快速的交付部署</strong>；</p>
-<p>使用 docker，开发人员可以利用镜像快速构建一套标准的研发环境；开发完成后，测试和运维人员可以直接通过使用相同的环境来部署代码。Docker 可以快速创建和删除容器，实现快速迭代，大量节约开发、测试、部署的时间。并且，各个步骤都有明确的配置和操作，整个过程全程课件，使团队里更容易理解应用创建和工作的过程。</p>
-<p><strong>更高效的资源利用</strong>；</p>
-<p>docker 容器的运行不需要额外的虚拟化管理程序的支持，它是内核级的虚拟化，可以实现更高的性能，同时对资源的额外需求很低。</p>
-<p><strong>更易迁移扩展</strong>；</p>
-<p>docker 容器几乎可以在任意的平台上运行，包括乌力吉、虚拟机、公有云、私有云、个人电脑、服务器等，这种兼容性让用户可以在不同平台之间轻松的迁移应用。</p>
-<p><strong>更简单的更新管理</strong>。</p>
-<p>使用 Dockerfile，只需要小小的配置修改，就可以替代以往的大量的更新工作。并且所有修改都是以增量的方式进行分发和更新，从而实现自动化和高效的容器管理。</p>
-<h2 id="3- 虚拟化与 docker"><a href="#3- 虚拟化与 docker" class="headerlink" title="3. 虚拟化与 docker"></a>3. 虚拟化与 docker</h2><p>虚拟化定义：虚拟化是一种资源管理技术，是将计算机的各种实体资源，如服务器、网络、内存及存储等，予以抽象、转换后呈现出来，打破实体结构间的不可切割的障碍，使用户可以比原本的配置更好的方式来应用这些资源。这些资源的新虚拟部分是不受现有资源的架设方式，地域或物理配置所限制。一般所指的虚拟化资源包括计算能力和数据存储。</p>
-<p>系统虚拟化，Hypervisor Virtualization，全虚拟化。在 Host 中通过 Hypervisor 层实现安装多个 GuestOS，每个 GuestOS 都有自己的内核，和主机的内核不同，GuestOS 之间完全隔离。</p>
-<p>容器虚拟化，Operating System Virtualization ，使用 Linux 内核中的 namespaces 和 cgroups 实现进程组之间的隔离。是用内核技术实现的隔离，所以它是一个共享内核的虚拟化技术。</p>
-<p>容器虚拟化没有 GuestOS，使用 Docker 时下载的镜像，只是为运行 App 提供的一个依赖的环境，是一个删减版本的系统镜像。一般情况下系统虚拟化没有容器虚拟化的运行效率高，但是系统安全性高很多。</p>
-<p><img src="https://i.imgur.com/p1qCpM4.jpg" alt=""></p>
-<p><strong>优越性</strong>：</p>
-<p>你在一台机器可以开 10 个虚拟机，如果用 docker 可以开 100 个容器，就是这么霸气</p>
-<h2 id="4-docker 官网注册"><a href="#4-docker 官网注册" class="headerlink" title="4.docker 官网注册"></a>4.docker 官网注册 </h2><p> 注册一个 docker 账号：<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></p>
-<p><img src="https://i.imgur.com/WUp1QHA.jpg" alt=""></p>
-<p>完成注册，等待一会就能收到验证邮件。</p>
-<p>收到后激活邮箱，进行登录</p>
-<p><img src="https://i.imgur.com/49eXVZQ.jpg" alt=""></p>
-<p>登录完毕</p>
-<p><img src="https://i.imgur.com/gTvFwKR.jpg" alt=""></p>
-<h2 id="Docker 资源"><a href="#Docker 资源" class="headerlink" title="Docker 资源"></a>Docker 资源</h2><p><strong>Docker 官方英文资源</strong>：</p>
-<p><a href="http://www.docker.com" target="_blank" rel="noopener">docker 官网</a></p>
-<p><a href="https://docs.docker.com/windows/" target="_blank" rel="noopener">Docker windows 入门</a></p>
-<p><a href="https://docs.docker.com/linux/" target="_blank" rel="noopener">Docker Linux 入门</a></p>
-<p><a href="https://docs.docker.com/mac/" target="_blank" rel="noopener">Docker mac 入门</a></p>
-<p><a href="https://docs.docker.com/engine/userguide/" target="_blank" rel="noopener">Docker 用户指引</a></p>
-<p><a href="http://blog.docker.com/" target="_blank" rel="noopener">Docker 官方博客</a></p>
-<p><a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a></p>
-<p><a href="https://www.docker.com/open-source" target="_blank" rel="noopener">Docker 开源</a></p>
-<p><strong>Docker 中文资源</strong>：</p>
-<p><a href="http://www.docker.org.cn" target="_blank" rel="noopener">Docker 中文网站</a></p>
-<p><a href="http://www.docker.org.cn/book/docker.html" target="_blank" rel="noopener">Docker 入门教程</a></p>
-<p><a href="http://www.docker.org.cn/book/install.html" target="_blank" rel="noopener">Docker 安装手册</a></p>
-<p><a href="https://blog.csphere.cn/archives/22" target="_blank" rel="noopener">一小时 Docker 教程</a></p>
-<p><a href="http://dockerpool.com/static/books/docker_practice/index.html" target="_blank" rel="noopener">docker 从入门到实践</a></p>
-<p><a href="http://www.docker.org.cn/dockershuji.html" target="_blank" rel="noopener">Docker 纸质书</a></p>
-<p><a href="http://www.docker.org.cn/dockerppt.html" target="_blank" rel="noopener">Docker PPT</a></p>
-<p>转自：<a href="https://cloud.tencent.com/developer/article/1140308" target="_blank" rel="noopener">跟我一起学 docker(一)–认识</a></p>
+<h2 id="环境介绍："><a href="# 环境介绍：" class="headerlink" title="环境介绍："></a>环境介绍：</h2><p> 操作系统：64bit CentOS7</p>
+<p> docker 版本：18.06.1-ce（最新版本）</p>
+<p> 版本新功能：</p>
+<p> <a href="https://github.com/docker/docker-ce/releases/tag/v18.06.1-ce" target="_blank" rel="noopener"> hhttps://github.com/docker/docker-ce/releases/tag/v18.06.1-ce</a></p>
+<h2 id="安装步骤"><a href="# 安装步骤" class="headerlink" title="安装步骤"></a>安装步骤 </h2><p> <strong> 系统：64 位 centos7</strong></p>
+<p> 迅雷直接下载：</p>
+<p> <a href="http://mirrors.aliyun.com/centos/7.4.1708/isos/x86_64/CentOS-7-x86_64-DVD-1708.iso" target="_blank" rel="noopener">http://mirrors.aliyun.com/centos/7.4.1708/isos/x86_64/CentOS-7-x86_64-DVD-1708.iso</a></p>
+<p> <strong>虚拟机：virtualBox 或 VMware Workstation</strong></p>
+<p> 最好是安装完整版本的 centos7，vm 安装 centos7 的过程我这里都不截图了，比较简单百度都可以看到。</p>
+<p><strong>要求: 内核版本最低为 3.10</strong></p>
+<pre><code>查看当前内核版本： uname –r
+</code></pre><p><img src="https://i.imgur.com/neYqgAy.jpg" alt=""></p>
+<p><strong>要求: 更改网卡配置</strong></p>
+<pre><code>更改网卡配置：vim /etc/sysconfig/network-scripts/ifcfg-ens33
+</code></pre><p><img src="https://i.imgur.com/9MNumOI.jpg" alt=""></p>
+<pre><code>更改完后重启服务：service network restart
+
+注意：如果 ifconfig 命令不识别的话需要安装：
+
+yum installnet-tools
+</code></pre><p><img src="https://i.imgur.com/xunz8Qn.jpg" alt=""></p>
+<h3 id="通过 yum 方式安装最新版 Docker"><a href="# 通过 yum 方式安装最新版 Docker" class="headerlink" title="通过 yum 方式安装最新版 Docker"></a>通过 yum 方式安装最新版 Docker</h3><pre><code>第一步：更新 yum 源： sudo yum update
+</code></pre><p><img src="https://i.imgur.com/CuLcekp.jpg" alt=""></p>
+<pre><code>第二步：卸载旧版本(如果安装过旧版本的话)
+yum remove docker  docker-common docker-selinux docker-engine
+
+第三步：安装需要的软件包， yum-util 提供 yum-config-manager 功能，另外两个是 devicemapper 驱动依赖的
+
+yum install -y yum-utils device-mapper-persistent-data lvm2
+
+第四步：设置 yum 源
+
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+第五步：可以查看所有仓库中所有 docker 版本，并选择特定版本安装
+
+yum list docker-ce --showduplicates | sort -r
+
+第六步：安装 docker
+
+yum install docker-ce   
+#由于 repo 中默认只开启 stable 仓库，故这里安装的是最新稳定版 18.06.1
+或者指定 docker 版本安装：
+yum install &lt;FQPN&gt; 
+# 例如：sudo yum install docker-ce-18.06.1.ce
+
+第七步：启动并加入开机启动
+
+systemctl start docker
+systemctl enable docker
+
+#centos7 已不用 chkconfig 了使用 systemctl list-unit-files 可以查看启动项
+
+第八步：验证安装是否成功(有 client 和 service 两部分表示 docker 安装启动都成功了)
+
+docker version
+</code></pre><p><img src="https://i.imgur.com/IpXNXAj.jpg" alt=""></p>
+<pre><code>第九步：添加国内镜像
+
+添加国内 docker 镜像地址：vim /etc/docker/daemon.json
+{&quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;,&quot;http://hub-mirror.c.163.com&quot;,&quot;https://docker.mirrors.ustc.edu.cn&quot;]
+}
+
+重启 docker
+systemctl daemon-reload
+systemctl restart docker
+
+第十步：启动 docker
+
+systemctl start docker
+
+
+测试：sudo docker run hello-world
+</code></pre><p><img src="https://i.imgur.com/ELcOAjh.jpg" alt=""></p>
+<p> <strong>docker 配置（按照正常的开发应用是 docker 控制有个专门的用户，为了学习方便我直接使用了 root 用户）：</strong></p>
+<pre><code>创建 docker 用户组
+
+sudo groupadd docker
+
+增加当前用户到 docker 分组
+
+sudo usermod -aG docker liming
+
+验证在不使用 sudo 的情况下 docker 是否正常工作
+
+docker run hello-world
+</code></pre><p>  <strong>docker 卸载</strong></p>
+<pre><code>查看安装包
+
+yum list installed | grep docker
+
+移除安装包：
+
+sudo yum -y remove docker-ce.x86_64
+
+清除所有 docker 依赖文件
+
+rm -rf /var/lib/docker
+
+删除用户创建的配置文件
+</code></pre><h2 id="Docker 的核心概念"><a href="#Docker 的核心概念" class="headerlink" title="Docker 的核心概念"></a>Docker 的核心概念</h2><h3 id="Docker 核心概念之镜像"><a href="#Docker 核心概念之镜像" class="headerlink" title="Docker 核心概念之镜像"></a>Docker 核心概念之镜像</h3><p> Docker 镜像镜像是创建 docker 容器的基础，docker 镜像类似于虚拟机镜像，可以将它理解为一个面向 docker 引擎的只读模块，包含文件系统。</p>
+<p> 例如：一个镜像可以包含一个完整的 centos 操作系统环境，里面仅安装了 Apache 或用户需要的其它应用程序。</p>
+<p> 镜像可以用来创建 Docker 容器。</p>
+<p> 创建 Docker 镜像有几种方式，多数是在一个现有镜像基础上创建新镜像，因为几乎你需要的任何东西都有了公共镜像，包括所有主流 Linux 发行版，你应该不会找不到你需要的镜像。不过，就算你想从头构建一个镜像，也有好几种方法。</p>
+<p>  创建镜像有三种方法：</p>
+<p>   （1）基于已有镜像的容器创建。主要是利用 docker commit 命令。</p>
+<p>   （2）基于本地模板导入。推荐利用 OpenVZ 提供的模板来创建。</p>
+<p>   （3）基于 dockerfile 创建。首先按照 dockerfile 的格式，编写好 dockerfile 文件，之后通过 docker build 命令来创建镜像。docker build 会读取制定的 dockerfile，由 docker 服务器来创建镜像。</p>
+<p><img src="https://i.imgur.com/fjpGCKo.jpg" alt=""></p>
+<h3 id="Docker 核心概念之容器"><a href="#Docker 核心概念之容器" class="headerlink" title="Docker 核心概念之容器"></a>Docker 核心概念之容器</h3><p> Docker 容器类似一个轻量级的沙箱，Docker 利用容器来运行和隔离应用。</p>
+<p> 容器是从镜像创建的运行实例。它可以被启动、开始、停止、删除。每个容器都是相互隔离的、保证安全的平台。</p>
+<p> 可以把容器看做是一个简易版的 Linux 环境（包括 root 用户权限、进程空间、用户空间和网络空间等）和运行在其中的应用程序。</p>
+ <table><tr><td style="padding:1px;border:none;background:#fff000"><font size="3">注：镜像是本身是只读的，容器从镜像启动的时候，Docker 会在镜像的最上层创建一个可写层，镜像本身保持不变。</font></td></tr></table>
+
+<p>可以利用 docker create 命令创建一个容器，创建后的的容器处于停止状态，可以使用 docker start 命令来启动它。也可以直接利用 docker run 命令来直接从镜像启动运行一个容器。docker run = docker creat + docker start。</p>
+<p>   当利用 docker run 创建并启动一个容器时，docker 在后台的标准操作包括：</p>
+<p>   （1）检查本地是否存在指定的镜像，不存在就从公有仓库下载。</p>
+<p>   （2）利用镜像创建并启动一个容器。</p>
+<p>   （3）分配一个文件系统，并在只读的镜像层外面挂载一层可读写层。</p>
+<p>   （4）从宿主机配置的网桥接口中桥接一个虚拟的接口到容器中。</p>
+<p>   （5）从地址池中配置一个 IP 地址给容器。</p>
+<p>   （6）执行用户指定的应用程序。</p>
+<p>   （7）执行完毕后容器终止。</p>
+<h3 id="Docker 核心概念之仓库"><a href="#Docker 核心概念之仓库" class="headerlink" title="Docker 核心概念之仓库"></a>Docker 核心概念之仓库 </h3><p> 仓库是集中存放 Docker 镜像文件的地方。</p>
+<p>有时候会把仓库和仓库注册服务器（Registry）混为一谈，并不严格区分。实际上，仓库注册服务器上往往存放着多个仓库，每个仓库中又包含了多个镜像，每个镜像有不同的标签（tag）。Centos 的 6.0 和 7.0 就是 tag。</p>
+<p>仓库分为公有仓库和私有仓库，DockerHub 是目前最大的公有仓库。可以通过 docker push/pull 命令从仓库中上传和下载镜像，docker search 命令来搜索镜像。</p>
+<h2 id="Docker 的其他核心技术预览"><a href="#Docker 的其他核心技术预览" class="headerlink" title="Docker 的其他核心技术预览"></a>Docker 的其他核心技术预览 </h2><p>Docker 核心是一个<a href="http://en.wikipedia.org/wiki/Operating_system-level_virtualization" target="_blank" rel="noopener"> 操作系统级虚拟化 </a> 方法, 理解起来可能并不像 VM 那样直观。我们从虚拟化方法的四个方面：<strong>隔离性、可配额 / 可度量、便携性、安全性 </strong> 来详细介绍 Docker 的技术细节。</p>
+<h3 id="LXC 介绍"><a href="#LXC 介绍" class="headerlink" title="LXC 介绍"></a>LXC 介绍 </h3><p>1、Linux Container 容器是一种<strong> 内核虚拟化技术</strong>，可以提供轻量级的虚拟化，以便隔离进程和资源。</p>
+<p>2、<strong>LXC 为 Linux Container</strong>的简写。可以提供轻量级的虚拟化，以便隔离进程和资源，而且不需要提供指令解释机制以及全虚拟化的其他复杂性。LXC 在资源管理方面依赖于 Linux 内核的 cgroups 子系统，LXC 在隔离控制方面依赖于 Linux 内核的 namespace 特性。容器有效地将由单个操作系统管理的资源划分到孤立的组中，以更好地在孤立的组之间平衡有冲突的资源使用需求。与传统虚拟化技术相比，它的优势在于：</p>
+<p>（1）与宿主机使用同一个内核，性能损耗小；</p>
+<p>（2）不需要指令级模拟；</p>
+<p>（3）不需要即时 (Just-in-time) 编译；</p>
+<p>（4）容器可以在 CPU 核心的本地运行指令，不需要任何专门的解释机制；</p>
+<p>（5）避免了准虚拟化和系统调用替换中的复杂性；</p>
+<p>（6）轻量级隔离，在隔离的同时还提供共享机制，以实现容器与宿主机的资源共享。</p>
+<p>总结：Linux Container 是一种轻量级的虚拟化的手段。</p>
+<p>3、Linux Container 提供了在单一可控主机节点上支持多个相互隔离的 server container 同时执行的机制。Linux Container 有点像 chroot，提供了一个拥有自己进程和网络空间的虚拟环境，但又有别于虚拟机，因为 lxc 是一种操作系统层次上的资源的虚拟化。</p>
+<p>4、<strong>LXC 与 docker 的关系</strong></p>
+<p>（1）Docker 并不是 LXC 的替代品，Docker 的底层就是使用了 LXC 来实现的。LXC 将 Linux 进程沙盒化，使得进程之间相互隔离，并且能够控制各进程的资源分配。<br>（2）在 LXC 的基础之上，Docker 提供了一系列更强的功能。</p>
+<h3 id="隔离性 -Linux-Namespace-ns"><a href="# 隔离性 -Linux-Namespace-ns" class="headerlink" title="隔离性: Linux Namespace(ns)"></a>隔离性: Linux Namespace(ns)</h3><p>每个用户实例之间相互隔离, 互不影响。 一般的硬件虚拟化方法给出的方法是 VM，而 LXC 给出的方法是 container，更细一点讲就是 kernel namespace。其中 pid、net、ipc、mnt、uts、user 等 namespace 将 container 的进程、网络、消息、文件系统、UTS(“UNIX Time-sharing System”)和用户空间隔离开。</p>
+<p>1) <strong>pid namespace</strong></p>
+<p>不同用户的进程就是通过 pid namespace 隔离开的，且不同 namespace 中可以有相同 pid。所有的 LXC 进程在 docker 中的父进程为 docker 进程，每个 lxc 进程具有不同的 namespace。同时由于允许嵌套，因此可以很方便的实现 Docker in Docker。</p>
+<p>2) <strong>net namespace</strong></p>
+<p>有了 pid namespace, 每个 namespace 中的 pid 能够相互隔离，但是网络端口还是共享 host 的端口。网络隔离是通过 net namespace 实现的， 每个 net namespace 有独立的 network devices, IP addresses, IP routing tables, /proc/net 目录。这样每个 container 的网络就能隔离开来。docker 默认采用 veth 的方式将 container 中的虚拟网卡同 host 上的一个 docker bridge: docker0 连接在一起。</p>
+<p>3) <strong>ipc namespace</strong></p>
+<p>container 中进程交互还是采用 linux 常见的进程间交互方法(interprocess communication - IPC), 包括常见的信号量、消息队列和共享内存。然而同 VM 不同的是，container 的进程间交互实际上还是 host 上具有相同 pid namespace 中的进程间交互，因此需要在 IPC 资源申请时加入 namespace 信息 - 每个 IPC 资源有一个唯一的 32 位 ID。</p>
+<p>4) <strong>mnt namespace</strong></p>
+<p>类似 chroot，将一个进程放到一个特定的目录执行。mnt namespace 允许不同 namespace 的进程看到的文件结构不同，这样每个 namespace 中的进程所看到的文件目录就被隔离开了。同 chroot 不同，每个 namespace 中的 container 在 /proc/mounts 的信息只包含所在 namespace 的 mount point。</p>
+<p>5) <strong>uts namespace</strong></p>
+<p>UTS(“UNIX Time-sharing System”) namespace 允许每个 container 拥有独立的 hostname 和 domain name, 使其在网络上可以被视作一个独立的节点而非 Host 上的一个进程。</p>
+<p>6) <strong>user namespace</strong></p>
+<p>每个 container 可以有不同的 user 和 group id, 也就是说可以在 container 内部用 container 内部的用户执行程序而非 Host 上的用户。</p>
+<h3 id="可配额 - 可度量 -Control-Groups-cgroups"><a href="# 可配额 - 可度量 -Control-Groups-cgroups" class="headerlink" title="可配额 / 可度量 - Control Groups (cgroups)"></a>可配额 / 可度量 - Control Groups (cgroups)</h3><p>cgroups 实现了对资源的配额和度量。 cgroups 的使用非常简单，提供类似文件的接口，在 /cgroup 目录下新建一个文件夹即可新建一个 group，在此文件夹中新建 task 文件，并将 pid 写入该文件，即可实现对该进程的资源控制。groups 可以限制 blkio、cpu、cpuacct、cpuset、devices、freezer、memory、net_cls、ns 九大子系统的资源，以下是每个子系统的详细说明：</p>
+<blockquote>
+<p>blkio 这个子系统设置限制每个块设备的输入输出控制。例如: 磁盘，光盘以及 usb 等等。</p>
+<p>cpu 这个子系统使用调度程序为 cgroup 任务提供 cpu 的访问。</p>
+<p>cpuacct 产生 cgroup 任务的 cpu 资源报告。</p>
+<p>cpuset 如果是多核心的 cpu，这个子系统会为 cgroup 任务分配单独的 cpu 和内存。</p>
+<p>devices 允许或拒绝 cgroup 任务对设备的访问。</p>
+<p>freezer 暂停和恢复 cgroup 任务。</p>
+<p>memory 设置每个 cgroup 的内存限制以及产生内存资源报告。</p>
+<p>net_cls 标记每个网络包以供 cgroup 方便使用。</p>
+<p>ns 名称空间子系统。</p>
+</blockquote>
+<p>以上九个子系统之间也存在着一定的关系. 详情请参阅 <a href="https://www.kernel.org/doc/Documentation/cgroups/" target="_blank" rel="noopener"> 官方文档</a>。</p>
+<h3 id="便携性 -AUFS"><a href="# 便携性 -AUFS" class="headerlink" title="便携性: AUFS"></a>便携性: AUFS</h3><p>AUFS (AnotherUnionFS) 是一种 Union FS, 简单来说就是支持将不同目录挂载到同一个虚拟文件系统下 (unite several directories into a single virtual filesystem) 的文件系统, 更进一步的理解, AUFS 支持为每一个成员目录 (类似 Git Branch) 设定 readonly、readwrite 和 whiteout-able 权限, 同时 AUFS 里有一个类似分层的概念, 对 readonly 权限的 branch 可以逻辑上进行修改(增量地, 不影响 readonly 部分的)。通常 Union FS 有两个用途, 一方面可以实现不借助 LVM、RAID 将多个 disk 挂到同一个目录下, 另一个更常用的就是将一个 readonly 的 branch 和一个 writeable 的 branch 联合在一起，Live CD 正是基于此方法可以允许在 OS image 不变的基础上允许用户在其上进行一些写操作。Docker 在 AUFS 上构建的 container image 也正是如此，接下来我们从启动 container 中的 linux 为例来介绍 docker 对 AUFS 特性的运用。</p>
+<p>典型的启动 Linux 运行需要两个 FS: bootfs + rootfs:</p>
+<p><img src="https://i.imgur.com/wKTrgF8.png" alt=""></p>
+<p>bootfs (boot file system) 主要包含 bootloader 和 kernel, bootloader 主要是引导加载 kernel, 当 boot 成功后 kernel 被加载到内存中后 bootfs 就被 umount 了. rootfs (root file system) 包含的就是典型 Linux 系统中的 /dev, /proc,/bin, /etc 等标准目录和文件。</p>
+<p>对于不同的 linux 发行版, bootfs 基本是一致的, 但 rootfs 会有差别, 因此不同的发行版可以公用 bootfs 如下图:</p>
+<p><img src="https://i.imgur.com/PK525fk.png" alt=""></p>
+<p>典型的 Linux 在启动后，首先将 rootfs 设置为 readonly, 进行一系列检查, 然后将其切换为 “readwrite” 供用户使用。在 Docker 中，初始化时也是将 rootfs 以 readonly 方式加载并检查，然而接下来利用 union mount 的方式将一个 readwrite 文件系统挂载在 readonly 的 rootfs 之上，并且允许再次将下层的 FS(file system) 设定为 readonly 并且向上叠加, 这样一组 readonly 和一个 writeable 的结构构成一个 container 的运行时态, 每一个 FS 被称作一个 FS 层。如下图:</p>
+<p><img src="https://i.imgur.com/4830dpC.png" alt=""></p>
+<p>得益于 AUFS 的特性, 每一个对 readonly 层文件 / 目录的修改都只会存在于上层的 writeable 层中。这样由于不存在竞争, 多个 container 可以共享 readonly 的 FS 层。 所以 Docker 将 readonly 的 FS 层称作 “image” - 对于 container 而言整个 rootfs 都是 read-write 的，但事实上所有的修改都写入最上层的 writeable 层中, image 不保存用户状态，只用于模板、新建和复制使用。</p>
+<p><img src="https://i.imgur.com/C7zhZAC.png" alt=""></p>
+<p>上层的 image 依赖下层的 image，因此 Docker 中把下层的 image 称作父 image，没有父 image 的 image 称作 base image。因此想要从一个 image 启动一个 container，Docker 会先加载这个 image 和依赖的父 images 以及 base image，用户的进程运行在 writeable 的 layer 中。所有 parent image 中的数据信息以及 ID、网络和 lxc 管理的资源限制等具体 container 的配置，构成一个 Docker 概念上的 container。如下图:</p>
+<p><img src="https://i.imgur.com/y4jDgrX.png" alt=""></p>
+<h3 id="安全性 -AppArmor-SELinux-GRSEC"><a href="# 安全性 -AppArmor-SELinux-GRSEC" class="headerlink" title="安全性: AppArmor, SELinux, GRSEC"></a>安全性: AppArmor, SELinux, GRSEC</h3><p>安全永远是相对的，这里有三个方面可以考虑 Docker 的安全特性:</p>
+<p>由 kernel namespaces 和 cgroups 实现的 Linux 系统固有的安全标准;<br>Docker Deamon 的安全接口;<br>Linux 本身的安全加固解决方案, 类如 AppArmor, SELinux;<br>由于安全属于非常具体的技术，这里不在赘述，请直接参阅<a href="https://docs.docker.com/engine/security/" target="_blank" rel="noopener">Docker 官方文档</a>。</p>
 
       
     </div>
@@ -582,7 +721,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yhaing.github.io/2018/01/19/一起学Docker（一）-初识/" title="一起学 Docker（一）- 初识">https://yhaing.github.io/2018/01/19/一起学Docker（一）-初识/</a>
+    <a href="https://yhaing.github.io/2018/05/20/一起学Docker（二）--核心概念和安装/" title="一起学 Docker（二）-- 核心概念和安装">https://yhaing.github.io/2018/05/20/一起学Docker（二）--核心概念和安装/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -620,8 +759,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/29/ZABBIX 3.2 监控服务器TCP连接状态/" rel="next" title="ZABBIX 3.2 监控服务器 TCP 连接状态">
-                <i class="fa fa-chevron-left"></i> ZABBIX 3.2 监控服务器 TCP 连接状态
+              <a href="/2018/05/19/一起学Docker（一）-初识/" rel="next" title="一起学 Docker（一）-- 初识">
+                <i class="fa fa-chevron-left"></i> 一起学 Docker（一）-- 初识
               </a>
             
           </div>
@@ -630,8 +769,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/10/Java-JVM/" rel="prev" title="Java-JVM 参数详解">
-                Java-JVM 参数详解 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/21/一起学Docker（四）--容器的常用操作/" rel="prev" title="一起学 Docker（四）-- 容器的常用操作">
+                一起学 Docker（四）-- 容器的常用操作 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -641,7 +780,7 @@
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/19/一起学Docker（一）-初识/">一起学 Docker（一）-- 初识</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li></ul>
       
     </footer>
   </div>
@@ -720,7 +859,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -828,7 +967,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1- 什么是 docker"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2- 为什么使用 docker"><span class="nav-number">2.</span> <span class="nav-text">2. 为什么使用 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3- 虚拟化与 docker"><span class="nav-number">3.</span> <span class="nav-text">3. 虚拟化与 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-docker 官网注册"><span class="nav-number">4.</span> <span class="nav-text">4.docker 官网注册 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker 资源"><span class="nav-number">5.</span> <span class="nav-text">Docker 资源</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境介绍："><span class="nav-number">1.</span> <span class="nav-text">环境介绍：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.</span> <span class="nav-text">安装步骤 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过 yum 方式安装最新版 Docker"><span class="nav-number">2.1.</span> <span class="nav-text">通过 yum 方式安装最新版 Docker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker 的核心概念"><span class="nav-number">3.</span> <span class="nav-text">Docker 的核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 核心概念之镜像"><span class="nav-number">3.1.</span> <span class="nav-text">Docker 核心概念之镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 核心概念之容器"><span class="nav-number">3.2.</span> <span class="nav-text">Docker 核心概念之容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 核心概念之仓库"><span class="nav-number">3.3.</span> <span class="nav-text">Docker 核心概念之仓库 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker 的其他核心技术预览"><span class="nav-number">4.</span> <span class="nav-text">Docker 的其他核心技术预览 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LXC 介绍"><span class="nav-number">4.1.</span> <span class="nav-text">LXC 介绍 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离性 -Linux-Namespace-ns"><span class="nav-number">4.2.</span> <span class="nav-text">隔离性: Linux Namespace(ns)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可配额 - 可度量 -Control-Groups-cgroups"><span class="nav-number">4.3.</span> <span class="nav-text">可配额 / 可度量 - Control Groups (cgroups)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#便携性 -AUFS"><span class="nav-number">4.4.</span> <span class="nav-text">便携性: AUFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性 -AppArmor-SELinux-GRSEC"><span class="nav-number">4.5.</span> <span class="nav-text">安全性: AppArmor, SELinux, GRSEC</span></a></li></ol></li></ol></div>
             
 
           </div>
