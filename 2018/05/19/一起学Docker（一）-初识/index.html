@@ -134,11 +134,16 @@
 <meta property="og:site_name" content="海阔天空">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/CmsuYgR.jpg">
+<meta property="og:image" content="https://i.imgur.com/dlaxkht.jpg">
+<meta property="og:image" content="https://i.imgur.com/Eh9BXXN.jpg">
+<meta property="og:image" content="https://i.imgur.com/WhNmDnz.jpg">
+<meta property="og:image" content="https://i.imgur.com/Yr0v5Bd.jpg">
+<meta property="og:image" content="https://i.imgur.com/DZQjzF3.jpg">
 <meta property="og:image" content="https://i.imgur.com/p1qCpM4.jpg">
 <meta property="og:image" content="https://i.imgur.com/WUp1QHA.jpg">
 <meta property="og:image" content="https://i.imgur.com/49eXVZQ.jpg">
 <meta property="og:image" content="https://i.imgur.com/gTvFwKR.jpg">
-<meta property="og:updated_time" content="2018-10-05T06:35:49.305Z">
+<meta property="og:updated_time" content="2018-10-09T08:24:10.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一起学 Docker（一）-- 初识">
 <meta name="twitter:image" content="https://i.imgur.com/CmsuYgR.jpg">
@@ -446,7 +451,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  7.5k
                 </span>
               
 
@@ -462,7 +467,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  28
                 </span>
               
             </div>
@@ -485,12 +490,298 @@
       
         <p><img src="https://i.imgur.com/CmsuYgR.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="1- 什么是 docker"><a href="#1- 什么是 docker" class="headerlink" title="1. 什么是 docker"></a>1. 什么是 docker</h2><p>Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub 上进行维护。</p>
+<h2 id="什么是 docker"><a href="# 什么是 docker" class="headerlink" title="什么是 docker"></a>什么是 docker</h2><p>Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub 上进行维护。</p>
 <p>Docker 自开源后受到广泛的关注和讨论，以至于 dotCloud 公司后来都改名为 Docker Inc。Redhat 已经在其 RHEL6.5 中集中支持 Docker；Google 也在其 PaaS 产品中广泛应用。</p>
-<p><strong>Docker 的主要目标</strong>：</p>
-<p>通过对应用组件的封装、分发、部署、运行等生命周期的管理，达到应用级别的一次封装，到处运行。</p>
-<p>小贴士：这里的应用组件，可以是 WEB 应用，也可以是一套数据库服务，甚至可以是一个操作系统编译器</p>
-<h2 id="2- 为什么使用 docker"><a href="#2- 为什么使用 docker" class="headerlink" title="2. 为什么使用 docker"></a>2. 为什么使用 docker</h2><p>Docker 容器虚拟化的优点 </p>
+<p>Docker 是一个程序运行、测试、交付的开放平台，Docker 被设计为能够使你快速地交付应用。</p>
+<p>在 Docker 中，你可以将你的程序分为不同的基础部分，对于每一个基础部分都可以当做一个应用程序来管理。</p>
+<p>Docker 能够帮助你快速地测试、快速地编码、快速地交付，并且缩短你从编码到运行应用的周期。</p>
+<p>Docker 使用轻量级的容器虚拟化平台，并且结合工作流和工具，来帮助你管理、部署你的应用程序。</p>
+<p>Docker 在其核心，Docker 实现了让几乎任何程序都可以在一个安全、隔离的容器中运行。安全和隔离可以使你可以同时在机器上运行多个容器。<br>Docker 容器轻量级的特性，意味着你可以得到更多的硬件性能。</p>
+<p>围绕着 Docker 容器的虚拟化工具和平台，可以在以下几个方面为你提供帮助：</p>
+<p>1）帮助你把应用程序 (包括其余的支持组件) 放入到 Docker 容器中。</p>
+<p>2）分发和转移你的容器至你的团队其它成员来进行进一步的开发和测试。</p>
+<p>3）部署这些应用程序至你的生产环境，不论是本地的数据中心还是云平台。</p>
+<h3 id="Docker 的用途"><a href="#Docker 的用途" class="headerlink" title="Docker 的用途"></a>Docker 的用途</h3><p>1）快速交付你的应用程序</p>
+<p>Docker 可以为你的开发过程提供完美的帮助。Docker 允许开发者在本地包含了应用程序和服务的容器进行开发，之后可以集成到连续的一体化和部署工作流中。</p>
+<p>举个例子，开发者们在本地编写代码并且使用 Docker 和同事分享其开发栈。当开发者们准备好了之后，他们可以将代码和开发栈推送到测试环境中，在该环境进行一切所需要的测试。从测试环境中，你可以将 Docker 镜像推送到服务器上进行部署。</p>
+<p>2）开发和拓展更加简单</p>
+<p>Docker 的以容器为基础的平台允许高度可移植的工作。Docker 容器可以在开发者机器上运行，也可以在实体或者虚拟机上运行，也可以在云平台上运行。</p>
+<p>Docker 的可移植、轻量特性同样让动态地管理负载更加简单。你可以用 Docker 快速地增加应用规模或者关闭应用程序和服务。Docker 的快速意味着变动几乎是实时的。</p>
+<p>3）达到高密度和更多负载</p>
+<p>Docker 轻巧快速，它提供了一个可行的、符合成本效益的替代基于虚拟机管理程序的虚拟机。这在高密度的环境下尤其有用。例如，构建你自己的云平台或者 PaaS，在中小的部署环境下同样可以获取到更多的资源性能。</p>
+<h3 id="Docker 的主要组成"><a href="#Docker 的主要组成" class="headerlink" title="Docker 的主要组成"></a>Docker 的主要组成</h3><p>Docker 有两个主要的部件：</p>
+<p>Docker:     开源的容器虚拟化平台。</p>
+<p>Docker Hub: 用于分享、管理 Docker 容器的 Docker SaaS 平台。</p>
+<h3 id="Docker 的架构"><a href="#Docker 的架构" class="headerlink" title="Docker 的架构"></a>Docker 的架构 </h3><p>Docker 使用客户端 - 服务器(client-server) 架构模式。</p>
+<p>Docker 客户端会与 Docker 守护进程进行通信。Docker 守护进程会处理复杂繁重的任务，例如建立、运行、发布你的 Docker 容器。</p>
+<p>Docker 客户端和守护进程可以运行在同一个系统上，当然也可以使用 Docker 客户端去连接一个远程的 Docker 守护进程。</p>
+<p>Docker 客户端和守护进程之间通过 socket 或者 RESTful API 进行通信。</p>
+<p><img src="https://i.imgur.com/dlaxkht.jpg" alt=""></p>
+<p>1）Docker 守护进程</p>
+<p>如上图所示，Docker 守护进程运行在一台主机上。用户并不直接和守护进程进行交互，而是通过 Docker 客户端间接和其通信。</p>
+<p>2）Docker 客户端</p>
+<p>Docker 客户端，实际上是 docker 的二进制程序，是主要的用户与 Docker 交互方式。它接收用户指令并且与背后的 Docker 守护进程通信，如此来回往复。</p>
+<p>3）Docker 内部</p>
+<p>要理解 Docker 内部构建，需要理解以下三种部件：</p>
+<p>Docker 镜像 - Docker images</p>
+<p>Docker 仓库 - Docker registeries</p>
+<p>Docker 容器 - Docker containers</p>
+<blockquote>
+<p>Docker 镜像</p>
+<p>Docker 镜像是 Docker 容器运行时的只读模板，每一个镜像由一系列的层 (layers) 组成。Docker 使用 UnionFS 来将这些层联合到单独的镜像中。UnionFS 允许独立文件系统中的文件和文件夹 (称之为分支) 被透明覆盖，形成一个单独连贯的文件系统。正因为有了这些层的存在，Docker 是如此的轻量。当你改变了一个 Docker 镜像，比如升级到某个程序到新的版本，一个新的层会被创建。因此，不用替换整个原先的镜像或者重新建立(在使用虚拟机的时候你可能会这么做)，只是一个新 的层被添加或升级了。现在你不用重新发布整个镜像，只需要升级，层使得分发 Docker 镜像变得简单和快速。</p>
+<p>Docker 仓库</p>
+<p>Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。同样的，Docker 仓库也有公有和私有的概念。公有的 Docker 仓库名字是 Docker Hub。Docker Hub 提供了庞大的镜像集合供使用。这些镜像可以是自己创建，或者在别人的镜像基础上创建。Docker 仓库是 Docker 的分发部分。</p>
+<p>Docker 容器</p>
+<p>Docker 容器和文件夹很类似，一个 Docker 容器包含了所有的某个应用运行所需要的环境。每一个 Docker 容器都是从 Docker 镜像创建的。Docker 容器可以运行、开始、停止、移动和删除。每一个 Docker 容器都是独立和安全的应用平台，Docker 容器是 Docker 的运行部分。</p>
+</blockquote>
+<p>4）libcontainer<br>Docker 从 0.9 版本开始使用 libcontainer 替代 lxc，libcontainer 和 Linux 系统的交互图如下：</p>
+<p><img src="https://i.imgur.com/Eh9BXXN.jpg" alt=""></p>
+<p>5）命名空间「Namespaces」</p>
+<pre><code>1）pid namespace
+不同用户的进程就是通过 pid namespace 隔离开的，且不同 namespace 中可以有相同 PID。
+具有以下特征:
+每个 namespace 中的 pid 是有自己的 pid=1 的进程(类似 /sbin/init 进程)
+每个 namespace 中的进程只能影响自己的同一个 namespace 或子 namespace 中的进程
+因为 /proc 包含正在运行的进程，因此在 container 中的 pseudo-filesystem 的 /proc 目录只能看到自己 namespace 中的进程
+因为 namespace 允许嵌套，父 namespace 可以影响子 namespace 的进程，所以子 namespace 的进程可以在父 namespace 中看到，但是具有不同的 pid
+
+2）mnt namespace
+类似 chroot，将一个进程放到一个特定的目录执行。mnt namespace 允许不同 namespace 的进程看到的文件结构不同，这样每个 namespace 中的进程所看到的文件目录就被隔离开了。同 chroot 不同，每个 namespace 中的 container 在 /proc/mounts 的信息只包含所在 namespace 的 mount point。
+
+3）net namespace
+网络隔离是通过 net namespace 实现的， 每个 net namespace 有独立的 network devices, IP addresses, IP routing tables, /proc/net 目录。这样每个 container 的网络就能隔离开来。 docker 默认采用 veth 的方式将 container 中的虚拟网卡同 host 上的一个 docker bridge 连接在一起。
+
+4）uts namespace
+UTS (&quot;UNIX Time-sharing System&quot;) namespace 允许每个 container 拥有独立的 hostname 和 domain name, 使其在网络上可以被视作一个独立的节点而非 Host 上的一个进程。
+
+5）ipc namespace
+container 中进程交互还是采用 Linux 常见的进程间交互方法 (interprocess communication - IPC), 包括常见的信号量、消息队列和共享内存。然而同 VM 不同，container 的进程间交互实际上还是 host 上具有相同 pid namespace 中的进程间交互，因此需要在 IPC 资源申请时加入 namespace 信息 - 每个 IPC 资源有一个唯一的 32bit ID。
+
+6）user namespace
+每个 container 可以有不同的 user 和 group id, 也就是说可以以 container 内部的用户在 container 内部执行程序而非 Host 上的用户。
+
+有了以上 6 种 namespace 从进程、网络、IPC、文件系统、UTS 和用户角度的隔离，一个 container 就可以对外展现出一个独立计算机的能力，并且不同 container 从 OS 层面实现了隔离。然而不同 namespace 之间资源还是相互竞争的，仍然需要类似 ulimit 来管理每个 container 所能使用的资源。
+</code></pre><p>6）资源配额「cgroups」</p>
+<pre><code>cgroups
+实现了对资源的配额和度量。 cgroups 的使用非常简单，提供类似文件的接口，在 /cgroup 目录下新建一个文件夹即可新建一个 group，在此文件夹中新建 task 文件，并将 pid 写入该文件，即可实现对该进程的资源控制。具体的资源配置选项可以在该文件夹中新建子 subsystem ，{子系统前缀}.{资源项} 是典型的配置方法， 如 memory.usageinbytes 就定义了该 group 在 subsystem memory 中的一个内存限制选项。
+另外，cgroups 中的 subsystem 可以随意组合，一个 subsystem 可以在不同的 group 中，也可以一个 group 包含多个 subsystem - 也就是说一个 subsystem。
+
+memory
+内存相关的限制
+
+cpu
+在 cgroup 中，并不能像硬件虚拟化方案一样能够定义 CPU 能力，但是能够定义 CPU 轮转的优先级，因此具有较高 CPU 优先级的进程会更可能得到 CPU 运算。 通过将参数写入 cpu.shares , 即可定义改 cgroup 的 CPU 优先级 - 这里是一个相对权重，而非绝对值
+
+blkio
+block IO 相关的统计和限制，byte/operation 统计和限制 (IOPS 等)，读写速度限制等，但是这里主要统计的都是同步 IO
+
+devices
+设备权限限制
+</code></pre><h3 id="Docker 的工作原理"><a href="#Docker 的工作原理" class="headerlink" title="Docker 的工作原理"></a>Docker 的工作原理</h3><p>1）可以建立一个容纳应用程序的容器。<br>2）可以从 Docker 镜像创建 Docker 容器来运行应用程序。<br>3）可以通过 Docker Hub 或者自己的 Docker 仓库分享 Docker 镜像。</p>
+<h3 id="Docker 镜像是如何工作的？"><a href="#Docker 镜像是如何工作的？" class="headerlink" title="Docker 镜像是如何工作的？"></a>Docker 镜像是如何工作的？</h3><pre><code>Docker 镜像是 Docker 容器运行时的只读模板，每一个镜像由一系列的层 (layers) 组成；
+Docker 使用 UnionFS(联合文件系统)来将这些层联合到一二镜像中，UnionFS 文件系统允许独立文件系统中的文件和文件夹 (称之为分支) 被透明覆盖，形成一个单独连贯的文件系统。
+
+正因为有了这些层 (layers) 的存在，Docker 才会如此的轻量。当你改变了一个 Docker 镜像，比如升级到某个程序到新的版本，一个新的层会被创建。因此，不用替换整个原先的镜像或者重新建立(在使用虚拟机的时候你可能会这么做)，只是一个新的层被添加或升级了。所以你不用重新发布整个镜像，只需要升级。层使得分发 Docker 镜像变得简单和快速。
+
+每个镜像都是从一个基础的镜像开始的，比如 ubuntu，一个基础的 Ubuntu 镜像，或者是 Centos，一个基础的 Centos 镜像。你可以使用你自己的镜像作为新镜像的基础，例如你有一个基础的安装了 Nginx 的镜像，你可以使用该镜像来建立你的 Web 应用程序镜像。（Docker 通常从 Docker Hub 获取基础镜像）
+
+Docker 镜像从这些基础的镜像创建，通过一种简单、具有描述性的步骤，我们称之为 指令(instructions)。
+每一个指令会在镜像中创建一个新的层，指令可以包含这些动作：
+1）运行一个命令。
+2）增加文件或者文件夹。
+3）创建一个环境变量。
+5）当运行容器的时候哪些程序会运行。
+
+这些指令存储在 Dockerfile 文件中。当你需要建立镜像的时候，Docker 可以从 Dockerfile 中读取这些指令并且运行，然后返回一个最终的镜像。
+</code></pre><h3 id="Docker 仓库是如何工作的？"><a href="#Docker 仓库是如何工作的？" class="headerlink" title="Docker 仓库是如何工作的？"></a>Docker 仓库是如何工作的？</h3><p>Docker 仓库是 Docker 镜像的存储仓库。可以推送镜像到 Docker 仓库中, 然后在 Docker 客户端，可以从 Docker 仓库中搜索镜像。</p>
+<h3 id="Docker 容器是如何工作的？"><a href="#Docker 容器是如何工作的？" class="headerlink" title="Docker 容器是如何工作的？"></a>Docker 容器是如何工作的？</h3><pre><code>一个 Docker 容器包含了一个操作系统、用户添加的文件和元数据(meta-data)。每个容器都是从镜像建立的，镜像告诉 Docker 容器内包含了什么，当容器启动时运行什么程序，还有许多配置数据。
+
+Docker 镜像是只读的，当 Docker 运行一个从镜像建立的容器，它会在镜像顶部添加一个可读写的层，应用程序可以在这里运行。
+
+### 当运行 docker 容器时发生了什么？
+
+使用 docker 命令时，Docker 客户端都告诉 Docker 守护进程运行一个容器。
+
+$ sudo docker run -i -t ubuntu /bin/bash
+可以来分析这个命令，Docker 客户端使用 docker 命令来运行，run 参数表明客户端要运行一个新的容器。
+Docker 客户端要运行一个容器需要告诉 Docker 守护进程的最小参数信息是：
+1）这个容器从哪个镜像创建，这里是 ubuntu，基础的 Ubuntu 镜像。
+2）在容器中要运行的命令，这里是 /bin/bash，在容器中运行 Bash shell。
+
+那么运行这个命令之后在底层发生了什么呢？
+按照顺序，Docker 做了这些事情：
+1）拉取 ubuntu 镜像: Docker 检查 ubuntu 镜像是否存在，如果在本地没有该镜像，Docker 会从 Docker Hub 下载。如果镜像已经存在，Docker 会使用它来创建新的容器。
+2）创建新的容器: 当 Docker 有了这个镜像之后，Docker 会用它来创建一个新的容器。
+3）分配文件系统并且挂载一个可读写的层: 容器会在这个文件系统中创建，并且一个可读写的层被添加到镜像中。
+4）分配网络 / 桥接接口: 创建一个允许容器与本地主机通信的网络接口。
+5）设置一个 IP 地址: 从池中寻找一个可用的 IP 地址并且服加到容器上。
+6）运行你指定的程序: 运行指定的程序。
+7）捕获并且提供应用输出: 连接并且记录标准输出、输入和错误让你可以看到你的程序是如何运行的。
+
+由此你就可以拥有一个运行着的 Docker 容器了！从这里开始你可以管理你的容器，与应用交互，应用完成之后，可以停止或者删除你的容器。
+</code></pre><h3 id="Docker 的底层技术"><a href="#Docker 的底层技术" class="headerlink" title="Docker 的底层技术"></a>Docker 的底层技术</h3><pre><code>Docker 使用 Go 语言编写，并且使用了一系列 Linux 内核提供的性能来实现我们已经看到的这些功能。
+
+命名空间(Namespaces)（这个上面也详细说明了）
+Docker 充分利用了一项称为 namespaces 的技术来提供隔离的工作空间，我们称之为 container(容器)。当你运行一个容器的时候，Docker 为该容器创建了一个命名空间集合。
+这样提供了一个隔离层，每一个应用在它们自己的命名空间中运行而且不会访问到命名空间之外。
+一些 Docker 使用到的命名空间有：
+pid 命名空间: 使用在进程隔离(PID: Process ID)。
+net 命名空间: 使用在管理网络接口(NET: Networking)。
+ipc 命名空间: 使用在管理进程间通信资源 (IPC: InterProcess Communication)。
+mnt 命名空间: 使用在管理挂载点 (MNT: Mount)。
+uts 命名空间: 使用在隔离内核和版本标识 (UTS: Unix Timesharing System)。
+
+群组控制
+Docker 还使用到了 cgroups 技术来管理群组。使应用隔离运行的关键是让它们只使用你想要的资源。这样可以确保在机器上运行的容器都是良民(good multi-tenant citizens)。群组控制允许 Docker 分享或者限制容器使用硬件资源。例如，限制指定的容器的内容使用。
+
+联合文件系统
+联合文件系统 (UnionFS) 是用来操作创建层的，使它们轻巧快速。Docker 使用 UnionFS 提供容器的构造块。Docker 可以使用很多种类的 UnionFS 包括 AUFS, btrfs, vfs, and DeviceMapper。
+
+容器格式
+Docker 连接这些组建到一个包装中，称为一个 container format(容器格式)。默认的容器格式是 libcontainer。Docker 同样支持传统的 Linux 容器使用 LXC。在未来，Docker 也许会支持其它的容器格式，例如与 BSD Jails 或 Solaris Zone 集成。
+</code></pre><h3 id="Docker 的网络配置"><a href="#Docker 的网络配置" class="headerlink" title="Docker 的网络配置"></a>Docker 的网络配置</h3><p><img src="https://i.imgur.com/WhNmDnz.jpg" alt=""></p>
+<p>Dokcer 通过使用 Linux 桥接提供容器之间的通信，docker0 桥接接口的目的就是方便 Docker 管理。当 Docker daemon 启动时需要做以下操作：</p>
+<pre><code>1）如果 docker0 不存在则创建
+2）搜索一个与当前路由不冲突的 ip 段
+3）在确定的范围中选择 ip
+4）绑定 ip 到 docker0
+</code></pre><h4 id="Docker 四种网络模式"><a href="#Docker 四种网络模式" class="headerlink" title="Docker 四种网络模式"></a>Docker 四种网络模式</h4><p>docker run 创建 Docker 容器时，可以用–net 选项指定容器的网络模式，Docker 有以下 4 种网络模式：</p>
+<blockquote>
+<p>1）host 模式，使用 –net=host 指定。</p>
+<p>2）container 模式，使用 –net=container:NAMEorID 指定。</p>
+<p>3）none 模式，使用 –net=none 指定。</p>
+<p>4）bridge 模式，使用 –net=bridge 指定，默认设置。</p>
+</blockquote>
+<p><strong>host 模式</strong></p>
+<p>如果启动容器的时候使用 host 模式，那么这个容器将不会获得一个独立的 Network Namespace，而是和宿主机共用一个 Network Namespace。容器将不会虚拟出自己的网卡，配置自己的 IP 等，而是使用宿主机的 IP 和端口。</p>
+<p>比如：我们在 10.10.101.105/24 的机器上用 host 模式启动一个含有 web 应用的 Docker 容器，监听 tcp 80 端口。当我们在容器中执行任何类似 ifconfig 命令查看网络环境时，看到的都是宿主机上的信息。而外界访问容器中的应用，则直接使用 10.10.101.105:80 即可，不用任何 NAT 转换，就如直接跑在宿主机中一样。但是，容器的其他方面，如文件系统、进程列表等还是和宿主机隔离的。</p>
+<p><strong>container 模式</strong></p>
+<p>这个模式指定新创建的容器和已经存在的一个容器共享一个 Network Namespace，而不是和宿主机共享。新创建的容器不会创建自己的网卡，配置自己的 IP，而是和一个指定的容器共享 IP、端口范围等。同样，两个容器除了网络方面，其他的如文件系统、进程列表等还是隔离的。两个容器的进程可以通过 lo 网卡设备通信。</p>
+<p><strong>none 模式</strong></p>
+<p>这个模式和前两个不同。在这种模式下，Docker 容器拥有自己的 Network Namespace，但是，并不为 Docker 容器进行任何网络配置。也就是说，这个 Docker 容器没有网卡、IP、路由等信息。需要我们自己为 Docker 容器添加网卡、配置 IP 等。</p>
+<p><strong>bridge 模式</strong></p>
+<p><img src="https://i.imgur.com/Yr0v5Bd.jpg" alt=""></p>
+<p>bridge 模式是 Docker 默认的网络设置，此模式会为每一个容器分配 Network Namespace、设置 IP 等，并将一个主机上的 Docker 容器连接到一个虚拟网桥上。当 Docker server 启动时，会在主机上创建一个名为 docker0 的虚拟网桥，此主机上启动的 Docker 容器会连接到这个虚拟网桥上。虚拟网桥的工作方式和物理交换机类似，这样主机上的所有容器就通过交换机连在了一个二层网络中。接下来就要为容器分配 IP 了，Docker 会从 RFC1918 所定义的私有 IP 网段中，选择一个和宿主机不同的 IP 地址和子网分配给 docker0，连接到 docker0 的容器就从这个子网中选择一个未占用的 IP 使用。如一般 Docker 会使用 172.17.0.0/16 这个网段，并将 172.17.42.1/16 分配给 docker0 网桥（在主机上使用 ifconfig 命令是可以看到 docker0 的，可以认为它是网桥的管理接口，在宿主机上作为一块虚拟网卡使用）</p>
+<h4 id="列出当前主机网桥"><a href="# 列出当前主机网桥" class="headerlink" title="列出当前主机网桥"></a>列出当前主机网桥</h4><pre><code>[root@localhost ~]# brctl show//brctl 工具依赖 bridge-utils 软件包
+bridge name bridge id   STP enabled interfaces
+docker0 8000.024223421c41   no  veth4b4f1b1
+</code></pre><h4 id="查看当前 -docker0-ip"><a href="# 查看当前 -docker0-ip" class="headerlink" title="查看当前 docker0 ip"></a>查看当前 docker0 ip</h4><pre><code>[root@localhost ~]# ifconfig docker0
+docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
+inet6 fe80::42:23ff:fe42:1c41  prefixlen 64  scopeid 0x20&lt;link&gt;
+ether 02:42:23:42:1c:41  txqueuelen 0  (Ethernet)
+RX packets 181704  bytes 9952837 (9.4 MiB)
+RX errors 0  dropped 0  overruns 0  frame 0
+TX packets 286903  bytes 598331176 (570.6 MiB)
+TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+</code></pre><p>在容器运行时，每个容器都会分配一个特定的虚拟机口并桥接到 docker0。每个容器都会配置同 docker0 ip 相同网段的专用 ip 地址，docker0 的 IP 地址被用于所有容器的默认网关。</p>
+<h4 id="运行一个容器"><a href="# 运行一个容器" class="headerlink" title="运行一个容器"></a>运行一个容器</h4><pre><code>[root@localhost ~]# docker images
+REPOSITORY  TAG IMAGE IDCREATED SIZE
+docker.io/ubuntulatest  0ef2e08ed3fa2 weeks ago 130 MB
+
+[root@localhost ~]# docker run -t -i -d docker.io/ubuntu /bin/bash
+bad5133ecd6a4c740d57621c8fdb536dd9512718a3cae371789b8063ec730944  // 这个字符串的前 12 位字符就是容器的 ID
+
+[root@localhost ~]# docker ps
+CONTAINER IDIMAGE   COMMAND   CREATED STATUS  PORTS NAMES
+bad5133ecd6adocker.io/ubuntu&quot;/bin/bash&quot;   33 seconds ago  Up 32 seconds suspicious_rosalind
+
+[root@localhost ~]# brctl show
+bridge namebridge idSTP enabled   interfaces
+docker08000.024223421c41noveth4b4f1b1
+  vetheaa4add
+</code></pre><p>以上, docker0 扮演着 bad5133ecd6a 这个容器的虚拟接口 vetheaa4add interface 桥接的角色。</p>
+<p><strong>使用特定范围的 IP</strong></p>
+<p>Docker 会尝试寻找没有被主机使用的 ip 段，尽管它适用于大多数情况下，但是它不是万能的，有时候我们还是需要对 ip 进一步规划。Docker 允许你管理 docker0 桥接或者通过 -b 选项自定义桥接网卡，需要安装 bridge-utils 软件包。</p>
+<p>基本步骤如下：</p>
+<p>1）确保 docker 的进程是停止的</p>
+<p>2）创建自定义网桥</p>
+<p>3）给网桥分配特定的 ip</p>
+<p>4）以 -b 的方式指定网桥</p>
+<p>具体操作如下：</p>
+<pre><code>$ sudo service docker stop
+$ sudo ip link set dev docker0 down
+$ sudo brctl delbr docker0
+$ sudo brctl addbr bridge0
+$ sudo ip addr add 192.168.5.1/24 dev bridge0
+$ sudo ip link set dev bridge0 up
+$ ip addr show bridge0
+$ echo &apos;DOCKER_OPTS=&quot;-b=bridge0&quot;&apos; &gt;&gt; /etc/default/docker
+$ sudo service docker start
+</code></pre><h4 id="不同主机间容器通信"><a href="# 不同主机间容器通信" class="headerlink" title="不同主机间容器通信"></a>不同主机间容器通信 </h4><p> 不同容器之间的通信可以借助于 pipework 这个工具：</p>
+<pre><code>$ git clone https://github.com/jpetazzo/pipework.git
+$ sudo cp -rp pipework/pipework /usr/local/bin/
+</code></pre><p>安装相应依赖软件</p>
+<pre><code>$ sudo apt-get install iputils-arping bridge-utils -y
+</code></pre><p>桥接网络</p>
+<pre><code># brctl show
+bridge name bridge id   STP enabled interfaces
+br0 8000.000c291412cd   no  eth0
+docker0 8000.56847afe9799   no  vetheb48029
+</code></pre><p>可以删除 docker0，直接把 docker 的桥接指定为 br0。也可以保留使用默认的配置，这样单主机容器之间的通信可以通过 docker0，而跨主机不同容器之间通过 pipework 新建 docker 容器的网卡桥接到 br0，这样跨主机容器之间就可以通信了。</p>
+<p>具体操作如下：</p>
+<p>1）ubuntu 操作：</p>
+<pre><code>$ sudo service docker stop
+$ sudo ip link set dev docker0 down
+$ sudo brctl delbr docker0
+$ echo &apos;DOCKER_OPTS=&quot;-b=br0&quot;&apos; &gt;&gt; /etc/default/docker
+$ sudo service docker start
+</code></pre><p>2）CentOS 7 操作</p>
+<pre><code>$ sudo systemctl stop docker
+$ sudo ip link set dev docker0 down
+$ sudo brctl delbr docker0
+$ cat /etc/sysconfig/docker | grep &apos;OPTIONS=&apos; OPTIONS=--selinux-enabled -b=br0 -H fd://
+$ sudo systemctl start docker
+</code></pre><p><strong>pipework</strong></p>
+<p><img src="https://i.imgur.com/DZQjzF3.jpg" alt=""></p>
+<p>不同容器之间的通信可以借助于 pipework 这个工具给 docker 容器新建虚拟网卡并绑定 IP 桥接到 br0</p>
+<pre><code>$ git clone https://github.com/jpetazzo/pipework.git
+$ sudo cp -rp pipework/pipework /usr/local/bin/
+$ pipework
+Syntax:
+pipework &lt;hostinterface&gt; [-i containerinterface] &lt;guest&gt; &lt;ipaddr&gt;/&lt;subnet&gt;[@default_gateway] [macaddr][@vlan]
+pipework &lt;hostinterface&gt; [-i containerinterface] &lt;guest&gt; dhcp [macaddr][@vlan]
+pipework --wait [-i containerinterface]
+</code></pre><p>如果删除了默认的 docker0 桥接，把 docker 默认桥接指定到了 br0，则最好在创建容器的时候加上–net=none，防止自动分配的 IP 在局域网中有冲突。</p>
+<pre><code>$ sudo docker run --rm -ti --net=none ubuntu:14.04 /bin/bash
+root@a46657528059:/#
+$  # Ctrl-P + Ctrl-Q 回到宿主机 shell，容器 detach 状态
+$ sudo docker  ps
+CONTAINER IDIMAGE  COMMAND   CREATED STATUS  PORTS  NAMES
+a46657528059ubuntu:14.04   &quot;/bin/bash&quot;   4 minutes ago   Up 4 minutes   hungry_lalande
+$ sudo pipework br0 -i eth0 a46657528059 192.168.115.10/24@192.168.115.2
+# 默认不指定网卡设备名，则默认添加为 eth1
+# 另外 pipework 不能添加静态路由，如果有需求则可以在 run 的时候加上 --privileged=true 权限在容器中手动添加，
+# 但这种安全性有缺陷，可以通过 ip netns 操作
+$ sudo docker attach a46657528059
+root@a46657528059:/# ifconfig eth0
+eth0  Link encap:Ethernet  HWaddr 86:b6:6b:e8:2e:4d 
+  inet addr:192.168.115.10  Bcast:0.0.0.0  Mask:255.255.255.0
+  inet6 addr: fe80::84b6:6bff:fee8:2e4d/64 Scope:Link
+  UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+  RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+  TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+  collisions:0 txqueuelen:1000
+  RX bytes:648 (648.0 B)  TX bytes:690 (690.0 B)
+
+root@a46657528059:/# route -n
+Kernel IP routing table
+Destination Gateway Genmask Flags Metric RefUse Iface
+0.0.0.0 192.168.115.2   0.0.0.0 UG0  00 eth0
+192.168.115.0   0.0.0.0 255.255.255.0   U 0  00 eth0
+</code></pre><p>使用 ip netns 添加静态路由，避免创建容器使用–privileged=true 选项造成一些不必要的安全问题：</p>
+<pre><code>$ docker inspect --format=&quot;{{.State.Pid}}&quot; a46657528059 # 获取指定容器 pid
+6350
+$ sudo ln -s /proc/6350/ns/net /var/run/netns/6350
+$ sudo ip netns exec 6350 ip route add 192.168.0.0/16 dev eth0 via 192.168.115.2
+$ sudo ip netns exec 6350 ip route# 添加成功
+192.168.0.0/16 via 192.168.115.2 dev eth0
+... ...
+</code></pre><p>在其它宿主机进行相应的配置，新建容器并使用 pipework 添加虚拟网卡桥接到 br0，测试通信情况即可。</p>
+<p>另外，pipework 可以创建容器的 vlan 网络，这里不作过多的介绍了，官方文档已经写的很清楚了，可以查看以下两篇文章：</p>
+<p><a href="https://github.com/jpetazzo/pipework" target="_blank" rel="noopener">Pipework 官方文档</a></p>
+<p><a href="http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice" target="_blank" rel="noopener">Docker 网络详解及 pipework 源码解读与实践</a></p>
+<h2 id="为什么使用 docker"><a href="# 为什么使用 docker" class="headerlink" title="为什么使用 docker"></a>为什么使用 docker</h2><p>Docker 容器虚拟化的优点 </p>
 <p><strong>环境隔离</strong>；</p>
 <p>通过 cgroups 和 namesapce 进行实现资源隔离，实现一台机器运行多个容器互不影响。</p>
 <p><strong>更快速的交付部署</strong>；</p>
@@ -501,14 +792,14 @@
 <p>docker 容器几乎可以在任意的平台上运行，包括乌力吉、虚拟机、公有云、私有云、个人电脑、服务器等，这种兼容性让用户可以在不同平台之间轻松的迁移应用。</p>
 <p><strong>更简单的更新管理</strong>。</p>
 <p>使用 Dockerfile，只需要小小的配置修改，就可以替代以往的大量的更新工作。并且所有修改都是以增量的方式进行分发和更新，从而实现自动化和高效的容器管理。</p>
-<h2 id="3- 虚拟化与 docker"><a href="#3- 虚拟化与 docker" class="headerlink" title="3. 虚拟化与 docker"></a>3. 虚拟化与 docker</h2><p>虚拟化定义：虚拟化是一种资源管理技术，是将计算机的各种实体资源，如服务器、网络、内存及存储等，予以抽象、转换后呈现出来，打破实体结构间的不可切割的障碍，使用户可以比原本的配置更好的方式来应用这些资源。这些资源的新虚拟部分是不受现有资源的架设方式，地域或物理配置所限制。一般所指的虚拟化资源包括计算能力和数据存储。</p>
+<h2 id="虚拟化与 docker"><a href="# 虚拟化与 docker" class="headerlink" title="虚拟化与 docker"></a>虚拟化与 docker</h2><p>虚拟化定义：虚拟化是一种资源管理技术，是将计算机的各种实体资源，如服务器、网络、内存及存储等，予以抽象、转换后呈现出来，打破实体结构间的不可切割的障碍，使用户可以比原本的配置更好的方式来应用这些资源。这些资源的新虚拟部分是不受现有资源的架设方式，地域或物理配置所限制。一般所指的虚拟化资源包括计算能力和数据存储。</p>
 <p>系统虚拟化，Hypervisor Virtualization，全虚拟化。在 Host 中通过 Hypervisor 层实现安装多个 GuestOS，每个 GuestOS 都有自己的内核，和主机的内核不同，GuestOS 之间完全隔离。</p>
 <p>容器虚拟化，Operating System Virtualization ，使用 Linux 内核中的 namespaces 和 cgroups 实现进程组之间的隔离。是用内核技术实现的隔离，所以它是一个共享内核的虚拟化技术。</p>
 <p>容器虚拟化没有 GuestOS，使用 Docker 时下载的镜像，只是为运行 App 提供的一个依赖的环境，是一个删减版本的系统镜像。一般情况下系统虚拟化没有容器虚拟化的运行效率高，但是系统安全性高很多。</p>
 <p><img src="https://i.imgur.com/p1qCpM4.jpg" alt=""></p>
 <p><strong>优越性</strong>：</p>
 <p>你在一台机器可以开 10 个虚拟机，如果用 docker 可以开 100 个容器，就是这么霸气</p>
-<h2 id="4-docker 官网注册"><a href="#4-docker 官网注册" class="headerlink" title="4.docker 官网注册"></a>4.docker 官网注册 </h2><p> 注册一个 docker 账号：<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></p>
+<h2 id="docker 官网注册"><a href="#docker 官网注册" class="headerlink" title="docker 官网注册"></a>docker 官网注册 </h2><p> 注册一个 docker 账号：<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></p>
 <p><img src="https://i.imgur.com/WUp1QHA.jpg" alt=""></p>
 <p>完成注册，等待一会就能收到验证邮件。</p>
 <p>收到后激活邮箱，进行登录</p>
@@ -620,8 +911,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/14/jenkins实例似乎已离线问题/" rel="next" title="jenkins 实例似乎已离线问题">
-                <i class="fa fa-chevron-left"></i> jenkins 实例似乎已离线问题
+              <a href="/2018/05/14/Hexo使用jenkins自动部署到阿里云/" rel="next" title="Hexo 使用 jenkins 自动部署到阿里云">
+                <i class="fa fa-chevron-left"></i> Hexo 使用 jenkins 自动部署到阿里云
               </a>
             
           </div>
@@ -641,7 +932,7 @@
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/24/一起学Docker（七）--容器的网络/">一起学 Docker（七）-- 容器的网络</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/23/一起学Docker（六）--数据管理/">一起学 Docker（六）-- 数据管理</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li><li><a href="/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/">容器间网络通信设置 (Pipework 和 Open vSwitch)</a></li></ul>
       
     </footer>
   </div>
@@ -720,7 +1011,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -828,7 +1119,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1- 什么是 docker"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2- 为什么使用 docker"><span class="nav-number">2.</span> <span class="nav-text">2. 为什么使用 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3- 虚拟化与 docker"><span class="nav-number">3.</span> <span class="nav-text">3. 虚拟化与 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-docker 官网注册"><span class="nav-number">4.</span> <span class="nav-text">4.docker 官网注册 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker 资源"><span class="nav-number">5.</span> <span class="nav-text">Docker 资源</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是 docker"><span class="nav-number">1.</span> <span class="nav-text">什么是 docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 的用途"><span class="nav-number">1.1.</span> <span class="nav-text">Docker 的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 的主要组成"><span class="nav-number">1.2.</span> <span class="nav-text">Docker 的主要组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 的架构"><span class="nav-number">1.3.</span> <span class="nav-text">Docker 的架构 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 的工作原理"><span class="nav-number">1.4.</span> <span class="nav-text">Docker 的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 镜像是如何工作的？"><span class="nav-number">1.5.</span> <span class="nav-text">Docker 镜像是如何工作的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 仓库是如何工作的？"><span class="nav-number">1.6.</span> <span class="nav-text">Docker 仓库是如何工作的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 容器是如何工作的？"><span class="nav-number">1.7.</span> <span class="nav-text">Docker 容器是如何工作的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 的底层技术"><span class="nav-number">1.8.</span> <span class="nav-text">Docker 的底层技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker 的网络配置"><span class="nav-number">1.9.</span> <span class="nav-text">Docker 的网络配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker 四种网络模式"><span class="nav-number">1.9.1.</span> <span class="nav-text">Docker 四种网络模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列出当前主机网桥"><span class="nav-number">1.9.2.</span> <span class="nav-text">列出当前主机网桥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看当前 -docker0-ip"><span class="nav-number">1.9.3.</span> <span class="nav-text">查看当前 docker0 ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行一个容器"><span class="nav-number">1.9.4.</span> <span class="nav-text">运行一个容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不同主机间容器通信"><span class="nav-number">1.9.5.</span> <span class="nav-text">不同主机间容器通信 </span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用 docker"><span class="nav-number">2.</span> <span class="nav-text">为什么使用 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟化与 docker"><span class="nav-number">3.</span> <span class="nav-text">虚拟化与 docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker 官网注册"><span class="nav-number">4.</span> <span class="nav-text">docker 官网注册 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker 资源"><span class="nav-number">5.</span> <span class="nav-text">Docker 资源</span></a></li></ol></div>
             
 
           </div>

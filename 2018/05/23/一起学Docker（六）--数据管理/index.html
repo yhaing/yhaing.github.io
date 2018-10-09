@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一起学 Docker（六）-- 数据管理">
+<meta property="og:url" content="https://yhaing.github.io/2018/05/23/一起学Docker（六）--数据管理/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/CmsuYgR.jpg">
+<meta property="og:image" content="https://i.imgur.com/4f9YPoH.jpg">
+<meta property="og:image" content="https://i.imgur.com/DS4FKTV.jpg">
+<meta property="og:image" content="https://i.imgur.com/AJuyxMq.jpg">
+<meta property="og:image" content="https://i.imgur.com/0wLUrtO.jpg">
+<meta property="og:image" content="https://i.imgur.com/yd9jjki.jpg">
+<meta property="og:image" content="https://i.imgur.com/QHKmOTi.jpg">
+<meta property="og:image" content="https://i.imgur.com/K0XdnTC.jpg">
+<meta property="og:image" content="https://i.imgur.com/8q6Rqse.jpg">
+<meta property="og:image" content="https://i.imgur.com/0Rz7ybE.jpg">
+<meta property="og:image" content="https://i.imgur.com/3VlOp76.jpg">
+<meta property="og:image" content="https://i.imgur.com/RcFNNNV.jpg">
+<meta property="og:image" content="https://i.imgur.com/IbSsah5.jpg">
+<meta property="og:image" content="https://i.imgur.com/wx1ioq0.jpg">
+<meta property="og:updated_time" content="2018-10-09T06:08:29.665Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一起学 Docker（六）-- 数据管理">
+<meta name="twitter:image" content="https://i.imgur.com/CmsuYgR.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2018/05/23/一起学Docker（六）--数据管理/"/>
+
+
+
+
+
+  <title>一起学 Docker（六）-- 数据管理 | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yhaing"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">当你发现自己的才华撑不起野心时，就请安静下来学习吧！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/05/23/一起学Docker（六）--数据管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一起学 Docker（六）-- 数据管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T00:34:14+08:00">
+                2018-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/23/一起学Docker（六）--数据管理/" class="leancloud_visitors" data-flag-title="一起学 Docker（六）-- 数据管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/CmsuYgR.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="数据卷"><a href="# 数据卷" class="headerlink" title="数据卷"></a>数据卷</h2><h3 id="Docker-volume 介绍"><a href="#Docker-volume 介绍" class="headerlink" title="Docker volume 介绍"></a>Docker volume 介绍</h3><p>Docker 中的数据可以存储在类似于虚拟机磁盘的介质中，在 Docker 中称为数据卷（Data Volume）。数据卷可以用来存储 Docker 应用的数据，也可以用来在 Docker 容器间进行数据共享。</p>
+<p>数据卷呈现给 Docker 容器的形式就是一个目录，支持多个容器间共享，修改也不会影响镜像。使用 Docker 的数据卷，类似在系统中使用 mount 挂载一个文件系统。</p>
+<p>1）一个数据卷是一个特别指定的目录，该目录利用容器的 UFS 文件系统可以为容器提供一些稳定的特性或者数据共享。数据卷可以在多个容器之间共享。</p>
+<p>2）创建数据卷，只要在 docker run 命令后面跟上 -v 参数即可创建一个数据卷，当然也可以跟多个 -v 参数来创建多个数据卷，当创建好带有数据卷的容器后，<br>   就可以在其他容器中通过–volumes-froms 参数来挂载该数据卷了，而不管该容器是否运行。也可以在 Dockerfile 中通过 VOLUME 指令来增加一个或者多个数据卷。</p>
+<p>3）如果有一些数据想在多个容器间共享，或者想在一些临时性的容器中使用该数据，那么最好的方案就是你创建一个数据卷容器，然后从该临时性的容器中挂载该数据卷容器的数据。<br>   这样，即使删除了刚开始的第一个数据卷容器或者中间层的数据卷容器，只要有其他容器使用数据卷，数据卷都不会被删除的。</p>
+<p>4）不能使用 docker export、save、cp 等命令来备份数据卷的内容，因为数据卷是存在于镜像之外的。备份的方法可以是创建一个新容器，挂载数据卷容器，同时挂载一个本地目录，<br>   然后把远程数据卷容器的数据卷通过备份命令备份到映射的本地目录里面。如下：</p>
+<pre><code>docker run -rm --volumes-from DATA -v $(pwd):/backup busybox tar cvf /backup/backup.tar /data
+</code></pre><p>5）也可以把一个本地主机的目录当做数据卷挂载在容器上，同样是在 docker run 后面跟 -v 参数，不过 -v 后面跟的不再是单独的目录了，它是 [host-dir]:[container-dir]:[rw|ro] 这样格式的，<br>   host-dir 是一个绝对路径的地址，如果 host-dir 不存在，则 docker 会创建一个新的数据卷，如果 host-dir 存在，但是指向的是一个不存在的目录，则 docker 也会创建该目录，然后使用该目录做数据源。</p>
+<p>Docker Volume 数据卷可以实现：</p>
+<p>1）绕过“拷贝写”系统，以达到本地磁盘 IO 的性能，（比如运行一个容器，在容器中对数据卷修改内容，会直接改变宿主机上的数据卷中的内容，所以是本地磁盘 IO 的性能，而不是先在容器中写一份，最后还要将容器中的修改的内容拷贝出来进行同步。）</p>
+<p>2）绕过“拷贝写”系统，有些文件不需要在 docker commit 打包进镜像文件。</p>
+<p>3）数据卷可以在容器间共享和重用数据</p>
+<p>4）数据卷可以在宿主和容器间共享数据</p>
+<p>5）数据卷数据改变是直接修改的，数据卷修改会立即生效， 数据卷的更新不会影响镜像</p>
+<p>6）数据卷是持续性的，直到没有容器使用它们。即便是初始的数据卷容器或中间层的数据卷容器删除了，只要还有其他的容器使用数据卷，那么里面的数据都不会丢失。</p>
+<p>Docker 数据持久化：</p>
+<p>容器在运行期间产生的数据是不会写在镜像里面的，重新用此镜像启动新的容器就会初始化镜像，会加一个全新的读写入层来保存数据。</p>
+<p>如果想做到数据持久化，Docker 提供数据卷（Data volume）或者数据容器卷来解决问题，另外还可以通过 commit 提交一个新的镜像来保存产生的数据。</p>
+<h2 id="准备工作"><a href="# 准备工作" class="headerlink" title="准备工作"></a>准备工作 </h2><p> 创建一个目录，并在目录里面创建文件，文件内写入内容。</p>
+<p><img src="https://i.imgur.com/4f9YPoH.jpg" alt=""></p>
+<h2 id="在容器内创建数据卷"><a href="# 在容器内创建数据卷" class="headerlink" title="在容器内创建数据卷"></a>在容器内创建数据卷</h2><p> 在使用 docker run 的命令时，使用 -v 标记可以在容器内创建一个数据卷，并且可以指定挂在一个本地已有的目录到容器中作为数据卷：</p>
+<pre><code>docker run -d --name app1-it -v ${PWD}/webapp:/root/webapp ubuntu bash
+</code></pre><p> 通过目录跟容器内建立了一层关系，数据卷发生变化后，容器内和容器外都会随之发生改变。例如容器挂载一个文件，当容器挂了后，文件不会丢失。</p>
+<p> 注意：默认挂载的数据卷的权限是 rw（可读写），如果要求 ro（只读），则需要加上对应的 ro 参数，命令可改为：</p>
+<pre><code>docker run -d --name app1-it -v ${PWD}/webapp:/root/webapp:ro ubuntu bash
+</code></pre><p>下面我们一起来操作一下：</p>
+<p>创建 webapp 目录，在目录下新建文件 file，并在文件 file 中写入“hello my docker!!”。</p>
+<p><img src="https://i.imgur.com/DS4FKTV.jpg" alt=""></p>
+<p>echo ${PWD} 命令标识当前目录。</p>
+<p><img src="https://i.imgur.com/AJuyxMq.jpg" alt=""></p>
+<p>创建启动 app1 容器并挂载数据卷<br><img src="https://i.imgur.com/0wLUrtO.jpg" alt=""></p>
+<p>进入容器找到 root 目录可查看到已挂载的数据卷。<br><img src="https://i.imgur.com/yd9jjki.jpg" alt=""></p>
+<p>数据卷目录与容器内目录有映射关系，所以不管是在容器内部修改数据卷还是在外部修改数据卷，相对应的数据卷都会发生改变。<br><img src="https://i.imgur.com/QHKmOTi.jpg" alt=""></p>
+<p>只读的演示<br><img src="https://i.imgur.com/K0XdnTC.jpg" alt=""></p>
+<h2 id="数据卷容器"><a href="# 数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h2><p> 数据卷容器用于用户需要在容器间共享一些持续更新的数据，数据卷容器专门提供数据卷供其它容器挂载使用。</p>
+<p> Example:</p>
+<p> 创建数据卷容器 db1</p>
+<pre><code>docker run -d --name db1 -v/dbdata -ti ubuntu bash
+</code></pre><p> 创建容器 db2 与 db1 共享 dbdata 的数据</p>
+<pre><code>docker run -d --name db2 --volumes-fromdb1 -ti ubuntu bash
+</code></pre><p><img src="https://i.imgur.com/8q6Rqse.jpg" alt=""></p>
+<p>在容器 db1 和容器 db2 任意一个容器修改 dbdata 的内容，在两个容器内均生效<br><img src="https://i.imgur.com/0Rz7ybE.jpg" alt=""></p>
+<p>数据卷容器的删除：</p>
+<p>如果删除了挂载的容器，数据卷并不会被自动删除，如果要删除一个数据卷，必须在删除最后一个还挂载它的容器时显示使用 docker rm -v 命令指定同时删除关联的容器。在下图可看到即使删除 db1，db2 中仍然有 file 文件。<br><img src="https://i.imgur.com/3VlOp76.jpg" alt=""></p>
+<p>在 db1 中创建了文件 db1_file，db2 可以看到 db1_file，删除 db1 容器后，db1_file 在 db2 中还可以看到。</p>
+<p>可以利用数据卷容器对其中的数据卷进行备份、恢复，以实现数据的迁移。</p>
+<p>备份：</p>
+<p> 使用下面的命令来备份 dbdata 数据卷容器内的数据卷：</p>
+<pre><code>docker run --volumes-from dbdata -v ${PWD}:/backup --name worker ubuntu \tar cvf /backup/backup.tar /dbdata
+</code></pre><p>说明：</p>
+<p>利用 ubuntu 镜像创建一个容器 worker。使用–volumes-from dbdata 参数来让 worker 容器挂载 dbdata 的数据卷；使用 ${pwd}:/backup 参数来挂载本地目录到 worker 容器的 /backup 目录。</p>
+<p>   worker 启动后，使用 tar 命令将 /dbdata 下的内容备份为容器内的 /backup/backup.tar。</p>
+<p>创建 dbdata 数据卷容器并写入文件：fileA、fileB、fileC</p>
+<p><img src="https://i.imgur.com/RcFNNNV.jpg" alt=""></p>
+<p>执行备份命令创建备份 tar 包：</p>
+<p><img src="https://i.imgur.com/IbSsah5.jpg" alt=""></p>
+<p>恢复：</p>
+<p>如果恢复数据到一个容器，可以参照下面的操作。首先创建一个带有数据卷的容器 dbdata2:</p>
+<pre><code>docker run -d -v /dbdata--name dbdata2 ubuntu /bin/bash
+</code></pre><p>然后创建另一个新的容器，挂载 dbdata2 的容器，并使用 tar 命令解压备份文件到挂载的容器卷中即可：<br><img src="https://i.imgur.com/wx1ioq0.jpg" alt=""></p>
+<pre><code>docker run --volumes-fromdbdata2 -v ${pwd}:/backup ubuntu tar xvf /backup/backup.tar
+</code></pre><p><strong><strong><strong>***</strong></strong></strong>当你发现自己的才华撑不起野心时，就请安静下来学习吧<strong><strong><strong>***</strong></strong></strong></p>
+<p>参考资料：<a href="https://www.cnblogs.com/kevingrace/p/6238195.html" target="_blank" rel="noopener">https://www.cnblogs.com/kevingrace/p/6238195.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2018/05/23/一起学Docker（六）--数据管理/" title="一起学 Docker（六）-- 数据管理">https://yhaing.github.io/2018/05/23/一起学Docker（六）--数据管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/22/一起学Docker（五）--仓库/" rel="next" title="一起学 Docker（五）-- 仓库">
+                <i class="fa fa-chevron-left"></i> 一起学 Docker（五）-- 仓库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/24/一起学Docker（七）--容器的网络/" rel="prev" title="一起学 Docker（七）-- 容器的网络">
+                一起学 Docker（七）-- 容器的网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/19/一起学Docker（一）-初识/">一起学 Docker（一）-- 初识</a></li><li><a href="/2018/05/24/一起学Docker（七）--容器的网络/">一起学 Docker（七）-- 容器的网络</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li><li><a href="/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/">容器间网络通信设置 (Pipework 和 Open vSwitch)</a></li></ul>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTk3MS8xNjQ5OA=="></div>
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yhaing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yh198812@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.cnblogs.com/yhaing/" target="_blank" title="cnblogs">
+                      
+                        <i class="fa fa-fw fa-globe"></i>cnblogs</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5b6256396fb9a04fbf2729fb/collections" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-globe"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("01/19/2015 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据卷"><span class="nav-number">1.</span> <span class="nav-text">数据卷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-volume 介绍"><span class="nav-number">1.1.</span> <span class="nav-text">Docker volume 介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在容器内创建数据卷"><span class="nav-number">3.</span> <span class="nav-text">在容器内创建数据卷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据卷容器"><span class="nav-number">4.</span> <span class="nav-text">数据卷容器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+
+<!-- 添加背景图片 -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+    $("body").backstretch("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538127512866&di=2f9d3ddd0c3a21af7c277add296ec5ea&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F56dfebba2e60b.jpg");
+  </script>
+   -->
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

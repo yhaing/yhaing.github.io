@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="容器间网络通信设置 (Pipework 和 Open vSwitch)">
+<meta property="og:url" content="https://yhaing.github.io/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/CmsuYgR.jpg">
+<meta property="og:image" content="https://i.imgur.com/lOSbdrP.jpg">
+<meta property="og:image" content="https://i.imgur.com/1fgKssn.jpg">
+<meta property="og:image" content="https://i.imgur.com/qiR9nf4.jpg">
+<meta property="og:image" content="https://i.imgur.com/wZZKqsj.jpg">
+<meta property="og:image" content="https://i.imgur.com/tXDa6Wa.jpg">
+<meta property="og:image" content="https://i.imgur.com/8dNVHnq.jpg">
+<meta property="og:updated_time" content="2018-10-09T09:13:26.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="容器间网络通信设置 (Pipework 和 Open vSwitch)">
+<meta name="twitter:image" content="https://i.imgur.com/CmsuYgR.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/"/>
+
+
+
+
+
+  <title>容器间网络通信设置 (Pipework 和 Open vSwitch) | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yhaing"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">当你发现自己的才华撑不起野心时，就请安静下来学习吧！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">容器间网络通信设置 (Pipework 和 Open vSwitch)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-24T10:34:14+08:00">
+                2018-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/" class="leancloud_visitors" data-flag-title="容器间网络通信设置 (Pipework 和 Open vSwitch)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  30
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/CmsuYgR.jpg" alt=""></p>
+<a id="more"></a>
+<p>自从 Docker 容器出现以来，容器的网络通信就一直是被关注的焦点，也是生产环境的迫切需求。容器的网络通信又可以分为两大方面：单主机容器上的相互通信，和跨主机的容器相互通信。下面将分别针对这两方面，对容器的通信原理进行简单的分析，帮助大家更好地使用 docker。</p>
+<h2 id="docker 单主机容器通信"><a href="#docker 单主机容器通信" class="headerlink" title="docker 单主机容器通信"></a>docker 单主机容器通信 </h2><p> 基于对 net namespace 的控制，docker 可以为在容器创建隔离的网络环境，在隔离的网络环境下，容器具有完全独立的网络栈，与宿主机隔离，<br>也可以使容器共享主机或者其他容器的网络命名空间，基本可以满足开发者在各种场景下的需要。</p>
+<p>按 docker 官方的说法，docker 容器的网络有五种模式：</p>
+<p>1）<strong>bridge 模式</strong>，–net=bridge(默认)</p>
+<p>这是 dokcer 网络的默认设置，为容器创建独立的网络命名空间，容器具有独立的网卡等所有单独的网络栈，是最常用的使用方式。<br>在 docker run 启动容器的时候，如果不加–net 参数，就默认采用这种网络模式。安装完 docker，系统会自动添加一个供 docker 使用的网桥 docker0，我们创建一个新的容器时，<br>容器通过 DHCP 获取一个与 docker0 同网段的 IP 地址，并默认连接到 docker0 网桥，以此实现容器与宿主机的网络互通。</p>
+<p>2）<strong>host 模式</strong>，–net=host</p>
+<p>这个模式下创建出来的容器，直接使用容器宿主机的网络命名空间。<br>将不拥有自己独立的 Network Namespace，即没有独立的网络环境。它使用宿主机的 ip 和端口。</p>
+<p>3）<strong>none 模式</strong>，–net=none</p>
+<p>为容器创建独立网络命名空间，但不为它做任何网络配置，容器中只有 lo，用户可以在此基础上，对容器网络做任意定制。<br>这个模式下，dokcer 不为容器进行任何网络配置。需要我们自己为容器添加网卡，配置 IP。<br>因此，若想使用 pipework 配置 docker 容器的 ip 地址，必须要在 none 模式下才可以。</p>
+<p>4）其他容器模式（即<strong>container 模式</strong>），–net=container:NAME_or_ID</p>
+<p>与 host 模式类似，只是容器将与指定的容器共享网络命名空间。<br>这个模式就是指定一个已有的容器，共享该容器的 IP 和端口。除了网络方面两个容器共享，其他的如文件系统，进程等还是隔离开的。</p>
+<p>5）<strong>用户自定义 </strong>：docker 1.9 版本以后新增的特性，允许容器使用第三方的网络实现或者创建单独的 bridge 网络，提供网络隔离能力。<br> 这些网络模式在相互网络通信方面的对比如下所示：</p>
+<p><img src="https://i.imgur.com/lOSbdrP.jpg" alt=""></p>
+<table><tr><td style="padding:1px;border:none;background:#fff000"><font size="3">南北向通信指容器与宿主机外界的访问机制，东西向流量指同一宿主机上，与其他容器相互访问的机制。</font></td></tr></table>
+
+<h3 id="host 模式"><a href="#host 模式" class="headerlink" title="host 模式"></a>host 模式 </h3><p> 由于容器和宿主机共享同一个网络命名空间，换言之，容器的 IP 地址即为宿主机的 IP 地址。所以容器可以和宿主机一样，使用宿主机的任意网卡，实现和外界的通信。其网络模型可以参照下图</p>
+<p><img src="https://i.imgur.com/1fgKssn.jpg" alt=""></p>
+<pre><code>采用 host 模式的容器，可以直接使用宿主机的 IP 地址与外界进行通信，若宿主机具有公有 IP，那么容器也拥有这个公有 IP。同时容器内服务的端口也可以使用宿主机的端口，
+无需额外进行 NAT 转换，而且由于容器通信时，不再需要通过 linuxbridge 等方式转发或者数据包的拆封，性能上有很大优势。
+当然，这种模式有优势，也就有劣势，主要包括以下几个方面：
+1）最明显的就是容器不再拥有隔离、独立的网络栈。容器会与宿主机竞争网络栈的使用，并且容器的崩溃就可能导致宿主机崩溃，在生产环境中，这种问题可能是不被允许的。
+2）容器内部将不再拥有所有的端口资源，因为一些端口已经被宿主机服务、bridge 模式的容器端口绑定等其他服务占用掉了。
+</code></pre><h3 id="bridge 模式"><a href="#bridge 模式" class="headerlink" title="bridge 模式"></a>bridge 模式</h3><p>bridge 模式是 docker 默认的，也是开发者最常使用的网络模式。在这种模式下，docker 为容器创建独立的网络栈，保证容器内的进程使用独立的网络环境，</p>
+<p>实现容器之间、容器与宿主机之间的网络栈隔离。同时，通过宿主机上的 docker0 网桥，容器可以与宿主机乃至外界进行网络通信。</p>
+<p>其网络模型可以参考下图：</p>
+<p><img src="https://i.imgur.com/qiR9nf4.jpg" alt=""></p>
+<pre><code>从上面的网络模型可以看出，容器从原理上是可以与宿主机乃至外界的其他机器通信的。同一宿主机上，容器之间都是连接掉 docker0 这个网桥上的，它可以作为虚拟交换机使容器可以相互通信。
+然而，由于宿主机的 IP 地址与容器 veth pair 的 IP 地址均不在同一个网段，故仅仅依靠 veth pair 和 namespace 的技术，还不足以使宿主机以外的网络主动发现容器的存在。为了使外界可以方位容器中的进程，docker 采用了端口绑定的方式，也就是通过 iptables 的 NAT，将宿主机上的端口
+端口流量转发到容器内的端口上。
+
+举一个简单的例子，使用下面的命令创建容器，并将宿主机的 3306 端口绑定到容器的 3306 端口：
+docker run -tid --name db -p 3306:3306 MySQL
+
+在宿主机上，可以通过 iptables -t nat -L -n，查到一条 DNAT 规则：
+
+DNAT tcp -- 0.0.0.0/0 0.0.0.0/0 tcp dpt:3306 to:172.17.0.5:3306
+
+上面的 172.17.0.5 即为 bridge 模式下，创建的容器 IP。
+
+很明显，bridge 模式的容器与外界通信时，必定会占用宿主机上的端口，从而与宿主机竞争端口资源，对宿主机端口的管理会是一个比较大的问题。同时，由于容器与外界通信是基于三层上 iptables NAT，性能和效率上的损耗是可以预见的。
+</code></pre><h3 id="none 模式"><a href="#none 模式" class="headerlink" title="none 模式"></a>none 模式 </h3><p> 在这种模式下，容器有独立的网络栈，但不包含任何网络配置，只具有 lo 这个 loopback 网卡用于进程通信。也就是说，none 模式为容器做了最少的网络设置，但是俗话说得好“少即是多”，在没有网络配置的情况下，通过第三方工具或者手工的方式，开发这任意定制容器的网络，提供了最高的灵活性</p>
+<h3 id="其他容器（container）模式"><a href="# 其他容器（container）模式" class="headerlink" title="其他容器（container）模式"></a>其他容器（container）模式 </h3><p> 其他网络模式是 docker 中一种较为特别的网络的模式。在这个模式下的容器，会使用其他容器的网络命名空间，其网络隔离性会处于 bridge 桥接模式与 host 模式之间。</p>
+<p>当容器共享其他容器的网络命名空间，则在这两个容器之间不存在网络隔离，而她们又与宿主机以及除此之外其他的容器存在网络隔离。其网络模型可以参考下图：</p>
+<p><img src="https://i.imgur.com/wZZKqsj.jpg" alt=""></p>
+<p>在这种模式下的容器可以通过 localhost 来同一网络命名空间下的其他容器，传输效率较高。而且这种模式还节约了一定数量的网络资源，但它并没有改变容器与外界通信的方式。<br>在一些特殊的场景中非常有用，例如，kubernetes 的 pod，kubernetes 为 pod 创建一个基础设施容器，同一 pod 下的其他容器都以其他容器模式共享这个基础设施容器的网络命名空间，<br>相互之间以 localhost 访问，构成一个统一的整体。</p>
+<h3 id="用户定义网络模式"><a href="# 用户定义网络模式" class="headerlink" title="用户定义网络模式"></a>用户定义网络模式 </h3><pre><code> 在用户定义网络模式下，开发者可以使用任何 docker 支持的第三方网络 driver 来定制容器的网络。并且，docker 1.9 以上的版本默认自带了 bridge 和 overlay 两种类型的自定义网络 driver。可以用于集成 calico、weave、openvswitch 等第三方厂商的网络实现。
+除了 docker 自带的 bridge driver，其他的几种 driver 都可以实现容器的跨主机通信。而基于 bdrige driver 的网络，docker 会自动为其创建 iptables 规则，
+保证与其他网络之间、与 docker0 之间的网络隔离。
+例如，使用下面的命令创建一个基于 bridge driver 的自定义网络：
+
+docker network create bri1
+
+则 docker 会自动生成如下的 iptables 规则，保证不同网络上的容器无法互相通信。
+
+-A DOCKER-ISOLATION -i br-8dba6df70456 -o docker0 -j DROP
+-A DOCKER-ISOLATION -i docker0 -o br-8dba6df70456 -j DROP
+
+除此之外，bridge driver 的所有行为都和默认的 bridge 模式完全一致。而 overlay 及其他 driver，则可以实现容器的跨主机通信。
+</code></pre><h2 id="docker 跨主机容器通信"><a href="#docker 跨主机容器通信" class="headerlink" title="docker 跨主机容器通信"></a>docker 跨主机容器通信 </h2><p> 早期大家的跨主机通信方案主要有以下几种：</p>
+<p>1）容器使用 host 模式：容器直接使用宿主机的网络，这样天生就可以支持跨主机通信。虽然可以解决跨主机通信问题，但这种方式应用场景很有限，容易出现端口冲突，也无法做到隔离网络环境，一个容器崩溃很可能引起整个宿主机的崩溃。</p>
+<p>2）端口绑定：通过绑定容器端口到宿主机端口，跨主机通信时，使用主机 IP+ 端口的方式访问容器中的服务。显而易见，这种方式仅能支持网络栈的四层及以上的应用，并且容器与宿主机紧耦合，很难灵活的处理，可扩展性不佳。</p>
+<p>3）docker 外定制容器网络：在容器通过 docker 创建完成后，然后再通过修改容器的网络命名空间来定义容器网络。典型的就是很久以前的 pipework，容器以 none 模式创建，pipework 通过进入容器的网络命名空间为容器重新配置网络，这样容器网络可以是静态 IP、vxlan 网络等各种方式，非常灵活，容器启动的一段时间内会没有 IP，明显无法在大规模场景下使用，只能在实验室中测试使用。</p>
+<p>4）第三方 SDN 定义容器网络：使用 Open vSwitch 或 Flannel 等第三方 SDN 工具，为容器构建可以跨主机通信的网络环境。这些方案一般要求各个主机上的 docker0 网桥的 cidr 不同，以避免出现 IP 冲突的问题，限制了容器在宿主机上的可获取 IP 范围。并且在容器需要对集群外提供服务时，需要比较复杂的配置，对部署实施人员的网络技能要求比较高。</p>
+<p>上面这些方案有各种各样的缺陷，同时也因为跨主机通信的迫切需求，docker 1.9 版本时，官方提出了基于 vxlan 的 overlay 网络实现，原生支持容器的跨主机通信。同时，还支持通过 libnetwork 的 plugin 机制扩展各种第三方实现，从而以不同的方式实现跨主机通信。就目前社区比较流行的方案来说，跨主机通信的基本实现方案有以下几种：</p>
+<p>1）基于隧道的 overlay 网络：按隧道类型来说，不同的公司或者组织有不同的实现方案。docker 原生的 overlay 网络就是基于 vxlan 隧道实现的。ovn 则需要通过 geneve 或者 stt 隧道来实现的。flannel 最新版本也开始默认基于 vxlan 实现 overlay 网络。</p>
+<p>2）基于包封装的 overlay 网络：基于 UDP 封装等数据包包装方式，在 docker 集群上实现跨主机网络。典型实现方案有 weave、flannel 的早期版本。</p>
+<p>3）基于三层实现 SDN 网络：基于三层协议和路由，直接在三层上实现跨主机网络，并且通过 iptables 实现网络的安全隔离。典型的方案为 Project Calico。同时对不支持三层路由的环境，Project Calico 还提供了基于 IPIP 封装的跨主机网络实现</p>
+<p>Dokcer 通过使用 Linux 桥接提供容器之间的通信，docker0 桥接接口的目的就是方便 Docker 管理。当 Docker daemon 启动时需要做以下操作</p>
+<p>a）如果 docker0 不存在则创建</p>
+<p>b）搜索一个与当前路由不冲突的 ip 段</p>
+<p>c）在确定的范围中选择 ip</p>
+<p>d）绑定 ip 到 docker0</p>
+<p><strong>列出当前主机网桥</strong></p>
+<p>[root@localhost ~]# brctl show<br>bridge namebridge id   STP enabled   interfaces<br>docker08000.02426f15541e   novethe833b02</p>
+<p><strong>查看当前 docker0 ip</strong></p>
+<pre><code>[root@localhost ~]# ifconfig
+docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
+inet6 fe80::42:6fff:fe15:541e  prefixlen 64  scopeid 0x20&lt;link&gt;
+ether 02:42:6f:15:54:1e  txqueuelen 0  (Ethernet)
+RX packets 120315  bytes 828868638 (790.4 MiB)
+RX errors 0  dropped 0  overruns 0  frame 0
+TX packets 132565  bytes 100884398 (96.2 MiB)
+TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+................
+</code></pre><p>在容器运行时，每个容器都会分配一个特定的虚拟机口并桥接到 docker0。每个容器都会配置同 docker0 ip 相同网段的专用 ip 地址，docker0 的 IP 地址被用于所有容器的默认网关。</p>
+<p>一般启动的容器中 ip 默认是 172.17.0.1/24 网段的。</p>
+<pre><code>[root@linux-node2 ~]# docker images
+REPOSITORY   TAG IMAGE IDCREATED SIZE
+centos   latest  67591570dd293 months ago191.8 MB
+
+[root@linux-node2 ~]# docker run -t -i --name my-test centos /bin/bash
+[root@c5217f7bd44c /]#
+
+[root@linux-node2 ~]# docker ps
+CONTAINER IDIMAGE   COMMAND CREATED STATUS  PORTSNAMES
+c5217f7bd44ccentos  &quot;/bin/bash&quot; 10 seconds ago  Up 10 secondsmy-test
+[root@linux-node2 ~]# docker inspect c5217f7bd44c|grep IPAddress
+&quot;SecondaryIPAddresses&quot;: null,
+&quot;IPAddress&quot;: &quot;172.17.0.2&quot;,
+&quot;IPAddress&quot;: &quot;172.17.0.2&quot;,
+</code></pre><p>那么能不能在创建容器的时候指定特定的 ip 呢？这是当然可以实现的！</p>
+<p>注意：宿主机的 ip 路由转发功能一定要打开，否则所创建的容器无法联网！</p>
+<pre><code>[root@localhost ~]# cat /proc/sys/net/ipv4/ip_forward
+1
+[root@localhost ~]#
+[root@localhost ~]# docker ps
+CONTAINER IDIMAGE   COMMAND CREATED STATUS  PORTS   NAMES
+6e64eade06d1docker.io/centos&quot;/bin/bash&quot; 10 seconds ago  Up 9 secondsmy-centos
+[root@localhost ~]# docker run -itd --net=none --name=container1 docker.io/centos
+5e5bdbc4d9977e6bcfa40e0a9c3be10806323c9bf5a60569775903d345869b09
+[root@localhost ~]# docker attach container1
+[root@5e5bdbc4d997 /]# ping www.baidu.com
+PING www.a.shifen.com (61.135.169.121) 56(84) bytes of data.
+64 bytes from 61.135.169.121 (61.135.169.121): icmp_seq=1 ttl=53 time=2.09 ms
+64 bytes from 61.135.169.121 (61.135.169.121): icmp_seq=2 ttl=53 time=2.09 ms
+
+关闭 ip 路由转发功能，容器即不能联网
+[root@localhost ~]# echo 0 &gt; /proc/sys/net/ipv4/ip_forward
+[root@localhost ~]# cat /proc/sys/net/ipv4/ip_forward
+0
+[root@5e5bdbc4d997 /]# ping www.baidu.com//ping 不通~
+</code></pre><h2 id="创建容器使用特定范围的 IP"><a href="# 创建容器使用特定范围的 IP" class="headerlink" title="创建容器使用特定范围的 IP"></a>创建容器使用特定范围的 IP</h2><p>Docker 会尝试寻找没有被主机使用的 ip 段，尽管它适用于大多数情况下，但是它不是万能的，有时候我们还是需要对 ip 进一步规划。</p>
+<p>Docker 允许你管理 docker0 桥接或者通过 -b 选项自定义桥接网卡，需要安装 bridge-utils 软件包。操作流程如下：</p>
+<p>a）确保 docker 的进程是停止的</p>
+<p>b）创建自定义网桥</p>
+<p>c）给网桥分配特定的 ip</p>
+<p>d）以 -b 的方式指定网桥</p>
+<p>具体操作过程如下（比如创建容器的时候，指定 ip 为 192.168.5.1/24 网段的）：</p>
+<pre><code>[root@localhost ~]# service docker stop
+[root@localhost ~]# ip link set dev docker0 down
+[root@localhost ~]# brctl delbr docker0
+[root@localhost ~]# brctl addbr bridge0
+[root@localhost ~]# ip addr add 192.168.5.1/24 dev bridge0  // 注意，这个 192.168.5.1 就是所建容器的网关地址。通过 docker inspect container_id 能查看到
+[root@localhost ~]# ip link set dev bridge0 up
+[root@localhost ~]# ip addr show bridge0
+[root@localhost ~]# vim /etc/sysconfig/docker  // 即将虚拟的桥接口由默认的 docker0 改为 bridge0
+将
+OPTIONS=&apos;--selinux-enabled --log-driver=journald&apos;
+改为
+OPTIONS=&apos;--selinux-enabled --log-driver=journald -b=bridge0&apos;// 即添加 -b=bridge0
+
+[root@localhost ~]# service docker restart
+</code></pre><hr>
+<p>上面是 centos7 下的操作步骤, 下面提供下 ubuntu 下的操作步骤：</p>
+<pre><code>$ sudo service docker stop
+$ sudo ip link set dev docker0 down
+$ sudo brctl delbr docker0
+$ sudo brctl addbr bridge0
+$ sudo ip addr add 192.168.5.1/24 dev bridge0
+$ sudo ip link set dev bridge0 up
+$ ip addr show bridge0
+$ echo &apos;DOCKER_OPTS=&quot;-b=bridge0&quot;&apos; &gt;&gt; /etc/default/docker
+$ sudo service docker start
+</code></pre><hr>
+<p>然后创建容器，查看下容器 ip 是否为设定的 192.168.5.1/24 网段的</p>
+<pre><code>[root@localhost ~]# docker images
+REPOSITORY  TAG IMAGE IDCREATED SIZE
+docker.io/ubuntulatest  0ef2e08ed3fa2 weeks ago 130 MB
+centos7 7.3.1611d5ebea14da543 weeks ago 311 MB
+
+[root@localhost ~]# docker run -t -i --name test2 centos7:7.3.1611 /bin/bash
+[root@224facf8e054 /]#
+
+[root@localhost ~]# docker run -t -i --name test1 docker.io/ubuntu /bin/bash
+root@f5b1bfc2811a:/#
+
+[root@localhost ~]# docker ps
+CONTAINER IDIMAGE   COMMAND CREATED STATUS  PORTS   NAMES
+224facf8e054centos7:7.3.1611&quot;/bin/bash&quot; 46 minutes ago  Up 46 minutes   test2
+f5b1bfc2811adocker.io/ubuntu&quot;/bin/bash&quot; 47 minutes ago  Up 5 minutestest1
+[root@localhost ~]# docker inspect --format=&apos;{{.NetworkSettings.IPAddress}}&apos; f5b1bfc2811a
+192.168.5.2
+[root@localhost ~]# docker inspect --format=&apos;{{.NetworkSettings.IPAddress}}&apos; 224facf8e054
+192.168.5.3
+
+[root@localhost ~]# brctl show
+bridge name   bridge id   STP enabled interfaces
+bridge0   8000.ba141fa20c91   no  vethe7e227b
+  vethf382771
+</code></pre><h3 id="使用 pipework 给容器设置一个固定的 ip"><a href="# 使用 pipework 给容器设置一个固定的 ip" class="headerlink" title="使用 pipework 给容器设置一个固定的 ip"></a>使用 pipework 给容器设置一个固定的 ip</h3><p>可以利用 pipework 为容器指定一个固定的 ip，操作方法非常简单，如下：</p>
+<pre><code>[root@node1 ~]# brctl addbr br0
+[root@node1 ~]# ip link set dev br0 up
+[root@node1 ~]# ip addr add 192.168.114.1/24 dev br0// 这个 ip 相当于 br0 网桥的网关 ip，可以随意设定。
+[root@node1 ~]# docker run -ti -d --net=none --name=my-test1 docker.io/nginx /bin/bash
+[root@node1 ~]# pipework br0 -i eth0 my-test1 192.168.114.100/24@192.168.114.1
+
+[root@node1 ~]# docker exec -ti my-test1 /bin/bash
+root@cf370a090f63:/# ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+   valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+   valid_lft forever preferred_lft forever
+57: eth0@if58: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+link/ether b2:c1:8d:92:33:e2 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+inet 192.168.114.100/24 brd 192.168.114.255 scope global eth0
+   valid_lft forever preferred_lft forever
+inet6 fe80::b0c1:8dff:fe92:33e2/64 scope link
+   valid_lft forever preferred_lft forever
+</code></pre><p>再启动一个容器</p>
+<pre><code>[root@node1 ~]# docker run -ti -d --net=none --name=my-test2 docker.io/nginx /bin/bash
+[root@node1 ~]# pipework br0 -i eth0 my-test12 192.168.114.200/24@192.168.114.1
+[root@node1 ~]# pipework br0 -i eth0 my-test2 192.168.114.200/24@192.168.114.1
+</code></pre><p>这样，my-test1 容器和 my-test2 容器在同一个宿主机上，所以它们固定后的 ip 是可以相互 ping 通的，如果是在不同的宿主机上，则就无法 ping 通！</p>
+<p>所以说：</p>
+<p>这样使用 pipework 指定固定 ip 的容器，在同一个宿主机下的容器间的 ip 是可以相互 ping 通的，但是跨主机的容器通过这种方式固定 ip 后就不能 ping 通了。<br>跨主机的容器间的通信可以看下面的介绍。</p>
+<h2 id="不同主机间的容器通信（pipework-config-docker-container-ip）"><a href="# 不同主机间的容器通信（pipework-config-docker-container-ip）" class="headerlink" title="不同主机间的容器通信（pipework  config docker container ip）"></a>不同主机间的容器通信（pipework  config docker container ip）</h2><p>我的 centos7 测试机上的 docker 是 yum 安装的，默认自带 pipework 工具，所以就不用在另行安装它了。</p>
+<p>如果没有 pipework 工具，可以安装下面步骤进行安装：</p>
+<pre><code># git clone https://github.com/jpetazzo/pipework.git
+# sudo cp -rp pipework/pipework /usr/local/bin/
+</code></pre><p>安装相应依赖软件(网桥)</p>
+<pre><code>#sudo apt-get install iputils-arping bridge-utils -y
+</code></pre><hr>
+<p>查看 Docker 宿主机上的桥接网络</p>
+<pre><code>[root@linux-node2 ~]# brctl show
+bridge name   bridge id   STP enabled   interfaces
+docker0   8000.02426f15541e   noveth92d132f
+</code></pre><p>有两种方式做法：</p>
+<p>1）可以选择删除 docker0，直接把 docker 的桥接指定为 br0；</p>
+<p>2）也可以选择保留使用默认 docker0 的配置，这样单主机容器之间的通信可以通过 docker0；跨主机不同容器之间通过 pipework 将容器的网卡桥接到 br0 上，这样跨主机容器之间就可以通信了。</p>
+<p>如果保留了 docker0，则容器启动时不加–net=none 参数，那么本机容器启动后就是默认的 docker0 自动分配的 ip（默认是 172.17.1.0/24 网段），它们之间是可以通信的；跨宿主机的容器创建时要加–net=none 参数，待容器启动后通过 pipework 给容器指定 ip，这样跨宿主机的容器 ip 是在同一网段内的同网段地址，因此可以通信。</p>
+<p>一般来说：最好在创建容器的时候加上–net=none，防止自动分配的 IP 在局域网中有冲突。若是容器创建后自动获取 ip，下次容器启动会 ip 有变化，可能会和物理网段中的 ip 冲突</p>
+<hr>
+<h2 id="实践"><a href="# 实践" class="headerlink" title="实践"></a>实践 </h2><p> 实例说明如下：</p>
+<p>宿主机信息</p>
+<p>ip：192.168.1.23          （网卡设备为 eth0）</p>
+<p>gateway：192.168.1.1</p>
+<p>netmask：255.255.255.0</p>
+<p>1）删除虚拟桥接卡 docker0 的配置</p>
+<pre><code>[root@localhost ~]# service docker stop
+[root@localhost ~]# ip link set dev docker0 down
+[root@localhost ~]# brctl delbr docker0
+[root@localhost ~]# brctl addbr br0
+[root@localhost ~]# ip link set dev br0 up  
+[root@localhost ~]# ip addr del 192.168.1.23/24 dev eth0   // 删除宿主机网卡的 IP（如果是使用这个地址进行的远程连接，这一步操作后就会断掉；如果是使用外网地址连接的话，就不会断开）
+[root@localhost ~]# ip addr add 192.168.1.23/24 dev br0// 将宿主主机的 ip 设置到 br0
+[root@localhost ~]# brctl addif br0 eth0// 将宿主机网卡挂到 br0 上
+[root@localhost ~]# ip route del default   // 删除默认的原路由，其实就是 eth0 上使用的原路由 192.168.1.1（这步小心，注意删除后要保证机器能远程连接上，最好是通过外网 ip 远程连的。别删除路由后，远程连接不上，中断了）
+[root@localhost ~]# ip route add default via 192.168.1.1 dev br0  // 为 br0 设置路由
+[root@localhost ~]# vim /etc/sysconfig/docker // 即将虚拟的桥接口由默认的 docker0 改为 bridge0
+将
+OPTIONS=&apos;--selinux-enabled --log-driver=journald&apos;
+改为
+OPTIONS=&apos;--selinux-enabled --log-driver=journald -b=br0&apos;// 即添加 -b=br0
+
+[root@localhost ~]# service docker start
+</code></pre><p>启动一个手动设置网络的容器</p>
+<pre><code>[root@localhost ~]# docker ps
+CONTAINER IDIMAGE   COMMAND CREATED STATUS  PORTS   NAMES
+6e64eade06d1docker.io/centos&quot;/bin/bash&quot; 10 seconds ago  Up 9 secondsmy-centos
+[root@localhost ~]# docker run -itd --net=none --name=my-test1 docker.io/centos
+</code></pre><p>为 my-test1 容器设置一个与桥接物理网络同地址段的 ip（如下，”ip@gateway”）<br>默认不指定网卡设备名，则默认添加为 eth0。可以通过 -i 参数添加网卡设备名</p>
+<pre><code>[root@localhost ~]# pipework br0 -i eth0 my-test1 192.168.1.190/24@192.168.1.1
+</code></pre><p>同理，在其他机器上启动容器，并类似上面用 pipework 设置一个同网段类的 ip，这样跨主机的容器就可以相互 ping 通了！</p>
+<hr>
+<p>2）保留默认虚拟桥接卡 docker0 的配置</p>
+<pre><code>[root@localhost ~]# cd /etc/sysconfig/network-scripts/
+[root@localhost network-scripts]# cp ifcfg-eth0 ifcfg-eth0.bak
+[root@localhost network-scripts]# cp ifcfg-eth0 ifcfg-br0
+[root@localhost network-scripts]# vim ifcfg-eth0// 增加 BRIDGE=br0，删除 IPADDR,NETMASK,GATEWAY,DNS 的设置
+......
+BRIDGE=br0
+[root@localhost network-scripts]# vim ifcfg-br0// 修改 DEVICE 为 br0,Type 为 Bridge, 把 eth0 的网络设置设置到这里来（里面应该有 ip，网关，子网掩码或 DNS 设置）
+......
+TYPE=Bridge
+DEVICE=br0
+
+[root@localhost network-scripts]# service network restart
+
+[root@localhost network-scripts]# service docker restart
+</code></pre><p>开启一个容器并指定网络模式为 none（这样，创建的容器就不会通过 docker0 自动分配 ip 了，而是根据 pipework 工具自定 ip 指定）</p>
+<pre><code>[root@localhost network-scripts]# docker images
+REPOSITORY  TAG IMAGE IDCREATED SIZE
+docker.io/centoslatest  67591570dd293 months ago191.8 MB
+[root@localhost network-scripts]# docker run -itd --net=none --name=my-centos docker.io/centos /bin/bash
+6e64eade06d1eb20be3bd22ece2f79174cd033b59182933f7bbbb502bef9cb0f
+</code></pre><p>接着给容器配置网络</p>
+<pre><code>[root@localhost network-scripts]# pipework br0 -i eth0 my-centos 192.168.1.150/24@192.168.1.1
+[root@localhost network-scripts]# docker attach 6e64eade06d1
+[root@6e64eade06d1 /]# ifconfig eth0 // 若没有 ifconfig 命令，可以 yum 安装 net-tools 工具
+eth0  Link encap:Ethernet  HWaddr 86:b6:6b:e8:2e:4d
+  inet addr:192.168.1.150  Bcast:0.0.0.0  Mask:255.255.255.0
+  inet6 addr: fe80::84b6:6bff:fee8:2e4d/64 Scope:Link
+  UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+  RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+  TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+  collisions:0 txqueuelen:1000
+  RX bytes:648 (648.0 B)  TX bytes:690 (690.0 B)
+
+[root@6e64eade06d1 /]# route -n
+Kernel IP routing table
+Destination Gateway Genmask Flags Metric RefUse Iface
+0.0.0.0 192.168.1.1 0.0.0.0 UG0  00 eth0
+192.168.115.0   0.0.0.0 255.255.255.0   U 0  00 eth0
+</code></pre><p>另外 pipework 不能添加静态路由，如果有需求则可以在 run 的时候加上–privileged=true 权限在容器中手动添加，但这种方法安全性有缺陷。</p>
+<p>除此之外，可以通过 ip netns（–help 参考帮助）添加静态路由，以避免创建容器使用–privileged=true 选项造成一些不必要的安全问题：</p>
+<p>如下获取指定容器的 pid</p>
+<pre><code>[root@localhost network-scripts]# docker inspect --format=&quot;{{.State.Pid}}&quot; 6e64eade06d1
+7852
+[root@localhost network-scripts]# ln -s /proc/7852/ns/net /var/run/netns/7852
+[root@localhost network-scripts]# ip netns exec 7852 ip route add 192.168.0.0/16 dev eth0 via 192.168.1.1
+[root@localhost network-scripts]# ip netns exec 7852 ip route// 添加成功
+192.168.0.0/16 via 192.168.1.1 dev eth0
+</code></pre><p>同理，在其它宿主机进行相应的配置，新建容器并使用 pipework 添加虚拟网卡桥接到 br0，如此创建的容器间就可以相互通信了。</p>
+<h3 id="报错处理"><a href="# 报错处理" class="headerlink" title="报错处理"></a>报错处理</h3><p>1）重启网卡报错如下：</p>
+<pre><code># systemctl restart network
+......
+Nov 23 22:09:08 hdcoe02 systemd[1]: network.service: control process exited, code=exited status=1 
+Nov 23 22:09:08 hdcoe02 systemd[1]: Failed to start LSB: Bring up/down networking. 
+Nov 23 22:09:08 hdcoe02 systemd[1]: Unit network.service entered failed state.&lt;/span&gt; 
+</code></pre><p>解决办法：</p>
+<pre><code># systemctl enable NetworkManager-wait-online.service
+# systemctl stop NetworkManager
+# systemctl  restart network.service
+</code></pre><p>2）创建容器，出现下面告警</p>
+<pre><code>WARNING: IPv4 forwarding is disabled. Networking will not work.
+</code></pre><p>解决办法：</p>
+<pre><code>#vim /usr/lib/sysctl.d/00-system.conf
+添加如下代码：
+net.ipv4.ip_forward=1
+
+重启 network 服务
+# systemctl restart network
+</code></pre><hr>
+<h2 id="Open-vSwitch 的使用"><a href="#Open-vSwitch 的使用" class="headerlink" title="Open vSwitch 的使用"></a>Open vSwitch 的使用 </h2><p> 其实除了上面使用的 pipework 工具还，还可以使用虚拟交换机 (Open vSwitch) 进行 docker 容器间的网络通信，废话不多说，下面说下 Open vSwitch 的使用：</p>
+<h3 id="在 Server1 和 Server2 上分别安装 open-vswitch"><a href="# 在 Server1 和 Server2 上分别安装 open-vswitch" class="headerlink" title="在 Server1 和 Server2 上分别安装 open vswitch"></a>在 Server1 和 Server2 上分别安装 open vswitch</h3><pre><code>[root@Slave1 ~]# # yum -y install wget openssl-devel kernel-devel
+[root@Slave1 ~]# yum groupinstall &quot;Development Tools&quot;
+[root@Slave1 ~]# adduser ovswitch
+[root@Slave1 ~]# su - ovswitch
+[root@Slave1 ~]$ wget http://openvswitch.org/releases/openvswitch-2.3.0.tar.gz
+[root@Slave1 ~]$ tar -zxvpf openvswitch-2.3.0.tar.gz
+[root@Slave1 ~]$ mkdir -p ~/rpmbuild/SOURCES
+[root@Slave1 ~]$ sed &apos;s/openvswitch-kmod, //g&apos; openvswitch-2.3.0/rhel/openvswitch.spec &gt; openvswitch-2.3.0/rhel/openvswitch_no_kmod.spec
+[root@Slave1 ~]$ cp openvswitch-2.3.0.tar.gz rpmbuild/SOURCES/
+
+[root@Slave1 ~]$ rpmbuild -bb --without check ~/openvswitch-2.3.0/rhel/openvswitch_no_kmod.spec
+
+[root@Slave1 ~]$ exit
+
+[root@Slave1 ~]# yum localinstall /home/ovswitch/rpmbuild/RPMS/x86_64/openvswitch-2.3.0-1.x86_64.rpm
+[root@Slave1 ~]# mkdir /etc/openvswitch
+[root@Slave1 ~]# setenforce 0
+[root@Slave1 ~]# systemctl start openvswitch.service
+[root@Slave1 ~]# systemctl  status openvswitch.service -l
+</code></pre><h3 id="在 Slave1 和 Slave2 上建立 OVS-Bridge 并配置路由"><a href="# 在 Slave1 和 Slave2 上建立 OVS-Bridge 并配置路由" class="headerlink" title="在 Slave1 和 Slave2 上建立 OVS Bridge 并配置路由"></a>在 Slave1 和 Slave2 上建立 OVS Bridge 并配置路由</h3><p>1）在 Slave1 宿主机上设置 docker 容器内网 ip 网段 172.17.1.0/24</p>
+<pre><code>[root@Slave1 ~]# vim /proc/sys/net/ipv4/ip_forward
+1
+[root@Slave1 ~]# ovs-vsctl add-br obr0
+[root@Slave1 ~]# ovs-vsctl add-port obr0 gre0 -- set Interface gre0 type=gre options:remote_ip=192.168.115.5
+
+[root@Slave1 ~]# brctl addbr kbr0
+[root@Slave1 ~]# brctl addif kbr0 obr0
+[root@Slave1 ~]# ip link set dev docker0 down
+[root@Slave1 ~]# ip link del dev docker0
+
+[root@Slave1 ~]# vim /etc/sysconfig/network-scripts/ifcfg-kbr0
+ONBOOT=yes
+BOOTPROTO=static
+IPADDR=172.17.1.1
+NETMASK=255.255.255.0
+GATEWAY=172.17.1.0
+USERCTL=no
+TYPE=Bridge
+IPV6INIT=no
+
+[root@Slave1 ~]# vim /etc/sysconfig/network-scripts/route-ens32
+172.17.2.0/24 via 192.168.115.6 dev ens32
+
+[root@Slave1 ~]# systemctl  restart network.service
+</code></pre><p><img src="https://i.imgur.com/tXDa6Wa.jpg" alt=""></p>
+<p>2）在 Slave2 宿主机上设置 docker 容器内网 ip 网段 172.17.2.0/24</p>
+<pre><code>[root@Slave2 ~]# vim /proc/sys/net/ipv4/ip_forward
+1
+[root@Slave2 ~]# ovs-vsctl add-br obr0
+[root@Slave2 ~]# ovs-vsctl add-port obr0 gre0 -- set Interface gre0 type=gre options:remote_ip=192.168.115.6
+
+[root@Slave2 ~]# brctl addbr kbr0
+[root@Slave2 ~]# brctl addif kbr0 obr0
+[root@Slave2 ~]# ip link set dev docker0 down
+[root@Slave2 ~]# ip link del dev docker0
+
+[root@Slave2 ~] vim /etc/sysconfig/network-scripts/ifcfg-kbr0
+ONBOOT=yes
+BOOTPROTO=static
+IPADDR=172.17.2.1
+NETMASK=255.255.255.0
+GATEWAY=172.17.2.0
+USERCTL=no
+TYPE=Bridge
+IPV6INIT=no
+
+[root@Slave2 ~]# vim /etc/sysconfig/network-scripts/route-ens32
+172.17.1.0/24 via 192.168.115.5 dev ens32
+
+[root@Slave2 ~]# systemctl  restart network.service
+</code></pre><p><img src="https://i.imgur.com/8dNVHnq.jpg" alt=""></p>
+<h2 id="启动容器测试"><a href="# 启动容器测试" class="headerlink" title="启动容器测试"></a>启动容器测试</h2><p>Server1 和 Server2 上修改 docker 启动的虚拟网卡绑定为 kbr0，重启 docker 进程</p>
+<p>1）在 Server1 宿主机上启动容器, 然后登陆容器内查看 ip，就会发现 ip 是上面设定额 172.17.1.0/24 网段的</p>
+<pre><code>[root@Slave1 ~]# docker run -idt --name my-server1 daocloud.io/library/centos/bin/bash
+</code></pre><p>2）在 Server2 宿主机上启动容器，然后登陆容器内查看 ip，就会发现 ip 是上面设定额 172.17.2.0/24 网段的</p>
+<pre><code>[root@Slave2 ~]#docker run -idt --name my-server1 daocloud.io/library/centos /bin/bash
+</code></pre><p>然后在上面启动的容内互 ping 对方容器，发现是可以 ping 通的</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/" title="容器间网络通信设置 (Pipework 和 Open vSwitch)">https://yhaing.github.io/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/24/Python 3爬取百度经验数据/" rel="next" title="Python 3 爬取百度经验数据">
+                <i class="fa fa-chevron-left"></i> Python 3 爬取百度经验数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/20/Maven私库Nexus3搭建使用/" rel="prev" title="Maven 私库 Nexus3 搭建使用">
+                Maven 私库 Nexus3 搭建使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/19/一起学Docker（一）-初识/">一起学 Docker（一）-- 初识</a></li><li><a href="/2018/05/24/一起学Docker（七）--容器的网络/">一起学 Docker（七）-- 容器的网络</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/23/一起学Docker（六）--数据管理/">一起学 Docker（六）-- 数据管理</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li></ul>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTk3MS8xNjQ5OA=="></div>
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yhaing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yh198812@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.cnblogs.com/yhaing/" target="_blank" title="cnblogs">
+                      
+                        <i class="fa fa-fw fa-globe"></i>cnblogs</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5b6256396fb9a04fbf2729fb/collections" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-globe"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("01/19/2015 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker 单主机容器通信"><span class="nav-number">1.</span> <span class="nav-text">docker 单主机容器通信 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#host 模式"><span class="nav-number">1.1.</span> <span class="nav-text">host 模式 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bridge 模式"><span class="nav-number">1.2.</span> <span class="nav-text">bridge 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#none 模式"><span class="nav-number">1.3.</span> <span class="nav-text">none 模式 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他容器（container）模式"><span class="nav-number">1.4.</span> <span class="nav-text">其他容器（container）模式 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户定义网络模式"><span class="nav-number">1.5.</span> <span class="nav-text">用户定义网络模式 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker 跨主机容器通信"><span class="nav-number">2.</span> <span class="nav-text">docker 跨主机容器通信 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建容器使用特定范围的 IP"><span class="nav-number">3.</span> <span class="nav-text">创建容器使用特定范围的 IP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用 pipework 给容器设置一个固定的 ip"><span class="nav-number">3.1.</span> <span class="nav-text">使用 pipework 给容器设置一个固定的 ip</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同主机间的容器通信（pipework-config-docker-container-ip）"><span class="nav-number">4.</span> <span class="nav-text">不同主机间的容器通信（pipework  config docker container ip）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实践"><span class="nav-number">5.</span> <span class="nav-text">实践 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#报错处理"><span class="nav-number">5.1.</span> <span class="nav-text">报错处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Open-vSwitch 的使用"><span class="nav-number">6.</span> <span class="nav-text">Open vSwitch 的使用 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在 Server1 和 Server2 上分别安装 open-vswitch"><span class="nav-number">6.1.</span> <span class="nav-text">在 Server1 和 Server2 上分别安装 open vswitch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在 Slave1 和 Slave2 上建立 OVS-Bridge 并配置路由"><span class="nav-number">6.2.</span> <span class="nav-text">在 Slave1 和 Slave2 上建立 OVS Bridge 并配置路由</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动容器测试"><span class="nav-number">7.</span> <span class="nav-text">启动容器测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+
+<!-- 添加背景图片 -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+    $("body").backstretch("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538127512866&di=2f9d3ddd0c3a21af7c277add296ec5ea&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F56dfebba2e60b.jpg");
+  </script>
+   -->
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
