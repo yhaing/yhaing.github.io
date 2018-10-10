@@ -130,13 +130,13 @@
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一起学 docker(八)--Dockerfile">
-<meta property="og:url" content="https://yhaing.github.io/2018/05/25/一起学docker(八)--Dockerfile/index.html">
+<meta property="og:url" content="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/index.html">
 <meta property="og:site_name" content="海阔天空">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/CmsuYgR.jpg">
 <meta property="og:image" content="https://i.imgur.com/p2TvKPl.jpg">
 <meta property="og:image" content="https://i.imgur.com/4b0C28I.jpg">
-<meta property="og:updated_time" content="2018-10-10T06:23:13.603Z">
+<meta property="og:updated_time" content="2018-10-10T07:35:46.224Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一起学 docker(八)--Dockerfile">
 <meta name="twitter:image" content="https://i.imgur.com/CmsuYgR.jpg">
@@ -169,7 +169,7 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/2018/05/25/一起学docker(八)--Dockerfile/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/"/>
 
 
 
@@ -345,7 +345,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/05/25/一起学docker(八)--Dockerfile/">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hai Yang">
@@ -414,7 +414,7 @@
 
           
           
-             <span id="/2018/05/25/一起学docker(八)--Dockerfile/" class="leancloud_visitors" data-flag-title="一起学 docker(八)--Dockerfile">
+             <span id="/2018/05/25/一起学docker(八)  --Dockerfile/" class="leancloud_visitors" data-flag-title="一起学 docker(八)--Dockerfile">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -484,9 +484,171 @@
         <p><img src="https://i.imgur.com/CmsuYgR.jpg" alt=""></p>
 <a id="more"></a>
 <p>在 Docker 的运用中，从下载镜像，启动容器，在容器中输入命令来运行程序，这些命令都是手工一条条往里输入的，无法重复利用，而且效率很低。所以就需要一 种文件或脚本，我们把想执行的操作以命令的方式写入其中，然后让 docker 读取并分析、执行，那么重复构建、更新将变得很方便，所以 Dockerfile 就此诞生了。<font color="#0000FF">Docker 提供了 Dockerfile 作为构建 Docker 镜像脚本，避免人们一行一行的输入，真是善莫大焉。Dockerfile 脚本可以做到随时维护修改，即可以分享，更有利于在模板化，更不用说传输了，好处那是一大箩筐！</font>下面就详细介绍下 Dockfile 的使用：</p>
-<font color="#FF0000">Dockfile 是一种被 Docker 程序解释的脚本，它由一条条的指令组成，每条指令对应 Linux 下面的一条命令。</font>Docker 程序将这些 Dockerfile 指令翻译成真正的 Linux 命令。Dockerfile 有自己书写格式和支持的命令，Docker 程序解决这些命令间的依赖关系，类似于 Makefile。Docker 程序将读取 Dockerfile，根据指令生成定制的 image。相比 image 这种黑盒子，Dockerfile 这种显而易见的脚本更容易被使用者接受，它明确的表明 image 是怎么产生的。有了 Dockerfile，当我们需要定制自己额外的需求时，只需在 Dockerfile 上添加或者修改指令，重新生成 image 即可，省去了敲命令的麻烦。<br><br>总的来说：<br>Dockerfile 分为四部分：<font color="#FFA07A">基础镜像信息、镜像创建者信息、镜像操作指令、容器启动执行指令 </font>。<br><br> 一开始必须要指明所基于的镜像名称，接下来一般会说明镜像创建者信息。后面则是镜像操作指令 <br><br>## Dockerfile 的书写规则及指令使用方法<br><br>Dockerfile 的指令是忽略大小写的，建议使用大写，使用 # 作为注释，每一行只支持一条指令，每条指令可以携带多个参数。<br>Dockerfile 的指令根据作用可以分为两种：构建指令和设置指令。<br> 构建指令用于构建 image，其指定的操作不会在运行 image 的容器上执行；<br>设置指令用于设置 image 的属性，其指定的操作将在运行 image 的容器中执行。<br><br><br>### FROM（指定基础 image）<br><br>构建指令，必须指定且需要在 Dockerfile 其他指令的前面。后续的指令都依赖于该指令指定的 image。FROM 指令指定的基础 image 可以是官方远程仓库中的，也可以位于本地仓库。<br><br>FROM 命令告诉 docker 我们构建的镜像是以哪个 (发行版) 镜像为基础的。第一条指令必须是 FROM 指令。并且，如果在同一个 Dockerfile 中创建多个镜像时，可以使用多个 FROM 指令。<br><br>该指令有两种格式：<br><br>    FROM <image><br><br>指定基础 image 为该 image 的最后修改的版本。或者：<br><br>    FROM <image>:<tag><br><br>指定基础 image 为该 image 的一个 tag 版本。<br><br>RUN 后面接要执行的命令，比如，我们想在镜像中安装 <code>vim</code>，只需在 Dockfile 中写入<code>RUN yum install -y vim</code><br><br>### MAINTAINER（用来指定镜像创建者信息）<br><br> 构建指令，用于将 image 的制作者相关的信息写入到 image 中。当我们对该 image 执行 docker inspect 命令时，输出中有相应的字段记录该信息。<br><br>格式：<br><br>    MAINTAINER <name><br><br>### RUN（安装软件用）<br><br>构建指令，RUN 可以运行任何被基础 image 支持的命令。如基础 image 选择了 ubuntu，那么软件管理部分只能使用 ubuntu 的命令。<br><br>该指令有两种格式：<br><br>    RUN <command><br>    RUN [“executable”, “param1”, “param2” …]<br><br>### CMD（设置 container 启动时执行的操作）<br><br>设置指令，用于 container 启动时指定的操作。该操作可以是执行自定义脚本，也可以是执行系统命令。该指令只能在文件中存在一次，如果有多个，则只执行最后一条。<br><br>该指令有三种格式：<br><br>    CMD [“executable”,”param1”,”param2”]<br>    CMD command param1 param2<br><br>当 Dockerfile 指定了 ENTRYPOINT，那么使用下面的格式：<br><br>    CMD [“param1”,”param2”]<br><br>其中：<br><br>ENTRYPOINT 指定的是一个可执行的脚本或者程序的路径，该指定的脚本或者程序将会以 <code>param1</code> 和<code>param2</code>作为参数执行。<br><br>所以如果 CMD 指令使用上面的形式，那么 Dockerfile 中必须要有配套的 <code>ENTRYPOINT</code>。<br><br>### ENTRYPOINT（设置 container 启动时执行的操作）<br><br> 设置指令，指定容器启动时执行的命令，可以多次设置，但是只有最后一个有效。<br><br>两种格式:<br><br>    ENTRYPOINT [“executable”, “param1”, “param2”]<br>    ENTRYPOINT command param1 param2<br><br>该指令的使用分为两种情况，一种是独自使用，另一种和 CMD 指令配合使用。<br>当独自使用时，如果你还使用了 CMD 命令且 CMD 是一个完整的可执行的命令，那么 CMD 指令和 ENTRYPOINT 会互相覆盖，只有最后一个 CMD 或者 ENTRYPOINT 有效。CMD 指令将不会被执行，只有 ENTRYPOINT 指令被执行 <br><br>    CMD echo “Hello, World!”<br>    ENTRYPOINT ls -l<br><br> 另一种用法和 CMD 指令配合使用来指定 ENTRYPOINT 的默认参数，这时 CMD 指令不是一个完整的可执行命令，仅仅是参数部分；ENTRYPOINT 指令只能使用 JSON 方式指定执行命令，而不能指定参数。<br><br>    FROM ubuntu<br>    CMD [“-l”]<br>    ENTRYPOINT [“/usr/bin/ls”]<br><br>### USER（设置 container 容器的用户）<br><br>设置指令，设置启动容器的用户，默认是 root 用户。例如下面指定 memcached 的运行用户 <br><br>    ENTRYPOINT [“memcached”]<br>    USER daemon<br>    或者<br>    ENTRYPOINT [“memcached”, “-u”, “daemon”]<br><br>## EXPOSE（指定容器需要映射到宿主机器的端口）<br><br> 设置指令，该指令会将容器中的端口映射成宿主机器中的某个端口。当你需要访问容器的时候，可以不是用容器的 IP 地址而是使用宿主机器的 IP 地址和映射后的端口。<br><br>要完成整个操作需要两个步骤，首先在 Dockerfile 使用 EXPOSE 设置需要映射的容器端口，然后在运行容器的时候指定 -p 选项加上 EXPOSE 设置的端口，这样 EXPOSE 设置的端口号会被随机映射成宿主机器中的一个端口号。<br><br>也可以指定需要映射到宿主机器的那个端口，这时要确保宿主机器上的端口号没有被使用。EXPOSE 指令可以一次设置多个端口号，相应的运行容器的时候，可以配套的多次使用 -p 选项。<br><br>格式:<br><br>    EXPOSE <port> [<port>…]<br><br>    # 映射一个端口 <br>    EXPOSE port1<br>    # 相应的运行容器使用的命令<br>    docker run -p port1 image<br><br>    # 映射多个端口<br>    EXPOSE port1 port2 port3<br>    # 相应的运行容器使用的命令<br>    docker run -p port1 -p port2 -p port3 image<br>    # 还可以指定需要映射到宿主机器上的某个端口号<br>    docker run -p host_port1:port1 -p host_port2:port2 -p host_port3:port3 image<br><br> 端口映射是 docker 比较重要的一个功能，原因在于我们每次运行容器的时候容器的 IP 地址不能指定而是在桥接网卡的地址范围内随机生成的。<br><br>宿主机器的 IP 地址是固定的，我们可以将容器的端口的映射到宿主机器上的一个端口，免去每次访问容器中的某个服务时都要查看容器的 IP 的地址。<br><br>对于一个运行的容器，可以使用 docker port 加上容器中需要映射的端口和容器的 ID 来查看该端口号在宿主机器上的映射端口。<br><br>## ENV（用于设置环境变量）<br><br>主要用于设置容器运行时的环境变量 <br><br> 格式:<br><br>    ENV <key> <value><br><br>设置了后，后续的 RUN 命令都可以使用，container 启动后，可以通过 docker inspect 查看这个环境变量，也可以通过在 docker run –env key=value 时设置或修改环境变量。<br><br>假如你安装了 JAVA 程序，需要设置 JAVA_HOME，那么可以在 Dockerfile 中这样写：<br>ENV JAVA_HOME /path/to/java/dirent<br><br>## ADD（从 src 复制文件到 container 的 dest 路径）<br><br>主要用于将宿主机中的文件添加到镜像中构建指令，所有拷贝到 container 中的文件和文件夹权限为 0755，uid 和 gid 为 0；如果是一个目录，那么会将该目录下的所有文件添加到 container 中，不包括目录；<br><br>如果文件是可识别的压缩格式，则 docker 会帮忙解压缩（注意压缩格式）；如果 <src> 是文件且 <dest> 中不使用斜杠结束，则会将 <dest> 视为文件，<src>的内容会写入 <dest>；如果<src> 是文件且 <dest> 中使用斜杠结束，则会 <src> 文件拷贝到 <dest> 目录下。<br><br>格式:<br><br>    ADD <src> <dest><br><br><src> 是相对被构建的源目录的相对路径，可以是文件或目录的路径，也可以是一个远程的文件 url;<dest> 是 container 中的绝对路径 <br><br>## VOLUME（指定挂载点)）<br><br> 设置指令，使容器中的一个目录具有持久化存储数据的功能，该目录可以被容器本身使用，也可以共享给其他容器使用。我们知道容器使用的是 AUFS，这种文件系统不能持久化数据，当容器关闭后，所有的更改都会丢失。当容器中的应用有持久化数据的需求时可以在 Dockerfile 中使用该指令。<br><br>格式:<br><br>    VOLUME [“<mountpoint>“]<br><br>例如：<br><br>    FROM base<br>    VOLUME [“/tmp/data”]<br><br>运行通过该 Dockerfile 生成 image 的容器，/tmp/data 目录中的数据在容器关闭后，里面的数据还存在。<br>例如另一个容器也有持久化数据的需求，且想使用上面容器共享的 /tmp/data 目录，那么可以运行下面的命令启动一个容器：<br><br>    docker run -t -i -rm -volumes-from container1 image2 bash<br><br>其中：<code>container1</code>为第一个容器的 <code>ID</code>，<code>image2</code> 为第二个容器运行 <code>image</code> 的名字。<br><br>## WORKDIR（切换目录）<br><br>设置指令，可以多次切换 (相当于 cd 命令)，对 RUN,CMD,ENTRYPOINT 生效。<br><br> 格式:<br><br>    WORKDIR /path/to/workdir<br><br>    # 在 /p1/p2 下执行 vim a.txt<br>    WORKDIR /p1 WORKDIR p2 RUN vim a.txt<br><br>## ONBUILD（在子镜像中执行）<br><br>格式：<br><br>    ONBUILD &lt;Dockerfile 关键字 &gt;<br><br><code>ONBUILD</code> 指定的命令在构建镜像时并不执行，而是在它的子镜像中执行。<br><br># Dockerfile 使用实例 <br><br>## 1）利用 dockerfile 部署 jdk1.7+tomcat7 服务环境<br><br>1）查看 docker 宿主机镜像<br><br>    [root@localhost ~]# docker images<br>    REPOSITORY TAG IMAGE IDCREATED SIZE<br>    docker.io/ubuntu   latest  0ef2e08ed3fa6 weeks ago 130 MB<br>    docker.io/centos   latest  67591570dd293 months ago191.8 MB<br>    docker.io/registry 2.2 ad379b517aa614 months ago   224.5 MB<br><br>2）编写 Dockerfile（注意里面的 ubuntu 的源要换成国内的，这里我换成了国内阿里的 ubuntu 源）<br><br>    [root@localhost ~]# vim Dockerfile<br>    # Pull base image<br>    FROM docker.io/ubuntu:latest<br><br>    MAINTAINER wangshibo “<a href="mailto:wang_shibo1987@sina.com" target="_blank" rel="noopener">wang_shibo1987@sina.com</a>“<br><br>    # update source<br>    RUN echo “deb <a href="http://mirrors.aliyun.com/ubuntu/" target="_blank" rel="noopener">http://mirrors.aliyun.com/ubuntu/</a> xenial main restricted universe multiverse”&gt; /etc/apt/sources.list<br>    RUN apt-get update<br><br>    # Install curl<br>    RUN apt-get -y install curl<br><br>    # Install JDK 7<br>    RUN cd /tmp &amp;&amp;  curl -L ‘<a href="http://download.oracle.com/otn-pub/java/jdk/7u65-b17/jdk-7u65-linux-x64.tar.gz&#39;" target="_blank" rel="noopener">http://download.oracle.com/otn-pub/java/jdk/7u65-b17/jdk-7u65-linux-x64.tar.gz&#39;</a> -H ‘Cookie: oraclelicense=accept-securebackup-cookie; gpw_e24=Dockerfile’ | tar -xz<br>    RUN mkdir -p /usr/lib/jvm<br>    RUN mv /tmp/jdk1.7.0_65/ /usr/lib/jvm/java-7-oracle/<br><br>    # Set Oracle JDK 7 as default Java<br>    RUN update-alternatives –install /usr/bin/java java /usr/lib/jvm/java-7-oracle/bin/java 300<br>    RUN update-alternatives –install /usr/bin/javac javac /usr/lib/jvm/java-7-oracle/bin/javac 300<br><br>    ENV JAVA_HOME /usr/lib/jvm/java-7-oracle/<br><br>    # Install tomcat7<br>    RUN cd /tmp &amp;&amp; curl -L ‘<a href="http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.8/bin/apache-tomcat-7.0.8.tar.gz&#39;" target="_blank" rel="noopener">http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.8/bin/apache-tomcat-7.0.8.tar.gz&#39;</a> | tar -xz<br>    RUN mv /tmp/apache-tomcat-7.0.8/ /opt/tomcat7/<br><br>    ENV CATALINA_HOME /opt/tomcat7<br>    ENV PATH $PATH:$CATALINA_HOME/bin<br><br>    ADD tomcat7.sh /etc/init.d/tomcat7<br>    RUN chmod 755 /etc/init.d/tomcat7<br><br>    # Expose ports.<br>    EXPOSE 8080<br><br>    # Define default command.<br>    ENTRYPOINT service tomcat7 start &amp;&amp; tail -f /opt/tomcat7/logs/catalina.out<br><br><br>3）编写 tomcat7.sh<br><br>    [root@localhost ~]# vim tomcat7.sh<br>    export JAVA_HOME=/usr/lib/jvm/java-7-oracle/<br>    export TOMCAT_HOME=/opt/tomcat7<br><br>    case $1 in<br>    start)<br>      sh $TOMCAT_HOME/bin/startup.sh<br>    ;;<br>    stop)<br>      sh $TOMCAT_HOME/bin/shutdown.sh<br>    ;;<br>    restart)<br>      sh $TOMCAT_HOME/bin/shutdown.sh<br>      sh $TOMCAT_HOME/bin/startup.sh<br>    ;;<br>    esac<br>    exit 0<br><br>4）构建镜像<br>DOckerfile 脚本写好了，需要转换成镜像：<br><br>    [root@localhost ~]# docker build -t wangshibo/jdk-tomcat –rm=true .<br>    ……..<br>    Removing intermediate container 09cfba8ebc6b<br>    Successfully built 76b10dd9923f<br><br>————————————————————————————<br> 其中：<br>-t    表示选择指定生成镜像的用户名，仓库名和 tag<br><br>–rm=true    表示指定在生成镜像过程中删除中间产生的临时容器。<br><br><font color="#FF0000">注意：上面构建命令中最后的. 符号不要漏了，表示使用当前目录下的 Dockerfile 构建镜像</font>
+<p><font color="#FF0000">Dockfile 是一种被 Docker 程序解释的脚本，它由一条条的指令组成，每条指令对应 Linux 下面的一条命令。</font>Docker 程序将这些 Dockerfile 指令翻译成真正的 Linux 命令。Dockerfile 有自己书写格式和支持的命令，Docker 程序解决这些命令间的依赖关系，类似于 Makefile。Docker 程序将读取 Dockerfile，根据指令生成定制的 image。相比 image 这种黑盒子，Dockerfile 这种显而易见的脚本更容易被使用者接受，它明确的表明 image 是怎么产生的。有了 Dockerfile，当我们需要定制自己额外的需求时，只需在 Dockerfile 上添加或者修改指令，重新生成 image 即可，省去了敲命令的麻烦。</p>
+<p>总的来说：<br>Dockerfile 分为四部分：<font color="#FFA07A">基础镜像信息、镜像创建者信息、镜像操作指令、容器启动执行指令</font>。</p>
+<p>一开始必须要指明所基于的镜像名称，接下来一般会说明镜像创建者信息。后面则是镜像操作指令</p>
+<h1 id="Dockerfile 的书写规则及指令使用方法"><a href="#Dockerfile 的书写规则及指令使用方法" class="headerlink" title="Dockerfile 的书写规则及指令使用方法"></a>Dockerfile 的书写规则及指令使用方法 </h1><p>Dockerfile 的指令是忽略大小写的，建议使用大写，使用 # 作为注释，每一行只支持一条指令，每条指令可以携带多个参数。<br>Dockerfile 的指令根据作用可以分为两种：构建指令和设置指令。<br> 构建指令用于构建 image，其指定的操作不会在运行 image 的容器上执行；<br>设置指令用于设置 image 的属性，其指定的操作将在运行 image 的容器中执行。</p>
+<h2 id="FROM（指定基础 image）"><a href="#FROM（指定基础 image）" class="headerlink" title="FROM（指定基础 image）"></a>FROM（指定基础 image）</h2><p>构建指令，必须指定且需要在 Dockerfile 其他指令的前面。后续的指令都依赖于该指令指定的 image。FROM 指令指定的基础 image 可以是官方远程仓库中的，也可以位于本地仓库。</p>
+<p>FROM 命令告诉 docker 我们构建的镜像是以哪个 (发行版) 镜像为基础的。第一条指令必须是 FROM 指令。并且，如果在同一个 Dockerfile 中创建多个镜像时，可以使用多个 FROM 指令。</p>
+<p>该指令有两种格式：</p>
+<pre><code>FROM &lt;image&gt; 
+</code></pre><p>指定基础 image 为该 image 的最后修改的版本。或者：</p>
+<pre><code>FROM &lt;image&gt;:&lt;tag&gt; 
+</code></pre><p>指定基础 image 为该 image 的一个 tag 版本。</p>
+<p>RUN 后面接要执行的命令，比如，我们想在镜像中安装<code>vim</code>，只需在 Dockfile 中写入<code>RUN yum install -y vim</code></p>
+<h2 id="MAINTAINER（用来指定镜像创建者信息）"><a href="#MAINTAINER（用来指定镜像创建者信息）" class="headerlink" title="MAINTAINER（用来指定镜像创建者信息）"></a>MAINTAINER（用来指定镜像创建者信息）</h2><p>构建指令，用于将 image 的制作者相关的信息写入到 image 中。当我们对该 image 执行 docker inspect 命令时，输出中有相应的字段记录该信息。</p>
+<p>格式：</p>
+<pre><code>MAINTAINER &lt;name&gt; 
+</code></pre><h2 id="RUN（安装软件用）"><a href="#RUN（安装软件用）" class="headerlink" title="RUN（安装软件用）"></a>RUN（安装软件用）</h2><p>构建指令，RUN 可以运行任何被基础 image 支持的命令。如基础 image 选择了 ubuntu，那么软件管理部分只能使用 ubuntu 的命令。</p>
+<p>该指令有两种格式：</p>
+<pre><code>RUN &lt;command&gt;  
+RUN [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot; ...] 
+</code></pre><h2 id="CMD（设置 container 启动时执行的操作）"><a href="#CMD（设置 container 启动时执行的操作）" class="headerlink" title="CMD（设置 container 启动时执行的操作）"></a>CMD（设置 container 启动时执行的操作）</h2><p>设置指令，用于 container 启动时指定的操作。该操作可以是执行自定义脚本，也可以是执行系统命令。该指令只能在文件中存在一次，如果有多个，则只执行最后一条。</p>
+<p>该指令有三种格式：</p>
+<pre><code>CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;]
+CMD command param1 param2
+</code></pre><p>当 Dockerfile 指定了 ENTRYPOINT，那么使用下面的格式：</p>
+<pre><code>CMD [&quot;param1&quot;,&quot;param2&quot;]
+</code></pre><p>其中：</p>
+<p>ENTRYPOINT 指定的是一个可执行的脚本或者程序的路径，该指定的脚本或者程序将会以 <code>param1</code> 和<code>param2</code>作为参数执行。</p>
+<p>所以如果 CMD 指令使用上面的形式，那么 Dockerfile 中必须要有配套的<code>ENTRYPOINT</code>。</p>
+<h2 id="ENTRYPOINT（设置 container 启动时执行的操作）"><a href="#ENTRYPOINT（设置 container 启动时执行的操作）" class="headerlink" title="ENTRYPOINT（设置 container 启动时执行的操作）"></a>ENTRYPOINT（设置 container 启动时执行的操作）</h2><p>设置指令，指定容器启动时执行的命令，可以多次设置，但是只有最后一个有效。</p>
+<p>两种格式:</p>
+<pre><code>ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;]
+ENTRYPOINT command param1 param2
+</code></pre><p>该指令的使用分为两种情况，一种是独自使用，另一种和 CMD 指令配合使用。<br>当独自使用时，如果你还使用了 CMD 命令且 CMD 是一个完整的可执行的命令，那么 CMD 指令和 ENTRYPOINT 会互相覆盖，只有最后一个 CMD 或者 ENTRYPOINT 有效。CMD 指令将不会被执行，只有 ENTRYPOINT 指令被执行 </p>
+<pre><code>CMD echo “Hello, World!” 
+ENTRYPOINT ls -l 
+</code></pre><p>另一种用法和 CMD 指令配合使用来指定 ENTRYPOINT 的默认参数，这时 CMD 指令不是一个完整的可执行命令，仅仅是参数部分；ENTRYPOINT 指令只能使用 JSON 方式指定执行命令，而不能指定参数。</p>
+<pre><code>FROM ubuntu 
+CMD [&quot;-l&quot;] 
+ENTRYPOINT [&quot;/usr/bin/ls&quot;] 
+</code></pre><h2 id="USER（设置 container 容器的用户）"><a href="#USER（设置 container 容器的用户）" class="headerlink" title="USER（设置 container 容器的用户）"></a>USER（设置 container 容器的用户）</h2><p>设置指令，设置启动容器的用户，默认是 root 用户。例如下面指定 memcached 的运行用户 </p>
+<pre><code>ENTRYPOINT [&quot;memcached&quot;] 
+USER daemon 
+或者
+ENTRYPOINT [&quot;memcached&quot;, &quot;-u&quot;, &quot;daemon&quot;] 
+</code></pre><h2 id="EXPOSE（指定容器需要映射到宿主机器的端口）"><a href="#EXPOSE（指定容器需要映射到宿主机器的端口）" class="headerlink" title="EXPOSE（指定容器需要映射到宿主机器的端口）"></a>EXPOSE（指定容器需要映射到宿主机器的端口）</h2><p>设置指令，该指令会将容器中的端口映射成宿主机器中的某个端口。当你需要访问容器的时候，可以不是用容器的 IP 地址而是使用宿主机器的 IP 地址和映射后的端口。</p>
+<p>要完成整个操作需要两个步骤，首先在 Dockerfile 使用 EXPOSE 设置需要映射的容器端口，然后在运行容器的时候指定 -p 选项加上 EXPOSE 设置的端口，这样 EXPOSE 设置的端口号会被随机映射成宿主机器中的一个端口号。</p>
+<p>也可以指定需要映射到宿主机器的那个端口，这时要确保宿主机器上的端口号没有被使用。EXPOSE 指令可以一次设置多个端口号，相应的运行容器的时候，可以配套的多次使用 -p 选项。</p>
+<p>格式:</p>
+<pre><code>EXPOSE &lt;port&gt; [&lt;port&gt;...] 
 
+# 映射一个端口 
+EXPOSE port1 
+# 相应的运行容器使用的命令 
+docker run -p port1 image 
 
+# 映射多个端口 
+EXPOSE port1 port2 port3 
+# 相应的运行容器使用的命令 
+docker run -p port1 -p port2 -p port3 image 
+# 还可以指定需要映射到宿主机器上的某个端口号 
+docker run -p host_port1:port1 -p host_port2:port2 -p host_port3:port3 image
+</code></pre><p>端口映射是 docker 比较重要的一个功能，原因在于我们每次运行容器的时候容器的 IP 地址不能指定而是在桥接网卡的地址范围内随机生成的。</p>
+<p>宿主机器的 IP 地址是固定的，我们可以将容器的端口的映射到宿主机器上的一个端口，免去每次访问容器中的某个服务时都要查看容器的 IP 的地址。</p>
+<p>对于一个运行的容器，可以使用 docker port 加上容器中需要映射的端口和容器的 ID 来查看该端口号在宿主机器上的映射端口。</p>
+<h2 id="ENV（用于设置环境变量）"><a href="#ENV（用于设置环境变量）" class="headerlink" title="ENV（用于设置环境变量）"></a>ENV（用于设置环境变量）</h2><p>主要用于设置容器运行时的环境变量</p>
+<p>格式:</p>
+<pre><code>ENV &lt;key&gt; &lt;value&gt; 
+</code></pre><p>设置了后，后续的 RUN 命令都可以使用，container 启动后，可以通过 docker inspect 查看这个环境变量，也可以通过在 docker run –env key=value 时设置或修改环境变量。</p>
+<p>假如你安装了 JAVA 程序，需要设置 JAVA_HOME，那么可以在 Dockerfile 中这样写：<br>ENV JAVA_HOME /path/to/java/dirent</p>
+<h2 id="ADD（从 src 复制文件到 container 的 dest 路径）"><a href="#ADD（从 src 复制文件到 container 的 dest 路径）" class="headerlink" title="ADD（从 src 复制文件到 container 的 dest 路径）"></a>ADD（从 src 复制文件到 container 的 dest 路径）</h2><p>主要用于将宿主机中的文件添加到镜像中构建指令，所有拷贝到 container 中的文件和文件夹权限为 0755，uid 和 gid 为 0；如果是一个目录，那么会将该目录下的所有文件添加到 container 中，不包括目录；</p>
+<p>如果文件是可识别的压缩格式，则 docker 会帮忙解压缩（注意压缩格式）；如果 <src> 是文件且 <dest> 中不使用斜杠结束，则会将 <dest> 视为文件，<src>的内容会写入 <dest>；如果<src> 是文件且 <dest> 中使用斜杠结束，则会 <src> 文件拷贝到 <dest> 目录下。</dest></src></dest></src></dest></src></dest></dest></src></p>
+<p>格式:</p>
+<pre><code>ADD &lt;src&gt; &lt;dest&gt; 
+</code></pre><p><src> 是相对被构建的源目录的相对路径，可以是文件或目录的路径，也可以是一个远程的文件 url;<dest> 是 container 中的绝对路径</dest></src></p>
+<h2 id="VOLUME（指定挂载点 -）"><a href="#VOLUME（指定挂载点 -）" class="headerlink" title="VOLUME（指定挂载点)）"></a>VOLUME（指定挂载点)）</h2><p>设置指令，使容器中的一个目录具有持久化存储数据的功能，该目录可以被容器本身使用，也可以共享给其他容器使用。我们知道容器使用的是 AUFS，这种文件系统不能持久化数据，当容器关闭后，所有的更改都会丢失。当容器中的应用有持久化数据的需求时可以在 Dockerfile 中使用该指令。</p>
+<p>格式:</p>
+<pre><code>VOLUME [&quot;&lt;mountpoint&gt;&quot;]
+</code></pre><p>例如：</p>
+<pre><code>FROM base 
+VOLUME [&quot;/tmp/data&quot;]
+</code></pre><p>运行通过该 Dockerfile 生成 image 的容器，/tmp/data 目录中的数据在容器关闭后，里面的数据还存在。<br>例如另一个容器也有持久化数据的需求，且想使用上面容器共享的 /tmp/data 目录，那么可以运行下面的命令启动一个容器：</p>
+<pre><code>docker run -t -i -rm -volumes-from container1 image2 bash
+</code></pre><p>其中：<code>container1</code>为第一个容器的 <code>ID</code>，<code>image2</code> 为第二个容器运行 <code>image</code> 的名字。</p>
+<h2 id="WORKDIR（切换目录）"><a href="#WORKDIR（切换目录）" class="headerlink" title="WORKDIR（切换目录）"></a>WORKDIR（切换目录）</h2><p>设置指令，可以多次切换(相当于 cd 命令)，对 RUN,CMD,ENTRYPOINT 生效。</p>
+<p>格式:</p>
+<pre><code>WORKDIR /path/to/workdir 
+
+# 在 /p1/p2 下执行 vim a.txt 
+WORKDIR /p1 WORKDIR p2 RUN vim a.txt 
+</code></pre><h2 id="ONBUILD（在子镜像中执行）"><a href="#ONBUILD（在子镜像中执行）" class="headerlink" title="ONBUILD（在子镜像中执行）"></a>ONBUILD（在子镜像中执行）</h2><p>格式：</p>
+<pre><code>ONBUILD &lt;Dockerfile 关键字 &gt; 
+</code></pre><p><code>ONBUILD</code> 指定的命令在构建镜像时并不执行，而是在它的子镜像中执行。</p>
+<h1 id="Dockerfile 使用实例"><a href="#Dockerfile 使用实例" class="headerlink" title="Dockerfile 使用实例"></a>Dockerfile 使用实例</h1><h2 id="1）利用 dockerfile 部署 jdk1-7-tomcat7 服务环境"><a href="#1）利用 dockerfile 部署 jdk1-7-tomcat7 服务环境" class="headerlink" title="1）利用 dockerfile 部署 jdk1.7+tomcat7 服务环境"></a>1）利用 dockerfile 部署 jdk1.7+tomcat7 服务环境</h2><p>1）查看 docker 宿主机镜像</p>
+<pre><code>[root@localhost ~]# docker images
+REPOSITORY TAG IMAGE IDCREATED SIZE
+docker.io/ubuntu   latest  0ef2e08ed3fa6 weeks ago 130 MB
+docker.io/centos   latest  67591570dd293 months ago191.8 MB
+docker.io/registry 2.2 ad379b517aa614 months ago   224.5 MB
+</code></pre><p>2）编写 Dockerfile（注意里面的 ubuntu 的源要换成国内的，这里我换成了国内阿里的 ubuntu 源）</p>
+<pre><code>[root@localhost ~]# vim Dockerfile
+# Pull base image 
+FROM docker.io/ubuntu:latest
+
+MAINTAINER wangshibo &quot;wang_shibo1987@sina.com&quot; 
+
+# update source 
+RUN echo &quot;deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse&quot;&gt; /etc/apt/sources.list 
+RUN apt-get update 
+
+# Install curl 
+RUN apt-get -y install curl 
+
+# Install JDK 7 
+RUN cd /tmp &amp;&amp;  curl -L &apos;http://download.oracle.com/otn-pub/java/jdk/7u65-b17/jdk-7u65-linux-x64.tar.gz&apos; -H &apos;Cookie: oraclelicense=accept-securebackup-cookie; gpw_e24=Dockerfile&apos; | tar -xz 
+RUN mkdir -p /usr/lib/jvm 
+RUN mv /tmp/jdk1.7.0_65/ /usr/lib/jvm/java-7-oracle/ 
+
+# Set Oracle JDK 7 as default Java 
+RUN update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-7-oracle/bin/java 300
+RUN update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/java-7-oracle/bin/javac 300
+
+ENV JAVA_HOME /usr/lib/jvm/java-7-oracle/ 
+
+# Install tomcat7 
+RUN cd /tmp &amp;&amp; curl -L &apos;http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.8/bin/apache-tomcat-7.0.8.tar.gz&apos; | tar -xz 
+RUN mv /tmp/apache-tomcat-7.0.8/ /opt/tomcat7/ 
+
+ENV CATALINA_HOME /opt/tomcat7 
+ENV PATH $PATH:$CATALINA_HOME/bin 
+
+ADD tomcat7.sh /etc/init.d/tomcat7 
+RUN chmod 755 /etc/init.d/tomcat7 
+
+# Expose ports. 
+EXPOSE 8080 
+
+# Define default command. 
+ENTRYPOINT service tomcat7 start &amp;&amp; tail -f /opt/tomcat7/logs/catalina.out
+</code></pre><p>3）编写 tomcat7.sh</p>
+<pre><code>[root@localhost ~]# vim tomcat7.sh
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle/ 
+export TOMCAT_HOME=/opt/tomcat7 
+
+case $1 in 
+start) 
+  sh $TOMCAT_HOME/bin/startup.sh 
+;; 
+stop) 
+  sh $TOMCAT_HOME/bin/shutdown.sh 
+;; 
+restart) 
+  sh $TOMCAT_HOME/bin/shutdown.sh 
+  sh $TOMCAT_HOME/bin/startup.sh 
+;; 
+esac 
+exit 0
+</code></pre><p>4）构建镜像<br>DOckerfile 脚本写好了，需要转换成镜像：</p>
+<pre><code>[root@localhost ~]# docker build -t wangshibo/jdk-tomcat --rm=true .
+........
+Removing intermediate container 09cfba8ebc6b
+Successfully built 76b10dd9923f  
+</code></pre><p>其中：</p>
+<p>-t           表示选择指定生成镜像的用户名，仓库名和 tag</p>
+<p>–rm=true    表示指定在生成镜像过程中删除中间产生的临时容器。</p>
+<p>注意：上面构建命令中最后的. 符号不要漏了，表示使用当前目录下的 Dockerfile 构建镜像</p>
 <p>以上构建命令执行后，可以查看下镜像是否构建成功</p>
 <pre><code>[root@localhost ~]# docker images
 REPOSITORY TAG IMAGE IDCREATED SIZE
@@ -615,7 +777,6 @@ ENTRYPOINT /usr/local/nginx/sbin/nginx &amp;&amp; tail -f /usr/local/nginx/logs/
 </code></pre><p>或者</p>
 <pre><code>CMD /usr/local/nginx/sbin/nginx &amp;&amp; tail -f /usr/local/nginx/logs/access.log   #确保容器内的进程一直运行
 </code></pre><p>其他应用程序镜像创建的 Dockerfile 配置类似</p>
-<hr>
 <p>Dockerfile 写好了，需要转换成镜像：</p>
 <p>构建镜像</p>
 <pre><code>[root@localhost mnt]# docker build -t kevin_nginx --rm=true .
@@ -667,7 +828,7 @@ eb80782ddf9c: Pushed
 <p>2 好的使用习惯</p>
 <p><a href="http://dockone.io/article/131" target="_blank" rel="noopener">http://dockone.io/article/131</a></p>
 <p><a href="http://dockone.io/article/132" target="_blank" rel="noopener">http://dockone.io/article/132</a></p>
-</mountpoint></dest></src></dest></src></dest></src></dest></src></dest></src></dest></dest></src></value></key></port></port></name></tag></image></image>
+
       
     </div>
     
@@ -716,7 +877,7 @@ eb80782ddf9c: Pushed
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yhaing.github.io/2018/05/25/一起学docker(八)--Dockerfile/" title="一起学 docker(八)--Dockerfile">https://yhaing.github.io/2018/05/25/一起学docker(八)--Dockerfile/</a>
+    <a href="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/" title="一起学 docker(八)--Dockerfile">https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -775,7 +936,7 @@ eb80782ddf9c: Pushed
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/19/一起学Docker（一）-初识/">一起学 Docker（一）-- 初识</a></li><li><a href="/2018/05/24/一起学Docker（七）--容器的网络/">一起学 Docker（七）-- 容器的网络</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/23/一起学Docker（六）--数据管理/">一起学 Docker（六）-- 数据管理</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li><li><a href="/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/">容器间网络通信设置 (Pipework 和 Open vSwitch)</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/24/一起学Docker（七）--容器的网络/">一起学 Docker（七）-- 容器的网络</a></li><li><a href="/2018/05/19/一起学Docker（一）--初识/">一起学 Docker（一）-- 初识</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li><li><a href="/2018/05/23/一起学Docker（六）--数据管理/">一起学 Docker（六）-- 数据管理</a></li><li><a href="/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/">容器间网络通信设置 (Pipework 和 Open vSwitch)</a></li></ul>
       
     </footer>
   </div>
@@ -962,7 +1123,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除 docker-images 中为 none 的镜像"><span class="nav-number">1.</span> <span class="nav-text">删除 docker images 中为 none 的镜像 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）"><span class="nav-number">2.</span> <span class="nav-text">2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）使用 Dockerfile 制作 nginx 镜像"><span class="nav-number">3.</span> <span class="nav-text">3）使用 Dockerfile 制作 nginx 镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile 最佳实践"><span class="nav-number">4.</span> <span class="nav-text">Dockerfile 最佳实践</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dockerfile 的书写规则及指令使用方法"><span class="nav-number">1.</span> <span class="nav-text">Dockerfile 的书写规则及指令使用方法 </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FROM（指定基础 image）"><span class="nav-number">1.1.</span> <span class="nav-text">FROM（指定基础 image）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAINTAINER（用来指定镜像创建者信息）"><span class="nav-number">1.2.</span> <span class="nav-text">MAINTAINER（用来指定镜像创建者信息）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RUN（安装软件用）"><span class="nav-number">1.3.</span> <span class="nav-text">RUN（安装软件用）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD（设置 container 启动时执行的操作）"><span class="nav-number">1.4.</span> <span class="nav-text">CMD（设置 container 启动时执行的操作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENTRYPOINT（设置 container 启动时执行的操作）"><span class="nav-number">1.5.</span> <span class="nav-text">ENTRYPOINT（设置 container 启动时执行的操作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#USER（设置 container 容器的用户）"><span class="nav-number">1.6.</span> <span class="nav-text">USER（设置 container 容器的用户）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPOSE（指定容器需要映射到宿主机器的端口）"><span class="nav-number">1.7.</span> <span class="nav-text">EXPOSE（指定容器需要映射到宿主机器的端口）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENV（用于设置环境变量）"><span class="nav-number">1.8.</span> <span class="nav-text">ENV（用于设置环境变量）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADD（从 src 复制文件到 container 的 dest 路径）"><span class="nav-number">1.9.</span> <span class="nav-text">ADD（从 src 复制文件到 container 的 dest 路径）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VOLUME（指定挂载点 -）"><span class="nav-number">1.10.</span> <span class="nav-text">VOLUME（指定挂载点)）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WORKDIR（切换目录）"><span class="nav-number">1.11.</span> <span class="nav-text">WORKDIR（切换目录）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ONBUILD（在子镜像中执行）"><span class="nav-number">1.12.</span> <span class="nav-text">ONBUILD（在子镜像中执行）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dockerfile 使用实例"><span class="nav-number">2.</span> <span class="nav-text">Dockerfile 使用实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1）利用 dockerfile 部署 jdk1-7-tomcat7 服务环境"><span class="nav-number">2.1.</span> <span class="nav-text">1）利用 dockerfile 部署 jdk1.7+tomcat7 服务环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除 docker-images 中为 none 的镜像"><span class="nav-number">2.2.</span> <span class="nav-text">删除 docker images 中为 none 的镜像 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）"><span class="nav-number">2.3.</span> <span class="nav-text">2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）使用 Dockerfile 制作 nginx 镜像"><span class="nav-number">2.4.</span> <span class="nav-text">3）使用 Dockerfile 制作 nginx 镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile 最佳实践"><span class="nav-number">2.5.</span> <span class="nav-text">Dockerfile 最佳实践</span></a></li></ol></li></ol></div>
             
 
           </div>
