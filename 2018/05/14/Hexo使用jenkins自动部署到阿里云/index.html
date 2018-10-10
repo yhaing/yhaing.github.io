@@ -153,7 +153,7 @@
 <meta property="og:image" content="https://i.imgur.com/1mkXBzO.png">
 <meta property="og:image" content="https://i.imgur.com/2NfRqfB.png">
 <meta property="og:image" content="https://i.imgur.com/So3MkQG.png">
-<meta property="og:updated_time" content="2018-09-30T07:47:40.162Z">
+<meta property="og:updated_time" content="2018-10-10T02:01:37.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 使用 jenkins 自动部署到阿里云">
 <meta name="twitter:image" content="https://i.imgur.com/4Pv3OSL.jpg">
@@ -690,15 +690,23 @@ hexo g -d
 <p><img src="https://i.imgur.com/2NfRqfB.png" alt=""></p>
 <ul>
 <li><ol start="6">
-<li><p>构建前 clone hexo<br>将 hexo 初始代码拉取到 /var/www/blog 目录中，以后 jenkins 会监控 github 的 push 操作，一旦发现 push 会自动更新。</p>
-<p>cd /var/www</p>
-<p>git clone <a href="https://github.com/dumingcode/dumingcode.github.io.git" target="_blank" rel="noopener">https://github.com/dumingcode/dumingcode.github.io.git</a> blog</p>
-</li>
+<li>构建前 clone hexo</li>
 </ol>
 </li>
 </ul>
-<h3 id="nginx 反向代理 hexo"><a href="#nginx 反向代理 hexo" class="headerlink" title="nginx 反向代理 hexo"></a>nginx 反向代理 hexo</h3><p>hexo 为静态网站，所以直接用 nginx 反向代理即可,nginx 脚本如下：注意 root 指向的是 hexo 部署目录。<br>server<br>{<br>    listen 80;<br>    server_name blog.buyasset.club;<br>    index index.html index.htm index.php default.html default.htm default.php;<br>    root  /var/www/blog;  </p>
-<pre><code>#error_page   404   /404.html;
+<p>将 hexo 初始代码拉取到 /var/www/blog 目录中，以后 jenkins 会监控 github 的 push 操作，一旦发现 push 会自动更新。</p>
+<pre><code>cd /var/www
+
+git clone https://github.com/dumingcode/dumingcode.github.io.git blog
+</code></pre><h3 id="nginx 反向代理 hexo"><a href="#nginx 反向代理 hexo" class="headerlink" title="nginx 反向代理 hexo"></a>nginx 反向代理 hexo</h3><p>hexo 为静态网站，所以直接用 nginx 反向代理即可,nginx 脚本如下：注意 root 指向的是 hexo 部署目录。</p>
+<pre><code>server
+{
+listen 80;
+server_name blog.buyasset.club;
+index index.html index.htm index.php default.html default.htm default.php;
+root  /var/www/blog;  
+
+#error_page   404   /404.html;
 location ~ .*\.(ico|gif|jpg|jpeg|png|bmp|swf)$
 {
     access_log   off;
@@ -840,7 +848,7 @@ drwxr-xr-x 17 root root 4096 Sep 30 15:04 blog
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/02/25/Hexo NexT主题内加入动态背景/">Hexo NexT 主题内加入动态背景</a></li><li><a href="/2015/02/26/Hexo NexT主题内接入网页在线联系功能/">Hexo NexT 主题内接入网页在线联系功能</a></li><li><a href="/2015/01/20/Hexo NexT主题添加点击爱心效果/">Hexo NexT 主题添加点击爱心效果</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2015/02/26/Hexo NexT主题内接入网页在线联系功能/">Hexo NexT 主题内接入网页在线联系功能</a></li><li><a href="/2015/01/20/Hexo NexT主题添加点击爱心效果/">Hexo NexT 主题添加点击爱心效果</a></li><li><a href="/2015/02/25/Hexo NexT主题内加入动态背景/">Hexo NexT 主题内加入动态背景</a></li></ul>
       
     </footer>
   </div>
