@@ -130,13 +130,13 @@
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一起学 docker(八)--Dockerfile">
-<meta property="og:url" content="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/index.html">
+<meta property="og:url" content="https://yhaing.github.io/2018/05/25/一起学docker   (八)  --Dockerfile/index.html">
 <meta property="og:site_name" content="海阔天空">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/CmsuYgR.jpg">
 <meta property="og:image" content="https://i.imgur.com/p2TvKPl.jpg">
 <meta property="og:image" content="https://i.imgur.com/4b0C28I.jpg">
-<meta property="og:updated_time" content="2018-10-10T07:35:46.224Z">
+<meta property="og:updated_time" content="2018-10-10T08:20:54.510Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一起学 docker(八)--Dockerfile">
 <meta name="twitter:image" content="https://i.imgur.com/CmsuYgR.jpg">
@@ -169,7 +169,7 @@
 
 
 
-  <link rel="canonical" href="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/"/>
+  <link rel="canonical" href="https://yhaing.github.io/2018/05/25/一起学docker   (八)  --Dockerfile/"/>
 
 
 
@@ -345,7 +345,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/05/25/一起学docker   (八)  --Dockerfile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hai Yang">
@@ -414,7 +414,7 @@
 
           
           
-             <span id="/2018/05/25/一起学docker(八)  --Dockerfile/" class="leancloud_visitors" data-flag-title="一起学 docker(八)--Dockerfile">
+             <span id="/2018/05/25/一起学docker   (八)  --Dockerfile/" class="leancloud_visitors" data-flag-title="一起学 docker(八)--Dockerfile">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -536,13 +536,16 @@ ENTRYPOINT [&quot;memcached&quot;, &quot;-u&quot;, &quot;daemon&quot;]
 
 # 映射一个端口 
 EXPOSE port1 
+
 # 相应的运行容器使用的命令 
 docker run -p port1 image 
 
 # 映射多个端口 
 EXPOSE port1 port2 port3 
+
 # 相应的运行容器使用的命令 
 docker run -p port1 -p port2 -p port3 image 
+
 # 还可以指定需要映射到宿主机器上的某个端口号 
 docker run -p host_port1:port1 -p host_port2:port2 -p host_port3:port3 image
 </code></pre><p>端口映射是 docker 比较重要的一个功能，原因在于我们每次运行容器的时候容器的 IP 地址不能指定而是在桥接网卡的地址范围内随机生成的。</p>
@@ -587,7 +590,7 @@ docker.io/registry 2.2 ad379b517aa614 months ago   224.5 MB
 # Pull base image 
 FROM docker.io/ubuntu:latest
 
-MAINTAINER wangshibo &quot;wang_shibo1987@sina.com&quot; 
+MAINTAINER yhaing &quot;yhaing@sina.com&quot; 
 
 # update source 
 RUN echo &quot;deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse&quot;&gt; /etc/apt/sources.list 
@@ -641,7 +644,7 @@ restart)
 esac 
 exit 0
 </code></pre><p>4）构建镜像<br>DOckerfile 脚本写好了，需要转换成镜像：</p>
-<pre><code>[root@localhost ~]# docker build -t wangshibo/jdk-tomcat --rm=true .
+<pre><code>[root@localhost ~]# docker build -t yhaing/jdk-tomcat --rm=true .
 ........
 Removing intermediate container 09cfba8ebc6b
 Successfully built 76b10dd9923f  
@@ -652,18 +655,18 @@ Successfully built 76b10dd9923f
 <p>以上构建命令执行后，可以查看下镜像是否构建成功</p>
 <pre><code>[root@localhost ~]# docker images
 REPOSITORY TAG IMAGE IDCREATED SIZE
-wangshibo/jdk-tomcat   latest  76b10dd9923f21 minutes ago  771.5 MB
+yhaing/jdk-tomcat   latest  76b10dd9923f21 minutes ago  771.5 MB
 docker.io/ubuntu   latest  0ef2e08ed3fa6 weeks ago 130 MB
 docker.io/centos   latest  67591570dd293 months ago191.8 MB
 docker.io/registry 2.2 ad379b517aa614 months ago   224.5 MB
 </code></pre><p>最后利用这个镜像启动容器</p>
-<pre><code>[root@localhost ~]# docker run -ti -d --name wangshibo-tomcat -p 8899:8080 wangshibo/jdk-tomcat /bin/bash
+<pre><code>[root@localhost ~]# docker run -ti -d --name yhaing-tomcat -p 8899:8080 yhaing/jdk-tomcat /bin/bash
 c0812ad20bed2f27787565d273f7b02d860de5afab88e853e591dde7d3b0dfc9
 [root@localhost ~]# docker ps
 CONTAINER IDIMAGE   COMMAND  CREATED STATUS  PORTSNAMES
-c0812ad20bedwangshibo/jdk-tomcat&quot;/bin/sh -c &apos;service &quot;   7 seconds ago   Up 6 seconds0.0.0.0:8899-&gt;8080/tcp   wangshibo-tomcat
+c0812ad20bed yhaing/jdk-tomcat&quot;/bin/sh -c &apos;service &quot;   7 seconds ago   Up 6 seconds0.0.0.0:8899-&gt;8080/tcp   yhaing-tomcat
 </code></pre><p>进入容器，查看 tomcat 进程起来了没</p>
-<pre><code>[root@localhost ~]# docker exec -ti wangshibo-tomcat /bin/bash
+<pre><code>[root@localhost ~]# docker exec -ti yhaing-tomcat /bin/bash
 root@c0812ad20bed:/# ps -ef|grep tomcat
 root 1 0  0 06:49 ?00:00:00 /bin/sh -c service tomcat7 start &amp;&amp; tail -f /opt/tomcat7/logs/catalina.out /bin/bash
 root23 1 11 06:49 ?00:00:04 /usr/lib/jvm/java-7-oracle//bin/java -Djava.util.logging.config.file=/opt/tomcat7/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/opt/tomcat7/endorsed -classpath /opt/tomcat7/bin/bootstrap.jar:/opt/tomcat7/bin/tomcat-juli.jar -Dcatalina.base=/opt/tomcat7 -Dcatalina.home=/opt/tomcat7 -Djava.io.tmpdir=/opt/tomcat7/temp org.apache.catalina.startup.Bootstrap start
@@ -672,23 +675,23 @@ root6953  0 06:49 ?00:00:00 grep --color=auto tomcat
 </code></pre><p>最后访问 http:// 本机 ip:8899 就能打开容器的 tomcat 页面了</p>
 <p><img src="https://i.imgur.com/p2TvKPl.jpg" alt=""></p>
 <p>Docker 容器创建好之后，尽量不要直接登陆容器内去修改。所以最好容器创建的时候进行目录映射。这样就可以通过映射到宿主机上的文件或目录去共享到容器内。</p>
-<p>则上面的 wangshibo-tomcat 容器可以如下调整操作：</p>
+<p>则上面的 yhaing-tomcat 容器可以如下调整操作：</p>
 <pre><code>[root@localhost ~]# docker ps
 CONTAINER IDIMAGE   COMMAND  CREATED STATUS  PORTSNAMES
-c0812ad20bedwangshibo/jdk-tomcat&quot;/bin/sh -c &apos;service &quot;   7 seconds ago   Up 6 seconds0.0.0.0:8899-&gt;8080/tcp   wangshibo-tomcat
+c0812ad20bed yhaing/jdk-tomcat&quot;/bin/sh -c &apos;service &quot;   7 seconds ago   Up 6 seconds0.0.0.0:8899-&gt;8080/tcp   yhaing-tomcat
 
-[root@localhost ~]# docker cp wangshibo-tomcat:/opt/tomcat7/webapps /opt/
+[root@localhost ~]# docker cp yhaing-tomcat:/opt/tomcat7/webapps /opt/
 
-[root@localhost ~]# docker run -ti -d --name wangshibo-tomcat -v /opt/webapps:/opt/tomcat7/webapps -p 8899:8080 wangshibo/jdk-tomcat /bin/bash
+[root@localhost ~]# docker run -ti -d --name yhaing-tomcat -v /opt/webapps:/opt/tomcat7/webapps -p 8899:8080 yhaing/jdk-tomcat /bin/bash
 1373d1496c2a6226fe5bb6b4877e854bde68ec3653c04966a1b5d22b98486f7d
 [root@localhost ~]# docker ps
 CONTAINER IDIMAGE   COMMAND  CREATED STATUS  PORTSNAMES
-1373d1496c2awangshibo/jdk-tomcat&quot;/bin/sh -c &apos;service &quot;   4 seconds ago   Up 2 seconds0.0.0.0:8899-&gt;8080/tcp   wangshibo-tomcat
-</code></pre><p>这样让需要修改 wangshibo-tomcat 容器的代码或上线代码时，只需要操作宿主机的 /opt/webapps 目录即可。</p>
+1373d1496c2a yhaing/jdk-tomcat&quot;/bin/sh -c &apos;service &quot;   4 seconds ago   Up 2 seconds0.0.0.0:8899-&gt;8080/tcp   yhaing-tomcat
+</code></pre><p>这样让需要修改 yhaing-tomcat 容器的代码或上线代码时，只需要操作宿主机的 /opt/webapps 目录即可。</p>
 <h2 id="删除 docker-images 中为 none 的镜像"><a href="# 删除 docker-images 中为 none 的镜像" class="headerlink" title="删除 docker images 中为 none 的镜像"></a>删除 docker images 中为 none 的镜像 </h2><p> 经常使用 Dockerfile 制作镜像，Docker build 命令执行后，由于版本更新需要重新创建，那么以前那个版本的镜像就会成为临时镜像，这就是 none 标签的镜像。，如下：</p>
 <pre><code>[root@localhost ~]# docker images
 REPOSITORY TAG IMAGE IDCREATED SIZE
-wangshibo/jdk-tomcat   latest  76b10dd9923fAbout an hour ago   771.5 MB
+yhaing/jdk-tomcat   latest  76b10dd9923fAbout an hour ago   771.5 MB
 &lt;none&gt; &lt;none&gt;  571685f2919c2 hours ago 130 MB
 &lt;none&gt; &lt;none&gt;  affbf24261bd2 hours ago 130 MB
 &lt;none&gt; &lt;none&gt;  8eee83c3b41d10 days ago 8.096 MB
@@ -708,7 +711,7 @@ docker images|grep none|awk &apos;{print $3}&apos;|xargs docker rmi
 
 [root@localhost ~]# docker images
 REPOSITORY TAG IMAGE IDCREATED SIZE
-wangshibo/jdk-tomcat   latest  76b10dd9923fAbout an hour ago   771.5 MB
+yhaing/jdk-tomcat   latest  76b10dd9923fAbout an hour ago   771.5 MB
 docker.io/centos   latest  67591570dd293 months ago191.8 MB
 docker.io/registry 2.2 ad379b517aa614 months ago   224.5 MB
 </code></pre><h2 id="2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）"><a href="#2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）" class="headerlink" title="2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）"></a>2）再看一例 tomcat 容器镜像的 Dockerfile 制作过程（centos 为 base 镜像）</h2><pre><code>[root@localhost ~]# docker images
@@ -721,7 +724,7 @@ apache-tomcat-7.0.67.tar.gz  jdk-7u79-linux-x64.tar.gz
 <pre><code>[root@localhost src]# vim Dockerfile
 #pull down centos image
 FROM docker.io/centos
-MAINTAINER wangshibo wang_shibo1987@163.com
+MAINTAINER yhaing yhaing@163.com
 #copy jdk and tomcat into image
 ADD ./apache-tomcat-7.0.67.tar.gz /usr/local
 ADD ./jdk-7u79-linux-x64.tar.gz /usr/local
@@ -758,7 +761,7 @@ docker.io/centos   latest  67591570dd293 months ago191.8 MB
 <pre><code>[root@localhost mnt]# vim Dockerfile
 #pull down centos image
 FROM docker.io/centos
-MAINTAINER wangshibo wang_shibo1987@163.com
+MAINTAINER yhaing yhaing@163.com
 
 #install nginx
 RUN yum install -y pcre pcre-devel openssl openssl-devel gcc gcc+ wget vim net-tools
@@ -806,14 +809,14 @@ root3816  0 11:16 ?00:00:00 grep --color=auto nginx
 <p>登陆<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a>  注册一个账号</p>
 <p>然后登陆</p>
 <pre><code>[root@localhost mnt]# docker login
-Username: wangshibo
+Username: yhaing
 Password:
-Email: wang_shibo1987@163.com
+Email: yhaing@163.com
 WARNING: login credentials saved in /root/.docker/config.json
 Login Succeeded
 </code></pre><p>提交到 Docker 索引仓库 <br> 注意下面提交的镜像路径，即 <code>&quot; 用户名 / 镜像 &quot;</code>，只有这样才能成功提交。<br> 所以在 Dockerfile 制作镜像的时候，仓库名最好用 docker 索引仓库的用户名，也即”用户名 / 镜像”</p>
-<pre><code>[root@localhost mnt]# docker push wangshibo/jdk-tomcat
-The push refers to a repository [docker.io/wangshibo/jdk-tomcat]
+<pre><code>[root@localhost mnt]# docker push yhaing/jdk-tomcat
+The push refers to a repository [docker.io/yhaing/jdk-tomcat]
 8363b5ccd5b3: Pushed
 a619e846ce29: Pushed
 578822b85971: Pushing [================================&gt;] 6.859 MB/10.57 MB
@@ -821,7 +824,7 @@ b979d350733e: Pushed
 a6b994571424: Pushed
 eb80782ddf9c: Pushed
 .......
-</code></pre><p>这样下次想用的时候，可以直接从 Docker 索引仓库里下载<br>docker pull wangshibo/jdk-tomcat</p>
+</code></pre><p>这样下次想用的时候，可以直接从 Docker 索引仓库里下载<br>docker pull yhaing/jdk-tomcat</p>
 <p>需要注意几点：<br>1）Docker 宿主机必须要有 base 镜像以供 Dockerfile 文件使用 <br>2）注意 Dockerfile 实例文件中的 base 镜像，这个引用的 base 镜像一定要是存在的<br>3）可以切换到不同的目录路径下编写 Dockerfile，然后构建，构建的时候直接使用. 表示在当前路径下。<br> 镜像构建成功后，可以放到自己的私有仓库里，然后 Dockerfile 文件可以选择删除。</p>
 <h2 id="Dockerfile 最佳实践"><a href="#Dockerfile 最佳实践" class="headerlink" title="Dockerfile 最佳实践"></a>Dockerfile 最佳实践</h2><p>1 错误定位</p>
 <p>每个 Dockerfile 的指令可以生成新的一层镜像，如果通过 Dockerfile 创建镜像出错，可以根据出错所在步骤的上一层启动容器，然后手工执行出错层的命令，以达到调试目的。</p>
@@ -877,7 +880,7 @@ eb80782ddf9c: Pushed
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/" title="一起学 docker(八)--Dockerfile">https://yhaing.github.io/2018/05/25/一起学docker(八)  --Dockerfile/</a>
+    <a href="https://yhaing.github.io/2018/05/25/一起学docker   (八)  --Dockerfile/" title="一起学 docker(八)--Dockerfile">https://yhaing.github.io/2018/05/25/一起学docker   (八)  --Dockerfile/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -936,7 +939,7 @@ eb80782ddf9c: Pushed
       
       
 	  
-	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/24/一起学Docker（七）--容器的网络/">一起学 Docker（七）-- 容器的网络</a></li><li><a href="/2018/05/19/一起学Docker（一）--初识/">一起学 Docker（一）-- 初识</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li><li><a href="/2018/05/23/一起学Docker（六）--数据管理/">一起学 Docker（六）-- 数据管理</a></li><li><a href="/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/">容器间网络通信设置 (Pipework 和 Open vSwitch)</a></li></ul>
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2018/07/15/CentOS 7 安装最新版docker/">CentOS 7 安装最新版 docker</a></li><li><a href="/2018/05/22/Docker集中化web界面管理平台-Shipyard部署记录/">Docker 集中化 web 界面管理平台 -Shipyard(官网已经停止维护)</a></li><li><a href="/2018/05/19/一起学Docker（一）--初识/">一起学 Docker（一）-- 初识</a></li><li><a href="/2018/05/24/一起学Docker（七）--容器的网络/">一起学 Docker（七）-- 容器的网络</a></li><li><a href="/2018/05/20/一起学Docker（二）--核心概念和安装/">一起学 Docker（二）-- 核心概念和安装</a></li><li><a href="/2018/05/23/一起学Docker（六）--数据管理/">一起学 Docker（六）-- 数据管理</a></li><li><a href="/2018/05/22/一起学Docker（五）--仓库/">一起学 Docker（五）-- 仓库</a></li><li><a href="/2018/05/21/一起学Docker（四）--容器的常用操作/">一起学 Docker（四）-- 容器的常用操作</a></li><li><a href="/2018/05/21/一起学Docker（三）--镜像的常用操作/">一起学 Docker（三）-- 镜像的常用操作</a></li><li><a href="/2018/05/24/容器间网络通信设置(Pipework和Open vSwitch)/">容器间网络通信设置 (Pipework 和 Open vSwitch)</a></li></ul>
       
     </footer>
   </div>
