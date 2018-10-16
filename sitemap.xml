@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yhaing.github.io/2018/06/02/%E4%B8%80%E8%B5%B7%E5%AD%A6docker(%E5%8D%81)%20--jenkins%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2018-10-16T03:09:31.678Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yhaing.github.io/2018/09/15/cpu%E5%86%85%E5%AD%98%E7%A3%81%E7%9B%98io%E8%BF%87%E9%AB%98%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86/</loc>
+    
+    <lastmod>2018-10-15T05:52:06.197Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yhaing.github.io/2018/05/28/%E4%B8%80%E8%B5%B7%E5%AD%A6docker(%E4%B9%9D)%20%20--%E6%8C%81%E7%BB%AD%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E4%BA%86%E8%A7%A3%E4%B8%8Bgit/</loc>
+    
+    <lastmod>2018-10-12T01:42:25.483Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yhaing.github.io/2018/05/25/%E4%B8%80%E8%B5%B7%E5%AD%A6docker%20%20%20(%E5%85%AB)%20%20--Dockerfile/</loc>
     
-    <lastmod>2018-10-10T08:20:54.510Z</lastmod>
+    <lastmod>2018-10-10T08:23:50.618Z</lastmod>
     
   </url>
   

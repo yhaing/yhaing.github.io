@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="故障案例," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="故障案例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cpu 内存磁盘 io 过高问题处理">
+<meta property="og:url" content="https://yhaing.github.io/2018/09/15/cpu内存磁盘io过高问题处理/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/CmsuYgR.jpg">
+<meta property="og:image" content="https://i.imgur.com/MAKZW8a.png">
+<meta property="og:updated_time" content="2018-10-15T05:52:06.197Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cpu 内存磁盘 io 过高问题处理">
+<meta name="twitter:image" content="https://i.imgur.com/CmsuYgR.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2018/09/15/cpu内存磁盘io过高问题处理/"/>
+
+
+
+
+
+  <title>cpu 内存磁盘 io 过高问题处理 | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yhaing"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">当你发现自己的才华撑不起野心时，就请安静下来学习吧！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2018/09/15/cpu内存磁盘io过高问题处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">cpu 内存磁盘 io 过高问题处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-15T10:34:14+08:00">
+                2018-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/故障案例/" itemprop="url" rel="index">
+                    <span itemprop="name">故障案例</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/15/cpu内存磁盘io过高问题处理/" class="leancloud_visitors" data-flag-title="cpu 内存磁盘 io 过高问题处理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  21
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/CmsuYgR.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="CPU 占用过高分析"><a href="#CPU 占用过高分析" class="headerlink" title="CPU 占用过高分析"></a>CPU 占用过高分析 </h2><p> 可以用 <code>top</code> 命令查看哪一个进程占用 cpu 高  或者哪一个占用内存大</p>
+<pre><code>top - 13:55:32 up 59 days, 19:18,  2 users,  load average: 0.00, 0.04, 0.09
+Tasks: 161 total,   1 running, 160 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  3.7 us,  0.3 sy,  0.0 ni, 96.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : 16267564 total,   271608 free,  9033932 used,  6962024 buff/cache
+KiB Swap:  8388604 total,  8364736 free,23868 used.  5913400 avail Mem 
+
+  PID USER  PR  NIVIRTRESSHR S  %CPU %MEM TIME+ COMMAND  
+29433 wuuser20   0 7805852 1.132g  19216 S   0.7  7.3   6:07.13 java 
+29355 wuuser20   0 6909304 1.093g  17248 S   0.3  7.0   2:29.96 java 
+29558 wuuser20   0 7763476 974788  15860 S   0.3  6.0   1:54.47 java 
+29945 wuuser20   0 7793536 1.202g  21344 S   0.3  7.7   4:31.02 java
+</code></pre><p>可以看到占用最高的是 <code>29433</code> 进程</p>
+<p>用 <code>top -H -p pid</code> 命令查看进程内各个线程占用的 CPU 百分比    （  <code>top -Hp 29433</code>）cpu 消耗情况</p>
+<pre><code> top -H -p 29433
+top - 13:58:57 up 59 days, 19:22,  2 users,  load average: 0.04, 0.07, 0.10
+Threads: 132 total,   0 running, 132 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.1 us,  0.0 sy,  0.0 ni, 99.8 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : 16267564 total,   271024 free,  9034476 used,  6962064 buff/cache
+KiB Swap:  8388604 total,  8364736 free,23868 used.  5913044 avail Mem 
+  PID USER  PR  NIVIRTRESSHR S %CPU %MEM TIME+ COMMAND   
+29433 wuuser20   0 7805852 1.132g  19216 S  0.0  7.3   0:00.00 java  
+29436 wuuser20   0 7805852 1.132g  19216 S  0.0  7.3   0:08.91 java  
+29437 wuuser20   0 7805852 1.132g  19216 S  0.0  7.3   0:00.34 java  
+29438 wuuser20   0 7805852 1.132g  19216 S  0.0  7.3   0:00.35 java  
+29439 wuuser20   0 7805852 1.132g  19216 S  0.0  7.3   0:00.34 java  
+29440 wuuser20   0 7805852 1.132g  19216 S  0.0  7.3   0:00.34 java  
+29441 wuuser20   0 7805852 1.132g  19216 S  0.0  7.3   0:00.34 java
+</code></pre><p>上面看到线程 <code>29436</code> 占用高时长多  </p>
+<p>接着  使用 <code>printf &quot;%x\n&quot; 线程号</code> 将异常线程号转化为 16 进制</p>
+<pre><code>printf &quot;%x\n&quot; 29436
+72fc
+</code></pre><p>接着使用<code>jstack 29433|grep 72fc -A90</code>  来定位出现异常的代码</p>
+<pre><code> jstack 29433|grep 72fc -A90
+&quot;main&quot; prio=10 tid=0x00007f16fc00e000 nid=0x72fc in Object.wait() [0x00007f17056d9000]
+   java.lang.Thread.State: WAITING (on object monitor)
+at java.lang.Object.wait(Native Method)
+- waiting on &lt;0x0000000778044670&gt; (a java.lang.Class for com.wu.mortgage.service.OrderServiceStartup)
+at java.lang.Object.wait(Object.java:503)
+at com.wu.mortgage.service.OrderServiceStartup.main(OrderServiceStartup.java:47)
+- locked &lt;0x0000000778044670&gt; (a java.lang.Class for com.wu.mortgage.service.OrderServiceStartup)
+
+&quot;VM Thread&quot; prio=10 tid=0x00007f16fc14a000 nid=0x7309 runnable 
+
+&quot;Gang worker#0 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc01f800 nid=0x72fd runnable 
+
+&quot;Gang worker#1 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc021800 nid=0x72fe runnable 
+
+&quot;Gang worker#2 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc023000 nid=0x72ff runnable 
+
+&quot;Gang worker#3 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc025000 nid=0x7300 runnable 
+
+&quot;Gang worker#4 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc027000 nid=0x7301 runnable 
+
+&quot;Gang worker#5 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc029000 nid=0x7302 runnable 
+
+&quot;Gang worker#6 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc02b000 nid=0x7303 runnable 
+
+&quot;Gang worker#7 (Parallel GC Threads)&quot; prio=10 tid=0x00007f16fc02d000 nid=0x7304 runnable 
+
+&quot;Concurrent Mark-Sweep GC Thread&quot; prio=10 tid=0x00007f16fc106800 nid=0x7307 runnable 
+&quot;Gang worker#0 (Parallel CMS Threads)&quot; prio=10 tid=0x00007f16fc102000 nid=0x7305 runnable 
+
+&quot;Gang worker#1 (Parallel CMS Threads)&quot; prio=10 tid=0x00007f16fc104000 nid=0x7306 runnable 
+
+&quot;VM Periodic Task Thread&quot; prio=10 tid=0x00007f16fcbed800 nid=0x7314 waiting on condition 
+
+JNI global references: 522
+</code></pre><h2 id="CPU 使用率较低但负载较高"><a href="#CPU 使用率较低但负载较高" class="headerlink" title="CPU 使用率较低但负载较高"></a>CPU 使用率较低但负载较高 </h2><p> 问题描述：</p>
+<p>Linux 系统没有业务程序运行，通过 top 观察，类似如下图所示，CPU 很空闲，但是 <code>load average</code> 却非常高：</p>
+<p><img src="https://i.imgur.com/MAKZW8a.png" alt=""></p>
+<p>处理办法：</p>
+<p><code>load average</code> 是对 CPU 负载的评估，其值越高，说明其任务队列越长，处于等待执行的任务越多。<br>出现此种情况时，可能是由于僵死进程导致的。可以通过指令 ps -axjf  查看是否存在 D 状态进程。<br>D 状态是指不可中断的睡眠状态。该状态的进程无法被 kill，也无法自行退出。只能通过恢复其依赖的资源或者重启系统来解决。</p>
+<h2 id="内存占用过高"><a href="# 内存占用过高" class="headerlink" title="内存占用过高"></a>内存占用过高 </h2><p> 使用<code>free -h</code> 查看内存使用情况</p>
+<p><code>top</code> 按<code>m</code> 查看内存可以看到使用率 / 总内存  <code>KiB Mem : 63.6/1626756</code></p>
+<pre><code> free -h
+  totalusedfree  shared  buff/cache   available
+Mem:15G8.6G274M854M6.6G5.7G
+Swap:  8.0G 23M8.0G
+</code></pre><p>top 按 m  查看内存可以看到使用率 / 总内存  </p>
+<pre><code>KiB Mem : 63.6/16267564
+top - 14:32:12 up 59 days, 19:55,  2 users,  load average: 0.01, 0.06, 0.05
+Tasks: 160 total,   1 running, 159 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.8 us,  0.2 sy,  0.0 ni, 98.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : 63.6/16267564 [|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||]
+KiB Swap:  0.3/8388604  []
+
+  PID USER  PR  NIVIRTRESSHR S  %CPU %MEM TIME+ COMMAND  
+ 1515 wuuser20   0  157716   2288   1536 R   0.7  0.0   0:00.13 top  
+10262 root  20   0   0  0  0 S   0.3  0.0   0:00.31 kworker/2:1  
+29433 wuuser20   0 7806112 1.133g  19216 S   0.3  7.3   6:23.73 java 
+29754 wuuser20   0 6991120 764416  11932 S   0.3  4.7   5:50.32 java 
+29945 wuuser20   0 7793536 1.202g  21344 S   0.3  7.7   4:41.44 java 
+1 root  20   0  191152   3040   2108 S   0.0  0.0  10:59.88 systemd  
+2 root  20   0   0  0  0 S   0.0  0.0   0:01.54 kthreadd 
+3 root  20   0   0  0  0 S   0.0  0.0   0:11.69 ksoftirqd/0  
+5 root   0 -20   0  0  0 S   0.0  0.0   0:00.00 kworker/0:0H 
+7 root  rt   0   0  0  0 S   0.0  0.0   0:04.75 migration/0
+</code></pre><p><code>cat /proc/meminfo</code>查看内存信息</p>
+<pre><code>cat /proc/meminfo
+MemTotal:   16267564 kB
+MemFree:  279388 kB
+MemAvailable:5926640 kB
+Buffers:   0 kB
+Cached:  6471844 kB
+SwapCached:  708 kB
+Active: 11110540 kB
+Inactive:4181420 kB
+Active(anon):8299564 kB
+Inactive(anon):  1395416 kB
+Active(file):2810976 kB
+Inactive(file):  2786004 kB
+Unevictable:   0 kB
+Mlocked:   0 kB
+SwapTotal:   8388604 kB
+SwapFree:8364736 kB
+Dirty:   192 kB
+Writeback: 0 kB
+AnonPages:   8819440 kB
+Mapped:98168 kB
+Shmem:874860 kB
+Slab: 495476 kB
+SReclaimable: 388612 kB
+SUnreclaim:   106864 kB
+KernelStack:   16560 kB
+PageTables:27572 kB
+NFS_Unstable:  0 kB
+Bounce:0 kB
+WritebackTmp:  0 kB
+CommitLimit:16522384 kB
+Committed_AS:   27461628 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:  179248 kB
+VmallocChunk:   34359341052 kB
+HardwareCorrupted: 0 kB
+AnonHugePages:   7559168 kB
+HugePages_Total:   0
+HugePages_Free:0
+HugePages_Rsvd:0
+HugePages_Surp:0
+Hugepagesize:   2048 kB
+DirectMap4k:   81856 kB
+DirectMap2M:16695296 kB
+</code></pre><p>查看占用内存最大的 10 个进程:</p>
+<pre><code>ps -aux | sort -k4nr | head -n 10
+</code></pre><p>查看内存占用最大的进程的命令:</p>
+<pre><code>ps aux| grep -v &quot;USER&quot; |sort -n -r -k 4 |awk &apos;NR==1{print $0}&apos;
+</code></pre><h2 id="io- 过高现象"><a href="#io- 过高现象" class="headerlink" title="io 过高现象"></a>io 过高现象</h2><p><code>iostat</code> 查看 io 情况</p>
+<p>linux 机器 <code>wa%</code> 过高</p>
+<pre><code>top
+top - 15:35:47 up 265 days, 23:08,  6 users,  load average: 0.03, 0.12, 0.13
+Tasks: 203 total,   1 running, 202 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.1 us,  0.2 sy,  0.0 ni, 98.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : 18497460 total,   581076 free,  3876592 used, 14039792 buff/cache
+KiB Swap:  4063228 total,  4003928 free,59300 used. 13227728 avail Mem 
+
+  PID USER  PR  NIVIRTRESSHR S  %CPU %MEM TIME+ COMMAND  
+12850 root  20   0 9316608 335148  11836 S  11.1  1.8 104:05.35 java 
+1 root  20   0   44188   6664   3916 S   0.0  0.0 216:00.79 systemd  
+2 root  20   0   0  0  0 S   0.0  0.0   0:24.61 kthreadd 
+3 root  20   0   0  0  0 S   0.0  0.0   0:11.27 ksoftirqd/0  
+5 root   0 -20   0  0  0 S   0.0  0.0   0:00.00 kworker/0:0H
+</code></pre><p><code>us</code>：用户态使用的 cpu 时间比</p>
+<p><code>sy</code>：系统态使用的 cpu 时间比</p>
+<p><code>ni</code>：用做 nice 加权的进程分配的用户态 cpu 时间比</p>
+<p><code>id</code>：空闲的 cpu 时间比</p>
+<p><code>wa</code>：cpu 等待磁盘写入完成时间</p>
+<p><code>hi</code>：硬中断消耗时间</p>
+<p><code>si</code>：软中断消耗时间</p>
+<p><code>st</code>：虚拟机偷取时间</p>
+<font color="#FF0000">如果一台机器看到 wa 特别高，那么一般说明是磁盘 IO 出现问题，可以使用 iostat 等命令继续进行详细分析。</font>
+
+<p>安装 iostat</p>
+<pre><code>yum install sysstat
+</code></pre><p>安装后就可以使用 iostat 命令了</p>
+<pre><code>iostat -d -k 2
+</code></pre><p>参数 <code>-d</code> 表示，显示设备（磁盘）使用状态；<code>-k</code>某些使用 block 为单位的列强制使用 Kilobytes 为单位；<code>2</code>表示，数据显示每隔 2 秒刷新一次。</p>
+<pre><code>iostat -d -k 2
+Linux 3.10.0-327.el7.x86_64 (szfyruat01)07/11/2018  _x86_64_(8 CPU)
+
+Device:tpskB_read/skB_wrtn/skB_readkB_wrtn
+sda   0.9810.34 9.89  237682005  227295642
+sdb   0.64 0.79 9.37   18104315  215368108
+dm-0  1.46 1.2419.26   28388124  442501536
+dm-1  0.00 0.00 0.01  39692 127628
+
+Device:tpskB_read/skB_wrtn/skB_readkB_wrtn
+sda   0.50 4.00 0.00  8  0
+sdb   0.00 0.00 0.00  0  0
+dm-0  0.50 4.00 0.00  8  0
+dm-1  0.00 0.00 0.00  0  0
+</code></pre><p>tps：该设备每秒的传输次数（Indicate the number of transfers per second that were issued to the device.）。”一次传输”意思是”一次 I/O 请求”。多个逻辑请求可能会被合并为”一次 I/O 请求”。”一次传输”请求的大小是未知的。 </p>
+<p><code>kB_read/s</code>：每秒从设备（drive expressed）读取的数据量；</p>
+<p><code>kB_wrtn/s</code>：每秒向设备（drive expressed）写入的数据量；</p>
+<p><code>kB_read</code>：读取的总数据量；</p>
+<p><code>kB_wrtn</code>：写入的总数量数据量；这些单位都为 Kilobytes。</p>
+<p>指定监控的设备名称为<code>sda</code>，该命令的输出结果和上面命令完全相同</p>
+<pre><code>iostat -d sda 2
+Linux 3.10.0-327.el7.x86_64 (szfyruat01)07/11/2018  _x86_64_(8 CPU)
+
+Device:tpskB_read/skB_wrtn/skB_readkB_wrtn
+sda   0.9810.34 9.89  237685197  227298479
+
+Device:tpskB_read/skB_wrtn/skB_readkB_wrtn
+sda   0.00 0.00 0.00  0  0
+
+Device:tpskB_read/skB_wrtn/skB_readkB_wrtn
+sda   0.00 0.00 0.00  0  0
+</code></pre><p><code>iostat</code>还有一个比较常用的选项 -x，该选项将用于显示和 io 相关的扩展数据。</p>
+<pre><code>iostat -d -x -k 1 10
+
+
+iostat -d -x -k 1 10
+Linux 3.10.0-327.el7.x86_64 (szfyruat01)07/11/2018  _x86_64_(8 CPU)
+
+Device: rrqm/s   wrqm/s r/s w/srkB/swkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+sda   0.00 0.070.310.6810.34 9.8941.10 0.004.251.365.55   0.90   0.09
+sdb   0.00 0.130.100.54 0.79 9.3731.86 0.005.820.556.77   1.55   0.10
+dm-0  0.00 0.000.051.42 1.2419.2628.02 0.016.201.836.35   0.96   0.14
+dm-1  0.00 0.000.000.00 0.00 0.01 8.04 0.009.084.77   10.39   0.69   0.00
+
+Device: rrqm/s   wrqm/s r/s w/srkB/swkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+sda   0.00 0.000.000.00 0.00 0.00 0.00 0.000.000.000.00   0.00   0.00
+sdb   0.00 0.000.000.00 0.00 0.00 0.00 0.000.000.000.00   0.00   0.00
+dm-0  0.00 0.000.000.00 0.00 0.00 0.00 0.000.000.000.00   0.00   0.00
+dm-1  0.00 0.000.000.00 0.00 0.00 0.00 0.000.000.000.00   0.00   0.00
+</code></pre><p><code>rrqm/s</code>：每秒这个设备相关的读取请求有多少被 Merge 了（当系统调用需要读取数据的时候，VFS 将请求发到各个 FS，如果 FS 发现不同的读取请求读取的是相同 Block 的数据，FS 会将这个请求合并 Merge）；</p>
+<p><code>wrqm/s</code>：每秒这个设备相关的写入请求有多少被 Merge 了。</p>
+<p><code>rsec/s</code>：每秒读取的扇区数；</p>
+<p><code>wsec/</code>：每秒写入的扇区数。</p>
+<p><code>rKB/s</code>：The number of read requests that were issued to the device per second；</p>
+<p><code>wKB/s</code>：The number of write requests that were issued to the device per second；</p>
+<p><code>avgrq-sz</code> 平均请求扇区的大小</p>
+<p><code>avgqu-sz</code> 是平均请求队列的长度。毫无疑问，队列长度越短越好。    </p>
+<p><code>await</code>：  每一个 IO 请求的处理的平均时间（单位是微秒毫秒）。这里可以理解为 IO 的响应时间，一般地系统 IO 响应时间应该低于 5ms，如果大于 10ms 就比较大了。这个时间包括了队列时间和服务时间，也就是说，一般情况下，await 大于 svctm，它们的差值越小，则说明队列时间越短，反之差值越大，队列时间越长，说明系统出了问题。</p>
+<p><code>svctm</code>    表示平均每次设备 I/O 操作的服务时间（以毫秒为单位）。如果 svctm 的值与 await 很接近，表示几乎没有 I/O 等待，磁盘性能很好，如果 await 的值远高于 svctm 的值，则表示 I/O 队列等待太长，系统上运行的应用程序将变慢。</p>
+<p><code>%util</code>： 在统计时间内所有处理 IO 时间，除以总共统计时间。例如，如果统计间隔 1 秒，该设备有 0.8 秒在处理 IO，而 0.2 秒闲置，那么该设备的 %util = 0.8/1 = 80%，所以该参数暗示了设备的繁忙程度。一般地，如果该参数是 100% 表示设备已经接近满负荷运行了（当然如果是多磁盘，即使 %util 是 100%，因为磁盘的并发能力，所以磁盘使用未必就到了瓶颈）。</p>
+<font color="#FF0000">常见用法<br><br>iostat -d -k 1 10         #查看 TPS 和吞吐量信息(磁盘读写速度单位为 KB)<br>iostat -d -m 2            #查看 TPS 和吞吐量信息(磁盘读写速度单位为 MB)<br>iostat -d -x -k 1 10      #查看设备使用率（%util）、响应时间（await） iostat -c 1 10 #查看 cpu 状态</font>
+
+
+<p>查找引起高 I/O wait 对应的进程 </p>
+<pre><code>yum -y install iotop
+</code></pre><p>查找引起高<code>I/O wait</code> 对应的进程 </p>
+<pre><code>[root@localhost ~]# iotop
+
+ iotop
+30475 be/4 root2.80 K/s0.00 B/s  0.00 %  0.00 % [cifsd]
+Total DISK READ :1915.31 B/s | Total DISK WRITE :  22.44 K/s
+Actual DISK READ:   0.00 B/s | Actual DISK WRITE:   0.00 B/s
+  TID  PRIO  USER DISK READ  DISK WRITE  SWAPIN IO&gt;COMMAND   
+20041 be/4 root0.00 B/s0.00 B/s  0.00 %  0.07 % java -Djava.util.logging.config.file=/home/rizhi/apache-tomcat-7.0.88/conf/logging.pro~pdir=/home/rizhi/apache-tomcat-7.0.88/temp org.apache.catalina.startup.Bootstrap start
+12881 be/4 root0.00 B/s   14.96 K/s  0.00 %  0.00 % java -Djava.util.logging.config.file=/home/rizhi/apache-tomcat-7.0.88/conf/logging.pro~pdir=/home/rizhi/apache-tomcat-7.0.88/temp org.apache.catalina.startup.Bootstrap start
+13150 be/4 agent   0.00 B/s3.74 K/s  0.00 %  0.00 % falcon-agent -c /open-falcon/agent/config/cfg.json
+30475 be/4 root 1915.31 B/s0.00 B/s  0.00 %  0.00 % [cifsd]
+20607 be/4 root0.00 B/s3.74 K/s  0.00 %  0.00 % java -Djava.util.logging.config.file=/home/rizhi/apache-tomcat-7.0.88/conf/logging.pro~pdir=/home/rizhi/apache-tomcat-7.0.88/temp org.apache.catalina.startup.Bootstrap start
+ 4096 be/4 root0.00 B/s0.00 B/s  0.00 %  0.00 % dockerd --insecure-registry 192.168.16.184:5000 --log-opt max-size=100m --log-opt max-file=3 --insecure-registry 192.168.34.138:5000
+1 be/4 root0.00 B/s0.00 B/s  0.00 %  0.00 % systemd --system --deserialize 26
+2 be/4 root0.00 B/s0.00 B/s  0.00 %  0.00 % [kthreadd]
+3 be/4 root0.00 B/s0.00 B/s  0.00 %  0.00 % [ksoftirqd/0]
+ 4100 be/4 root0.00 B/s0.00 B/s  0.00 %  0.00 % docker-containerd -l unix:///var/run/docker/libcontainerd/docker-containerd.sock --met~un/docker/libcontainerd/containerd --shim docker-containerd-shim --runtime docker-runc
+5 be/0 root0.00 B/s0.00 B/s  0.00 %  0.00 % [kworker/0:0H]
+ 4102 be/4 root0.00 B/s0.00 B/s  0.00 %  0.00 % docker-containerd -l unix:///var/run/docker/libcontainerd/docker-containerd.sock --met~un/docker/libcontainerd/containerd --shim docker-containerd-shim --runtime docker-runc
+7 rt/4 root0.00 B/s0.00 B/s  0.00 %  0.00 % [migration/0]
+</code></pre><h3 id="iotop 命令简介"><a href="#iotop 命令简介" class="headerlink" title="iotop 命令简介"></a>iotop 命令简介</h3><p>iotop 根据 Linux 内核（需要 2.6.20 及以上）来监测 I/O，并且能显示当前进程 / 线程的 I/O 使用率。</p>
+<p>Linux 内核 build 的事后哦，需要开启 CONFIG_TASK_DELAY_ACCT 和 CONFIG_TASK_IO_ACCOUNTING 选项，这些选项依赖于 CONFIG_TASKSTATS。在采样周期里，iotop 按列显示每个进程 / 线程的 I/O 读写带宽，同时也显示进程 / 线程做 swap 交换和等待 I/O 所占用的百分比。</p>
+<p>每一个进程都会显示 I/O 优先级 (class/level)，另外在最上面显示每个采样周期内的读写带宽。<br> 使用左右箭头来改变排序，r 用来改变排序顺序，o 用来触发–only 选项，p 用来触发–processes 选项。<br>a 用来触发–accumulated 选项，q 用来退出，i 用来改变进程或线程的监测优先级，其它任继健是强制刷新。</p>
+<p>选项</p>
+<pre><code>--version 显示版本号然后退出
+-h, --help 显示帮助然后退出
+-o, --only 只显示正在产生 I/O 的进程或线程。除了传参，可以在运行过程中按 o 生效。
+-b, --batch 非交互模式，一般用来记录日志
+-n NUM, --iter=NUM 设置监测的次数，默认无限。在非交互模式下很有用
+-d SEC, --delay=SEC 设置每次监测的间隔，默认 1 秒，接受非×××数据例如 1.1
+-p PID, --pid=PID 指定监测的进程 / 线程
+-u USER, --user=USER 指定监测某个用户产生的 I/O
+-P, --processes 仅显示进程，默认 iotop 显示所有线程
+-a, --accumulated 显示累积的 I/O，而不是带宽
+-k, --kilobytes 使用 kB 单位，而不是对人友好的单位。在非交互模式下，脚本编程有用。
+-t, --time 加上时间戳，非交互非模式。
+-q, --quiet 禁止头几行，非交互模式。有三种指定方式。
+       -q     只在第一次监测时显示列名
+       -qq    永远不显示列名。
+       -qqq   永远不显示 I/O 汇总。
+</code></pre><p>只显示有 I/O 行为的进程</p>
+<pre><code>iotop -oP
+Total DISK READ :  18.12 K/s | Total DISK WRITE :   7.63 K/s
+Actual DISK READ:   0.00 B/s | Actual DISK WRITE:   0.00 B/s
+  PID  PRIO  USER DISK READ  DISK WRITE  SWAPIN IO&gt;COMMAND   
+12850 be/4 root0.00 B/s7.63 K/s  0.00 %  0.01 % java -Djava.util.logging.config.file=/home/rizhi/apache-tomcat-7.0.88/conf/logging.pro~pdir=/home/rizhi/apache-tomcat-7.0.88/temp org.apache.catalina.startup.Bootstrap start
+30475 be/4 root   18.12 K/s0.00 B/s  0.00 %  0.00 % [cifsd]
+</code></pre><h2 id="总结"><a href="# 总结" class="headerlink" title="总结"></a>总结 </h2><p><strong> 内存过高 </strong></p>
+<p>查看占用内存最大的 10 个进程:</p>
+<p>top 也可以</p>
+<pre><code>ps -aux | sort -k4nr | head -n 10
+</code></pre><p><strong>io 过高 </strong></p>
+<p>首先查看哪些进程的 io 过高</p>
+<p>（用 top 查看是否很高，让后用<code>iostat -x -d 1</code>  定哪个设备 IO 负载高）</p>
+<p>然后用 <code>iotop -oP</code> 查看哪一个进程的 io 高   也可以用<code>iostat -x -d 1</code> 定哪个设备 IO 负载高</p>
+<p>确定的进程 pid 后，可以用<code>ps -ef |grep pid</code> 查看哪一个应用引起的，看看是否需要重启服务 减少 io </p>
+<p>也可以用<code>top -H -p pid</code> 查看这个进程中线程消耗资源情况</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2018/09/15/cpu内存磁盘io过高问题处理/" title="cpu 内存磁盘 io 过高问题处理">https://yhaing.github.io/2018/09/15/cpu内存磁盘io过高问题处理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/故障案例/" rel="tag"># 故障案例</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/12/ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】/" rel="next" title="ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】">
+                <i class="fa fa-chevron-left"></i> ELK+Filebeat+Kafka+ZooKeeper 构建海量日志分析平台【转】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/20/Kubernetes集群之路（一）TLS证书配置/" rel="prev" title="Kubernetes 集群之路（一）TLS 证书配置">
+                Kubernetes 集群之路（一）TLS 证书配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTk3MS8xNjQ5OA=="></div>
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yhaing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yh198812@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.cnblogs.com/yhaing/" target="_blank" title="cnblogs">
+                      
+                        <i class="fa fa-fw fa-globe"></i>cnblogs</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5b6256396fb9a04fbf2729fb/collections" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-globe"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("01/19/2015 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU 占用过高分析"><span class="nav-number">1.</span> <span class="nav-text">CPU 占用过高分析 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU 使用率较低但负载较高"><span class="nav-number">2.</span> <span class="nav-text">CPU 使用率较低但负载较高 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存占用过高"><span class="nav-number">3.</span> <span class="nav-text">内存占用过高 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#io- 过高现象"><span class="nav-number">4.</span> <span class="nav-text">io 过高现象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iotop 命令简介"><span class="nav-number">4.1.</span> <span class="nav-text">iotop 命令简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结 </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+
+<!-- 添加背景图片 -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+    $("body").backstretch("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538127512866&di=2f9d3ddd0c3a21af7c277add296ec5ea&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F56dfebba2e60b.jpg");
+  </script>
+   -->
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
