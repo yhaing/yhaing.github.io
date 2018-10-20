@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MySQL," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 闪回工具之 binlog2sql">
+<meta property="og:url" content="https://yhaing.github.io/2017/08/19/MySQL 闪回工具之 binlog2sql/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/IcsgkYD.jpg">
+<meta property="og:updated_time" content="2018-10-20T02:09:33.454Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 闪回工具之 binlog2sql">
+<meta name="twitter:image" content="https://i.imgur.com/IcsgkYD.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2017/08/19/MySQL 闪回工具之 binlog2sql/"/>
+
+
+
+
+
+  <title>MySQL 闪回工具之 binlog2sql | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yhaing"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">当你发现自己的才华撑不起野心时，就请安静下来学习吧！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2017/08/19/MySQL 闪回工具之 binlog2sql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL 闪回工具之 binlog2sql</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-19T08:34:14+08:00">
+                2017-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/19/MySQL 闪回工具之 binlog2sql/" class="leancloud_visitors" data-flag-title="MySQL 闪回工具之 binlog2sql">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  29
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/IcsgkYD.jpg" alt=""></p>
+<a id="more"></a>
+<p>生产上误删数据、误改数据的现象也是时常发生的现象，作为 DBA 这时候就需要出来补锅了，最开始的做法是恢复备份，然后从中找到需要的数据再进行修复，但是这个时间太长了，对于大表少数数据的修复来讲，动作太大，成本也大。当然还有其他的一些操作方法，这里暂不展开来讲，我们今天有主角。</p>
+<p>最近有些朋友在用大众点评开源的一个 MySQL 闪回工具 – <a href="https://github.com/danfengcao/binlog2sql" target="_blank" rel="noopener">binlog2sql</a>，因此也测试了一把，一探究竟。</p>
+<h2 id="用途"><a href="# 用途" class="headerlink" title="用途"></a>用途</h2><ul>
+<li><p>数据回滚</p>
+</li>
+<li><p>主从切换后数据不一致的修复</p>
+</li>
+<li><p>从 binlog 生成标准 SQL，带来的衍生功能</p>
+</li>
+</ul>
+<h2 id="闪回原理简析"><a href="# 闪回原理简析" class="headerlink" title="闪回原理简析"></a>闪回原理简析 </h2><p> 开始之前，先说说闪回。我们都知道 MySQL binlog 以<code>event</code> 为单位，记录数据库的变更信息，这些信息能够帮助我们重现这之间的所有变化，也就是所谓的闪回。</p>
+<p>binlog 有三种可选的格式：</p>
+<ul>
+<li><p><code>statement</code>：基于 SQL 语句的模式，binlog 数据量小，但是某些语句和函数在复制过程可能导致数据不一致甚至出错；</p>
+</li>
+<li><p><code>mixed</code>：混合模式，根据语句来选用是 statement 还是 row 模式；</p>
+</li>
+<li><p><code>row</code>：基于行的模式，记录的是行的完整变化。安全，但 binlog 会比其他两种模式大很多；</p>
+</li>
+</ul>
+<p>利用 binlog 做闪回，需要将 binlog 格式设置为 row，因为我们需要最详尽的信息来确定操作之后数据不会出错。</p>
+<p>既然 binlog 以 event 形式记录了所有的变更信息，那么我们把需要回滚的 event，从后往前回滚回去即可。</p>
+<p>回滚操作：</p>
+<ul>
+<li><p>对于 <code>delete</code>操作，我们从 binlog 提取出 delete 信息，反向生成 <code>insert</code> 回滚语句；</p>
+</li>
+<li><p>对于 <code>insert</code> 操作，反向生成 <code>delete</code> 回滚语句；</p>
+</li>
+<li><p>对于<code>update</code> 操作，根据信息生成反向的 <code>update</code> 语句；</p>
+</li>
+</ul>
+<h2 id="准备"><a href="# 准备" class="headerlink" title="准备"></a>准备 </h2><p> 本次测试使用社区版 MySQL 5.7.17，binlog 格式设置为<code>row</code>。</p>
+<p>1、初始化测试表</p>
+<pre><code>root@localhost 14:57:35 [glonho]&gt;CREATE TABLE `test` (-&gt;   `id` int(11) NOT NULL AUTO_INCREMENT,
+-&gt;   `name` varchar(20) NOT NULL,
+-&gt;   `create_time` datetime NOT NULL,
+-&gt;   PRIMARY KEY (`id`)
+-&gt; ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+Query OK, 0 rows affected (0.16 sec)
+
+root@localhost 15:02:06 [glonho]&gt;insert into test (name,create_time) values (&apos;Glon Ho&apos;,&apos;2012-10-1&apos;),(&apos;Eason Chan&apos;, &apos;2016-05-02&apos;),(&apos;Jacky Cheung&apos;, &apos;2015-05-02&apos;);
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+root@localhost 15:02:23 [glonho]&gt;select * from test;
++----+--------------+---------------------+
+| id | name | create_time |
++----+--------------+---------------------+
+|  1 | Glon Ho  | 2012-10-01 00:00:00 |
+|  2 | Eason Chan   | 2016-05-02 00:00:00 |
+|  3 | Jacky Cheung | 2015-05-02 00:00:00 |
++----+--------------+---------------------+
+3 rows in set (0.00 sec)
+</code></pre><p>2、查看闪回操作账号的权限信息</p>
+<pre><code>root@localhost 15:02:24 [glonho]&gt;show grants for &apos;glon&apos;@&apos;%&apos;;
++--------------------------------------------------------------------------+
+| Grants for glon@%|
++--------------------------------------------------------------------------+
+| GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;glon&apos;@&apos;%&apos; |
++--------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+</code></pre><h2 id="开始"><a href="# 开始" class="headerlink" title="开始"></a>开始 </h2><p> 这一部分，主要测试 DML，也就是 delete、update、insert 等操作的闪回效果。</p>
+<p>本次实验，更改一条数据，并删除一条数据，然后从解析 binlog 信息，到使用 binlog2sql 工具来生成标准和回滚 SQL，来剖析整个运行过程。</p>
+<p>1、进行 update 和 delete 操作</p>
+<pre><code>root@localhost 15:02:29 [glonho]&gt;update test set create_time = &apos;2017-05-12&apos; where name = &apos;Glon Ho&apos;;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+root@localhost 15:03:34 [glonho]&gt;select * from test;
++----+--------------+---------------------+
+| id | name | create_time |
++----+--------------+---------------------+
+|  1 | Glon Ho  | 2017-05-12 00:00:00 |
+|  2 | Eason Chan   | 2016-05-02 00:00:00 |
+|  3 | Jacky Cheung | 2015-05-02 00:00:00 |
++----+--------------+---------------------+
+3 rows in set (0.00 sec)
+
+root@localhost 15:03:40 [glonho]&gt;delete from test where name = &apos;Jacky Cheung&apos;;
+Query OK, 1 row affected (0.01 sec)
+
+root@localhost 15:04:03 [glonho]&gt;select * from test;
++----+------------+---------------------+
+| id | name   | create_time |
++----+------------+---------------------+
+|  1 | Glon Ho| 2017-05-12 00:00:00 |
+|  2 | Eason Chan | 2016-05-02 00:00:00 |
++----+------------+---------------------+
+2 rows in set (0.00 sec)
+</code></pre><p>操作时候，Glon Ho 的时间改变了，而 Jacky Cheung 也被删除了。</p>
+<p>2、查看当前 binlog 信息</p>
+<pre><code>root@localhost 15:04:04 [glonho]&gt;show master status;
++------------------+----------+--------------+------------------+------------------------------------------+
+| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set|
++------------------+----------+--------------+------------------+------------------------------------------+
+| mysql-bin.000001 | 1381 |  |  | 1e9269cb-3630-11e7-b892-080027d27daf:1-4 |
++------------------+----------+--------------+------------------+------------------------------------------+
+1 row in set (0.00 sec)
+</code></pre><p>3、使用 mysqlbinlog 解析 binlog 日志</p>
+<pre><code>/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;
+/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;
+DELIMITER /*!*/;
+# at 4
+#170512 14:57:35 server id 1003306  end_log_pos 123 CRC32 0xcd69513cStart: binlog v 4, server v 5.7.17-log created 170512 14:57:35 at startup
+# Warning: this binlog is either in use or was not closed properly.
+ROLLBACK/*!*/;
+# at 123
+#170512 14:57:35 server id 1003306  end_log_pos 154 CRC32 0xd38f365bPrevious-GTIDs
+# [empty]
+# at 154
+#170512 15:02:06 server id 1003306  end_log_pos 219 CRC32 0xd50d9707GTIDlast_committed=0sequence_number=1
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:1&apos;/*!*/;
+# at 219
+#170512 15:02:06 server id 1003306  end_log_pos 482 CRC32 0xa6491181Query   thread_id=4 exec_time=0 error_code=0
+use `glonho`/*!*/;
+SET TIMESTAMP=1494572526/*!*/;
+SET @@session.pseudo_thread_id=4/*!*/;
+SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;
+SET @@session.sql_mode=1436549152/*!*/;
+SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
+/*!\C utf8 *//*!*/;
+SET @@session.character_set_client=33,@@session.collation_connection=33,@@session.collation_server=33/*!*/;
+SET @@session.lc_time_names=0/*!*/;
+SET @@session.collation_database=DEFAULT/*!*/;
+CREATE TABLE `test` (`id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `create_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+/*!*/;
+# at 482
+#170512 15:02:23 server id 1003306  end_log_pos 547 CRC32 0xeb55009bGTIDlast_committed=1sequence_number=2
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:2&apos;/*!*/;
+# at 547
+#170512 15:02:23 server id 1003306  end_log_pos 621 CRC32 0x2edf4f1aQuery   thread_id=4 exec_time=0 error_code=0
+SET TIMESTAMP=1494572543/*!*/;
+BEGIN
+/*!*/;
+# at 621
+#170512 15:02:23 server id 1003306  end_log_pos 675 CRC32 0x48915eb3Table_map: `glonho`.`test` mapped to number 219
+# at 675
+#170512 15:02:23 server id 1003306  end_log_pos 772 CRC32 0xea1b47e6Write_rows: table id 219 flags: STMT_END_F
+### INSERT INTO `glonho`.`test`
+### SET
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Glon Ho&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2012-10-01 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+### INSERT INTO `glonho`.`test`
+### SET
+###   @1=2 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Eason Chan&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2016-05-02 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+### INSERT INTO `glonho`.`test`
+### SET
+###   @1=3 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Jacky Cheung&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2015-05-02 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+# at 772
+#170512 15:02:23 server id 1003306  end_log_pos 803 CRC32 0x35bf5664Xid = 14
+COMMIT/*!*/;
+# at 803
+#170512 15:03:34 server id 1003306  end_log_pos 868 CRC32 0x3f830a6eGTIDlast_committed=2sequence_number=3
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:3&apos;/*!*/;
+# at 868
+#170512 15:03:34 server id 1003306  end_log_pos 942 CRC32 0x35d2d23cQuery   thread_id=4 exec_time=0 error_code=0
+SET TIMESTAMP=1494572614/*!*/;
+BEGIN
+/*!*/;
+# at 942
+#170512 15:03:34 server id 1003306  end_log_pos 996 CRC32 0x56346189Table_map: `glonho`.`test` mapped to number 219
+# at 996
+#170512 15:03:34 server id 1003306  end_log_pos 1068 CRC32 0xcb2187c2   Update_rows: table id 219 flags: STMT_END_F
+### UPDATE `glonho`.`test`
+### WHERE
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Glon Ho&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2012-10-01 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+### SET
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Glon Ho&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2017-05-12 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+# at 1068
+#170512 15:03:34 server id 1003306  end_log_pos 1099 CRC32 0xbc8b6f9d   Xid = 16
+COMMIT/*!*/;
+# at 1099
+#170512 15:04:03 server id 1003306  end_log_pos 1164 CRC32 0x203853e1   GTIDlast_committed=3sequence_number=4
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:4&apos;/*!*/;
+# at 1164
+#170512 15:04:03 server id 1003306  end_log_pos 1238 CRC32 0xde9d2f56   Query   thread_id=4 exec_time=0 error_code=0
+SET TIMESTAMP=1494572643/*!*/;
+BEGIN
+/*!*/;
+# at 1238
+#170512 15:04:03 server id 1003306  end_log_pos 1292 CRC32 0xd6950fe2   Table_map: `glonho`.`test` mapped to number 219
+# at 1292
+#170512 15:04:03 server id 1003306  end_log_pos 1350 CRC32 0xbe57572b   Delete_rows: table id 219 flags: STMT_END_F
+### DELETE FROM `glonho`.`test`
+### WHERE
+###   @1=3 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Jacky Cheung&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2015-05-02 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+# at 1350
+#170512 15:04:03 server id 1003306  end_log_pos 1381 CRC32 0x96e3ba93   Xid = 18
+COMMIT/*!*/;
+SET @@SESSION.GTID_NEXT= &apos;AUTOMATIC&apos; /* added by mysqlbinlog */ /*!*/;
+DELIMITER ;
+# End of log file
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;
+</code></pre><p>解析 binlog 只是展示一下这些操作在日志中记录的样子，不叙说如何具体地根据 binlog 信息来进行闪回操作。</p>
+<h2 id="使用 -binlog2sql- 工具"><a href="# 使用 -binlog2sql- 工具" class="headerlink" title="使用 binlog2sql 工具"></a>使用 binlog2sql 工具 </h2><h3 id="1- 解析出标准 SQL"><a href="#1- 解析出标准 SQL" class="headerlink" title="1) 解析出标准 SQL"></a>1) 解析出标准 SQL</h3><p> 直接整个解析 mysql-bin.000001 日志</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos;
+USE glonho;
+CREATE TABLE `test` (`id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `create_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2012-10-01 00:00:00&apos;, 1, &apos;Glon Ho&apos;); #start 547 end 772 time 2017-05-12 15:02:23
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2016-05-02 00:00:00&apos;, 2, &apos;Eason Chan&apos;); #start 547 end 772 time 2017-05-12 15:02:23
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2015-05-02 00:00:00&apos;, 3, &apos;Jacky Cheung&apos;); #start 547 end 772 time 2017-05-12 15:02:23
+UPDATE `glonho`.`test` SET `create_time`=&apos;2017-05-12 00:00:00&apos;, `id`=1, `name`=&apos;Glon Ho&apos; WHERE `create_time`=&apos;2012-10-01 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 868 end 1068 time 2017-05-12 15:03:34
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2015-05-02 00:00:00&apos; AND `id`=3 AND `name`=&apos;Jacky Cheung&apos; LIMIT 1; #start 1164 end 1350 time 2017-05-12 15:04:03
+</code></pre><p>可以看到，几乎完美重现了我们上面执行过的 SQL，而且生成的每个 SQL 后面都带有该语句在 binlog 中的 position 信息和该语句的执行时间。</p>
+<h3 id="2- 解析出回滚 SQL"><a href="#2- 解析出回滚 SQL" class="headerlink" title="2) 解析出回滚 SQL"></a>2) 解析出回滚 SQL</h3><p>生产从建表，到数据的更新删除，这个时间端内的操作的回滚语句：</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-datetime=&quot;2017-05-12 14:57:00&quot; --stop-datetime=&quot;2017-05-12 15:04:22&quot;
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2015-05-02 00:00:00&apos;, 3, &apos;Jacky Cheung&apos;); #start 1164 end 1350 time 2017-05-12 15:04:03
+UPDATE `glonho`.`test` SET `create_time`=&apos;2012-10-01 00:00:00&apos;, `id`=1, `name`=&apos;Glon Ho&apos; WHERE `create_time`=&apos;2017-05-12 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 868 end 1068 time 2017-05-12 15:03:34
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2015-05-02 00:00:00&apos; AND `id`=3 AND `name`=&apos;Jacky Cheung&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2016-05-02 00:00:00&apos; AND `id`=2 AND `name`=&apos;Eason Chan&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2012-10-01 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+</code></pre><p>可以看到，建表语句属于 DDL，没有生产回滚操作，即使在 binlog 中记录了该 SQL；初始化时批量插入的 3 条数据，则被分成了 3 条 delete 语句；更新 Glon Ho 的时间列的语句也被反向生成出来了，set 和 where 的列掉转过来了；而删除 Jacky Cheung 的语句生成了一条 insert 语句。</p>
+<p>这和上面闪回原理中回滚操作说的是一致的。</p>
+<ul>
+<li>下面对回滚时间进行细粒度的操作，具体到某一个 event</li>
+</ul>
+<p>通过根据 mysqlbinlog 解析出来的日志信息，使用 binlog2sql 来获得回滚的 SQL 语句：</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-position=547 --stop-position=803
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2015-05-02 00:00:00&apos; AND `id`=3 AND `name`=&apos;Jacky Cheung&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2016-05-02 00:00:00&apos; AND `id`=2 AND `name`=&apos;Eason Chan&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2012-10-01 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+[root@node1 binlog2sql]# 
+
+[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-position=868 --stop-position=1099
+UPDATE `glonho`.`test` SET `create_time`=&apos;2012-10-01 00:00:00&apos;, `id`=1, `name`=&apos;Glon Ho&apos; WHERE `create_time`=&apos;2017-05-12 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 868 end 1068 time 2017-05-12 15:03:34
+[root@node1 binlog2sql]# 
+
+[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-position=1164 --stop-position=1350
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2015-05-02 00:00:00&apos;, 3, &apos;Jacky Cheung&apos;); #start 1164 end 1350 time 2017-05-12 15:04:03
+[root@node1 binlog2sql]# 
+</code></pre><p>根据通过 binlog2sql 解析出来指定时间段的数据获取到日志信息，使用 binlog2sql 来获得具体回滚的 SQL 语句：</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-position=547 --stop-position=772
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2015-05-02 00:00:00&apos; AND `id`=3 AND `name`=&apos;Jacky Cheung&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2016-05-02 00:00:00&apos; AND `id`=2 AND `name`=&apos;Eason Chan&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2012-10-01 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 547 end 772 time 2017-05-12 15:02:23
+[root@node1 binlog2sql]# 
+
+[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-position=868 --stop-position=1068
+UPDATE `glonho`.`test` SET `create_time`=&apos;2012-10-01 00:00:00&apos;, `id`=1, `name`=&apos;Glon Ho&apos; WHERE `create_time`=&apos;2017-05-12 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 868 end 1068 time 2017-05-12 15:03:34
+[root@node1 binlog2sql]# 
+
+[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-position=1164 --stop-position=1350
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2015-05-02 00:00:00&apos;, 3, &apos;Jacky Cheung&apos;); #start 1164 end 1350 time 2017-05-12 15:04:03
+[root@node1 binlog2sql]#
+</code></pre><p>可以看到，这两种 binlog pos 都解析出来正确的语句，尽管根据 mysqlbinlog 解析出来的日志信息是最准确的，而通过 binlog2sql 解析出来的指定时间段的数据获取到的日志信息在我们看来是不正确的，或者说是不完整的。</p>
+<p>继续</p>
+<p>下面我们再测试一下批量 delete 和 truncate，及 drop table 的情况</p>
+<pre><code>root@localhost 15:55:41 [glonho]&gt;select * from test;
++----+------------+---------------------+
+| id | name   | create_time |
++----+------------+---------------------+
+|  1 | Glon Ho| 2017-05-12 00:00:00 |
+|  2 | Eason Chan | 2016-05-02 00:00:00 |
++----+------------+---------------------+
+2 rows in set (0.00 sec)
+
+root@localhost 15:55:48 [glonho]&gt;delete from test where id &lt; 3;
+Query OK, 2 rows affected (0.06 sec)
+
+root@localhost 15:56:01 [glonho]&gt;select * from test;
+Empty set (0.00 sec)
+
+root@localhost 15:56:03 [glonho]&gt;insert into test (name,create_time) values (&apos;Glon Ho&apos;,&apos;2012-10-1&apos;);
+Query OK, 1 row affected (0.01 sec)
+
+root@localhost 15:56:26 [glonho]&gt;select * from test;
++----+---------+---------------------+
+| id | name| create_time |
++----+---------+---------------------+
+|  4 | Glon Ho | 2012-10-01 00:00:00 |
++----+---------+---------------------+
+1 row in set (0.00 sec)
+
+root@localhost 15:56:37 [glonho]&gt;truncate table test;
+Query OK, 0 rows affected (0.04 sec)
+
+root@localhost 15:56:43 [glonho]&gt;select * from test;
+Empty set (0.00 sec)
+
+root@localhost 15:56:47 [glonho]&gt;drop table test;
+Query OK, 0 rows affected (0.01 sec)
+
+root@localhost 15:56:53 [glonho]&gt;show tables;
+Empty set (0.00 sec)
+
+root@localhost 15:56:56 [glonho]&gt;show master status;
++------------------+----------+--------------+------------------+------------------------------------------+
+| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set|
++------------------+----------+--------------+------------------+------------------------------------------+
+| mysql-bin.000001 | 2295 |  |  | 1e9269cb-3630-11e7-b892-080027d27daf:1-8 |
++------------------+----------+--------------+------------------+------------------------------------------+
+1 row in set (0.00 sec)
+</code></pre><ul>
+<li>继续解析 binlog</li>
+</ul>
+<p>解析新一轮操作生产的 binlog：</p>
+<pre><code>/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;
+/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;
+DELIMITER /*!*/;
+# at 4
+#170512 14:57:35 server id 1003306  end_log_pos 123 CRC32 0xcd69513cStart: binlog v 4, server v 5.7.17-log created 170512 14:57:35 at startup
+# Warning: this binlog is either in use or was not closed properly.
+ROLLBACK/*!*/;
+# at 1381
+#170512 15:56:01 server id 1003306  end_log_pos 1446 CRC32 0x29eeeb58   GTIDlast_committed=4sequence_number=5
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:5&apos;/*!*/;
+# at 1446
+#170512 15:56:01 server id 1003306  end_log_pos 1520 CRC32 0x397feed7   Query   thread_id=26exec_time=0 error_code=0
+SET TIMESTAMP=1494575761/*!*/;
+SET @@session.pseudo_thread_id=26/*!*/;
+SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;
+SET @@session.sql_mode=1436549152/*!*/;
+SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
+/*!\C utf8 *//*!*/;
+SET @@session.character_set_client=33,@@session.collation_connection=33,@@session.collation_server=33/*!*/;
+SET @@session.lc_time_names=0/*!*/;
+SET @@session.collation_database=DEFAULT/*!*/;
+BEGIN
+/*!*/;
+# at 1520
+#170512 15:56:01 server id 1003306  end_log_pos 1574 CRC32 0xe1b822b7   Table_map: `glonho`.`test` mapped to number 219
+# at 1574
+#170512 15:56:01 server id 1003306  end_log_pos 1648 CRC32 0xec210617   Delete_rows: table id 219 flags: STMT_END_F
+### DELETE FROM `glonho`.`test`
+### WHERE
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Glon Ho&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2017-05-12 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+### DELETE FROM `glonho`.`test`
+### WHERE
+###   @1=2 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Eason Chan&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2016-05-02 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+# at 1648
+#170512 15:56:01 server id 1003306  end_log_pos 1679 CRC32 0x8506ab3c   Xid = 106
+COMMIT/*!*/;
+# at 1679
+#170512 15:56:26 server id 1003306  end_log_pos 1744 CRC32 0x06d317f7   GTIDlast_committed=5sequence_number=6
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:6&apos;/*!*/;
+# at 1744
+#170512 15:56:26 server id 1003306  end_log_pos 1818 CRC32 0x06b90ae3   Query   thread_id=26exec_time=0 error_code=0
+SET TIMESTAMP=1494575786/*!*/;
+BEGIN
+/*!*/;
+# at 1818
+#170512 15:56:26 server id 1003306  end_log_pos 1872 CRC32 0xea37392b   Table_map: `glonho`.`test` mapped to number 219
+# at 1872
+#170512 15:56:26 server id 1003306  end_log_pos 1925 CRC32 0x7117bf7c   Write_rows: table id 219 flags: STMT_END_F
+### INSERT INTO `glonho`.`test`
+### SET
+###   @1=4 /* INT meta=0 nullable=0 is_null=0 */
+###   @2=&apos;Glon Ho&apos; /* VARSTRING(60) meta=60 nullable=0 is_null=0 */
+###   @3=&apos;2012-10-01 00:00:00&apos; /* DATETIME(0) meta=0 nullable=0 is_null=0 */
+# at 1925
+#170512 15:56:26 server id 1003306  end_log_pos 1956 CRC32 0x8f283ebd   Xid = 108
+COMMIT/*!*/;
+# at 1956
+#170512 15:56:43 server id 1003306  end_log_pos 2021 CRC32 0x9eeda351   GTIDlast_committed=6sequence_number=7
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:7&apos;/*!*/;
+# at 2021
+#170512 15:56:43 server id 1003306  end_log_pos 2109 CRC32 0xf447fce8   Query   thread_id=26exec_time=0 error_code=0
+use `glonho`/*!*/;
+SET TIMESTAMP=1494575803/*!*/;
+truncate table test
+/*!*/;
+# at 2109
+#170512 15:56:53 server id 1003306  end_log_pos 2174 CRC32 0xd9d80941   GTIDlast_committed=7sequence_number=8
+SET @@SESSION.GTID_NEXT= &apos;1e9269cb-3630-11e7-b892-080027d27daf:8&apos;/*!*/;
+# at 2174
+#170512 15:56:53 server id 1003306  end_log_pos 2295 CRC32 0xbb004dff   Query   thread_id=26exec_time=0 error_code=0
+SET TIMESTAMP=1494575813/*!*/;
+DROP TABLE `test` /* generated by server */
+/*!*/;
+SET @@SESSION.GTID_NEXT= &apos;AUTOMATIC&apos; /* added by mysqlbinlog */ /*!*/;
+DELIMITER ;
+# End of log file
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;
+</code></pre><ul>
+<li>使用 binlog2sql 解析</li>
+</ul>
+<p>1) 解析出标准 SQL</p>
+<p>解析出新一轮操作的 SQL：</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-datetime=&quot;2017-05-12 15:55:41&quot;  --stop-datetime=&quot;2017-05-12 15:56:56&quot; --start-file=&apos;mysql-bin.000001&apos;
+USE glonho;
+truncate table test;
+USE glonho;
+DROP TABLE `test` /* generated by server */;
+
+[root@node1 binlog2sql]# python binlog2sql.py -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-datetime=&quot;2017-05-12 15:55:41&quot; --start-file=&apos;mysql-bin.000001&apos;
+USE glonho;
+truncate table test;
+USE glonho;
+DROP TABLE `test` /* generated by server */;
+
+[root@node1 binlog2sql]# python binlog2sql.py -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos;
+USE glonho;
+CREATE TABLE `test` (`id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `create_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+USE glonho;
+truncate table test;
+USE glonho;
+DROP TABLE `test` /* generated by server */;
+</code></pre><p>可以看到，尽管不断放宽解析的时间段，这一轮的批量 delete 和 insert 操作并没有被解析出来。</p>
+<p>2) 解析出回滚 SQL</p>
+<p>在来看看回滚的 SQL 能否被解析出来：</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-datetime=&quot;2017-05-12 15:55:41&quot;  --stop-datetime=&quot;2017-05-12 15:56:56&quot;
+[root@node1 binlog2sql]# 
+</code></pre><p>很明显，解析不出来，失败了。</p>
+<p>这就比较纳闷了，怎么会解析不出来呢，明明已经记录到 binlog 中了。</p>
+<p>不急，我们再回头看看，binlog2sql 这个工具的操作是指定了 database 和 table 的，而此时我们已经把 table drop 掉了，所以导致解析不出来。</p>
+<p>是不是这个原因呢？我们重新创建这张表，然后再看：</p>
+<pre><code>root@localhost 16:06:48 [glonho]&gt;CREATE TABLE `test` (-&gt;   `id` int(11) NOT NULL AUTO_INCREMENT,
+-&gt;   `name` varchar(20) NOT NULL,
+-&gt;   `create_time` datetime NOT NULL,
+-&gt;   PRIMARY KEY (`id`)
+-&gt; ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected (0.05 sec)
+</code></pre><p>重新解析出标准 SQL：</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-datetime=&quot;2017-05-12 15:55:41&quot;  --stop-datetime=&quot;2017-05-12 16:06:48&quot; --start-file=&apos;mysql-bin.000001&apos;
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2017-05-12 00:00:00&apos; AND `id`=1 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 1446 end 1648 time 2017-05-12 15:56:01
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2016-05-02 00:00:00&apos; AND `id`=2 AND `name`=&apos;Eason Chan&apos; LIMIT 1; #start 1446 end 1648 time 2017-05-12 15:56:01
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2012-10-01 00:00:00&apos;, 4, &apos;Glon Ho&apos;); #start 1744 end 1925 time 2017-05-12 15:56:26
+USE glonho;
+truncate table test;
+USE glonho;
+DROP TABLE `test` /* generated by server */;
+[root@node1 binlog2sql]# 
+</code></pre><p>再次解析出回滚 SQL：</p>
+<pre><code>[root@node1 binlog2sql]# python binlog2sql.py --flashback -h127.0.0.1 -P3306 -uglon -p&apos;123456&apos; -dglonho -ttest --start-file=&apos;mysql-bin.000001&apos; --start-datetime=&quot;2017-05-12 15:55:41&quot; --stop-datetime=&quot;2017-05-12 16:06:48&quot;
+DELETE FROM `glonho`.`test` WHERE `create_time`=&apos;2012-10-01 00:00:00&apos; AND `id`=4 AND `name`=&apos;Glon Ho&apos; LIMIT 1; #start 1744 end 1925 time 2017-05-12 15:56:26
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2016-05-02 00:00:00&apos;, 2, &apos;Eason Chan&apos;); #start 1446 end 1648 time 2017-05-12 15:56:01
+INSERT INTO `glonho`.`test`(`create_time`, `id`, `name`) VALUES (&apos;2017-05-12 00:00:00&apos;, 1, &apos;Glon Ho&apos;); #start 1446 end 1648 time 2017-05-12 15:56:01
+[root@node1 binlog2sql]# 
+</code></pre><p>可以看到，此时批量 <code>delete</code> 和 <code>insert</code> 的语句被解析出来了，并且能够成功生成回滚的 SQL。</p>
+<p>但是，DDL 语句，在整个测试过程中都是无法被回滚的，这也在我们的预期中，至此，MySQL 闪回工具 – binlog2sql 的基本测试就告一段落了。</p>
+<h2 id="总结"><a href="# 总结" class="headerlink" title="总结"></a>总结 </h2><p> 利用 binlog2sql 来做闪回的前提如下：</p>
+<p>1、在配置文件中设置了以下参数：</p>
+<pre><code>[mysqld]
+server_id = 1
+log_bin = /var/log/mysql/mysql-bin.log
+max_binlog_size = 1G
+binlog_format = row
+binlog_row_image = full # 默认
+</code></pre><p>2、在闪回的时候必须启动 MySQL 服务，因为它是通过 BINLOG_DUMP 协议来获取 binlog 内容，需要读取 server 端 information_schema.COLUMNS 表，来获取表结构的元信息，才能拼接成 SQL 语句。因此需要给用户提供的最小权限如下：</p>
+<pre><code>GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;user&apos;@&apos;%&apos;;
+</code></pre><p>看源码，主要是使用 <code>python-mysql-replication</code> 作为实时解析 <code>MySQL binlog</code> 来获取各个 <code>EVENT</code>。</p>
+<p><code>python-mysql-replication</code> 实现了 MySQL 复制协议，客户端伪装成 slave 来获取主的 binlog 和 EVENT。</p>
+<p>具体可参考：</p>
+<ul>
+<li><a href="https://github.com/noplay/python-mysql-replication" target="_blank" rel="noopener">https://github.com/noplay/python-mysql-replication</a></li>
+<li><a href="http://python-mysql-replication.readthedocs.io/en/latest/_modules/pymysqlreplication/binlogstream.html" target="_blank" rel="noopener">http://python-mysql-replication.readthedocs.io/en/latest/_modules/pymysqlreplication/binlogstream.html</a></li>
+</ul>
+<p>基于这一点，可以使用它通过读取 binlog 来实现一些完成实时计算，而无需先存储再计算。</p>
+<p>但，这也是一个缺点，如果没有满足上面的前提，那么 binlog2sql 就无法完成工作。而且如果在高并发环境要进行解析 binlog，也就相当于多了一个同步线程在主上读取数据，加大了主的负担。</p>
+<p>另外，有朋友在测试的时候，出现 SQL 解析不完整的情况，但是这个情况比较难遇到，已经和作者联系，表示有待验证。</p>
+<p>所以，在生产上使用之前，务必先在测试环境测试通过之后再使用，确保没有数据错误。</p>
+<p>从上面的测试也可以看出来，<code>flashback 模式 </code> 只支持 <code>DML</code>，<code>DDL</code> 不会输出；而且 flashback 模式下，一次性处理的 binlog 不宜过大，不能超过内存大小(有待优化)。</p>
+<p>binlog2sql 官方文档：<a href="https://github.com/danfengcao/binlog2sql" target="_blank" rel="noopener">https://github.com/danfengcao/binlog2sql</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2017/08/19/MySQL 闪回工具之 binlog2sql/" title="MySQL 闪回工具之 binlog2sql">https://yhaing.github.io/2017/08/19/MySQL 闪回工具之 binlog2sql/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/ZABBIX 忘记登录密码/" rel="next" title="ZABBIX 忘记登录密码">
+                <i class="fa fa-chevron-left"></i> ZABBIX 忘记登录密码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/10/Java-JVM/" rel="prev" title="Java-JVM 参数详解">
+                Java-JVM 参数详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTk3MS8xNjQ5OA=="></div>
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yhaing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yh198812@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.cnblogs.com/yhaing/" target="_blank" title="cnblogs">
+                      
+                        <i class="fa fa-fw fa-globe"></i>cnblogs</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5b6256396fb9a04fbf2729fb/collections" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-globe"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("01/19/2015 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用途"><span class="nav-number">1.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#闪回原理简析"><span class="nav-number">2.</span> <span class="nav-text">闪回原理简析 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">3.</span> <span class="nav-text">准备 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">4.</span> <span class="nav-text">开始 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用 -binlog2sql- 工具"><span class="nav-number">5.</span> <span class="nav-text">使用 binlog2sql 工具 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1- 解析出标准 SQL"><span class="nav-number">5.1.</span> <span class="nav-text">1) 解析出标准 SQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2- 解析出回滚 SQL"><span class="nav-number">5.2.</span> <span class="nav-text">2) 解析出回滚 SQL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结 </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+
+<!-- 添加背景图片 -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+    $("body").backstretch("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538127512866&di=2f9d3ddd0c3a21af7c277add296ec5ea&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F56dfebba2e60b.jpg");
+  </script>
+   -->
+</body>
+</html>
