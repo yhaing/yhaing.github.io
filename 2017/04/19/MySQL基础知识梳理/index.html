@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f5d1a474"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MySQL," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 基础知识梳理">
+<meta property="og:url" content="https://yhaing.github.io/2017/04/19/MySQL基础知识梳理/index.html">
+<meta property="og:site_name" content="海阔天空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/t1SY0oj.jpg">
+<meta property="og:updated_time" content="2018-10-22T09:29:19.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 基础知识梳理">
+<meta name="twitter:image" content="https://i.imgur.com/t1SY0oj.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhaing.github.io/2017/04/19/MySQL基础知识梳理/"/>
+
+
+
+
+
+  <title>MySQL 基础知识梳理 | 海阔天空</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yhaing"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">海阔天空</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">当你发现自己的才华撑不起野心时，就请安静下来学习吧！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhaing.github.io/2017/04/19/MySQL基础知识梳理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hai Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海阔天空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL 基础知识梳理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T08:34:14+08:00">
+                2017-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/19/MySQL基础知识梳理/" class="leancloud_visitors" data-flag-title="MySQL 基础知识梳理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  38.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  163
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/t1SY0oj.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="第 1 章 -MySQL 常见安装方式"><a href="# 第 1 章 -MySQL 常见安装方式" class="headerlink" title="第 1 章 MySQL 常见安装方式"></a>第 1 章 MySQL 常见安装方式</h1><p>MySQL 的安装方式有多种，但是对于不同场景，会有最适合该场景的 MySQL 安装方式，下面就介绍一下 MySQL 常见的安装方法，包括 rpm 安装，yum 安装，通用二进制安装以及源码编译安装，以 CentOS6.9 操作系统为例。</p>
+<h2 id="一、rpm 安装"><a href="# 一、rpm 安装" class="headerlink" title="一、rpm 安装"></a>一、rpm 安装 </h2><p> 安装速度较快，通常适用于企业中大规模部署 mysql，安装步骤如下：</p>
+<p>（1）首先下载 MySQL 的 rpm 安装包, 如下:</p>
+<p>客户端：<a href="http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-client-5.6.32-1.linux_glibc2.5.x86_64.rpm" target="_blank" rel="noopener">http://dev.mysql.com/get/Down…</a></p>
+<p>服务端：<a href="http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-server-5.6.32-1.linux_glibc2.5.x86_64.rpm" target="_blank" rel="noopener">http://dev.mysql.com/get/Down…</a></p>
+<p>（2）下载完成之后，上传至服务器的指定软件目录下，比如：/home/software;</p>
+<p>（3）首先查看主机上是否已经安装过 mysql，使用如下命令查看：</p>
+<pre><code>[root@WB-BLOG ~]# rpm -qa | grep -i mysql*
+</code></pre><p>（4）如果存在，需要先卸载原有 mysql，使用如下命令：</p>
+<pre><code>[root@WB-BLOG ~]# rpm -e --nodeps mysql-libs
+</code></pre><p>注：–nodeps 表示无依赖卸载 mysql-libs，防止卸载依赖的库而导致后续安装出错</p>
+<p>（5）添加 mysql 用户：</p>
+<pre><code>[root@WB-BLOG software]# useradd mysql -s /sbin/nologin -M
+</code></pre><p>（6）卸载完成之后，开始安装，首先安装服务端，然后再安装客户端：</p>
+<p>服务端安装：</p>
+<pre><code>[root@WB-BLOG ~]# rpm -ivh MySQL-server-5.6.32-1.linux_glibc2.5.x86_64.rpm
+</code></pre><p>注：上述命令执行完毕之后，会自动初始化数据库，数据目录默认在 /var/lib/mysql 下，查看控制台实时日志中是否有 ERROR 信息，如果无 ERROR 信息，表示服务端安装完成，Warning 信息可以忽略。安装完成之后，会在 /root/.mysql_secret 文件中生成 mysql 的默认密码，可以通过 cat 命令查看即可：cat /root/.mysql_secret</p>
+<p>客户端安装：</p>
+<pre><code>[root@WB-BLOG ~]# rpm -ivh MySQL-client-5.6.32-1.linux_glibc2.5.x86_64.rpm
+</code></pre><p>注：安装客户端的目的是可以再服务器上使用到 mysql 的一些客户端连接命令，比如：mysql 命令，如果确定不在服务器上操作 mysql，可以不安装此客户端。</p>
+<p>（7）安装完成之后，添加 mysql 的配置文件 my.cnf，对于 mysql，改配置文件有一个加载顺序，mysql 启动的时候会按照这个顺序去加载，顺序为：/etc/my.cnf,basedir/my.cnf,datadir/my.cnf,~/.my.cnf</p>
+<p>编辑 /etc/my.cnf 配置文件，写入如下内容：</p>
+<pre><code>[mysql]
+socket = /tmp/mysql.sock
+[mysqld]
+port = 3306
+socket = /tmp/mysql.sock
+character-set-server = UTF8
+innodb_file_per_table = 1
+innodb_flush_log_at_trx_commit = 2
+</code></pre><p>（8）编辑完配置文件之后，保存。然后启动 mysql 数据库，如下：</p>
+<pre><code>[root@WB-BLOG ~]# service mysql start
+</code></pre><p>（9）启动之后，使用如下 mysql 命令行工具登陆 mysql，默认密码为 /root/.mysql_secret 中生成的，登陆 mysql 之后，完成如下的初始工作：</p>
+<pre><code>[root@WB-BLOG mysql]# mysql -uroot -pBcbwbAXM_kUL8lpE -h127.0.0.1 -P3306
+</code></pre><p>a. 修改 root 密码，有两种方法：</p>
+<p>  方法一：在 shell 命令行中使用”mysqladmin”命令修改</p>
+<pre><code>[root@WB-BLOG mysql]# mysqladmin -uroot -pBcbwbAXM_kUL8lpE password &apos;root&apos;
+</code></pre><p> 注：修改密码的时候需要使用 password 函数，而且密码尽可能设置复杂一些；</p>
+<p>b. 修改远程连接权限：</p>
+<pre><code>mysql&gt; select user,host,password from mysql.user; #查看当前已有用户及权限
+mysql&gt; update user set host = &apos;192.168.0.%&apos; where host = &apos;wb-blog&apos;;
+</code></pre><p>注：”set host = ‘192.168.0.%’”表示只允许 192.168.0 网段内的主机使用’root’用户远程连接，此处也可以指定 ip 段或者对所有用户开放，可根据实际场景配置</p>
+<pre><code>mysql&gt; flush privileges; #刷新权限，让 mysql 重读权限表
+</code></pre><p>c. 删除多余及不安全的用户：</p>
+<pre><code>mysql&gt; drop user &apos;root&apos;@&apos;::1&apos;;   #该用户为 ipv6 的用户，暂时没用，可以删掉
+</code></pre><p>d. 删除无用的数据库：</p>
+<pre><code>mysql&gt; drop database test;   #该数据库在初始化的时候是默认添加的，无用，可删除
+</code></pre><p>至此，rpm 方式的 MySQL 安装及初始化完毕。</p>
+<h2 id="二、通用二进制安装"><a href="# 二、通用二进制安装" class="headerlink" title="二、通用二进制安装"></a>二、通用二进制安装 </h2><p> 通用二进制安装的优点就是可以同时在一台主机上安装多个不同版本的 mysql，而且在安装完成之后包括了一些常用的库文件，安装步骤如下：</p>
+<p>（1）首先下载通用二进制安装包，下载地址为：<a href="https://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.40-linux-glibc2.12-x86_64.tar.gz" target="_blank" rel="noopener">https://dev.mysql.com/get/Dow…</a></p>
+<p>（2）使用 yum 命令安装 mysql 的依赖库，mysql 主要有如下两个依赖库：</p>
+<pre><code>[root@WB-BLOG mysql]# yum install -y ncurses-devel libaio-devel
+</code></pre><p>注：如果没有网络的情况下，使用 yum 安装会提示错误。此时可以下载依赖库所对应的 rpm 包上传至服务器完成安装；或者还可以使用 iso 镜像文件搭建私有的 yum 源，后面写文章介绍如何在局域网或者本地搭建及配置私有得的 yum 源。</p>
+<p>（3）安装完成之后，添加 mysql 用户：</p>
+<pre><code>[root@WB-BLOG ~]# useradd mysql -s /sbin/nologin -M
+</code></pre><p>（4）解压 mysql 通用二进制安装包，并重命名目录：</p>
+<pre><code>[root@WB-BLOG home]# tar xf mysql-5.6.40-linux-glibc2.12-x86_64.tar.gz -C /usr/local/
+[root@WB-BLOG home]# cd /usr/local/
+[root@WB-BLOG local]# mv mysql-5.6.40-linux-glibc2.12-x86_64.tar.gz/ mysql-5.6.40
+</code></pre><p>（5）创建 mysql 的数据目录，并授权 mysql 用户。注意，数据目录最好别放在系统盘上，如果数据量后期比较大的话，最好事先选择一个空间比较大的数据盘作为 mysql 的存储目录，方便后期数据备份及迁移</p>
+<pre><code>[root@WB-BLOG local]# mkdir -pv /mysql_data/
+[root@WB-BLOG local]# chown -R mysql.mysql /mysql_data
+</code></pre><p>（6）编辑 mysql 的配置文件 my.cnf，可以从 mysql 解压目录中拷贝一份到 /etc/my.cnf 下，并修改，在配置文件中指定 mysql 的一些配置参数，如下：</p>
+<pre><code>[mysql]
+socket = /mysql_data/mysql.sock
+[mysqld]
+basedir = /usr/local/mysql-5.6.40
+datadir = /mysql_data/
+character-set-server = UTF8
+port = 3306
+server_id = 3   #后期做 mysql 主从使用，可暂不配置
+socket = /mysql_data/mysql.sock
+innodb_file_per_table = 1
+innodb_flush_log_at_trx_commit = 2
+</code></pre><p>（7）初始化 mysql 数据库：</p>
+<pre><code>[root@WB-BLOG local]# cd /usr/local/mysql-5.6.39/
+[root@WB-BLOG mysql-5.6.39]# ./scripts/mysql_install_db --basedir=/usr/local/mysql-5.6.39 --datadir=/mysql_data --user=mysql
+</code></pre><p>注意：看到有如下所示的两个单行的 OK 字样，表示初始化成功.</p>
+<pre><code>Installing MySQL system tables...
+OK
+Filling help tables...
+OK
+</code></pre><p>（8）拷贝 mysql 的启动脚本文件至 /etc/init.d/ 目录下，并重命名为 mysqld，授予其可执行权限：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.39]# cp /usr/local/mysql-5.6.40/support-files/mysql.server /etc/init.d/mysqld
+[root@WB-BLOG mysql-5.6.39]# chmod +x /etc/init.d/mysqld
+</code></pre><p>（9）修改 mysql 启动脚本中的默认安装路径：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.39]# sed -i &quot;s#/usr/local/mysql#/usr/local/mysql-5.6.40#g&quot; /etc/init.d/mysqld
+</code></pre><p>（10）将 mysqld 添加至系统服务，并设置自动启动：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.39]# chkconfig --level 2345 mysqld on  #配置
+[root@WB-BLOG mysql-5.6.39]# chkconfig --list mysqld   #查看
+</code></pre><p>（11）使用跳过授权表方式启动 mysql 数据库，并登陆 mysql，设置密码，然后完成 mysql 使用前的初始化准备工作：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.39]# /usr/local/mysql-5.6.39/bin/mysqld_safe --defaults-file=/etc/my.cnf --skip-grant-tables &amp;
+[root@WB-BLOG mysql-5.6.39]# mysql -uroot -p  #然后两次回车
+mysql&gt; update mysql.user set password = password(&apos;root&apos;) where user = &apos;root&apos;;  #修改密码：
+mysql&gt; delete from mysql.user where host = &apos;::1&apos;; #删除多余用户
+mysql&gt; flush privileges;   #重读权限表
+mysql&gt; drop database test;   #清理多余数据库
+</code></pre><p>（12）退出 mysql 命令行，使用 mysqladmin 命令关闭数据库，并重新启动，使数据库再次使用权限认证：</p>
+<pre><code>mysql&gt; \q
+[root@WB-BLOG mysql-5.6.39]# ./bin/mysqladmin -uroot -proot shutdown  #需要使用刚才修改的密码
+[root@WB-BLOG mysql-5.6.39]# service mysqld start
+</code></pre><p>（13）配置 mysql 的环境变量，方便使用客户端连接：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.39]# vim /etc/profile
+添加如下内容：
+MYSQL_HOME=/usr/local/mysql-5.6.39
+PATH=$PATH:$JAVA_HOME/bin:$MYSQL_HOME/bin
+[root@WB-BLOG mysql-5.6.39]# source /etc/profile# 使配置文件生效
+</code></pre><p>至此，通用二进制方式的 mysql 安装及初始化完毕。</p>
+<h2 id="三、源码编译安装 mysql"><a href="# 三、源码编译安装 mysql" class="headerlink" title="三、源码编译安装 mysql"></a>三、源码编译安装 mysql</h2><p>该方式安装过程比较慢，机器性能不好的情况下，大约需要 30 分钟左右，通常适用于 mysql 定制化的安装，比如需要加入一些第三方的插件及依赖库等，安装方法如下：</p>
+<p>（1）源码安装需要使用到 cmake，首先下载 cmake 和 mysql 的源码，上传至服务器：</p>
+<p>cmake 下载地址：<a href="https://cmake.org/files/v2.8/cmake-2.8.8.tar.gz" target="_blank" rel="noopener">https://cmake.org/files/v2.8/…</a></p>
+<p>mysql 源码下载地址：<a href="https://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.35.tar.gz" target="_blank" rel="noopener">https://dev.mysql.com/get/Dow…</a></p>
+<p>（2）使用 yum 方式安装 gcc 和 gcc-c++，否则编译 cmake 和 mysql 的时候会报错，如下：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.39]# yum install -y gcc gcc-c++
+</code></pre><p>（3）解压 cmake，并进入 cmake 软件目录：</p>
+<pre><code>[root@WB-BLOG software]# tar xf cmake-2.8.8.tar.gz
+[root@WB-BLOG software]# cd cmake-2.8.8
+[root@WB-BLOG cmake-2.8.8]# ./configure
+[root@WB-BLOG cmake-2.8.8]# gmake
+[root@WB-BLOG cmake-2.8.8]# gmake install
+</code></pre><p>（4）安装 mysql 的依赖库：ncurses-devel</p>
+<pre><code>[root@WB-BLOG software]# yum install -y ncurses-devel
+</code></pre><p>（5）解压 mysql：</p>
+<pre><code>[root@WB-BLOG software]# tar xf mysql-5.6.35.tar.gz &amp;&amp; cd mysql-5.6.35
+[root@WB-BLOG software]# mv mysql-5.6.35 /usr/local
+</code></pre><p>（6）创建 mysql 组和 mysql 用户：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.35]# groupadd mysql
+[root@WB-BLOG mysql-5.6.35]# useradd mysql -s /sbin/nologin -M -g mysql
+</code></pre><p>（7）创建 mysql 的数据目录并授权：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.35]# mkdir -pv /mysql_data/
+[root@WB-BLOG mysql-5.6.35]# chown -R mysql.mysql /mysql_data/
+</code></pre><p>（8）使用 cmake 编译 mysql，如下的编译选项为最基本的，更多选项可以参考官方文档：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.35]# cmake . -DCMAKE_INSTALL_PREFIX=/usr/local/mysql-5.6.35 -DMYSQL_DATADIR=/mysql_data/ -DMYSQL_UNIX_ADDR=/mysql_data/mysql.sock -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DEXTRA_CHARSETS=gbk,gb2312,utf8,ascii -DENABLED_LOCAL_INFILE=ON -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_FEDERATED_STORAGE_ENGINE=1 -DWITH_BLACKHOLE_STORAGE_ENGINE=1 -DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 -DWITHOUT_PARTITION_STORAGE_ENGINE=0 -DWITH_FAST_MUTEXES=1 -DWITH_ZLIB=bundled -DENABLED_LOCAL_INFILE=1 -DWITH_READLINE=1 -DWITH_EMBEDDED_SERVER=1 -DWITH_DEBUG=0 -DWITH_PARTITION_STORAGE_ENGINE=1
+</code></pre><p>…等待编译…</p>
+<pre><code>[root@WB-BLOG mysql-5.6.35]# make
+[root@WB-BLOG mysql-5.6.35]# make install
+</code></pre><p>（9）如果上述过程正常结束，表示 mysql 编译安装成功，否则停下来检查编译过程中的错误，通常编译期的错误多数为缺少类库导致，可安装相关类库后重新编译。然后编辑 mysql 的配置文件 my.cnf，写入如下内容：</p>
+<pre><code>[mysql]
+socket = /mysql_data/mysql.sock
+[mysqld]
+character-set-server = UTF8
+basedir = /usr/local/mysql-5.6.35
+datadir = /mysql_data
+port = 3306
+server_id = 3
+socket = /mysql_data/mysql.sock
+innodb_file_per_table = 1
+skip-name-resolve
+innodb_flush_log_at_trx_commit = 2
+</code></pre><p>（10）初始化 mysql 数据库：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.35]# cd /usr/local/mysql-5.6.35/
+[root@WB-BLOG mysql-5.6.35]# ./scripts/mysql_install_db --basedir=/usr/local/mysql-5.6.35 --datadir=/mysql_data/ --user=mysql
+</code></pre><p>（11）看到如下的字样，表示 mysql 数据库初始化成功：</p>
+<pre><code>Installing MySQL system tables...
+OK
+Filling help tables...
+OK
+</code></pre><p>（12）拷贝启动脚本到 /etc/init.d 目录下：</p>
+<pre><code>[root@WB-BLOG mysql-5.6.35]# cp /usr/local/mysql-5.6.35/support-files/mysql.server.sh /etc/init.d/mysqld
+[root@WB-BLOG mysql-5.6.35]# vim /etc/init.d/mysqld  #编辑脚本，修改 basedir 和 datadir 目录为安装的目录
+</code></pre><p>找到 basedir 和 datadir，然后修改为如下内容，并保存退出：</p>
+<pre><code>basedir=/usr/local/mysql-5.6.35
+datadir=/mysql_data/
+</code></pre><p>（13）授权脚本的执行权限，使用跳过授权表的方式启动，然后修改密码，删除多余的用户和数据库，并配置环境变量，具体步骤同“通用二进制安装中的(11),(12),(13)”，此处后续步骤略。</p>
+<pre><code>[root@WB-BLOG mysql-5.6.35]# chmod +x /etc/init.d/mysqld
+...
+</code></pre><p>至此，源码编译安装 mysql 介绍完毕。</p>
+<h1 id="第 2 章 -MySQL 基本操作之—建库，建表，删库，删表"><a href="# 第 2 章 -MySQL 基本操作之—建库，建表，删库，删表" class="headerlink" title="第 2 章 MySQL 基本操作之—建库，建表，删库，删表"></a>第 2 章 MySQL 基本操作之—建库，建表，删库，删表</h1><p>MySQL 数据库环境搭建好之后，就一块开始 MySQL 的学习之旅吧？本次主要介绍 MySQL 的基本操作之”建库，建表，删库，删表”。</p>
+<h2 id="一、基本操作之建库（非图形界面工具操作）"><a href="# 一、基本操作之建库（非图形界面工具操作）" class="headerlink" title="一、基本操作之建库（非图形界面工具操作）"></a>一、基本操作之建库（非图形界面工具操作）</h2><p>1、建库之前，首先需要连接到 MySQL 数据库，常见的连接工具工具为：”mysql”客户端命令，基本用法如下：</p>
+<pre><code>[root@WB-BLOG ~]# mysql &lt;options&gt;
+</code></pre><p>options 中常用的选项有：</p>
+<blockquote>
+<p>-u: 指定连接数据库实例所使用的用户名</p>
+<p>-p: 指定连接数据库实例所使用的密码</p>
+<p>-h: 指定需要连接的目标数据实例所在主机的 ip 地址或者域名，如果是服务器本地连接，可省略</p>
+<p>-P: 指定需要连接的目标数据库实例所监听的 tcp 端口，注意是大写的 P。如果使用的是默认端口，此选项可省略</p>
+<p>…该命令还有其他很多不太常用的选项，可以自行使用”mysql –help”命令查看，此处略。</p>
+</blockquote>
+<p>示例：使用用户名为 root 密码为 root 的用户连接 192.168.0.10 服务器上端口为 3306 的数据库实例:</p>
+<pre><code>[root@WB-BLOG ~]# mysql -uroot -proot -h127.0.0.1 -P3306
+</code></pre><p>注：除了 -p 指定的密码的选项之外，其余的参数和对应的值之间可以不加空格，也可加空格，但是 -p 参数和密码之间不可有空格，否则会被认为另外一个参数，需要重新输入密码。</p>
+<p>2、进入 mysql 命令行之后，就可以创建数据库了，首先查看当前已经存在的数据库，使用 show 命令，show 命令的使用选项如下：</p>
+<pre><code>mysql&gt; show &lt;options&gt;
+</code></pre><p>options 常见的选项如下：</p>
+<blockquote>
+<p>tables: 查看当前库下的所有表</p>
+<p>databases: 查看当前实例下的所有数据库，不一定是所有库，和登陆用户的权限有关</p>
+<p>create database db_name:show 后接 create database 命令，表示查看名称为 db_name 的数据库的创建过程</p>
+<p>create database table_name:show 后接 create table 命令，表示查看名称为 table_name 的表的创建过程</p>
+<p>warnings: 查看 sql 执行的警告信息</p>
+<p>events: 查看当前数据库所对应的事件信息</p>
+<p>binary logs | master logs: 查看当前数据库实例对应的二进制日志文件信息（bin_log_pos 和 bin_log_file）</p>
+<p>status: 查看当前数据库实例的运行状态信息</p>
+<p>index|indexes from table_name: 查看指定表中的索引信息</p>
+<p>…其他不常用选项此处暂时略，后续再介绍。</p>
+</blockquote>
+<p>示例：查看当前登录用户有权查看的所有数据库：</p>
+<pre><code>mysql&gt; show databases;
++--------------------+
+| Database   |
++--------------------+
+| information_schema |
+| mysql  |
+| performance_schema |
+| test   |
++--------------------+
+4 rows in set (0.00 sec)
+</code></pre><p>由于使用的是 root 用户登录，故可以看到所有数据库；如果用某个普通用户登录，只能看到该用户有权查看的所有库，具体权限管理后期介绍。</p>
+<p>3、创建数据库，使用 create 命令，create 命令用法如下：</p>
+<pre><code>mysql&gt; create &lt;options&gt;
+</code></pre><p>options 常见选项如下：</p>
+<blockquote>
+<p>database db_name [option]: 后接 database 关键字表示创建名称为 db_name 的数据库，option 选项中可以指定字符集</p>
+<p>table table_name [option]: 后接 table 关键字表示创建名称为 table_name 的表，option 选项中可以指定字符集</p>
+<p>index index_name on table_name(field): 后接 index 关键字表示在 table_name 表的 field 字段上创建名称为 index_name 的索引</p>
+<p>procedure pro_name [option]: 后接 procedure 关键字表示在当前库的某个表上创建一个存储过程，option 选项表示具体的创建过程</p>
+<p>…其他选项此处暂不介绍，后续再介绍。</p>
+</blockquote>
+<p>示例：创建一个名称为 db_shop 的数据库，使用 UTF8 字符集，如下：</p>
+<pre><code>mysql&gt; create database db_shop character set UTF8;
+Query OK, 1 row affected (0.21 sec)
+mysql&gt; show databases;  #查看创建的数据库
++--------------------+
+| Database   |
++--------------------+
+| information_schema |
+| db_shop|
+| mysql  |
+| performance_schema |
+| test   |
++--------------------+
+5 rows in set (0.00 sec)
+mysql&gt; show create database db_shop;  #查看 db_shop 数据库的创建过程
++----------+------------------------------------------------------------------+
+| Database | Create Database  |
++----------+------------------------------------------------------------------+
+| db_shop  | CREATE DATABASE `db_shop` /*!40100 DEFAULT CHARACTER SET utf8 */ |
++----------+------------------------------------------------------------------+
+1 row in set (0.00 sec)
+</code></pre><p>4. 创建表，在建表之前首先需要先选择数据库，使用 use 命令，用法如下：</p>
+<p>mysql&gt; use &lt;db_name&gt;<br>示例：在 db_shop 库中创建一个名称为 t_goods 的表，使用 UTF8 字符集，表中字段包括 id(bigint)，goods_name(varchar(50))，goods_price(bigint)[金钱类可以使用字符串或者分来存储，此处使用分来存储]，create_time(datetime)，创建过程如下：</p>
+<pre><code>mysql&gt; use db_shop;  #选库
+mysql&gt; create table t_goods(id bigint primary key auto_increment,goods_name varchar(50) not null default &apos;&apos;,goods_price bigint,create_time datetime) default character set UTF8;  #建表
+Query OK, 0 rows affected (0.76 sec)
+mysql&gt; show tables;  #查看表
++-------------------+
+| Tables_in_db_shop |
++-------------------+
+| t_goods   |
++-------------------+
+1 row in set (0.00 sec)
+mysql&gt; show create table t_goods \G #查看创建库的过程，\G 表示按行展示
+*************************** 1. row ***************************
+   Table: t_goods
+Create Table: CREATE TABLE `t_goods` (`id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `goods_name` varchar(50) NOT NULL DEFAULT &apos;&apos;,
+  `goods_price` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)
+</code></pre><p>注：MySQL 常用数据类型如下，详细介绍请查看官方手册，后期 sql 优化会重点对比讲解每种类型的优缺点：</p>
+<blockquote>
+<p> 数值型整型：tinyint,smallint,mediumint,int,bigint</p>
+<p> 浮点数类型：double,float,decimal</p>
+<p> 字符串类型：char,varchar,varbinary</p>
+<p> 长文本类型：text</p>
+<p> 二进制类型：binary,blob</p>
+<p> 日期类型：timestamp,datetime,time,date,year</p>
+<p> 枚举类型：enum</p>
+<p> 集合类型：set</p>
+</blockquote>
+<p>5、删除表，使用”drop table”命令，用法如下：</p>
+<pre><code>mysql&gt; drop table &lt;table_name&gt;
+</code></pre><p>示例：删除名称为 t_goods 的表：</p>
+<pre><code>mysql&gt; drop table t_goods;  #删除名称为 t_goods 的表
+Query OK, 0 rows affected (0.16 sec)
+mysql&gt; show tables;   #查看当前库下的所有表
+Empty set (0.00 sec)
+</code></pre><p>6、删除数据库，使用”drop database”命令，用法如下：</p>
+<pre><code>mysql&gt; drop database &lt;db_name&gt;;
+</code></pre><p>示例：删除名称为 db_shop 的数据库：</p>
+<pre><code>mysql&gt; drop database db_shop;
+Query OK, 0 rows affected (0.00 sec)
+mysql&gt; show databases;
++--------------------+
+| Database   |
++--------------------+
+| information_schema |
+| mysql  |
+| performance_schema |
+| test   |
++--------------------+
+4 rows in set (0.01 sec)
+</code></pre><p>7、退出 MySQL 的方法：</p>
+<blockquote>
+<p>(1)方法 1：Ctrl+C</p>
+<p>(2)方法 2：”quit”命令</p>
+<p>(3)方法 3：\q</p>
+</blockquote>
+<p>至此，数据库的基本操作之建库，建表，删库，删表操作介绍完毕，下一篇将介绍 MySQL 数据库的常见操作，包括 DDL(数据定义语言),DCL(数据控制语言),DML(数据操纵语言),DQL(数据查询语言)。</p>
+<h1 id="第 3 章 -MySQL 基本操作之 -DDL，DML，DQL，DCL"><a href="# 第 3 章 -MySQL 基本操作之 -DDL，DML，DQL，DCL" class="headerlink" title="第 3 章 MySQL 基本操作之 -DDL，DML，DQL，DCL"></a>第 3 章 MySQL 基本操作之 -DDL，DML，DQL，DCL</h1><p>MySQL 基本操作之 DDL（数据定义语言），DML（数据操纵语言），DQL（数据查询语言），DCL（数据控制语言）</p>
+<h2 id="一、DDL–数据定义语言"><a href="# 一、DDL–数据定义语言" class="headerlink" title="一、DDL–数据定义语言"></a>一、DDL–数据定义语言 </h2><p> 作用：数据定义语言主要用来定义数据库中的各类对象，包括用户、库、表、视图、索引、触发器、事件、存储过程和函数等。</p>
+<p>常见的 DDL 操作的基本用法如下：</p>
+<blockquote>
+<p>   CREATE USER           #创建用户</p>
+<p>   CREATE DATABASE       #创建数据库</p>
+<p>   CREATE TABLE          #创建表</p>
+<p>   CREATE VIEW           #创建视图</p>
+<p>   CREATE INDEX          #创建索引</p>
+<p>   CREATE TRIGGER        #创建触发器</p>
+<p>   CREATE EVENT          #创建事件</p>
+<p>   CREATE PROCEDURE      #创建存储过程</p>
+<p>   CREATE FUNCTION       #创建自定义函数</p>
+<p>   …其他不常用的 DDL(如：TABLESPACE)操作可自行查阅资料…</p>
+</blockquote>
+<p>1、创建用户：</p>
+<p>详细用法：CREATE USER ‘username‘@’[ip/domain/netmask]’</p>
+<p>参数解释：</p>
+<pre><code>username: 表示登陆 MySQL 实例的用户名
+[ip/domain/ip range]: 表示数据库实例允许的登陆 ip，域名或者 ip 段
+</code></pre><p>示例：创建一个名称为 bingwang，登陆 ip 为 192.168.0.10 的用户：</p>
+<pre><code>mysql&gt; CREATE USER &apos;bingwang&apos;@&apos;192.168.0.10&apos;;
+</code></pre><p>2、创建数据库，示例如下：</p>
+<p>详细用法：</p>
+<pre><code>CREATE DATABASE db_name;
+</code></pre><p>示例如下：</p>
+<pre><code># 创建一个名称为 test_db，字符集为 utf8 的数据库
+mysql&gt; CREATE DATABASE test_db DEFAULT CHARSET UTF8;
+</code></pre><p>3、创建表：</p>
+<p>详细用法：CREATE TABLE table_name;</p>
+<p>示例如下：</p>
+<pre><code># 创建一个名称为 t_test，字符集为 utf8，存储引擎为 InnoDB，字符校验集为 utf8_general_ci 的表：
+mysql&gt; CREATE TABLE t_test (
+   id INT NOT NULL AUTO_INCREMENT,
+   name VARCHAR(50),
+   PRIMARY KEY(id)
+   ) ENGINE = InnoDB DEFAUL CHARSET = UTF8 COLLATE = utf8_general_ci;
+</code></pre><p>4、创建视图：</p>
+<p>详细用法：</p>
+<pre><code>CREATE VIEW view_name as &lt;SELECT phrase&gt;;
+参数解释： &lt;SELECT phrase&gt;: 查询语句
+</code></pre><p>示例如下：</p>
+<pre><code># 创建一个视图 t_view，用来查询 t_test 中的 ID 为 1 或者 2 的数据：
+mysql&gt; CREATE VIEW test_view AS SELECT * FROM t_test WHERE id IN (1,2);
+#查看创建视图的过程：
+mysql&gt; SHOW CREATE VIEW test_view;
+</code></pre><p>5、创建索引，有两种方法，CREATE 和 ALTER，下面先介绍一下 CREATE：<br>详细用法：</p>
+<pre><code>CREATE [UNIQUE] INDEX index_name ON table_name(field[num]) &lt;OPTIONS&gt;;
+</code></pre><p>参数解释： </p>
+<pre><code>UNIQUE: 表示创建的索引类型为唯一索引，如果创建的为一般索引可以忽略该选项
+table_name: 表名称
+field: 表中的某个字段。num 为可选参数，如果 field 为字符创类型，表示给该字段的前 num 个字符创建索引
+OPTIONS: 表示可选选项，可以指定索引使用的算法，比如：USING BTREE。不指定默认为 BTREE;
+</code></pre><p>示例如下：</p>
+<p>（1）给 t_test 表中的 name 字段添加一个唯一索引，使用 BTREE 作为其索引算法：</p>
+<pre><code>mysql&gt; CREATE UNIQUE INDEX name_ind ON t_test(name) USING BTREE;
+mysql&gt; SHOW [INDEX/INDEXES] FROM t_test;  #查看 t_test 表中的索引，[INDEX/INDEXES]两个关键字都可以
+</code></pre><p>（2）给 t_test 表中的 name 字段的前 5 个字符创建一般索引，使用 BTREE 作为其索引算法：</p>
+<pre><code>mysql&gt; CREATE INDEX name_index ON t_test(name(5));
+</code></pre><p>关于索引的更多用法及优化在后面的文章中会详细讲解。</p>
+<p>6、创建触发器：</p>
+<p>详细用法：</p>
+<pre><code>CREATE TRIGGER trigger_name trigger_time trigger_event FOR EACH ROW 
+BEGIN 
+  trigger_stmt 
+END;
+</code></pre><p>示例：创建触发器内容稍多，此处先稍微提一下，后面专门章节介绍；</p>
+<p>7、创建存储过程：</p>
+<p>详细用法：</p>
+<pre><code>CREATE PROCEDURE procedure_name([proc_parameter[,...]])
+BEGIN
+  ... 存储过程体
+END
+</code></pre><p>示例：创建存储过程内容稍多，此处先稍微提一下，后面专门章节介绍；</p>
+<p>8、创建自定义函数：</p>
+<p>详细用法：</p>
+<pre><code>CREATE FUNCTION function_name([func_parameter[,...]])
+RETURNS type
+BEGIN
+... 函数体
+END
+</code></pre><p>示例：创建自定义函数内容稍多，此处先稍微提一下，后面专门章节介绍；<br>至此，简单的 DDL 操作介绍完成。</p>
+<h2 id="二、DML–数据操纵语言"><a href="# 二、DML–数据操纵语言" class="headerlink" title="二、DML–数据操纵语言"></a>二、DML–数据操纵语言 </h2><p> 作用：用来操作数据库中的表对象，主要包括的操作有：INSERT，UPDATE，DELETE</p>
+<p>常见的 DML 的基本操作方法如下：</p>
+<pre><code># 给表中添加数据
+INSERT INTO ...
+#修改表中的数据
+UPDATE table_name SET ...
+#删除表中的数据
+DELETE FROM table_name WHERE &lt;condition&gt;;
+注：&lt;condition&gt;: 表示 DML 操作时的条件
+</code></pre><p>1、向表中插入数据：</p>
+<p>详细用法：</p>
+<pre><code>mysql&gt; INSERT INTO table_name(field1,field2,[,...]) values(value1,value2),(value3,value4),...;
+</code></pre><p>示例：向学生表中插入一条数据，name:’xiaohong’, age:24, gender:’M’ ，如下：</p>
+<p>(1)创建表：</p>
+<pre><code> mysql&gt; CREATE TABLE student(
+id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(50) NOT NULL DEFAULT &apos;&apos;,
+age TINYINT,
+gender ENUM(&apos;F&apos;,&apos;M&apos;)
+ ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+</code></pre><p>(2)插入数据：</p>
+<pre><code>mysql&gt; INSERT INTO student(name,age,gender) VALUES(&apos;xiaohong&apos;,24,&apos;M&apos;);
+Query OK, 1 row affected (0.09 sec)
+mysql&gt; SELECT * FROM student;
++----+----------+------+--------+
+| id | name | age  | gender |
++----+----------+------+--------+
+|  1 | xiaohong |   24 | M  |
++----+----------+------+--------+
+1 row in set (0.37 sec)
+</code></pre><p>注：主键如果自动递增，插入时可不用指定；</p>
+<p>2、修改表中的数据：</p>
+<p>详细用法：</p>
+<pre><code>UPDATE table_name SET field1 = value1, field2 = value2, ... ,  WHERE &lt;condition&gt;;
+</code></pre><p>示例：将 student 表中 id 为 1 的记录中的 name 值修改为:”xiaohua”，如下：</p>
+<pre><code>mysql&gt; UPDATE STUDENT SET name = &apos;xiaohua&apos; WHERE id = 1;
+Query OK, 1 row affected (0.67 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql&gt; SELECT * FROM student;
++----+---------+------+--------+
+| id | name| age  | gender |
++----+---------+------+--------+
+|  1 | xiaohua |   24 | M  |
++----+---------+------+--------+
+1 row in set (0.00 sec)
+</code></pre><p>注意：此处修改的时候，一定得注意加条件，否则整个表都会被改。讲个技巧：在 MySQL 的命令中执行操作的时候，可以在登录 MySQL 时添加 -U 选项，如果忘加条件，会被阻止执行 sql 语句。登录命令如下：</p>
+<pre><code>[root@WB-BLOG ~]# mysql -uroot -proot -U -h127.0.0.1 -P3306
+mysql&gt; UPDATE STUDENT SET name = &apos;hong&apos;;
+ERROR 1175 (HY000): You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column
+</code></pre><p>可见：登录之后如果不加条件执行 UPDATE 语句，会被阻止；</p>
+<p>3、删除表中的数据：</p>
+<p>详细用法：</p>
+<pre><code>mysql&gt; DELETE FROM table_name WHERE &lt;condition&gt;;
+</code></pre><p>示例：删除 student 表中 id 为 1 的记录，如下：</p>
+<pre><code>mysql&gt; DELETE FROM student WHERE id = 1;
+Query OK, 1 row affected (0.37 sec)
+mysql&gt; SELECT * FROM student;
+Empty set (0.00 sec)
+</code></pre><p>注意：注意！注意！！再注意！！！，该操作非常危险，命令行中操作时，需要万分注意。可以使用登录时加 -U 参数的方式，防止忘加条件而删除所有数据，加了 -U 参数之后，如果不加条件，会被阻止，执行结果如下：</p>
+<pre><code>mysql&gt; DELETE FROM student;
+ERROR 1175 (HY000): You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column
+</code></pre><p>至此，DML 操作介绍完毕。</p>
+<h2 id="三、DQL–数据查询语言"><a href="# 三、DQL–数据查询语言" class="headerlink" title="三、DQL–数据查询语言"></a>三、DQL–数据查询语言 </h2><p> 作用：主要用来查看表中的数据，也是平时使用最多的操作，主要命令为：SELECT</p>
+<p>基本用法如下：</p>
+<pre><code>mysql&gt; SELECT fields FROM table_name WHERE &lt;condition&gt;;
+</code></pre><p>注意事项：</p>
+<p>fields: 表示要查询的字段列表，可以使用代替，但是在程序中最好别写，因为使用 * 一方面会降低 SQL 的查询效率，查询到一些用不到的字段；另一方面，使用一些 ORM 框架时，如果数据库中字段有变动，可能会立刻导致程序报错。</p>
+<p>1、简单不加条件的单表查询：</p>
+<p>用法：</p>
+<pre><code>mysql&gt; SELECT * FROM table;
+</code></pre><p>示例略。</p>
+<p>2、单表中的条件查询：</p>
+<p>常见的条件：&gt;，&gt;=，&lt;，&lt;= ，=，&lt;&gt;，!=，IN，NOT IN，LIKE，NOT LIKE，REGEXP</p>
+<p>示例：</p>
+<pre><code># 查询年龄大于 23 的记录
+mysql&gt; SELECT * FROM student WHERE age &gt; 23;
+#查询年龄大于等于 24 的记录，和上面 age&gt;23 结果相同
+mysql&gt; SELECT * FROM student WHERE age &gt;= 24;
+#查询年龄小于 24 的记录
+mysql&gt; SELECT * FROM student WHERE age &lt; 24;
+#查询年龄小于等于 24 的记录
+mysql&gt; SELECT * FROM student WHERE age &lt;= 24;
+#查询姓名等于 xiaohong 的记录
+mysql&gt; SELECT * FROM student WHERE name = &apos;xiaohong&apos;;
+#查询姓名不等于 xiaohong 的记录
+mysql&gt; SELECT * FROM student WHERE name &lt;&gt; &apos;xiaohong&apos;; 
+#查询姓名不等于 xiaohong 的记录
+mysql&gt; SELECT * FROM student WHERE name != &apos;xiaohong&apos;;
+#查询姓名为 xiaohong 或者 xiaohui 的记录
+mysql&gt; SELECT * FROM student WHERE name in (&apos;xiaohong&apos;,&apos;xiaohui&apos;);
+#查询姓名不是 xiaohong 和 xiaohui 的记录等价于：where name != xiaohong and name != xiaohui
+mysql&gt; SELECT * FROM student WHERE name not in (&apos;xiaohong&apos;,&apos;xiaohui&apos;);
+#查询姓名以 xiao 开头的记录
+mysql&gt; SELECT * FROM student WHERE name like &apos;xiao%&apos;;
+#查询姓名以 xiaohon 开头的记录，后面模糊匹配一位，如：xiaohong，xiaohoni
+mysql&gt; SELECT * FROM student WHERE name like &apos;xiaohon_&apos;;
+#查询姓名中包含 ao 字符创的记录
+mysql&gt; SELECT * FROM student WHERE name like &apos;%ao%&apos;;
+#查询以 hong 结尾的记录
+mysql&gt; SELECT * FROM student WHERE name not like &apos;%hong&apos;;
+#使用正则表达式查询姓名以 xiao 开头的记录
+mysql&gt; SELECT * FROM student WHERE name REGEXP(&apos;^xiao&apos;);
+#使用正则表达式查询姓名以 hong 结尾的记录
+mysql&gt; SELECT * FROM student WHERE name REGEXP(&apos;hong$&apos;);
+#支持的其他复杂的正则表达式，请参阅资料:
+</code></pre><p>正则表达式教程：<a href="http://www.runoob.com/regexp/regexp-syntax.html" target="_blank" rel="noopener">http://www.runoob.com/regexp/…</a></p>
+<p>注意：</p>
+<p>（1）当某个字段上有索引时，使用上述的反向查询或者前模糊查询，如：&lt;&gt;，!=，NOT LIKE，NOT IN，LIKE “%test”，将会不走索引；</p>
+<p>（2）查询中的潜在问题：如果某个字段在创建表结构的时候未设置非空，则使用 WHERE name!=”BING”的时候，将不会包含 name 为 NULL 的记录；</p>
+<p>示例：查询 student 表中年龄大于”xiaohong”年龄的记录的数量：</p>
+<pre><code>mysql&gt; SELECT COUNT(*) FROM student WHERE age &gt; (SELECT age FROM student WHERE name = &apos;xiaohong&apos;);
++----------+
+| COUNT(*) |
++----------+
+|2 |
++----------+
+1 row in set (0.46 sec)
+</code></pre><p>3、分页查询：</p>
+<p>用法：</p>
+<pre><code>mysql&gt; SELECT * FROM table_name LIMIT start,num;
+</code></pre><p>参数解释：</p>
+<p>start: 开始位置，默认从 0 开始；</p>
+<p>num: 偏移量，即：从开始位置向后查询的数据条数；</p>
+<p>示例：查询 test 表中，第二页的数据，每页显示 10 条，如下：</p>
+<pre><code>mysql&gt; SELECT * FROM student LIMIT 1,10;
+</code></pre><p>4、使用 ORDER BY 对查询结果进行排序：</p>
+<p>用法：</p>
+<pre><code>SELECT * FROM table_name &lt;where condition&gt; ORDER BY &lt;field&gt; ASC/DESC;
+</code></pre><p>示例：从 student 表中查询出所有年龄大于 20 的学生记录，并且按照年龄 age 倒序排列，如下：</p>
+<pre><code>SELECT * FROM student WHERE age &gt; 20 ORDER BY age DESC;
+</code></pre><p>注意：如果在排序时 ORDER BY <field>之后没有添加 DESC 和 ASC 关键字，默认按照 ASC 升序排列；</field></p>
+<p>5、使用 GROUP BY 对查询结果集进行分组</p>
+<p>基本用法：</p>
+<pre><code>mysql&gt; SELECT res FROM table_name &lt;where condition&gt; GROUP BY &lt;field&gt;;
+</code></pre><p>示例：查询 student 表中男生和女生的数量：</p>
+<pre><code>mysql&gt; SELECT gender,COUNT(*) FROM student GROUP BY gender;
+</code></pre><p>6、使用 GROUP BY 之后，在使用 HAVING 完成分组之后的条件查询</p>
+<p>基本用法：</p>
+<pre><code>SELECT res FROM table_name &lt;where condition&gt; GROUP BY &lt;field&gt; &lt;having condition&gt;;
+</code></pre><p>示例：查询 student_course 表中有 3 门成绩大于等于 80 的学生学号</p>
+<p>（1）创建测试表结构：</p>
+<pre><code>mysql&gt; CREATE TABLE student_course(sno INT(11) NOT NULL,
+cno INT(11) NOT NULL,
+grade SMALLINT NOT NULL DEFAULT 0
+)ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+</code></pre><p>（2）插入测试数据：</p>
+<pre><code>INSERT INTO student_course(sno,cno,grade) VALUES(1,100,79);
+INSERT INTO student_course(sno,cno,grade) VALUES(1,101,89);
+INSERT INTO student_course(sno,cno,grade) VALUES(1,102,87);
+INSERT INTO student_course(sno,cno,grade) VALUES(1,103,99);
+INSERT INTO student_course(sno,cno,grade) VALUES(2,100,90);
+INSERT INTO student_course(sno,cno,grade) VALUES(2,101,80);
+INSERT INTO student_course(sno,cno,grade) VALUES(2,102,77);
+INSERT INTO student_course(sno,cno,grade) VALUES(2,103,79);
+INSERT INTO student_course(sno,cno,grade) VALUES(3,100,89);
+INSERT INTO student_course(sno,cno,grade) VALUES(3,101,90);
+INSERT INTO student_course(sno,cno,grade) VALUES(3,102,83);
+INSERT INTO student_course(sno,cno,grade) VALUES(3,103,91);
+</code></pre><p>（3）查询：</p>
+<pre><code>mysql&gt; SELECT sno,SUM(CASE WHEN grade &gt; 80 THEN 1 ELSE 0 END) num FROM student_course GROUP BY sno HAVING num &gt;= 3; 
++-----+------+
+| sno | num  |
++-----+------+
+|   1 |3 |
+|   3 |4 |
++-----+------+
+2 rows in set (0.45 sec)
+</code></pre><h2 id="四、DCL–数据控制语言"><a href="# 四、DCL–数据控制语言" class="headerlink" title="四、DCL–数据控制语言"></a>四、DCL–数据控制语言 </h2><p> 作用：用来授予或回收访问数据库的某种特权，并控制数据库操纵事务发生的时间及效果。</p>
+<p>1、GRANT 授予用户权限：</p>
+<p>基本用法：</p>
+<pre><code>mysql&gt; GRANT priv_type ON &lt;object_type&gt; TO user &lt;WITH {GRANT OPTION | resource_option} ...&gt;;
+</code></pre><p>示例：给用户 jerry 授予对 test_db 数据库的增删改查权限，允许该用户从 IP 为’192.168.0.10’的网络登录</p>
+<p>（1）方法一：</p>
+<pre><code>mysql&gt; GRANT INSERT,SELECT,UPDATE,DELETE ON test_db.* TO &apos;jerry&apos;@&apos;192.168.0.10&apos; IDENTIFIED BY &apos;password&apos; WITH GRANT OPTION;
+</code></pre><p>（2）方法二：</p>
+<pre><code>mysql&gt; CREATE USER &apos;jerry&apos;@&apos;192.168.0.10&apos; IDENTIFIED BY &apos;password&apos;;
+mysql&gt; GRANT INSERT,SELECT,UPDATE,DELETE ON test_db.* TO &apos;jerry&apos;@&apos;192.168.0.10&apos;;
+</code></pre><p>2、REVOKE 收回用户权限：</p>
+<p>基本用法：</p>
+<pre><code>mysql&gt; REVOKE priv_type ON &lt;object_type&gt; FROM &apos;jerry&apos;@&apos;192.168.0.10&apos;;
+</code></pre><p>示例：收回用户对 test_db 库的删除权限：</p>
+<pre><code>mysql&gt; REVOKE DELETE ON test_db.* FROM &apos;jerry&apos;@&apos;192.168.0.10&apos;;
+</code></pre><p>3、查看给某个用户所授予的权限：</p>
+<p>基本用法：</p>
+<pre><code>mysql&gt; SHOW GRANTS FOR user;
+</code></pre><p>示例：查询给‘jerry‘@’192.168.0.10’所授予的所有权限：</p>
+<pre><code>mysql&gt; SHOW GRANTS FOR &apos;jerry&apos;@&apos;192.168.0.10&apos;;
+</code></pre><p>4、查询可授予的所有权限，使用技巧：</p>
+<p>（1）首先将某个库 (如：test_db) 的所有权限授予给用户‘jerry‘@’localhost’</p>
+<pre><code>mysql&gt; GRANT ALL ON test_db.* TO &apos;jerry&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;jerry&apos;;
+</code></pre><p>（2）收回某个权限，如：查询权限</p>
+<pre><code>mysql&gt; REVOKE SELECT ON test_db.* FROM &apos;jerry&apos;@&apos;localhost&apos;;
+</code></pre><p>（3）查看剩余权限，就可以查到除了查询权限之外的权限，再加上查询权限即可授予的所有权限</p>
+<pre><code>mysql&gt; SHOW GRANTS FOR &apos;jerry&apos;@&apos;localhost&apos;;
+</code></pre><p>至此，MySQL 的基本操作 DDL，DML，DQL，DCL 介绍完毕。</p>
+<h1 id="第 4 章 -MySQL 数据库 DDL 之触发器应用"><a href="# 第 4 章 -MySQL 数据库 DDL 之触发器应用" class="headerlink" title="第 4 章 MySQL 数据库 DDL 之触发器应用"></a>第 4 章 MySQL 数据库 DDL 之触发器应用 </h1><p> 上面简单介绍了一下 MySQL 的基本操作之 DDL、DML、DQL、DCL，在 DDL 中简单提了一下触发器，存储过程和函数，本篇文章将详细介绍触发器！</p>
+<p>1、触发器作用：简单来说，触发器就是绑定在某个表上的一个特定数据库对象，当在这个表上发生某种触发器所监听的操作时，将会触发某种动作。</p>
+<p>2、触发器用法：</p>
+<pre><code>CREATE TRIGGER trigger_name trigger_event trigger_time ON table_name FOR EACH ROW
+BEGIN
+...trigger_statement... #触发器的逻辑实现
+END
+</code></pre><p>参数解释：<br>trigger_name: 触发器的名称 <br>trigger_event: 触发的事件，包括：INSERT，UPDATE，DELETE<br>trigger_time: 触发的时间点，包括：BEFORE（事件之前触发），AFTER（事件之后触发）<br>table_name: 触发器所在表<br>trigger_statement: 触发器被触发之后，所执行的数据库操作逻辑，可以为单一的数据库操作，或者一系列数据库操作集合，也可以包含一些判断等处理逻辑；<br> 注意：<br>（1）同一张表中不能同时存在两个类型一样的触发器；<br>（2）触发事件和触发时间点总共可以组成 3 组 6 种不同的触发器，分别为：（BEFORE INSERT，AFTER INSERT）、（BEFORE UPDATE，AFTER UPDATE）、（BEFORE DELETE，AFTER DELETE）；<br>（3）触发事件：<br>① INSERT：在插入数据的时候触发，插入数据的动作包括 INSERT，LOAD DATA，REPLACE 操作，即：发生这三种操作时，都会触发 INSERT 类型的触发器；<br>② UPDATE：数据发生变更时触发，即：发生了 UPDATE 操作；<br>③ DELETE：从表中删除某一行的时候触发，即：发生了 DELETE 或者 REPLACE 操作；<br>（4）创建触发器的时候，由于在触发器的 trigger_statement 语句中有逻辑，而每个逻辑都会有结束符，默认为”;”，故需要在创建之前先定义定界符。防止 SQL 语句在执行之前被存储引擎（存储引擎:MySQL 数据库的插件，后续介绍）解析的时候碰见”;”而提前结束，提示语法错误。<br>3、示例：<br>（1）示例 1：现在 test_db 中有两个表，一个为员工信息表 t_emp，一个为部门统计表 t_dept_statis，他们的表结构分别如下所示：<br>员工信息表：<br>CREATE TABLE <code>t_emp</code> (<br>  <code>id</code> INT(11) NOT NULL AUTO_INCREMENT,<br>  <code>name</code> VARCHAR(50) NOT NULL DEFAULT ‘’, #员工姓名 <br>  <code>age</code> TINYINT(4) DEFAULT NULL,          #年龄<br>  <code>gender</code> ENUM(‘F’,’M’) DEFAULT NULL,    #性别<br>  <code>dept_id</code> INT,                          #部门编号<br>   PRIMARY KEY (<code>id</code>)<br>) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;<br> 部门员工数量统计表：<br>CREATE TABLE t_dept_statis(<br>    id INT PRIMARY KEY AUTO_INCREMENT,<br>    emp_count INT, #员工数量，初始化为 0<br>    dept_id INT,   #部门编号 <br>    update_time DATETIME #更新时间<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;<br> 初始化的统计数据，插入两条统计数据，分别为编号为 1 和 2 的两个部门，初始化员工数量为 0：<br>mysql&gt; INSERT INTO t_dept_statis(emp_count,dept_id,update_time) VALUES(0,1,NOW());<br>mysql&gt; INSERT INTO t_dept_statis(emp_count,dept_id,update_time) VALUES(0,2,NOW());<br>需求：使用触发器实现每新增一条员工记录，部门信息统计表中就可以自动统计出员工数有变化的部门的员工总数量。这个需求可能不合适，但是完全可以说明触发器的用法：<br>mysql&gt; \d $  #建立定界符，可以使用”DELIMITER $”，和”\d $”等价<br>mysql&gt; CREATE TRIGGER dep_tri AFTER INSERT ON t_emp FOR EACH ROW<br>        BEGIN<br>            DECLARE num INT;<br>            SET num = (SELECT emp_count FROM t_dept_statis WHERE dept_id = new.dept_id);<br>            UPDATE t_dept_statis SET emp_count = num + 1 ,dept_id = new.dept_id, update_time = now() where dept_id = new.dept_id;<br>        END$<br>mysql&gt; \d ;   #重新还原定界符为默认的定界符”;”</p>
+<p># 查看 t_emp 中的数据，此时是空的 <br>mysql&gt; SELECT <em> FROM t_emp;<br>Empty set (0.00 sec)<br> 查看 t_dept_statis 中的数据，此时有两条初始化数据，员工数量为 0<br>mysql&gt; SELECT </em> FROM t_dept_statis;<br>+—-+———–+———+————-+<br>| id | emp_count | dept_id | update_time |<br>+—-+———–+———+————-+<br>|  1 |         0 |       1 | NULL        |<br>|  2 |         0 |       2 | NULL        |<br>+—-+———–+———+————-+<br>向 t_emp 中插入一条数据，然后查看 t_dept_statis 表，会发现，员工数量会自动统计 <br>mysql&gt; INSERT INTO t_emp(name,age,gender,dept_id) values(‘emp01’,23,’F’,1);<br>Query OK, 1 row affected (0.00 sec)<br>mysql&gt; SELECT <em> FROM t_dept_statis;<br>+—-+———–+———+———————+<br>| id | emp_count | dept_id | update_time         |<br>+—-+———–+———+———————+<br>|  1 |         1 |       1 | 2018-05-14 22:51:15 |<br>|  2 |         0 |       2 | NULL                |<br>+—-+———–+———+———————+<br> 再次向 t_emp 中插入一条数据，然后查看 t_dept_statis 表，会发现，员工数量会再次统计 <br>mysql&gt; INSERT INTO t_emp(name,age,gender,dept_id) values(‘emp03’,26,’M’,2);<br>Query OK, 1 row affected (0.15 sec)<br>mysql&gt; SELECT </em> FROM t_dept_statis;<br>+—-+———–+———+———————+<br>| id | emp_count | dept_id | update_time         |<br>+—-+———–+———+———————+<br>|  1 |         1 |       1 | 2018-05-14 22:51:15 |<br>|  2 |         1 |       2 | 2018-05-14 22:51:30 |<br>+—-+———–+———+———————+<br> 查看 t_emp 中的数据，会发现目前有两条记录，部门 1 和部门二中各有一条，统计表已经通过触发器实现了员工数量的自动统计：<br>mysql&gt; SELECT * FROM t_emp;<br>+—-+——-+——+——–+———+<br>| id | name  | age  | gender | dept_id |<br>+—-+——-+——+——–+———+<br>|  1 | emp01 |   23 | F      |       1 |<br>|  2 | emp03 |   26 | M      |       2 |<br>+—-+——-+——+——–+———+<br>2 rows in set (0.00 sec)<br>（2）示例 2：在 test_db 中有一张用户表 t_user 和 t_user_bak，表结构相同，如下所示：<br>mysql&gt; CREATE TABLE t_user(id INT PRIMARY KEY AUTO_INCREMENT,<br>        name VARCHAR(50) NOT NULL DEFAULT ‘’, #用户名<br>        age TINYINT NOT NULL DEFAULT 0,       #年龄<br>        create_time DATETIME NOT NULL         #创建时间<br>   ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;</p>
+<p> mysql&gt; CREATE TABLE t_user_bak(id INT PRIMARY KEY AUTO_INCREMENT,<br>        name VARCHAR(50) NOT NULL DEFAULT ‘’, #用户名 <br>        age TINYINT NOT NULL DEFAULT 0,       #年龄<br>        create_time DATETIME NOT NULL         #创建时间<br>   ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;<br> 创建测试数据，插入如下几条数据：<br>mysql&gt; INSERT INTO t_user(name,age,create_time) VALUES(‘name01’,23,NOW());<br>mysql&gt; INSERT INTO t_user(name,age,create_time) VALUES(‘name02’,25,NOW());  </p>
+<p>需求：如果 t_user 表中的数据被修改，则将修改前的数据先备份到 t_user_bak 表中，使用触发器实现：<br>mysql&gt; \d $<br>mysql&gt; CREATE TRIGGER user_bak_tri BEFORE UPDATE ON t_user FOR EACH ROW<br>       BEGIN<br>            INSERT INTO t_user_bak(name,age,create_time) VALUES(old.name,old.age,NOW());<br>       END$<br>mysql&gt; \d ;<br>查询 t_user_bak 表中的数据，此时为空：<br>mysql&gt; SELECT <em> FROM t_user_bak;<br>Empty set (0.00 sec)<br>修改 t_user 表中 id 为 1 的数据，然后再次查看 t_user_bak 表中的数据：<br>mysql&gt; UPDATE t_user SET name = ‘name001’ WHERE name = ‘name01’;<br>mysql&gt; SELECT </em> FROM t_user_bak;<br>+—-+——–+—–+———————+<br>| id | name   | age | create_time         |<br>+—-+——–+—–+———————+<br>|  1 | name01 |  23 | 2018-05-15 05:07:40 |<br>+—-+——–+—–+———————+<br>1 row in set (0.00 sec)<br>可见，数据已经自动备份到 t_user_bak 中。<br>4、触发器中的 new 和 old 关键字：<br>（1）作用：用来访问受触发器影响的行中的列 <br>（2）用法：<br>a、在 INSERT 操作中，new 表示将要插入（BEFORE INSERT）或者已经插入（AFTER INSERT）表中的数据；<br>b、在 UPDATE 操作中，new 表示将要插入或者已经插入的新数据，而 old 表示将要插入或者已经插入的原数据；<br>c、在 DELETE 操作中，old 表示将要删除或者已经被删除的原数据；<br>d、OLD 是只读的，而 NEW 则可以在触发器中使用 SET 赋值，这样不会再次触发触发器，造成循环调用；<br>5、触发器管理：<br>（1）查看已经创建好的触发器：<br> 语法：<br>mysql&gt; USE db_name;    #选择数据库 <br>mysql&gt; SHOW TRIGGERS;  #查看选择的数据库中已经创建的所有触发器<br>mysql&gt; SHOW CREATE TRIGGER trigger_name; #查看某个触发器的创建过程<br> 示例：查看 test_db 库中已经创建好的所有触发器：<br>mysql&gt; USE test_db;  #选择数据库 <br>mysql&gt; SHOW TRIGGERS \G     #查看该库中的触发器<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>             Trigger: dep_tri<br>               Event: INSERT<br>               Table: t_emp<br>           Statement: BEGIN<br>DECLARE num INT;<br>SET num = (SELECT emp_count FROM t_dept_statis WHERE dept_id = new.dept_id);<br>UPDATE t_dept_statis SET emp_count = num + 1 ,dept_id = new.dept_id, update_time = now() where dept_id = new.dept_id;<br>END<br>              Timing: AFTER<br>             Created: NULL<br>            sql_mode: STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION<br>             Definer: <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a><br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>2 rows in set (0.13 sec)<br> 参数解释：<br>Trigger：触发器名称 <br>Event：触发器所绑定的事件，即：发生什么操作时会执行触发器程序<br>Table：触发器所在的表<br>Statement：触发器的逻辑<br>Timing：触发器的事件<br>Created：表示创建时间<br>sql_mode：sql 模式，STRICT_TRANS_TABLES 表示当一个数据不能插入到一个事务表中，则中断当前操作，NO_ENGINE_SUBSTITUTION 表示编译的时候如果没有选择默认存储引擎，则会使用一个默认的存储引擎，并提示一个错误；<br>Definer：创建触发器的用户<br>character_set_client：客户端使用的字符集<br>collation_connection：连接数据库使用的字符校验集<br>Database Collation：数据库使用的字符校验集<br> 除此之外，还可以使用 information_schema 库中的 trigger 表查看已经存在的触发器，如下：<br>mysql&gt; USE information_schema;<br>mysql&gt; SELECT TRIGGER_SCHEMA AS ‘db_name’,EVENT_OBJECT_TABLE as ‘table_name’,TRIGGER_NAME as ‘trigger_name’,ACTION_STATEMENT AS ‘trigger_statement’ FROM TRIGGERS \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>          db_name: test_db<br>       table_name: t_emp<br>     trigger_name: dep_tri<br>trigger_statement: BEGIN<br>DECLARE num INT;<br>SET num = (SELECT emp_count FROM t_dept_statis WHERE dept_id = new.dept_id);<br>UPDATE t_dept_statis SET emp_count = num + 1 ,dept_id = new.dept_id, update_time = now() where dept_id = new.dept_id;<br>END<br>2 rows in set (0.02 sec)<br>（2）删除指定的触发器：<br>语法：<br>mysql&gt; DROP TRIGGER trigger_name;<br>示例：删除 t_emp 表上的 dep_tri 索引：<br>mysql&gt; DROP TRIGGER dep_tri;<br>6、触发器的优缺点：<br>优点：<br>可以方便而且高效的维护数据；<br>缺点：<br>a、高并发场景下容易导致死锁，拖死数据库，成为数据库瓶颈，故高并发场景下一定要慎用；<br>b、触发器比较多的时候不容易迁移，而且表之间数据导入和导出可能会导致无意中触发某个触发器，造成数据错误，故对于数据量比较大，而且数据库模型非常复杂的情况下慎用；<br>7、事务场景下的注意要点：<br>MySQL 中使用了插件式的存储引擎（存储引擎后文会详细介绍），对于 InnoDB 事务型的存储引擎，如果 SQL 语句执行错误，或者触发器执行错误，会发生什么结果呢？<br>（1）如果触发器或者 SQL 语句执行过程中出现错误，则会发生事务的回滚；<br>（2）SQL 语句如果执行失败，则 AFTER 类型的触发器不会执行；<br>（3）如果 AFTER 类型的触发器执行失败，则触发此触发器的 SQL 语句将会回滚；<br>（4）如果 BEFORE 类型的触发器执行失败，则触发此触发程序的 SQL 语句将会执行失败；<br>至此，触发器相关内容介绍完毕 <br> 第 5 章 MySQL 数据库 DDL 操作之存储过程和函数 <br>•     mysql<br> 保存 <br> 标签：至少 1 个，最多 5 个 <br> mysql×<br> 上篇文章介绍了 MySQL 数据库 DDL 操作中的触发器，本章将详细介绍 MySQL 数据库 DDL 操作中的存储过程和函数，存储过程和函数在某些复杂业务场景下还是有很大作用的。<br>1、定义和作用：<br>存储过程和函数是数据库中预先编译好的一个为了完成特定功能的 SQL 语句集。通过存储过程和函数，可以完成一些具有负责处理逻辑的数据库操作，同时可以减少应用程序和数据库服务器之间的数据传输，提升数据库的数据处理效率。<br>2、使用存储过程和函数的前提：<br>（1）创建存储过程和函数时，需要用户具备”CREATE ROUTINE”的权限；<br>（2）在删除和修改存储过程和函数时，需要用户具备”ALTER ROUTINE”的权限；<br>（3）在执行存储过程和函数时，需要用户具备”EXECUTE”的权限；<br>3、储存过程的创建和修改：<br>（1）存储过程创建的语法：<br>CREATE PROCEDURE p_name ([procedure_parameter[,…]])<br>BEGIN<br>    [characteristic …]<br>    …procedure_statement…  #存储过程的逻辑处理语句 <br>END<br> 参数解释：<br>procedure_name：存储过程的名称 <br>procedure_parameter：存储过程的参数，可以包含多个参数，procedure_parameter 中又包含了存储过程参数<br> 类型、参数名称和参数的具体数据类型，它的定义格式为：[IN|OUT|INOUT] parameter_name field_type<br>characteristic: 表示要修改存储过程的哪个部分，该参数的取值包括以下几种：<br>    a. CONTAINS SQL，表示子程序包含 SQL 语句，但是，不包含读或写数据的语句 <br>    b. NO SQL，表示子程序中，不包含 SQL 语句<br>    c. READS SQL DATA，表示子程序中，包含读数据的语句<br>    d. MODIFIES DATA，表示子程序中，包含写数据的语句<br>    e. SQL SECURITY {DEFINER | INVOKER}，指明谁有权限来执行<br>        DEFINER，表示只有定义者，自己才能够执行<br>        INVOKER，表示调用者可以执行<br>    f. COMMENT “conte”，表示注释信息<br>    g. LANGUAGE SQL，表示存储过程使用 SQL 语句来实现[默认]，为后期引入其他语言实现做准备<br> 存储过程参数类型 [IN|OUT|INOUT] 说明：<br>IN：表示该参数为输入参数，即：调用存储过程时所要接收的输入参数，为一个具体的值 <br>OUT：表示该参数为输出参数，即：存储过程在被调用时，需要接收的一个外部变量，通常使用 @加变量名定义，比如：”@a”。在存储过程处理完结果之后，可以将结果放在该外部变量中，供外部查看；<br>INOUT：表示该参数即可作为输入参数，接收一个具体的值；同时也可以作为输出参数，通过传入外部变量，完成在存储过程外部查看变量的值；<br>（2）示例应用：<br> 示例 1：创建一个存储过程，查询表出指定表中的记录数，并可以在存储过程外部查看：<br>修改默认定界符为 $，也可使用 DELIMITER 命令完成 <br>mysql&gt; \d $<br> 创建存储过程：<br>mysql&gt; CREATE PROCEDURE p_count(OUT param INT)<br>       BEGIN<br>            SELECT COUNT(<em>) FROM t_user INTO param FROM t_user;<br>       END $<br>将修改的定界符恢复至默认定界符 <br>mysql&gt; \d ;<br> 使用 CALL 命令调用存储过程，传入 @a 变量，该变量在存储过程中被赋值：<br>mysql&gt; CALL p_count(@a);<br>查看通过存储过程所查询到的表中记录数量：<br>注：查询自定义变量使用”@&lt; 变量名 &gt;”，如果查询系统中的变量，可以使用”@@&lt; 变量名 &gt;”，后期系统参数调优时介绍，此处可以先了解 <br>mysql&gt; SELECT @a;<br>+——–+<br>| @a     |<br>+——–+<br>|      3 |<br>+——–+<br>1 row in set (0.00 sec)<br> 示例 2：创建一个存储过程，封装 MySQL 的 LIMIT 函数，实现分页：<br>创建存储过程：<br>mysql&gt; \d $<br>mysql&gt; CREATE PROCEDURE p_page(IN pageNo INT,IN pageSize INT)<br>       BEGIN<br>           SELECT </em> FROM t_user LIMIT pageNo,pageSize;<br>       END $<br>mysql&gt; \d ;<br>调用存储过程，根据具体传入的值查询记录：<br>mysql&gt; CALL p_page(1,10);<br>注意：<br>（1）如果使用的是普通用户登录 MySQL 来执行存储过程，则需要注意权限问题。如果用户对某个表没有查询权限，则该用户如果调用了某个包含对该表有查询操作的存储过程，会调用失败；<br>（2）在一个存储过程中可以调用其他的函数或者存储过程，如上示例 2，可以调用系统函数 LIMIT；<br>（3）在存储过程中可以完成事务的操作，比如：”提交事务 (COMMIT) 和回滚事务 (ROLLBACK)”，但是不能完成”LOAD DATA INFILE”操作；<br>（3）存储过程的修改：<br> 目前，存储过程暂时不支持直接修改其逻辑语句，只支持修改一些存储过程的特征，也就是对 characteristic 进行修改。<br>语法：<br>ALTER PROCEDURE procedure_name [characteristic …];<br>示例：对上述的 p_page 存储过程进行修改，指明调用者可以执行该存储过程：<br>mysql&gt; ALTER PROCEDURE p_page SQL SECURITY INVOKER;<br>4、函数的创建和修改：<br>（1）函数创建的语法：<br>CREATE FUNCTION function_name([function_parameter[,…]])<br>RETURNS type<br>BEGIN<br>    [chracteristic …]<br>    …function statement… #函数中的实现逻辑 <br>END<br> 参数解释：<br>function_name：函数名称 <br>function_parameter：函数的参数，它的定义格式为：”param_name field_type”<br>[characteristic]：表示要修改的函数的哪个部分，包括的内容和存储过程相同<br>RETURNS type：表示返回值的声明<br>（2）示例应用：<br> 示例 1：创建一个函数，对于输入的内容，会在内容之前拼接”hello”字符串，在结束位置拼接”!”符号，实现如下：<br>创建函数：<br>mysql&gt; CREATE FUNCTION function_hello(str CHAR(20))<br>        RETURNS CHAR(50) DETERMINISTIC<br>        RETURN CONCAT(“Hello “,str,’!’);<br>调用函数，传入字符串”Tomcat”，输出为：”Hello ,Tomcat!”，如下：<br>mysql&gt; SELECT function_hello(“Tomcat”);<br>+————————–+<br>| function_hello(“Tomcat”) |<br>+————————–+<br>| Hello Tomcat!            |<br>+————————–+<br>1 row in set (0.00 sec)<br>说明：<br>RETURNS CHAR(50)：表示返回值类型为 CHAR(50)<br>RETURN CONCAT(‘Hello ‘,str,’!’)：表示具体的返回值是使用 CONCAT 函数拼接得到的 <br>DETERMINISTIC：指明存储过程执行的结果是否正确。DETERMINISTIC 表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出。<br> 示例 2：实现一个加法功能的函数，输入两个 INT 类型的值，计算这两个数的和：<br>定义函数：<br>mysql&gt; CREATE FUNCTION function_add1(num1 VARCHAR(20),num2 VARCHAR(20))<br>       RETURNS INT DETERMINISTIC<br>       RETURN (IF(num1 REGEXP “[0-9]{1,}”,num1,0) + IF(num2 REGEXP “[0-9]{1,}”,num2,0));</p>
+<p>调用，传入 10 和 20，计算出这两个数的和为 30，如下：<br>mysql&gt; SELECT function_add(10,20);<br>+———————+<br>| function_add(10,20) |<br>+———————+<br>|                  30 |<br>+———————+<br>1 row in set (0.00 sec)<br>注意：该函数中对入参做了简单判断，判断是否为数值，如果不为数值，默认当做 0 处理；<br>（3）函数的修改：<br>上面修改存储过程中介绍了使用 ALTER 完成的方法，此处直接通过修改系统中的 mysql 表中的数据来修改函数，对应的表为：mysql 库中的 proc<br>示例：将 function_hello 函数的定义者修改为”tomcat”@”localhost”。要修改的用户必须提前存在，修改方式如下：<br>选库：<br>mysql&gt; USE mysql;<br>修改函数的定义者：<br>mysql&gt; UPDATE proc SET definer = ‘tomcat@localhost’ WHERE name = ‘function_hello’;<br>刷新权限，如果不执行该操作，修改的结果不会生效：<br>mysql&gt; FLUSH PRIVILEGES;<br>5、存储过程和函数的查看和删除：<br>（1）查看已经创建的存储过程或者函数：<br>语法：<br>SHOW &lt;PROCEDURE|FUNCTION&gt; STATUS LIKE “pattern”;<br>参数解释：<br>pattern：表示存储过程或者函数名称的匹配串，支持模糊匹配 <br> 示例 1：查看创建的 p_page 存储过程：<br>mysql&gt; SHOW PROCEDURE STATUS LIKE “p_page” \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>                  Db: test<br>                Name: p_page<br>                Type: PROCEDURE<br>             Definer: <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a><br>            Modified: 2018-05-16 11:56:56<br>             Created: 2018-05-16 11:21:45<br>       Security_type: INVOKER<br>             Comment:<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>1 row in set (0.00 sec)<br>示例 2：查看创建的函数”function_hello”：<br>mysql&gt; SHOW FUNCTION STATUS LIKE ‘%hello’ \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>                  Db: test<br>                Name: function_hello<br>                Type: FUNCTION<br>             Definer: <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a><br>            Modified: 2018-05-16 12:09:17<br>             Created: 2018-05-16 12:09:17<br>       Security_type: DEFINER<br>             Comment:<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>1 row in set (0.01 sec)<br>（2）查看存储过程或者函数的定义：<br>语法：<br>SHOW CREATE &lt;PROCEDURE|FUNCTION&gt; &lt;procedure_name|function_name&gt;;<br>示例 1：查看触发器 p_page 的创建过程：<br>选库：<br>mysql&gt; USE test;<br>查看创建过程：<br>mysql&gt; SHOW CREATE PROCEDURE p_page \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>           Procedure: p_page<br>            sql_mode: STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION<br>    Create Procedure: CREATE DEFINER=<code>root</code>@<code>127.0.0.1</code> PROCEDURE <code>p_page</code>(IN pageNo INT,IN pageSize INT)<br>    SQL SECURITY INVOKER<br>begin<br>select <em> from t_user limit pageNo,pageSize ;<br>end<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>1 row in set (0.00 sec)<br>示例 2：查看函数 function_hello 的创建过程：<br>选库：<br>mysql&gt; USE test;<br>查看创建过程：<br>mysql&gt; SHOW CREATE FUNCTION function_hello \G<br><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></em> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>            Function: function_hello<br>            sql_mode: STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION<br>     Create Function: CREATE DEFINER=<code>root</code>@<code>127.0.0.1</code> FUNCTION <code>function_hello</code>(str CHAR(20)) RETURNS char(50) CHARSET utf8<br>    DETERMINISTIC<br>RETURN CONCAT(“Hello “,str,’!’)<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>1 row in set (0.00 sec)<br>注意：<br>查看存储过程和函数的定义还可以通过系统库 information_schema 中的 routines 表来查看，主要包括的字段有：ROUTINE_SCHEMA,ROUTINE_NAME,ROUTINE_BODY,ROUTINE_COMMENT,DEFINER<br>mysql&gt; SELECT ROUTINE_SCHEMA,ROUTINE_NAME,ROUTINE_BODY,ROUTINE_COMMENT,DEFINER FROM information_schema.routines;<br>解释：<br>ROUTINE_SCHEMA: 存储过程或者函数所在的库 <br>ROUTINE_NAME: 存储过程或者函数名称<br>ROUTINE_BODY: 存储过程或者函数体<br>ROUTINE_COMMENT: 注释信息<br>DEFINER: 存储过程或者函数的定义者<br>6、删除存储过程和函数：<br> 语法：<br>DROP &lt;PROCEDURE|FUNCTION&gt; &lt;procedure_name|function_name&gt;;<br>示例 1：删除存储过程 p_page：<br>mysql&gt; USE test;<br>mysql&gt; DROP PROCEDURE p_page;<br>示例 2：删除函数 function_hello：<br>mysql&gt; USE test;<br>mysql&gt; DROP FUNCTION function_hello;<br>7、变量的定义和赋值：<br>（1）变量的定义：<br>语法：<br>DECLARE var_name type <default var_value="">;<br>参数解释：<br>var_name: 表示参数名称 <br>type: 表示参数类型<br>var_value: 表示参数的默认初始值<br> 示例 1：定义一个 INT 类型的变量 SUM，默认值为 0：<br>DECLARE SUM INT DEFAULT 0;<br>示例 2：定义一个 VARCHAR(20)类型的变量 STR，无初始值：<br>DECLARE STR VARCHAR(20);<br>（2）变量的赋值：<br>语法：<br>a. 直接通过 SET 赋值：<br>SET var_name = var_value;<br>b. 通过 SELECT 查询到结果之后再赋值：<br>SELECT <result> INTO var_name <from table_name="">;<br>示例 1：给 VARCHAR(20)类型的变量 STR 赋一个初始值为””<br>mysql&gt; SET STR = “”;<br>示例 2：查询表 t_user 中的记录数量，并将结果赋值给 INT 类型的 STU_COUNT 变量 <br>mysql&gt; SELECT COUNT(*) INTO STU_COUNT FROM t_user;<br>8、条件定义和处理：<br> 语法：<br>a. 条件的定义：<br>DECLARE condition_name CONDITION FOR condition_value;<br>condition_value:<br>    SQLSTATE sql_state_value<br>参数解释：<br>condition_name: 表示条件的名称 <br>condition_value: 表示条件中所关注的执行结果，通常为 SQL 的执行状态<br>b. 条件的处理：<br>DECLARE handler_name HANDLER FOR condition_value do_statement;<br> 参数解释：<br>handler_name: 表示处理器的名称，常用的有：”CONTINUE”,”SQLWARNING”,”NOT FOUND”,”SQLEXCEPTION”<br>condition_value: 表示执行的结果，当处理器匹配到该结果时，会执行后面的 do_statement<br>示例：在一个存储过程中连续给 t_user 表中插入相同的数据，如果插入失败，则继续向下执行，而不退出 <br>mysql&gt; \d $<br>mysql&gt; CREATE PROCEDURE p_insert()<br>        BEGIN<br>            DECLARE CONTINUE HANDLER FOR SQLSTATE ‘23000’ SET @state = 1;<br>            INSERT INTO t_user(id,name,age) VALUES(1,’bing’,23);<br>            INSERT INTO t_user(id,name,age) VALUES(1,’bing’,23);<br>            SET @val = 666;<br>        END $<br>mysql&gt; \d ;<br>mysql&gt; SELECT @state,@val;<br>+——–+——+<br>| @state | @val |<br>+——–+——+<br>|      1 |  666 |<br>+——–+——+<br>1 row in set (0.00 sec)<br> 结果分析：在上述的存储过程中，第二次插入 t_user 表中的记录由于主键冲突，故会插入失败。如果不定义条件处理的话。”SET @val=666”不会被执行，最后查出来的 @val 也不会为 666，同样，@state 也不会为 1，现在查出来的结果分别为 1 和 666，表示处理器起作用了。主键冲突的时候会提示”23000”状态码.<br>9、游标的使用：<br>（1）定义：<br>简单的理解，游标就是一个查询结果集的出口。在这个出口，可以完成对结果的筛选和其他操作。<br>（2）语法：<br>a. 声明：<br>DECLARE cursor_name CURSOR FOR select_statement;<br>b.OPEN: 打开游标 <br>OPEN cursor_name;<br>c.FETCH：将游标的结果保存到某些中间变量中<br>FETCH cursor_name INTO var_name,…;<br>d.CLOSE：关闭游标<br>CLOSE cursor_name;<br>（3）示例：<br> 使用游标统计出学生表 t_student 中男生和女生的总人数：<br>创建测试表结构：<br>CREATE TABLE t_student(<br>    id INT PRIMARY KEY AUTO_INCREMENT,<br>    gender VARCHAR(1) DEFAULT ‘0’ COMMENT “0- 男,1- 女”,<br>    name VARCHAR(50) DEFAULT ‘’<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;<br>测试数据：<br>INSERT INTO t_student(gender,name) VALUES(‘1’,’name01’);<br>INSERT INTO t_student(gender,name) VALUES(‘0’,’name03’);<br>INSERT INTO t_student(gender,name) VALUES(‘0’,’name06’);<br>INSERT INTO t_student(gender,name) VALUES(‘0’,’name08’);<br>创建存储过程：<br>mysql&gt; \d $<br>mysql&gt; CREATE PROCEDURE student_count()<br>    BEGIN<br>        DECLARE str VARCHAR(1);<br>        DECLARE gender_str CURSOR FOR SELECT gender FROM t_student;<br>        DECLARE EXIT HANDLER FOR NOT FOUND CLOSE gender_str;<br>        SET @m_count = 0;<br>        SET @f_count = 0;</from></result></default></p>
+<pre><code>    OPEN gender_str;
+    REPEAT
+        FETCH gender_str INTO str;
+        IF str = &apos;1&apos; THEN
+            SET @m_count = @m_count + 1;
+        ELSE
+            SET @f_count = @f_count + 1;
+        END IF;
+    UNTIL 0 END REPEAT;
+    CLOSE gender_str;
+END $
+</code></pre><p>mysql&gt; \d ;<br>调用存储过程：<br>mysql&gt; CALL student_count();<br>Query OK, 0 rows affected (0.00 sec)<br>查看统计结果，M 表示女生数量，F 表示男生数量，可见，已经使用游标统计完毕：<br>mysql&gt; SELECT @m_count AS ‘M’,@f_count AS “F” FROM DUAL;<br>+——+——+<br>| M    | F    |<br>+——+——+<br>|    1 |    3 |<br>+——+——+<br>1 row in set (0.00 sec)<br>10、存储过程和函数中的流程控制，主要介绍一下常用的 IF，CASE，LOOP，REPEAT，WHILE 流程控制：<br>（1）IF<br>语法：<br>IF search_conditoin THEN statement<br>    elseif search_condition THEN state<br>END IF<br>示例：已经在上述的游标中使用到了，可自行查看。<br>（2）CASE<br>语法：<br>CASE case_value<br>    WHEN when_value THEN statement<br>    WHEN when_value THEN statement<br>    … #可有多个判断语句 <br>    ELSE statement<br>END CASE<br> 示例：将上述判断学生性别中使用的 IF 改为 CASE 如下：<br>CASE str<br>    WHEN ‘1’ THEN<br>        SET @m_count = @m_count + 1;<br>    ELSE<br>        SET @f_count = @m_count + 1;<br>END CASE;<br>（3）LOOP<br>语法：<br>[loop_label:] LOOP<br>    statement<br>END LOOP [loop_label];<br>示例：<br>LOOP 通常用在循环语句中，处于 BEGIN…END 之间，如果没有退出语句的话，会一直循环下去，造成死循环，可以和 LEAVE 一块使用，如下，求 1+2+…+100 的和：<br>创建存储过程：<br>mysql&gt; \d $<br>mysql&gt; CREATE PROCEDURE p_getsum()<br>BEGIN<br>    SET @sum = 0;<br>    SET @i = 0;<br>    label:LOOP<br>        SET @i = @i + 1;<br>        SET @sum = @sum + @i;<br>        IF @i = 100 THEN<br>            LEAVE label;<br>        END IF;<br>    END LOOP label;<br>END $<br>mysql&gt; \d ;<br>调用存储过程并查看结果：<br>mysql&gt; CALL p_getsum();<br>mysql&gt; SELECT @sum;<br>+——+<br>| @sum |<br>+——+<br>| 5050 |<br>+——+<br>1 row in set (0.00 sec)<br>说明：<br>LEAVE：通常用在循环结构中，用来退出指定标记的循环，如上”LEAVE label”，表示跳出名称为 label 的循环，即：退出 LOOP 循环。<br>（4）REPEAT<br>语法：<br>[label:]REPEAT<br>    statement<br>UNTIL search_condition<br>END REPEAT [label]<br>示例：求 1+2+…+100 的和：<br>创建存储过程：<br>mysql&gt; \d $<br>mysql&gt; CREATE PROCEDURE p_getsum1()<br>BEGIN<br>    SET @i = 0;<br>    SET @SUM = 0;<br>    REPEAT<br>        SET @i = @i + 1;<br>        SET @sum = @sum + @i;<br>    UNTIL @i &gt; 99<br>    END REPEAT;<br>    SELECT @sum FROM DUAL;<br>END $<br>mysql&gt; \d ;<br>调用存储过程，显示 1+2+…+100 的值：<br>mysql&gt; CALL p_getsum1();<br>+——+<br>| @sum |<br>+——+<br>| 5050 |<br>+——+<br>1 row in set (0.01 sec)<br>Query OK, 0 rows affected (0.01 sec)<br>（5）WHILE<br>语法：<br>[label:]WHILE search_condition DO<br>    statement<br>END WHILE [label];<br>示例：求 1+2+…+100 的和：<br>创建存储过程：<br>mysql&gt; \d $<br>mysql&gt; CREATE PROCEDURE p_getsum()<br>BEGIN<br>    SET @i = 0;<br>    SET @sum = 0;<br>    WHILE @i &lt; 100 DO<br>        SET @i = @i + 1;<br>        SET @sum = @sum + @i;<br>    END WHILE;<br>    SELECT @sum FROM DUAL;<br>END $<br>\d ;<br>调用存储过程，查看结果：<br>CALL p_getsum();<br>+——+<br>| @sum |<br>+——+<br>| 5050 |<br>+——+<br>1 row in set (0.00 sec)<br>Query OK, 0 rows affected (0.00 sec)<br>此处举了一个简单的求和的例子，说明了一下存储过程中的流程控制，负责的流程控制也是由这些简单的组合而成的。简单的掌握了，就可以在这个基础上写出更复杂的存储过程。<br>11、存储过程的优缺点：<br>优点：<br>（1）可以完成实时的复杂报表数据处理及统计；<br>（2）可以很好的解决某些业务系统和数据库之间的耦合度，比如政府、银行或者金融系统中，一旦存储过程调试完毕，会稳定运行，减少很大一部分不必要的系统间交互；<br>缺点：<br>（1）互联网行业大并发场景，存储过程会由于访问量大，而且同时操作多张表，有可能会造成死锁，不好排查，导致数据库出现瓶颈。所以应该慎用，最好别用；<br>（2）迁移会比较麻烦，如果存储过程中用到了多张表，必须先保证表结构迁移正确，否则存储过程迁移时会出现错误；<br>（3）如果数据库中的某些表结构变化了，可能需要重新删除并创建存储过程，可扩展性较差；<br>（4）存储过程多数情况下都是由 DBA 编写，普通开发人员不容易掌握；<br>至此，存储过程和函数相关的内容介绍完毕 <br> 第 6 章 MySQL 数据库 DDL 操作之事件调度器 <br>MySQL 中的事件调度器是在 5.1 版本之后新增的，可以在数据库中定时触发某种操作，类似于 Spring 中的 Quartz 定时任务或者 Linux 中的 crontab 任务调度器，下面将介绍 MySQL 中事件调度器的用法。<br>1、调度器的创建：<br>（1）语法：<br>CREATE EVENT event_name ON SCHEDULE &lt;time_frequency&gt; DO &lt;event_statement&gt;;<br> 参数解释：<br>event_name：表示自定义的事件调度器的名称，放在 CREATE EVENT 关键字之后；<br>time_frequency：表示该事件调度器什么时间执行以及执行周期为多少；<br>event_statement：表示该事件调度器中要执行的具体操作或者事件，可以为一个语句，也可以为一个语句块，即：由 BEGIN…END 包含的语句块，中间可以添加一些执行逻辑，需要使用 \d 指定定界符。除此之外，还可以在 event_statement 中调用其他的存储过程和函数；<br>（2）示例：<br>示例 1：创建一张测试表 t_test，每隔 10 秒钟向该表中插入一条记录，操作如下：<br>创建表结构：<br>mysql&gt; CREATE TABLE t_test(<br>           id INT PRIMARY KEY AUTO_INCREMENT,<br>            name VARCHAR(10) NOT NULL DEFAULT ‘’,<br>            create_time DATETIME<br>       ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;<br>创建事件调度器：<br>mysql&gt; CREATE EVENT insert_event<br>    ON SCHEDULE EVERY 10 SECOND<br>    DO<br>        INSERT INTO t_test(name,create_time) VALUES(‘test_name’,NOW());<br>10 秒之后查询 t_test 表，结果如下：<br>mysql&gt; SELECT <em> FROM t_test;<br>Empty set (0.00 sec)<br>发现并没有起作用，10 秒之后并未插入数据，这是由于事件调度器未打开导致，通过如下命令查看事件调度器的状态，发现结果为 OFF，表示未打开：<br>mysql&gt; SHOW VARIABLES LIKE ‘event_scheduler’;<br>+—————–+——-+<br>| Variable_name   | Value |<br>+—————–+——-+<br>| event_scheduler | OFF   |<br>+—————–+——-+<br>1 row in set (0.01 sec)<br>使用如下命令打开事件调度器：<br>mysql&gt; SET GLOBAL event_scheduler = ON;<br>或者使用：mysql&gt; SET @@global.event_scheduler = ON;<br>Query OK, 0 rows affected (0.11 sec)<br>再次查看，已经打开事件调度器：<br>mysql&gt; SHOW VARIABLES LIKE ‘event_scheduler’;<br>+—————–+——-+<br>| Variable_name   | Value |<br>+—————–+——-+<br>| event_scheduler | ON    |<br>+—————–+——-+<br>1 row in set (0.00 sec)<br>打开事件调度器的开关之后，在经过 10 秒，查看 t_test 表，发现事件调度器已经正常执行了，如下：<br>mysql&gt; SELECT </em> FROM t_test;<br>+—-+———–+———————+<br>| id | name      | create_time         |<br>+—-+———–+———————+<br>|  1 | test_name | 2018-05-16 16:58:45 |<br>+—-+———–+———————+<br>注意：上述使用”SET GLOBAL”命令只能全局修改服务器参数，如果数据库重启，该参数会失效。如果要永久修改，需要修改 MySQL 的配置文件，编辑 /etc/my.cnf，在 [mysqld] 中添加如下内容：<br>[mysqld]<br>event_scheduler = ON  #添加该项 <br>…<br> 示例 2：上述示例是每 10 秒给 t_test 表中插入一条记录，表中的记录会快速增多，现在通过另外一个事件调度器，完成每 1 分钟清空一次 t_test 表中的记录，如下：<br>创建事件调度器：<br>mysql&gt; CREATE EVENT clear_event<br>ON SCHEDULE EVERY 1 MINUTE<br>DO<br>    TRUNCATE TABLE t_test;<br>创建完成之后，立刻查看，会发现 t_test 表中的数据已经被清空，再 10 秒后差生的数据，在 1 分钟之后又会被再次清空：<br>mysql&gt; SELECT <em> FROM t_test;<br>Empty set (0.00 sec)<br>示例 3：定期清理 t_log 日志表，并将清除时间及清除的记录数量写入 t_delete_log 中，通过事件调度器和存储过程实现：<br>创建 t_delete_log 表：<br>CREATE TABLE t_delete_log(<br>    id INT PRIMARY KEY AUTO_INCREMENT,<br>    delete_time DATETIME,<br>    delete_count INT DEFAULT 0<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;<br>创建存储过程：<br>mysql&gt; \d $<br>mysql&gt; CREATE PROCEDURE p_clear()<br>    BEGIN<br>        DECLARE d_count INT DEFAULT 0;<br>        SET AUTOCOMMIT = 0;<br>        SET d_count = (SELECT COUNT(</em>) FROM t_log);</p>
+<pre><code>    # 判断是否有待清除的数据
+    IF d_count &gt; 0 THEN
+        TRUNCATE t_log;
+        INSERT INTO t_delete_log(delete_time,delete_count) VALUES(NOW(),d_count);
+    END IF;
+    COMMIT;
+END $
+</code></pre><p>mysql&gt; \d ;<br>创建事件调度器：<br>mysql&gt; CREATE EVENT student_clear_event<br>    ON SCHEDULE EVERY 1 MINUTE<br>    DO<br>        CALL p_clear();<br>上述事件调度器会每隔 1 分钟调用一次清除表数据的存储过程，完成一次历史数据清理及记录归档，综合使用到了事件调度器和存储过程。<br>2、调度器信息的查看：<br>语法：<br>SHOW EVENTS <like statement="">; #查看已有调度器的信息，可以添加 LIKE 对调度器的名称进行筛选 <br>SHOW CREATE EVENT event_name; #查看指定名称的调度器的创建信息<br>SHOW PROCESSLIST; #如果用户具有 PROCESS 权限，可以使用该命令查看调度器的线程状态<br>SELECT <field> FROM information_schema.event; #也可以从系统库中查看<br> 输出结果中重要参数说明：<br>Db: 表示调度器所在的数据库 <br>Name: 表示调度器的名称，可以使用 Like 条件过滤查看<br>Definer: 表示调度器的定义者<br>Time zone: 表示调度器使用的时区，SYSTEM 表示使用系统默认的时区<br>Interval value: 表示调度器时间周期的单位，包括：YEAR | QUARTER | MONTH | DAY | HOUR | MINUTE |<br>WEEK | SECOND | YEAR_MONTH | DAY_HOUR | DAY_MINUTE | DAY_SECOND | HOUR_MINUTE | HOUR_SECOND | MINUTE_SECOND<br>Starts: 表示调度器的开始执时间<br>Status：表示调度器的可用状态，包括：ENABLE,DISABLE,ENABLE ON SLAVE<br> 示例 1：查看在 test 库中创建的事件调度器，可以发现刚才创建的调度器器 insert_event 和 clear_event，如下：<br>mysql&gt; USE test;<br>mysql&gt; SHOW EVENTS \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>                  Db: test<br>                Name: clear_event<br>             Definer: <a href="mailto:root@127.0.0.1"target="_blank"rel="noopener">root@127.0.0.1</a><br>           Time zone: SYSTEM<br>                Type: RECURRING<br>          Execute at: NULL<br>      Interval value: 1<br>      Interval field: MINUTE<br>              Starts: 2018-05-16 17:08:43<br>                Ends: NULL<br>              Status: ENABLED<br>          Originator: 3<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 2. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>                  Db: test<br>                Name: insert_event<br>             Definer: <a href="mailto:root@127.0.0.1"target="_blank"rel="noopener">root@127.0.0.1</a><br>           Time zone: SYSTEM<br>                Type: RECURRING<br>          Execute at: NULL<br>      Interval value: 10<br>      Interval field: SECOND<br>              Starts: 2018-05-16 16:53:55<br>                Ends: NULL<br>              Status: ENABLED<br>          Originator: 3<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>2 rows in set (0.00 sec)<br>示例 2：查看触发器 clear_event 的创建信息：<br>mysql&gt; USE test;<br>mysql&gt; SHOW CREATE EVENT clear_event;<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>               Event: clear_event<br>            sql_mode: STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION<br>           time_zone: SYSTEM<br>        Create Event: CREATE DEFINER=<code>root</code>@<code>127.0.0.1</code> EVENT <code>clear_event</code> ON SCHEDULE EVERY 1 MINUTE STARTS ‘2018-05-16 17:08:43’ ON COMPLETION NOT PRESERVE ENABLE DO TRUNCATE TABLE t_test<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>1 row in set (0.00 sec)<br>示例 3：查看调度器的线程状态：<br>mysql&gt; SHOW PROCESSLIST \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>     Id: 1<br>   User: event_scheduler<br>   Host: localhost<br>     db: NULL<br>Command: Daemon<br>   Time: 55<br>  State: Waiting for next activation<br>   Info: NULL<br>3、调度器的修改：<br>语法：<br>ALTER<br>    [DEFINER = { user | CURRENT_USER}]<br>    EVENT event_name<br>    [ON SCHEDULE schedule]<br>    [ON COMPLETION [NOT] PRESERVE]<br>    [RENAME TO new_event_name] #修改名称，支持 RENAME 语法 <br>    [ENABLE | DISABLE | DISABLE ON SLAVE] #将其修改为可用或者不可用<br>    [COMMENT ‘string’] #添加注释信息<br>    [DO event_body]<br> 示例：<br>示例 1：将 test 库中的 insert_event 事件调度器改名为 save_event，操作如下：<br>mysql&gt; USE test;<br>mysql&gt; ALTER EVENT insert_event RENAME TO save_event;<br>mysql&gt; SHOW EVENTS  LIKE ‘save_event’\G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>                  Db: test<br>                Name: save_event<br>             Definer: <a href="mailto:root@127.0.0.1"target="_blank"rel="noopener">root@127.0.0.1</a><br>           Time zone: SYSTEM<br>                Type: RECURRING<br>          Execute at: NULL<br>      Interval value: 10<br>      Interval field: SECOND<br>              Starts: 2018-05-16 16:53:55<br>                Ends: NULL<br>              Status: ENABLED<br>          Originator: 3<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>1 row in set (0.00 sec)</field></like></p>
+<p># 查看，发现已经修改。<br>示例 2：将 save_event 调度器改为不可用：<br>mysql&gt; USE test;<br>mysql&gt; ALTER EVENT save_event DISABLE;</p>
+<p># 查看 save_event，发现 Status 已经变为 DISABLE，表示该调度器已经不可用了<br>mysql&gt; SHOW EVENTS LIKE ‘save_event’\G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>                  Db: test<br>                Name: save_event<br>             Definer: <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a><br>           Time zone: SYSTEM<br>                Type: RECURRING<br>          Execute at: NULL<br>      Interval value: 10<br>      Interval field: SECOND<br>              Starts: 2018-05-16 16:53:55<br>                Ends: NULL<br>              Status: DISABLED<br>          Originator: 3<br>character_set_client: utf8<br>collation_connection: utf8_general_ci<br>  Database Collation: utf8_general_ci<br>1 row in set (0.00 sec)</p>
+<p># 修改完成之后，再次查看 save_event，已经发现没有新数据插入了，表示修改生效。<br>4、调度器的禁用和删除：<br>语法：<br>ALTER EVENT event_name DISABLE; #禁用某个调度器 <br>DROP EVENT [IF EXISTS] event_name;  #删除某个调度器<br> 示例：禁用和删除 save_event 事件调度器并查看：<br>mysql&gt; USE test;</p>
+<p># 如果某个调度器不用了，可以先把其禁用<br>mysql&gt; ALTER EVENT save_event DISABLE;</p>
+<p># 确定删除之后，可以使用 DROP 完成调度器删除操作<br>mysql&gt; DROP EVENT save_event;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt; SHOW EVENTS LIKE ‘save_event’;<br>Empty set (0.00 sec)<br>5、调度器的优缺点及适用场景：<br>（1）优点：<br>a. 可以实现类似于操作系统层面的定时任务调度；<br>b. 可以再数据库层面解决事件的调度，由 DBA 统一维护，不依赖于操作系统层面的事件调度，有效防止了系统维护人员误操作调度器而导致的错误；<br>（2）缺点：<br>a. 在服务器繁忙的情况下，或者功能对于性能要求很高的情况下，使用调度器会对性能产生一定影响，因为调度器也是在后台开启线程一直在运行及判断；<br>b. 需要具有 SUPER 权限的用户才可以创建调度器，而 SUPER 用户权限一般开发人员是不可能具有的，需要 DBA 专门创建；<br>（3）适用场景：<br>a. 历史数据定期统计 <br>b. 过期数据清除<br> 至此，MySQL 事件调度器的内容介绍完毕 <br> 第 7 章 MySQL 数据库之索引的应用 <br> 前面几篇文章详细介绍了 MySQL 数据库的 DML，DDL，DCL，DQL 常用操作，本篇文章将介绍 MySQL 中一块对于开发和维护都比较重要的内容–MySQL 索引的应用！<br>1、索引的作用 <br>（1）如果索引为唯一索引，可以保证数据库中每一行数据的唯一性<br>（2）索引如果创建的合适，会大幅度提高数据库的查询性能，这也是索引最大的作用<br>（3）索引能够使得在查询过程中，使用到数据库的查询优化器，极大提高系统的性能<br>2、索引的分类<br>（1）按照数据结构和使用的算法划分：<br>B+Tree 索引<br> 内部实现采用了 B+Tree 数据结构，数据全部存在叶子节点上。本质上是一棵平衡排序树，由二叉树进化而来，各个叶结点由指针相连，按照从左到右的顺序读取叶子结点上的数据，会得到一个有序的数列。<br>Hash 索引 <br> 内部实现采用了 Hash 算法，数据的保存方式为一对一，一个键对应一条唯一的记录，类似于 Redis 或者 Memcached 中的 K-V 存储结构。<br>R-Tree 索引 <br> 内部实现采用了 R-Tree 数据结构，R-Tree 是一种空间索引的数据结构，它是 B 树向多维空间发展的另外一种形式，在地理位置测绘领域有所应用，其他场景几乎没有应用，了解即可。<br>（2）按照类型划分：<br>普通索引 <br> 普通索引是一种最基本的索引，只是为了提高数据的查询效率，也是开发中使用比较多的一种索引，允许索引列重复。<br>主键索引 <br> 用来唯一标识数据库中的一条记录，常用于保证数据库中记录的参照完整性，既不可为空，也不能重复。<br>唯一索引 <br> 用来唯一标识数据库中的一条记录，但是与主键索引稍有不同，唯一索引允许索引列的值为空，但是不允许索引列的值发生重复。<br>联合索引 / 组合索引 <br> 指在数据库表中的某几个字段上同时建立的索引，即：这个索引会关联不止一个列。使用的时候需要特别注意，这种索引遵循最左前缀匹配规则，在下面的索引使用中会详细介绍。<br>全文索引 <br> 用来完成某一段文字中的关键字查找，可以简单理解为 like 的加强版，不过使用方法和 like 不同，全文索引比较像一个搜索引擎。它目前支持的数据类型有：char，varchar 和 text 类型。<br>3、索引的创建和查看 <br>（1）索引的创建<br> 语法：<br>方法一：使用 CREATE INDEX 方法 <br>CREATE <unique> INDEX index_name ON table_name(&lt;field1,field2,…&gt;);<br> 方法二：使用修改表结构的方法 <br>ALTER TABLE table_name ADD <unique> INDEX index_name ON table_name(&lt;field1,field2,…&gt;);<br> 方法三：在创建表的时候指定 <br>CREATE TABLE table_name (<br>    field1 INT NOT NULL AUTO_INCREMENT,<br>    field2 INT ,<br>    field3 INT ,<br>    PRIMARY KEY(field_name),<br>    UNIQUE index_name(field(len)),<br>    INDEX index_name(field(len))<br>);<br> 示例：<br>示例 1：创建一张 t_user 测试表，字段包含：[id（主键），user_no（用户编号），login_name（登录名称），login_pass（登录密码），phone（手机号）]，要求：id 作为主键，user_no 列上建立唯一索引，login_name 和 login_pass 两个列上建立联合索引，phone 列上建立普通索引：<br>方法一：创建表的时候指定 <br>mysql&gt; USE test;<br>mysql&gt; CREATE TABLE t_user(<br>    id INT NOT NULL AUTO_INCREMENT,<br>    user_no VARCHAR(30) NOT NULL,<br>    login_name VARCHAR(50) NOT NULL,<br>    login_pass VARCHAR(50) NOT NULL,<br>    phone VARCHAR(15) NOT NULL,<br>    PRIMARY KEY(id),  #主键索引<br>    UNIQUE user_no_ind(user_no),  #唯一索引<br>    INDEX name_pass_ind(login_name,login_pass),  #联合索引<br>    INDEX phone_ind(phone)  #普通索引<br>)ENGINE = InnoDB DEFAULT CHARSET = UTF8;<br> 方法二：使用 CREATE INDEX 创建索引，此种方式不能创建主键索引<br>mysql&gt; USE test;</unique></unique></p>
+<p># 创建表的时候先不指定索引：<br>mysql&gt; CREATE TABLE t_user(<br>    id INT NOT NULL AUTO_INCREMENT,<br>    user_no VARCHAR(30) NOT NULL,<br>    login_name VARCHAR(50) NOT NULL,<br>    login_pass VARCHAR(50) NOT NULL,<br>    phone VARCHAR(15) NOT NULL,<br>    PRIMARY KEY (id)<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;</p>
+<p># 使用 CREATE INDEX 命令创建表上的索引 <br>mysql&gt; CREATE UNIQUE INDEX user_no_ind ON t_user(user_no);<br>mysql&gt; mysql&gt; CREATE INDEX name_pass_ind ON t_user(login_name,login_pass);<br>mysql&gt; CREATE INDEX phone_ind ON t_user(phone);<br> 方法三：使用 ALTER TABLE 修改表结构的方式创建索引<br>mysql&gt; USE test;</p>
+<p># 创建表结构<br>mysql&gt; CREATE TABLE t_user(<br>    id INT NOT NULL,<br>    user_no VARCHAR(30) NOT NULL,<br>    login_name VARCHAR(50) NOT NULL,<br>    login_pass VARCHAR(50) NOT NULL,<br>    phone VARCHAR(15) NOT NULL<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;</p>
+<p># 使用 ALTER TABLE 命令创建索引 <br>mysql&gt; ALTER TABLE t_user ADD PRIMARY KEY(id);<br>mysql&gt; ALTER TABLE t_user ADD UNIQUE INDEX user_no_ind(user_no);<br>mysql&gt; ALTER TABLE t_user ADD INDEX name_pass_ind(login_name,login_pass);<br>mysql&gt; ALTER TABLE t_user ADD INDEX phone_ind(phone);<br> 示例 2：创建一张帖子内容表，并在帖子内容列创建全文索引 <br> 方法一：创建表结构的时候指定索引 <br>mysql&gt; USE test;<br>mysql&gt; CREATE TABLE t_note(<br>    id BIGINT NOT NULL AUTO_INCREMENT,<br>    note_content TEXT NOT NULL,<br>    create_time DATETIME,<br>    PRIMARY KEY(id),<br>    FULLTEXT(note_content) #添加全文索引<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;<br> 方法二：使用 CREATE INDEX 方式创建全文索引<br>mysql&gt; USE test;<br>mysql&gt; CREATE TABLE t_note(<br>    id BIGINT NOT NULL AUTO_INCREMENT,<br>    note_content TEXT NOT NULL,<br>    create_time DATETIME,<br>    PRIMARY KEY(id)<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;</p>
+<p># 添加全文索引 <br>mysql&gt; CREATE FULLTEXT INDEX note_ind ON t_note(note_content);<br> 方法三：使用 ALTER TABLE 修改表结构的方式创建全文索引<br>mysql&gt; USE test;<br>mysql&gt; CREATE TABLE t_note(<br>    id BIGINT NOT NULL AUTO_INCREMENT,<br>    note_content TEXT NOT NULL,<br>    create_time DATETIME,<br>    PRIMARY KEY(id)<br>) ENGINE = InnoDB DEFAULT CHARSET = UTF8;</p>
+<p># 添加全文索引 <br>mysql&gt; ALTER TABLE t_note ADD FULLTEXT note_ind(note_content);<br>（2）索引信息的查看<br> 语法：<br>SHOW INDEX FROM table_name <where key_name="">;<br>SHOW INDEXES FROM table_name <where key_name="">;<br>注意：SHOW 后面可以为 INDEX 或者 INDEXES，可以使用 WHERE 条件根据索引名称查看索引信息 <br> 示例：查看 t_user 表上所创建的索引 <br>mysql&gt; USE t_user;<br>mysql&gt; SHOW INDEXES FROM t_user \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>        Table: t_user<br>   Non_unique: 0<br>     Key_name: PRIMARY<br> Seq_in_index: 1<br>  Column_name: id<br>    Collation: A<br>  Cardinality: 0<br>     Sub_part: NULL<br>       Packed: NULL<br>         Null:<br>   Index_type: BTREE<br>      Comment:<br>Index_comment:<br>…其他行略…<br> 输出字段解释：<br>Table：索引所在的表名称 <br>Non_unique：是否为非唯一的索引，对唯一索引和主键索引，此值为 0，因为主键和唯一键必须唯一<br>Key_name：索引的名称<br>Seq_in_index：索引中该列的位置，在<br>Column_name：索引所在列的列名称<br>Collation：列使用哪种方式存储在索引中，B+ 数索引总是 A，表示排过序的。对于其他的如 Hash 索引，此处可能为 NULL，因为 Hash 索引并未排序<br>Cardinality：索引中非胃一直的数目的估计值，通常用于优化器去判断是否查询时使本索引<br>Sub_part：是否只是用了列的一部分作为索引。比如：在某个非常长的字段上的前多少个字符上创建索引的情况<br>Packed：关键字如何被压缩，Null 表示未被压缩<br>Null：索引的列中是否含有 Null 值，主键索引，此处为空，表示不含有 Null 值<br>Index_type：索引类型，InnoDB 存储引擎，此处为 B+ 树<br>Comment：索引列的注释<br>Index_comment：索引的注释<br> 注意：上述字段中，Cardinality 字段相对来说比较重要，可以通过该字段来判断当前的索引是否最优，通常如果索引的利用率比较高的话，这个值会比较接近于表中的记录数，即：和表中的记录数接近于 1:1，但是这个值并不是实时维护，索引当相差比较大的时候，可以使用”ANALYZE TABLE table_name”命令去更新下这个值，有利于优化器对索引使用的判断。<br>4、索引的修改和删除 <br>（1）索引的删除<br> 语法：<br>DROP INDEX index_name ON table_name;<br>示例：<br>示例 1：删除 t_user 表中 phone 列上的 phone_ind 索引 <br>mysql&gt; USE test;<br>mysql&gt; DROP INDEX phone_ind ON t_user;<br>Query OK, 0 rows affected (0.01 sec)<br>Records: 0  Duplicates: 0  Warnings: 0<br> 示例 2：删除 t_user 表中的 id 列上的主键索引 <br>mysql&gt; USE test;<br>mysql&gt; ALTER TABLE t_user DROP PRIMARY KEY;<br>Query OK, 0 rows affected (0.19 sec)<br>Records: 0  Duplicates: 0  Warnings: 0<br>（2）索引的修改<br> 索引的修改过程其实是先删除索引，在重新创建索引，可以按照上述的删除索引和创建索引步骤完成。<br>5、索引使用注意事项 <br>（1）使用场景<br>a. 业务场景中，读多写少的场景<br>b.SQL 查询场景中，常用于 WHERE 语句之后的过滤条件；区分度大于 80%；WHERE 语句之后的过滤字段在过滤时不参与运算；<br>（2）以下的情况，对于有索引的列，查询时也不会使用索引<br>a. 当优化器判断使用索引和不适用索引差别不大时，将不会使用索引，比如：性别列创建的索引<br>b. 查询条件中发生计算，优化器将不使用索引，比如：WHERE SUBSTR(name,5) = ‘BING’<br>c. 查询条件中包含了隐士类型转换，比如：WHERE phone = 13520277199<br>d. 反向查询不会使用索引，比如：!=,&lt;&gt;,NOT IN,NOT LIKE 等，比如：WHERE name != ‘BING’;<br>e.LIKE 的左模糊匹配，将不会使用索引，比如：WHERE name LIKE ‘%BING’，右匹配查询会走索引;<br>f. 联合索引中，不满足左前缀规则，则 MySQL 不会使用索引。比如：对于 name,pass,user_no 列的联合索引，下述情况将不会使用索引：<br>        WHERE pass = ‘value’<br>        WHERE user_no = ‘value’<br>        WHERE pass = ‘123’ AND user_no = ‘123’<br>    而如下的情况将会使用到索引：<br>        WHERE name = ‘bing’<br>        WHERE name = ‘bing’ AND pass = ‘123’;<br>        WHERE name = ‘bing’ AND user_no = ‘021250’;<br>        WHERE pass = ‘123’ AND name = ‘bing’;<br>        WHERE name = ‘bing’ AND pass = ‘123’ AND user_no = ‘021250’;<br>g. 某个带索引的列和不带索引的列中间使用 OR 连接，则带索引的列也不会使用索引，如：user_no 列带有索引，phone_未带索引，则：<br>        不会使用索引：WHERE user_no = ‘123’ OR phone = ‘13520277898’<br>        会使用索引：WHERE user_no = ‘123’ AND phone = ‘15265648758’<br>h. 如果在联合索引中有范围查询，如果字段之间使用 OR 连接，则整个查询条件不会使用索引，如果字段之间使用 AND 连接，则从第一个范围查询开始之后的条件都不会使用索引<br>    比如：name,score,usre_no 列上的联合索引，则：<br>        不会使用索引：WHERE name = ‘bing’ OR score = 123 OR user_no = ‘02311’;<br>        不会使用索引：WHERE name = ‘bing’ AND score = 123 OR user_no = ‘01231’;<br>        会使用索引：WHERE name = ‘bing’ AND score = 123 AND user_no = ‘021321’;<br>        name 列会使用索引，name 之后的列不会使用索引：WHERE name = ‘bing’ AND score &gt; 120 AND user_no = ‘021321’;<br>6、执行计划查看<br> 语法：<br>EXPLAIN <select statement=""><br>示例：<br>示例 1：查看 t_user 表上面的 id 列查询执行计划：<br>mysql&gt; USER test;<br>mysql&gt; EXPLAIN SELECT <em> FROM t_user WHERE id = 1 \G<br><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></em> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>           id: 1<br>  select_type: SIMPLE<br>        table: t_user<br>         type: const<br>possible_keys: PRIMARY<br>          key: PRIMARY<br>      key_len: 4<br>          ref: const<br>         rows: 1<br>        Extra: NULL<br>1 row in set (0.00 sec)<br>输出字段说明：<br>id: 查询编号，如果有多个大小相同的编号，则执行顺序为从上到下，如果大小相同，则编号大的先执行 <br>select_type: 表示查询类型，有以下几种值：<br>    SIMPLE: 表示该查询为一个简单查询，如上述的根据 id 查询就是一个简单查询<br>    SUBQUERY: 表示该查询是 WHERE 字句中的子查询<br>    DERIVED: 表示该查询是 FROM 字句中的子查询<br>    PRIMARY: 表示一个负责嵌套查询最外层的查询<br>    UNION: 表示 UNION 查询的第二个 SELECT 子查询<br>    UNION RESULT: 表示该结果是从 UNION 表中查询出的结果<br>table: 表示查询时所关联的表<br>type: 表示关联类型或者访问类型，常见的几种值如下：<br>    ALL: 表示未使用索引，扫描全表<br>    index: 表示扫描所有的索引，通过扫描索引树去定位所有待查询数据<br>    range: 表示按照索引的范围扫描，即：从某索引的某个位置开始，到索引的另外一个位置结束，找出这个范围内每个索引对应的数据，范围查询会出现 range<br>    ref: 非唯一索引扫描，MySQL 将返回匹配这个索引的所有行<br>    eq_ref: 唯一索引扫描，即：通过该索引只能定位到表中的一条数据，主键索引和唯一索引属于这种类型<br>possible_keys: 查询优化器可能使用到的索引，但是不一定使用<br>key: 查询优化器真正使用的索引<br>key_len: 使用的索引长度，比如：在某个比较长的列上，通常只会给前多少个字符创建索引，这个长度就表示索引字符的长度<br>ref: 表示表的连接匹配条件中，哪些列或者常量被用于查找索引列上的值。可以理解为如果要完成这个查询，需要关联其他表中的哪个列或者常量<br>rows: 要查询到目标数据，需要扫描的行数<br>Extra: 其他额外信息，常见的有以下几种：<br>    Using Where: 表示查询结果需要在存储引擎层通过 Where 条件完成过滤<br>    Using index: 表示该 Where 条件的查询使用到了覆盖索引，即：该索引包括了满足查询所有数据的需求；<br>    Using tempory: 表示该查询使用到了临时表来存储中间结果集，通常在排序或者分组查询中会出现<br>    Using filesort: 表示该查询使用到了写磁盘的方式来存储结果集，出现这种情况，表示查询性能极差，已经发生了磁盘 IO<br> 以上的查询计划中主要关注的列：<br>type: 查询类型，该列出现了 ALL 的查询类型，就表示查询语句有问题，需要根据索引使用的注意事项来排查 <br>key: 表示查询是否用到了索引，如果该列为 NULL，表示索引未起到实际作用<br>rows: 查询行数，如果特别大，和表中的数据条数相差不大，则表示索引利用率特别低，需要优化索引<br>Extra: 如果发现有 Using filesort，表示索引的效率特别差，已经发生了磁盘 IO，需要排查对应的语句和索引使用情况<br> 示例 2：查询 t_user 表中 id 大于 4 的记录，观察其执行计划 <br>mysql&gt; USE test;<br>mysql&gt; EXPLAIN SELECT <em> FROM t_user WHERE id &gt; 4\G<br><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></em> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>           id: 1<br>  select_type: SIMPLE<br>        table: t_user<br>         type: range<br>possible_keys: PRIMARY<br>          key: PRIMARY<br>      key_len: 4<br>          ref: NULL<br>         rows: 1<br>        Extra: Using where<br>1 row in set (0.00 sec)<br> 从上述输出结果看出：type 列为 range，possible_keys 和 key 都为 PRIMARY，表示该查询使用到了范围查询，而且用到了主键索引。<br>示例 3：查看 t_user 表中 login_name 列的索引使用情况 <br>mysql&gt; USE test;<br>mysql&gt; EXPLAIN SELECT <em> FROM t_user WHERE login_name = ‘aaa’ \G<br><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></em> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>           id: 1<br>  select_type: SIMPLE<br>        table: t_user<br>         type: ref<br>possible_keys: name_pass_ind<br>          key: name_pass_ind<br>      key_len: 152<br>          ref: const<br>         rows: 1<br>        Extra: Using index condition<br>1 row in set (0.00 sec)<br> 由结果可以看出，login_name 列的条件查询用到了 login_name,login_pass 列的联合索引。<br>示例 4：查看 t_user 表中 id 最大的记录的执行计划 <br>mysql&gt; USE test;<br>mysql&gt; EXPLAIN SELECT <em> FROM t_user WHERE id = (SELECT MAX(id) FROM t_user) \G<br><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></em> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>           id: 1<br>  select_type: PRIMARY<br>        table: t_user<br>         type: const<br>possible_keys: PRIMARY<br>          key: PRIMARY<br>      key_len: 4<br>          ref: const<br>         rows: 1<br>        Extra: NULL<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 2. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>           id: 2<br>  select_type: SUBQUERY<br>        table: NULL<br>         type: NULL<br>possible_keys: NULL<br>          key: NULL<br>      key_len: NULL<br>          ref: NULL<br>         rows: NULL<br>        Extra: Select tables optimized away<br>2 rows in set (0.00 sec)<br> 由上述结果可以看出，位于 WHERE 之后的子查询的查询类型为 SUBQUERY，直接查询最大 id 不会使用到索引。<br>7、索引优化 <br>（1）对于主键索引，最好采用整型数字的格式，因为在普通索引中，索引树的叶子节点上存储的是主键索引的值，这个值如果过大，会导致普通索引会变的特别大<br>（2）在更新频繁的列上最好少创建索引，因为更新需要维护索引树，而这个维护过程是很耗时的<br>（3）创建联合索引时，应该考虑哪些组合列上的查询需求最大，从而确定联合索引的顺序，因为联合索引有左前缀规则<br>（4）索引并不是越多越好，索引如果过多，会导致磁盘大量浪费，而且在更新这些查询较少的列时，会产生很大的 IO 操作，造成服务器资源浪费<br>（5）索引可以在后期通过监控 MySQL 数据库中的慢 SQL 再来优化和添加。最好的办法还是开始就考虑周全，创建好索引<br>（6）添加索引的时候，需要注意是否有慢 SQL，如果有慢 SQL，会阻塞索引的添加操作，一直处于等待中<br> 至此，MySQL 索引相关内容介绍完毕 <br> 第 8 章 MySQL 数据库运维之多单机多实例搭建 <br> 上篇文章介绍了 MySQL 中索引应用，从本篇文章往后，将介绍 MySQL 运行维护相关内容，首先介绍一下 MySQL 单服务器多实例的搭建过程！<br>一、单机多实例的优缺点 <br>1、优点<br>（1）单机多实例的部署方式可以充分利用服务器资源<br>（2）如果后期业务量会扩展，使用多实例将数据分开存储，有利于后期的数据迁移<br>2、缺点<br>（1）由于多实例部署在一台机器上，会造成一定程度上的服务器资源争用（包括：CPU，内存，IO，网络等）<br>（2）单机上的多实例容灾能力较差，比如：单台服务器磁盘如果损坏，所有实例的数据可能会丢失<br> 二、单机多实例的搭建过程 <br>1、软件和环境准备<br>（1）通用二进制格式下载地址：<a href="https://dev.mysql.com/get/Dow.."target="_blank"rel="noopener">https://dev.mysql.com/get/Dow..</a>.<br>（2）主机 IP:192.168.0.10<br>2、将下载的软件上传到远程服务器上，然后解压，重命名。以下介绍过程中使用的是 5.6.39 版本，和 5.6.40 版本没有太大区别<br>[root@WB-BLOG local]# tar xf mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz<br>[root@WB-BLOG local]# mv mysql-5.6.39-linux-glibc2.12-x86_64 mysql-5.6.39<br>3、创建 mysql 用户和多实例的目录<br>[root@WB-BLOG local]# useradd mysql -s /sbin/nologin -M<br>[root@WB-BLOG local]# mkdir -pv /mysql_data/{3306,3307}/data<br>[root@WB-BLOG local]# tree /mysql_data/<br>    /mysql_data/<br>    ├── 3306<br>    │   └── data<br>    └── 3307<br>        └── data<br>4、配置 3306 端口对应的实例<br>[root@WB-BLOG local]# cd mysql-5.6.39<br>[root@WB-BLOG mysql-5.6.39]# cp support-files/my-default.cnf /mysql_data/3306/my.cnf<br>[root@WB-BLOG mysql-5.6.39]# cd /mysql_data/3306/<br>[root@WB-BLOG 3306]# vim my.cnf<br> 编辑端口为 3306 的实例的配置文件，写入如下内容：<br>[mysql]<br>socket = /mysql_data/3306/data/mysql.sock<br>[mysqld]<br>event_scheduler = ON<br>character-set-server = UTF8<br>innodb_buffer_pool_size = 128M<br>basedir = /usr/local/mysql-5.6.39<br>datadir = /mysql_data/3306/data<br>port = 3306<br>server_id = 3<br>socket = /mysql_data/3306/data/mysql.sock<br>innodb_file_per_table = 1<br>skip-name-resolve<br>innodb_flush_log_at_trx_commit = 2<br>log_bin = /mysql_data/3306/data/mysql-bin<br>log_bin_index = /mysql_data/3306/data/mysql-bin-index<br>binlog_format = mixed<br>log_error = /mysql_data/3306/data/mysql-error<br>pid_file = /mysql_data/3306/data/mysql.pid<br>join_buffer_size = 128M<br>sort_buffer_size = 2M<br>read_rnd_buffer_size = 2M<br>max_connections = 1000<br>max_allowed_packet = 16M<br>sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES<br>5、配置 3307 端口对应的实例 <br> 将 /mysql_data/3306 目录下的 my.cnf 复制一份到 /mysql_data/3307 目录下，并修配置文件中的端口，server-id 和数据目录的路径，如下：<br>[root@WB-BLOG 3306]# cd ../3307/<br>[root@WB-BLOG 3307]# cp ../3306/my.cnf .<br>[root@WB-BLOG 3307]# vim my.cnf<br>在端口为 3307 的实例对应的配置文件中写入如下内容：<br>[mysql]<br>socket = /mysql_data/3307/data/mysql.sock<br>[mysqld]<br>event_scheduler = ON<br>character-set-server = UTF8<br>innodb_buffer_pool_size = 128M<br>basedir = /usr/local/mysql-5.6.39<br>datadir = /mysql_data/3307/data<br>port = 3307<br>server_id = 4<br>socket = /mysql_data/3307/data/mysql.sock<br>innodb_file_per_table = 1<br>skip-name-resolve<br>innodb_flush_log_at_trx_commit = 2<br>log_bin = /mysql_data/3307/data/mysql-bin<br>log_bin_index = /mysql_data/3307/data/mysql-bin-index<br>binlog_format = mixed<br>log_error = /mysql_data/3307/data/mysql-error<br>pid_file = /mysql_data/3307/data/mysql.pid<br>join_buffer_size = 128M<br>sort_buffer_size = 2M<br>read_rnd_buffer_size = 2M<br>max_connections = 1000<br>max_allowed_packet = 16M<br>sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES<br>注意：上述的内容对比之后可以发现，只有端口和 server-id 不同，所以可以使用 sed 命令完成替换，如下：<br>[root@WB-BLOG 3307]# sed -i “s#3306#3307#g” my.cnf<br>[root@WB-BLOG 3307]# sed -i “s#server-id=3#server-id=4#g” my.cnf<br>6、查看目录结构是否正常，如下所示表示的结果表示正常。然后将 /mysql_data/3306 和 /mysql_data/3307 目录授权给 mysql 用户<br>[root@WB-BLOG 3307]# tree /mysql_data/<br>    /mysql_data/<br>    ├── 3306<br>    │   ├── data<br>    │   └── my.cnf<br>    └── 3307<br>        ├── data<br>        └── my.cnf<br>[root@WB-BLOG 3307]# chown -R mysql:mysql /mysql_data/{3306,3307}<br>[root@WB-BLOG 3307]# ls -l /mysql_data/<br>    total 8<br>    drwxr-xr-x. 3 mysql mysql 4096 May 22 04:45 3306<br>    drwxr-xr-x. 3 mysql mysql 4096 May 22 04:51 3307<br>7、初始化 3306 实例和 3307 实例的数据目录<br>[root@WB-BLOG 3307]# cd /usr/local/mysql-5.6.39<br>[root@WB-BLOG mysql-5.6.39]# ./scripts/mysql_install_db –basedir=/usr/local/mysql-5.6.39 –datadir=/mysql_data/3306/data/ –user=mysql<br>[root@WB-BLOG mysql-5.6.39]# ./scripts/mysql_install_db –basedir=/usr/local/mysql-5.6.39 –datadir=/mysql_data/3307/data/ –user=mysql</select></where></where></p>
+<p># 从初始化的控制台日志判断是否初始化成功，看到两个单行的 OK 表示成功，如下<br>2018-05-22 04:58:48 0 [Note] /usr/local/mysql-5.6.39/bin/mysqld (mysqld 5.6.39-log) starting as process 3642 …<br>OK<br>…<br>2018-05-22 04:58:54 0 [Note] /usr/local/mysql-5.6.39/bin/mysqld (mysqld 5.6.39-log) starting as process 3664 …<br>OK</p>
+<p># 查看 3306 和 3307 实例的数据目录是否正常，是否有初始化之后的系统表<br>[root@WB-BLOG mysql-5.6.39]# ls /mysql_data/3306/data/<br>    ibdata1  ib_logfile0  ib_logfile1  mysql  performance_schema  test<br>[root@WB-BLOG mysql-5.6.39]# ls /mysql_data/3307/data/<br>    ibdata1  ib_logfile0  ib_logfile1  mysql  performance_schema  test<br>8、使用 mysqld_safe 命令测试实例是否可以正常启动<br>[root@WB-BLOG mysql-5.6.39]# cd bin/<br>[root@WB-BLOG bin]# ./mysqld_safe –defaults-file=/mysql_data/3306/my.cnf –datadir=/mysql_data/3306/data/ &amp;</p>
+<p># 查看进程是否正常启动 <br>[root@WB-BLOG bin]# netstat -tunlp | grep mysql<br>  tcp   0   0 :::3306      :::*      LISTEN      4050/mysqld<br> 如上结果表示 3306 实例启动正常，可以用此方法测试 3307 是否可以正常启动。<br>9、手动编写针对每个实例的启动脚本 <br>（1）修改 3306 和 3307 实例的密码，修改方式为使用跳过授权表的方式启动，然后登陆修改，可以参考第一篇博文，MySQL 的多种安装方式中有介绍，使用的命令如下，不再详述<br>[root@WB-BLOG 3306]# /usr/local/mysql-5.6.39/bin/mysqld_safe –defaults-file=/mysql_data/3306/my.cnf –datadir=/mysql_data/3306/data/ –skip-grant-tables &amp;<br>[root@WB-BLOG ~]# mysql -uroot -p -P3306 -S /mysql_data/3306/data/mysql.sock<br>mysql&gt; update user set password = password(‘root’);<br>mysql&gt; flush privileges;<br>（2）编写 3306 实例的启动脚本，如下：<br>[root@WB-BLOG bin]# cd /mysql_data/3306/<br>[root@WB-BLOG 3306]# vim mysqld<br> 写入如下内容：</p>
+<p>#!/bin/bash<br>#<br>MYSQL_BASE_PATH=/usr/local/mysql-5.6.39<br>MYSQL_PORT=3306<br>MYSQL_3306_BASEDIR=/mysql_data/3306<br>MYSQL_SOCK=${MYSQL_3306_BASEDIR}/data/mysql.sock<br>MYSQL_CONF=${MYSQL_3306_BASEDIR}/my.cnf<br>MYSQL_DATADIR=${MYSQL_3306_BASEDIR}/data<br>MYSQL_USER=root<br>MYSQL_PASS=root</p>
+<p>#When No Input<br>function Usage(){<br>   echo “Please Usage ./mysqld {start|stop|restart|status}”<br>   exit 2<br>}</p>
+<p>#Start MySQL<br>function start_mysql() {<br>   if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>      echo “MySQL is already running…”<br>   else<br>      ${MYSQL_BASE_PATH}/bin/mysqld_safe –defaults-file=${MYSQL_CONF} –datadir=${MYSQL_DATADIR} &gt; /dev/null 2&gt;&amp;1 &amp;<br>      sleep 2<br>      if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>          echo “MySQL start success!”<br>      else<br>          echo “MySQL start failure.View logs and try again.”<br>      fi<br>   fi<br>}</p>
+<p>#Stop MySQL<br>function stop_mysql(){<br>   if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>       ${MYSQL_BASE_PATH}/bin/mysqladmin -u${MYSQL_USER} -p${MYSQL_PASS} -P${MYSQL_PORT} -S ${MYSQL_SOCK} shutdown &gt; /dev/null 2&gt;&amp;1 &amp;<br>       sleep 2<br>       if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>          echo “MySQL stop failure…”<br>       else<br>          echo “MySQL stop success!”<br>       fi<br>   else<br>       echo “MySQL is not running…”<br>   fi<br>}</p>
+<p>#Restart MySQL<br>function restart_mysql(){<br>   stop_mysql<br>   sleep 2<br>   start_mysql<br>}</p>
+<p>#MySQL status<br>function mysql_status(){<br>   if [<code>ps -ef| grep mysql | grep ${MYSQL_PORT}|grep -v grep | wc -l</code> -gt 1 ]; then<br>       echo “MySQL is running…”<br>   else<br>       echo “MySQL is stopped.”<br>   fi<br>}<br>case $1 in<br>start)<br>start_mysql<br>;;<br>stop)<br>stop_mysql<br>;;<br>restart)<br>restart_mysql<br>;;<br>status)<br>mysql_status<br>;;<br>*)<br>Usage<br>;;<br>esac<br>授予 mysqld 脚本可执行权限，然后启动：<br>[root@WB-BLOG 3306]# chmod +x mysqld<br>[root@WB-BLOG 3306]# ./mysqld start</p>
+<p># 查看运行状态<br>[root@WB-BLOG 3306]# ./mysqld status<br>    MySQL is running…<br>（3）将 3306 实例中的 mysqld 脚本拷贝一份到 /mysqld_data/3307 目录下，然后修改端口及实例的目录，最终内容如下：</p>
+<p>#!/bin/bash<br>#<br>MYSQL_BASE_PATH=/usr/local/mysql-5.6.39<br>MYSQL_PORT=3307<br>MYSQL_3307_BASEDIR=/mysql_data/3307<br>MYSQL_SOCK=${MYSQL_3307_BASEDIR}/data/mysql.sock<br>MYSQL_CONF=${MYSQL_3307_BASEDIR}/my.cnf<br>MYSQL_DATADIR=${MYSQL_3307_BASEDIR}/data<br>MYSQL_USER=root<br>MYSQL_PASS=root</p>
+<p>#When No Input<br>function Usage(){<br>   echo “Please Usage ./mysqld {start|stop|restart|status}”<br>   exit 2<br>}</p>
+<p>#Start MySQL<br>function start_mysql() {<br>   if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>      echo “MySQL is already running…”<br>   else<br>      ${MYSQL_BASE_PATH}/bin/mysqld_safe –defaults-file=${MYSQL_CONF} –datadir=${MYSQL_DATADIR} &gt; /dev/null 2&gt;&amp;1 &amp;<br>      sleep 2<br>      if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>          echo “MySQL start success!”<br>      else<br>          echo “MySQL start failure.View logs and try again.”<br>      fi<br>   fi<br>}</p>
+<p>#Stop MySQL<br>function stop_mysql(){<br>   if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>       ${MYSQL_BASE_PATH}/bin/mysqladmin -u${MYSQL_USER} -p${MYSQL_PASS} -P${MYSQL_PORT} -S ${MYSQL_SOCK} shutdown &gt; /dev/null 2&gt;&amp;1 &amp;<br>       sleep 2<br>       if [<code>ps -ef | grep mysql | grep ${MYSQL_PORT} | grep -v grep | wc -l</code> -gt 1 ]; then<br>          echo “MySQL stop failure…”<br>       else<br>          echo “MySQL stop success!”<br>       fi<br>   else<br>       echo “MySQL is not running…”<br>   fi<br>}</p>
+<p>#Restart MySQL<br>function restart_mysql(){<br>   stop_mysql<br>   sleep 2<br>   start_mysql<br>}</p>
+<p>#MySQL status<br>function mysql_status(){<br>   if [<code>ps -ef| grep mysql | grep ${MYSQL_PORT}|grep -v grep | wc -l</code> -gt 1 ]; then<br>       echo “MySQL is running…”<br>   else<br>       echo “MySQL is stopped.”<br>   fi<br>}<br>case $1 in<br>start)<br>start_mysql<br>;;<br>stop)<br>stop_mysql<br>;;<br>restart)<br>restart_mysql<br>;;<br>status)<br>mysql_status<br>;;<br>*)<br>Usage<br>;;<br>esac<br>10、单机多实例的登录 <br>（1）常规登录方法<br>[root@WB-BLOG ~]# mysql -uroot -proot -h127.0.0.1 -P3307 -S /mysql_data/3307/data/mysql.sock<br> 参数解释：<br>-S: 指定示例对应的 Socket 文件 <br> 注意：单机多实例的登录需要指定待登录示例对应的 socket 文件。<br>（2）为了防止每次登陆 MySQL 时需要带一对参数，编写一个方便登陆的脚本 mysql_login.sh，将登录所需参数写入到脚本中，内容如下：<br>[root@WB-BLOG mysql_data]# cat mysql_login.sh </p>
+<p>#!/bin/bash<br>#<br>SERVER_IP=127.0.0.1<br>MYSQL_BASE_PATH=/usr/local/mysql-5.6.39<br>MYSQL_01_PORT=3306<br>MYSQL_02_PORT=3307</p>
+<p>#MYSQL USER AND PASS<br>MYSQL_01_USER=root<br>MYSQL_01_PASS=root<br>MYSQL_02_USER=root<br>MYSQL_02_PASS=root</p>
+<p>MYSQL_01_BASEDIR=/mysql_data/3306<br>MYSQL_02_BASEDIR=/mysql_data/3307</p>
+<p>MYSQL_01_SOCK=${MYSQL_01_BASEDIR}/data/mysql.sock<br>MYSQL_02_SOCK=${MYSQL_02_BASEDIR}/data/mysql.sock</p>
+<p>echo “1&gt; mysql-3306”<br>echo “2&gt; mysql-3307”</p>
+<p>read -p “Please Input the Login Server Number:[1,2]:” INPUT<br>case $INPUT in<br>1)<br>${MYSQL_BASE_PATH}/bin/mysql -u${MYSQL_01_USER} -p${MYSQL_01_PASS} -P${MYSQL_01_PORT} -h${SERVER_IP} -S ${MYSQL_01_SOCK} –prompt=’mysql-server-3306&gt; ‘<br>;;<br>2)<br>${MYSQL_BASE_PATH}/bin/mysql -u${MYSQL_02_USER} -p${MYSQL_02_PASS} -P${MYSQL_02_PORT} -h${SERVER_IP} -S ${MYSQL_02_SOCK} –prompt=’m<br>ysql-server-3307&gt; ‘<br>;;<br>*)<br>echo “Wrong Input.Please run mysql_login.sh again.”<br>;;<br>esac<br>脚本中的登录命令参数说明：<br>prompt: 指定登录之后的 mysql 命令行提示符，如果同时打开多个 shell 窗口，可以在每一个 mysql 的命令行窗口指定命令提示符，防止数据库的误操作。<br>脚本的运行效果：<br>[root@WB-BLOG mysql_data]# ./mysql_login.sh<br>1&gt; mysql-3306<br>2&gt; mysql-3307<br>Please Input the Login Server Number:[1,2]:1<br>Warning: Using a password on the command line interface can be insecure.<br>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 4<br>Server version: 5.6.39-log MySQL Community Server (GPL)<br>Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.<br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.<br>mysql-server-3306&gt; </p>
+<p># 登录成功 <br> 至此，MySQL 的多实例搭建介绍完毕，后面的主从异步复制介绍打算使用 MySQL 单机多实例来部署，<br>第 9 章 MySQL 数据库运维之主从复制搭建 <br> 上篇文章详细介绍了 MySQL 数据库的单机多实例搭建，本篇文章将在上篇文章的基础上介绍 MySQL 主从复制过程，其中常见的复制架构有：异步复制，半同步复制及同步复制。常用的复制架构有异步复制及半同步复制！<br>一、常见的复制架构<br>1、主主复制<br>（1）结构图：</p>
+<p>（2）说明：主主复制即复制的两个实例互为主从，两个库中都可以同时读和写；<br>（3）优点：<br>a、对于读写请求都较多的需求，可以在多个实例之间分摊读写请求，减轻单实例的读写压力<br>b、互为主从，当一个示例出故障时，可以迅速切换到另外一个实例上，提供读写服务<br>2、一主一从<br>（1）结构图：</p>
+<p>（2）说明：指的是在两个数据库实例中，一个实例扮演着主库的角色，另一个实例扮演着从库的角色。这种方案中，从库通常用来作为备份使用，提供服务的多为主库；<br>（3）优点：<br>a、多数情况下，可以有效降低因某台数据库服务器故障而导致数据丢失的概率<br>b、作为备份服务器，可以在从库上完成在线数据的全备份，而不影响主库的写服务<br>3、一主多从<br>（1）结构图：</p>
+<p>（2）说明：指的是在多个数据库实例中，只包含了一个主库，其他实例都作为该主库的从库，这种架构是业务规模较大场景中的一种复制架构；<br>（3）优点：<br>a、该方已经比较成功，而且使用范围极为广泛，出问题之后可以迅速找到解决方案 <br>a、作为主库的备份，可以迅速扩展多个从库<br>b、可以使用 mysql-proxy 等中间件提供读写分离服务，通过多个从库来应对大量的读请求，提高网站的吞吐量<br>c、当主库出故障时，从库可以快速接管主库，成为新的主库，提供写服务<br> 二、主从复制的原理和过程 <br>1、主从异步复制的原理<br> 主库上的二进制 bin-log 中记录主库的所有 DML 操作，同时在主库上运行有一个 IO 线程，用于响应从库上的 bin-log 日志读取请求；在从库上运行有一个 IO 线程和一个 SQL 线程，IO 线程会实时通过网络请求去从库上读取 bin-log 日志，然后写入到自身的 relay-log 日志文件中，同时运行在从库上的 SQL 线程会去解析并读取 relay-log，然后在自身库上执行读取到的 SQL，完成主从数据的同步，示意图如下：</p>
+<p>2、主从同步的工作过程 <br>（1）详细过程<br>a、主库上会开启了二进制 bin-log 日志记录，同时运行有一个 IO 线程；<br>b、主库上对于需要同步的数据库或者表所发生的所有 DML 操作都会被记录到 bin-log 二进制日志文件中；<br>c、从库上开启 relay-log 日志，同时运行有一个 IO 线程和一个 SQL 线程；<br>d、IO 线程负责从主库中读取 bin-log 二进制日志，并写入到本地的 relay-log 日志中，同时记录从库所读取到的主库的日志文件位置信息，以便下次从这个位置点再次读取；<br>e、SQL 线程负责从本地的 relay-log 日志中读取同步到的二进制日志，并解析为数据库可以识别的 SQL 语句，然后应用到本地数据库，完成同步；<br>f、执行完 relay-log 中的操作之后，进入睡眠状态，等待主库产生新的更新；<br>（2）以上详细过程可总结为三步<br> 第一步：主库在每个事务更新数据完成之前，将该操作记录串行地写入到 binlog 文件中；<br>第二步：从库开启一个 I/O 线程，该线程对主库打开一个普通连接，主要工作是读取二进制日志。如果读取的进度已经跟上了主库，就进入睡眠状态并等待主库产生新的事件。I/O 线程最终的目的是将这些事件写入到中继日志中；<br>第三步：SQL 线程会读取中继日志，并顺序执行该日志中的 SQL 事件，从而与主数据库中的数据保持一致；<br>三、MySQL 异步复制搭建过程（单机多实例介绍，沿用上篇文章中搭建的多实例环境）<br>1、环境准备 <br> 操作系统：CentOS6.9<br>服务器 IP：192.168.0.10<br>数据库版本：MySQL-5.6.39<br>数据库实例：实例 1–3306 端口（主），实例 2–3307 端口（从）<br>2、编辑 3306 实例的配置文件，打开该实例的二进制日志，并修改 server-id，如下 <br>[root@WB-BLOG ~]# cd /mysql_data/3306/<br>[root@WB-BLOG 3306]# vim my.cnf<br>    [mysqld]<br>    server_id=3<br>    log_bin=/mysql_data/3306/data/mysql-bin<br>    log_bin_index=/mysql_data/3306/data/mysql-bin-index<br>    binlog_format=mixed<br>    …<br> 参数解释：<br>（1）server-id：用来标识一个唯一的实例，如果是在同一个局域网内，可以使用 ip 地址的最后一段，要保证唯一 <br>（2）log_bin：二进制日志文件的路径，mysql 用户对该路径必须具有读写权限<br>（3）log_bin_index：二进制文件的索引路径，mysql 用户对该路径必须具有读写权限<br>（4）binlog_format：表示二进制日志内容的记录方式，有三种方式：<br>    a、row: 基于行记录的方式，MySQL 会将真实发生变化的行记录进日志，所以如果有 update 更新全表的操作，二进制日志文件会变得非常大。通常用于 SQL 语句复杂但是影响的行比较少的场景<br>    b、statement: 基于语句的方式，MySQL 会将导致数据发生变化的 SQL 语句记录到日志文件中，适用于一条语句影响很多行的场景，但是注意当在主库上使用到了 UUID，SYSDATE，FOUND_ROWS 函数时，使用 statement 方式的复制会出现主从不一致的情况；<br>    c、mixed: 混合记录模式，MySQL 会自动进行判断具体是使用 row 格式还是 statement 格式，通常情况下都使用 mixed，由 MySQL 来进行判断<br>3、重启主库<br>[root@WB-BLOG ~]# cd /mysql_data/3306/<br>[root@WB-BLOG 3306]# ./mysqld restart<br>4、备份主库的数据<br>[root@WB-BLOG 3306]# cd /usr/local/mysql-5.6.39/bin/<br>[root@WB-BLOG tmp]# ./mysqldump -uroot -proot -h127.0.0.1 -P3306 -S /mysql_data/3306/data/mysql.sock -A –master-data=2 -F –single-transaction | gzip &gt; /tmp/mysql_all.sql.gz<br> 参数说明：<br>-S：指定 socket 文件，单机多实例必须要指定<br>-A：–all-databases，表示备份所有的数据库<br>–master-data：表示 change master 命令是否包括在备份之后的 sql 文件中，常用的值有 1 和 2<br>    1：表示 change master 指令在 sql 文件中处于打开状态，可用于快速创建主从同步，不用再次手动修改日志文件名称和位置点<br>    2：表示 change master 指令在 sql 文件中会被注释，从库上使用 change master 时需要手动指定日志文件的文件名和位置点<br>-F：表示备份日志的时候刷新二进制日志，重新创建一个新的二进制日志文件<br>–single-transaction：用于 InnoDB 存储引擎格式的表备份，导出开始时设置事务隔离状态并使用一致性快照开始事务，而后马上执行 unlock tables，然后执行导出<br>gzip：表示将备份的 sql 文件压缩</p>
+<p># 其他常见参数在后面的 MySQL 数据备份于恢复会详细介绍<br>5、登陆主库，然后创建复制账户<br>[root@WB-BLOG 3306]# cd ..<br>[root@WB-BLOG mysql_data]# ./mysql_login.sh</p>
+<p>mysql-server-3306&gt; USE mysql</p>
+<p># 授权从库的 <br>mysql-server-3306&gt; GRANT REPLICATION SLAVE,REPLICATION CLIENT ON <em>.</em> to ‘repl‘@’127.0.0.1’ IDENTIFIED BY ‘repl’;<br>mysql-server-3306&gt; FLUSH PRIVILEGES;<br>6、查看主库的二进制日志文件及位置点<br>mysql-server-3306&gt; show master status \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>             File: mysql-bin.000014<br>         Position: 367<br>     Binlog_Do_DB:<br> Binlog_Ignore_DB:<br>Executed_Gtid_Set:<br>1 row in set (0.00 sec)<br>7、将主库导出的数据导入从库中<br>[root@WB-BLOG mysql_data]# cd /usr/local/mysql-5.6.39/bin/<br>[root@WB-BLOG bin]# gzip -d /tmp/mysql_all.sql.gz | ./mysql -uroot -proot -S /mysql_data/3307/data/mysql.sock<br>8、修改从库的配置文件，开启 relay-log 日志，并设置 server-id，如下<br>[mysqld]<br>server-id=4<br>relay_log=/mysql_data/3307/data/relay-log<br>relay_log_index = /mysql_data/3307/data/relay-log-index<br>…<br>9、修改从库上的 master 指向，使其指向主库，并且从主库上最新的二进制日志和位置点开始同步，然后启动主从同步<br>[root@WB-BLOG mysql_data]# ./mysql_login.sh<br>mysql-server-3307&gt; CHANGE MASTER TO master_host = ‘127.0.0.1’,master_port = 3306,master_user=’repl’,master_password=’repl’,master_log_file=’mysql-bin.000014’,master_log_pos = 367;<br>mysql-server-3307&gt; START SLAVE;<br>mysql-server-3307&gt; SHOW SLAVE STATUS \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>               Slave_IO_State: Waiting for master to send event<br>                  Master_Host: 127.0.0.1<br>                  Master_User: repl<br>                  Master_Port: 3306<br>                Connect_Retry: 60<br>              Master_Log_File: mysql-bin.000015<br>          Read_Master_Log_Pos: 425<br>               Relay_Log_File: relay-log.000004<br>                Relay_Log_Pos: 588<br>        Relay_Master_Log_File: mysql-bin.000015<br>             Slave_IO_Running: Yes<br>            Slave_SQL_Running: Yes<br>              Replicate_Do_DB:<br> 注意：上述结果中 Slave_IO_Running 和 Slave_SQL_Running 都为 Yes 表示主从同步成功，如果为 Connecting…，可以等待一会再次查看，如果为 No，表示同步失败；<br>参数说明：<br>master_host: 主库的主机名或者 IP 地址 <br>master_port: 主库的端口号，必须为整数，不能加引号，否则会提示错误<br>master_user: 在主库上添加的复制用户名称<br>master_password: 在主库上添加的复制用户密码<br>master_log_file: 主库当前的二进制日志文件名称<br>master_log_pos: 主库当前的二进制文件位置点，整数，不可加引号，否则会提示错误<br> 开启主从的另外一种方法是分别开启 SQL 线程和 IO 线程，如下：<br>mysql&gt; START SLAVE IO_THREAD;<br>mysql&gt; START SLAVE SQL_THREAD;<br>10、验证，登陆主库，然后创建数据库，查看从库是否可以正常同步<br>mysql-server-3306&gt; CREATE DATABASE test_db;<br>mysql-server-3306&gt; QUIT<br>mysql-server-3307&gt; SHOW DATABASES;<br>+——————–+<br>| Database           |<br>+——————–+<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| test               |<br>| test_db            |<br>+——————–+<br>5 rows in set (0.00 sec)</p>
+<p># 从上面的结果可以看到，test_db 已经同步到 3307 实例上了 <br>11、至此，MySQL 的主从复制搭建完毕。<br>12、主从同步中常见的问题<br>（1）从库的 IO 线程无法连接，通过”show slave status G”可以查看到具体的错误信息<br> 原因 1：在主库上创建的用户授权错误，导致从库无法远程连接主库 <br> 解决办法 1：在主库上通过”show grants for ‘user‘@’ip’;”查看授权是否正确，如果错误，重新授权即可 <br> 原因 2：如果是独立主机上的两个主从数据库实例，授权正确的情况下，可能是由于主库的防火墙拦截导致从库无法连接主库 <br> 解决办法 2：关闭主库的防火墙，或者在主库所在服务器添加防火墙规则，允许从库的 tcp 连接 <br>（2）从库启动的时候提示 server-id 冲突，导致无法同步主库上的数据<br> 原因：主从库配置文件中的 server-id 相同了 <br> 解决办法：将主库可从库配置文件中的 server-id 改为不同，重新开启从库上的同步即可 <br>（3）在从库上执行了创建库或者表的操作，然后在主库上又执行了一遍，导致同步错误，如下：<br>           Last_SQL_Error: Error ‘Can’t create database ‘test1’; database exists’ on query. Default database: ‘test1’. Query: ‘create database test1’<br> 原因：从库上创建了库，主库上再次创建，从库会将主库上的创建过程再次应用到从库，导致从库上创建同名的库，发生错误 <br> 解决办法：停止从库，然后设置 sql_slave_skip_count，使其跳过同步主库创建库的操作，从下一个操作开始同步，如下：</p>
+<p># 停止从库<br>mysql-server-3307&gt; STOP SLAVE;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<p># 向前跳跃一步，从下一个点开始同步<br>mysql-server-3307&gt; SET GLOBAL sql_slave_skip_counter =1;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<p># 重新开启从库上的同步<br>mysql-server-3307&gt; START SLAVE ;<br>Query OK, 0 rows affected (0.03 sec) </p>
+<p># 再次查看，发现已经正常 <br> 针对直接写从库的操作，可以再从库上创建一个普通用户，授予其部分操作权限，然后设置从库的只读，通过在从库的配置文件中增加”read-only”参数来设置。但是注意，这个参数对而且只对非 super 用户生效，对 root 用户没有任何效果。<br>13、再生产场景下如何保证主库上的用户可以有写权限，从库上的用户只有读权限 <br> 方法 1：在设置从库同步的时候，排除对 mysql 系统库的同步，通过在配置文件中指定 binlog_ignore_db=mysql 来排除不需要同步的库，或者在配置文件中指定 binlog_do_db=db_name 只来同步需要同步的库，然后分别在主库上创建可以写的用户，在从库上创建只能读的用户；<br>[mysqld]<br>binlog_ignore_db=mysql<br>binlog_do_db=user_db<br>方法 2：在未排除任何库的情况下，先在主库上创建可以读写的用户，然后在从库中从新回收用户的写权限；<br>方法 3：在主库和从库上创建不同的用户，然后分别授予不同的权限，使得主库只能写，从库只能读；<br>四、MySQL 半同步搭建过程（介绍过程仍然使用单机多实例的环境）<br>1、定义 <br> 是介于异步复制和全同步复制之间的一种复制方式，主库在执行完客户端提交的事务后不是立刻返回给客户端，而是等待至少一个从库接收到并写到 relay log 中才返回给客户端。<br>2、优缺点<br>（1）优点：有效的提高了数据的安全性，需要等到数据写到从库之后才返回给客户端；<br>（2）缺点：因为需要等待至少一个从库接收到并写入 relaylog 中，索引会造成一定的网络延迟，需要在网络延迟较低的环境中使用<br>3、搭建过程<br>（1）前提条件：<br>a、MySQL 数据库版本为 5.5 及以上<br>b、属性变量 have_dynamic_loading 的值为 YES<br>c、异步复制已经搭建完成<br>（2）查看主库和从库上的 have_dynamic_loading 变量<br>[root@WB-BLOG mysql_data]# ./mysql_login.sh<br>mysql-server-3306&gt; SHOW VARIABLES LIKE ‘have_dynamic_loading’;<br>+———————-+——-+<br>| Variable_name        | Value |<br>+———————-+——-+<br>| have_dynamic_loading | YES   |<br>+———————-+——-+<br>1 row in set (0.00 sec)<br>（3）登陆主库，在主库上安装半同步插件<br>mysql-server-3306&gt; INSTALL PLUGIN rpl_semi_sync_master SONAME ‘semisync_master.so’;<br>Query OK, 0 rows affected (0.01 sec)<br>mysql-server-3306&gt; SHOW PLUGINS \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 43. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>   Name: rpl_semi_sync_master<br> Status: ACTIVE<br>   Type: REPLICATION<br>Library: semisync_master.so<br>License: GPL<br>43 rows in set (0.00 sec)</p>
+<p># 查看输出结果中包括上面的一行，表示半同步插件安装成功 <br> 注：如果想卸载半同步插件，可以使用如下命令：<br>mysql-server-3306&gt; UNINSTALL PLUGIN rpl_semi_sync_master;<br>（4）登陆从库，安装从库上的半同步插件 <br>mysql-server-3307&gt; INSTALL PLUGIN rpl_semi_sync_slave SONAME ‘semisync_slave.so’;<br>Query OK, 0 rows affected (0.01 sec)<br>mysql-server-3307&gt; SHOW PLUGINS;<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 43. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>   Name: rpl_semi_sync_slave<br> Status: ACTIVE<br>   Type: REPLICATION<br>Library: semisync_slave.so<br>License: GPL<br>43 rows in set (0.01 sec)<br> 注：从库上的半同步插件，也可以使用如下命令完成卸载：<br>mysql-server-3307&gt; UNINSTALL PLUGIN rpl_semi_sync_slave;<br>（5）查看插件是否加载成功 <br> 主库：<br>mysql-server-3306&gt; SELECT plugin_name,plugin_status FROM information_schema.plugins WHERE plugin_name LIKE ‘%semi%’;<br>+———————-+—————+<br>| plugin_name          | plugin_status |<br>+———————-+—————+<br>| rpl_semi_sync_master | ACTIVE        |<br>+———————-+—————+<br>1 row in set (0.00 sec)<br>从库：<br>mysql-server-3307&gt; SELECT plugin_name,plugin_status FROM information_schema.plugins WHERE plugin_name LIKE ‘%semi%’;<br>+———————+—————+<br>| plugin_name         | plugin_status |<br>+———————+—————+<br>| rpl_semi_sync_slave | ACTIVE        |<br>+———————+—————+<br>1 row in set (0.00 sec)<br>（6）配置并开启主库的半同步复制，然后重启主库<br>[root@WB-BLOG 3306]# vim my.cnf</p>
+<p># 在 mysqld 段下面添加如下内容：<br>    [mysqld]<br>    plugin-load = rpl_semi_sync_master=semisync_master.so<br>    rpl_semi_sync_master_enabled=1<br>[root@WB-BLOG 3306]# ./mysqld restart<br>（7）配置并开启从库的半同步复制，然后重启从库<br>[root@WB-BLOG 3307]# vim my.cnf</p>
+<p># 添加如下内容：<br>    [mysqld]<br>    plugin-load = rpl_semi_sync_slave=semisync_slave.so<br>    rpl_semi_sync_slave_enabled=1<br>[root@WB-BLOG 3307]# ./mysqld restart<br>（8）重启从库上的 IO 线程 <br>mysql-server-3307&gt; STOP SLAVE IO_THREAD;<br>Query OK, 0 rows affected (0.00 sec)<br>ysql-server-3307&gt; START SLAVE IO_THREAD;<br>Query OK, 0 rows affected (0.00 sec)<br>（9）查看主库和从库上的半同步复制是否在运行<br> 登录主库查看：<br>mysql-server-3306&gt; SHOW STATUS LIKE ‘rpl_semi_sync_master_status’;<br>+—————————–+——-+<br>| Variable_name               | Value |<br>+—————————–+——-+<br>| Rpl_semi_sync_master_status | ON    |<br>+—————————–+——-+<br>登录从库查看：<br>mysql-server-3307&gt; SHOW STATUS LIKE ‘rpl_semi_sync_slave_status’;<br>+—————————-+——-+<br>| Variable_name              | Value |<br>+—————————-+——-+<br>| Rpl_semi_sync_slave_status | ON    |<br>+—————————-+——-+<br>1 row in set (0.00 sec)<br>上述结果表示主库和从库上的半同步复制运行正常。<br>（10）验证半同步复制是否正常 <br> 验证方法：正常在主库上创建一张表，会立刻返回，耗时 0.1s。关闭从库的 io 线程，然后在主库上执行建表操作，会发现，主库上回阻塞 10 秒之后才会返回，而这个时间正好和主库上的 rpl_semi_sync_master_timeout 相同，表示半同步起作用了，主库的 DDL 操作需要等到从库应用完 relaylog 之后才返回；</p>
+<p># 主库执行：<br>mysql-server-3307&gt; STOP SLAVE IO_THREAD;</p>
+<p># 从库执行：<br>mysql-server-3306&gt; CREATE TABLE test(id int);<br>Query OK, 0 rows affected (10.03 sec)</p>
+<p># 查看主库上的 rpl_semi_sync_maser_timeout<br>mysql-server-3306&gt; SHOW VARIABLES LIKE ‘rpl_semi_sync_master_timeout’;<br>+——————————+——-+<br>| Variable_name                | Value |<br>+——————————+——-+<br>| rpl_semi_sync_master_timeout | 10000 |<br>+——————————+——-+<br>至此，MySQL 的半同步复制搭建完成。<br>4、半同步搭建中常见问题 <br>（1）主从不能正常同步：和主从同步无法正常复制的排查方法相同<br>（2）不能正常安装半同步插件<br> 原因 1：可能是版本问题 <br> 解决办法 1：查看 MySQL 实例的版本，如果版本问题，更换新版本重新安装即可 <br>mysql&gt; SELECT version();<br> 原因 2：MySQL 的安装目录中未包含用于半同步复制的共享库 <br> 解决办法 2：找到该版本对应的半同步共享库，然后重新安装 <br> 五、全同步复制 <br> 同步复制在所有复制方案中最安全，但是性能最差，而且需要使用 DRBD（分布式复制块设备）来完成数据的同步，DRBD 是一种类似于”rsync+inotify”的架构，通常使用较少，几乎不用，此处不做详细介绍。<br>到此，MySQL 的主从复制介绍完毕，主从复制是一块很大的内容，包括延迟排查，数据一致问题、快速主从搭建及主从复制的高可用，后面会继续写 <br> 第 10 章 MySQL 数据库运维之主从复制延迟问题排查 <br> 上篇文章介绍了单机环境下的 MySQL 主从异步复制和主从半同步复制的搭建过程。搭建过程很简单，但是在实际使用过程中，更多的是解决问题，本篇文章将介绍一下 MySQL 主从复制中常见的问题以及如何定位问题和如何解决问题。<br>一、从库复制延迟问题 <br>1、可能的原因如下<br>（1）主从服务器处于不同的网络之中，由于网络延迟导致；<br>（2）主从服务器的硬件配置不同，从服务器的硬件配置（包括内存，CPU，网卡等）远低于主服务器；<br>（3）主库上有大量的写入操作，导致从库无法实时重放主库上的 binlog；<br>（4）主库上存在着大事务操作或者慢 SQL，导致从库在应用主库 binlog 的过程过慢，形成延迟；<br>（5）数据库实例的参数配置问题导致，如：从库开启了 binlog，或者配置了每次事务都去做刷盘操作；<br>2、主从同步延迟问题判断<br>（1）根据从库上的状态参数判断<br>mysql-server-3307&gt; SHOW SLAVE STATUS \G<br> 在输出结果中找到 Seconds_Behind_Master 参数，这个参数表示的是从库上的 IO 线程和 SQL 线程相差的时间，然后根据该参数值判断，这个值只是初步判断，不能由这个值来下结论，有如下几种情况：<br>a、0：表示无延迟，理想状态；<br>b、NULL：表示从库上的 IO 线程和 SQL 线程中，有某一个线程出现问题，可以再次查看 Slave_IO_Running 和 Slave_SQL_Running 的值是否都为 Yes；<br>c、大于 0：表示主从已经出现延迟，这个值越大，表示从库和主库之间的延迟越严重；<br>d、小于 0：这个值在官方文档中没有说明，通常不会出现。如果出现，那恭喜你中奖了，撞见 MySQL 的 bug 了；<br>（2）根据主从库上面当前应用的二进制日志文件名称或者重放日志的位置来判断 <br>① 同时打开两个 MySQL 的命令行窗口，分别打开主库和从库，在第一个窗口上执行查看主库当前状态的命令<br>mysql-server-3306&gt; SHOW MASTER STATUS \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>             File: mysql-bin.000017<br>         Position: 120<br>     Binlog_Do_DB:<br> Binlog_Ignore_DB:<br>Executed_Gtid_Set:<br>1 row in set (0.00 sec)<br>② 在第二个从库的命令行窗口执行如下命令<br>mysql-server-3307&gt; SHOW SLAVE STATUS \G<br><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong> 1. row <strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong><br>               Slave_IO_State: Waiting for master to send event<br>               …<br>                Connect_Retry: 60<br>              Master_Log_File: mysql-bin.000017<br>          Read_Master_Log_Pos: 120<br>               Relay_Log_File: relay-log.000016<br>                Relay_Log_Pos: 283<br>        Relay_Master_Log_File: mysql-bin.000017<br>             Slave_IO_Running: Yes<br>            Slave_SQL_Running: Yes<br>            …<br>                   Last_Errno: 0<br>                   Last_Error:<br>                 Skip_Counter: 0<br>          Exec_Master_Log_Pos: 120<br>              Relay_Log_Space: 613<br>              Until_Condition: None<br>               Until_Log_File:<br>                Until_Log_Pos: 0<br>                …<br>        Seconds_Behind_Master: 0<br>        …<br>  Replicate_Ignore_Server_Ids:<br>             Master_Server_Id: 3<br>                  Master_UUID: 2dbbf79b-5d9f-11e8-8004-000c29e28409<br>             Master_Info_File: /mysql_data/3307/data/master.info<br>                    SQL_Delay: 0<br>          SQL_Remaining_Delay: NULL<br>③ 比较从库上的 Master_Log_File 和 Relay_Master_Log_File 文件之间是否有差异<br>a、如果有差异，则说明主从延迟很严重；<br>b、如果没有差异，则比较 Read_Master_Log_Pos 和 Exec_Master_Log_Pos 的差异，这俩参数分别表示从库当前读取到的主库的二进制日志文件位置点和已经执行到的位置点；<br>c、如果上述输出都没有差异，可以通过主库上”show master status”和从库上”show slave status”的结果作比较。主要比较主库的”File”和从库的”Master_Log_File”，主库上的”Position”和从库上的”Read_Master_Log_Pos”；<br>3、主从延迟解决办法<br>（1）判断是否由于网络导致<br> 方法：测试主从库之间的网络延迟，比如测试 ping 延迟。同时可以检查主从同步的时候是否使用了主库的域名来同步，而域名解析速度可能会特别慢。或者使用其他测试工具；<br>（2）判断是否由于硬件环境导致 <br> 方法：确认主从库的硬件配置是否相差较大，如果配置参数相差较大，可以排查从库上的 CPU，内存，IO 使用率来判断是否因为硬件配置导致；<br>（3）判断是否在主库上有大量的 DML 操作 <br> 方法：可以再主库上通过”show full processlist”命令查看当前正在执行的 sql，查看是否有大量正在执行的 SQL，或者观察主库的 CPU 和内存使用率，判断是否有高并发操作；<br>（4）判断是否有慢 SQl，可以再主库上临时打开慢 SQL 记录，临时打开方法如下</p>
+<p># 开启慢 SQL 功能并查看是否生效<br>mysql-server-3306&gt; SET @@GLOBAL.slow_query_log = ON;<br>mysql-server-3306&gt; SHOW VARIABLES LIKE ‘slow_query_log’;</p>
+<p># 设置慢 SQL 的时间并查看是否生效，单位为 s，表示大于多少秒的 SQL 会被记录<br>mysql-server-3306&gt; SET @@GLOBAL.long_query_time = 5;<br>mysql-server-3306&gt; SHOW VARIABLES LIKE ‘long_query_time’;</p>
+<p># 设置慢 SQL 记录日志路径并查看是否生效。注意，这个目录必须对 MySQL 用户有读写权限 <br>mysql-server-3306&gt; SET @@GLOBAL.slow_query_log_file = ‘/mysql_data/mysql-slow.log’;<br>mysql-server-3306&gt; SHOW VARIABLES LIKE ‘slow_query_log_file’;<br>（5）检查从服务器参数配置是否合理<br>① 查看从库是否开启了 binlog 日志，从库上执行如下命令查看<br>mysql-server-3307&gt; SHOW VARIABLES LIKE ‘log_bin’;<br> 如果开启了 binlog 日志，而且从库未充当其他库的主库时，可以将从库上的 binlog 关闭，否则会增加从库负担，每次重放完成主库的 binlog 还要记录到自身的 binlog<br>② 查看从库上的 sync_binlog 参数的值，这个参数表示的是事务提交多少次之后，由 MySQL 来将 binlog_cache 中的数据刷新到磁盘，有以下几种值：<br>0：表示事务提交之后，MySQL 不做刷新 binlog_cache 到磁盘的操作，而是由操作系统来定时自动完成刷盘操作，这种操作对性能损耗最少，但是也最不安全；<br>n：表示提交 n 次事务之后，由 MySQL 将 binlog_cache 中的数据刷新到磁盘，如果开启，会对性能有一定程度的损耗。所以，从库上如果延迟很严重，可以考虑将该参数的值设为 0；<br>mysql-server-3307&gt; SET @@GLOBAL.sync_binlog = 0;<br>mysql-server-3307&gt; SHOW VARIABLES LIKE ‘sync_binlog’;<br>+—————+——-+<br>| Variable_name | Value |<br>+—————+——-+<br>| sync_binlog   | 0     |<br>+—————+——-+<br>1 row in set (0.00 sec)<br>③ 如果从库中要同步的数据库使用的是 InnoDB 存储引擎，可以查看 innodb_flush_log_at_trx_commit 参数。这个参数表示事务执行完成之后，多久的频率刷新一次日志到磁盘上，可用的值有如下几种：<br>0：表示 MySQL 会将日志缓冲区中的数据每秒一次地写入日志文件中，并且日志文件的刷盘操作同时进行。该模式下在事务提交的时候，不会主动触发写入磁盘的操作，效率最搞，但是安全性也比较低，可能会丢失数据；<br>1：每一次事务提交都需要把日志写入磁盘，这个过程是特别耗时的操作；<br>2：每一次事务提交之后，不会自动触发日志刷盘的操作，而是由操作系统来决定什么时候来做刷新日志的操作，在操作系统挂了的情况下才会丢失数据；<br>如果在主从延迟非常严重的情况下，可以将从库的该参数设置为 0，以提高从库上重放主库二进制日志的效率。<br>mysql-server-3307&gt; SET @@GLOBAL.innodb_flush_log_at_trx_commit = 0;<br>mysql-server-3307&gt; SHOW VARIABLES LIKE ‘innodb_flush_log_at_trx_commit’;<br>+——————————–+——-+<br>| Variable_name                  | Value |<br>+——————————–+——-+<br>| innodb_flush_log_at_trx_commit | 0     |<br>+——————————–+——-+<br>1 row in set (0.00 sec)<br>注意：上述设计到修改 MySQL 数据库实例的操作中，修改之后会立刻生效，但是重启实例之后，会失效，如果要永久修改，则需要编辑 mysql 配置文件，然后重启。<br>至此，主从复制延迟的常见原因就介绍完毕，还有更多其他原因需要实际问题实际解决，此处并未提到 <br> 第 11 章 MySQL 数据库运维之数据备份 01<br>上篇文章介绍了 MySQL 主从复制中常见问题排查。在主从复制架构搭建完成之后，需要定期对数据进行备份，本篇文章开始就来介绍 MySQL 数据库的数据备份与恢复，由于备份及恢复内容较多，分多个小节介绍，本小节先来介绍 MySQL 数据库备份的相关概念及 mysqldump 逻辑备份工具。<br>1、备份类型 <br>（1）按照备份后的文件来划分<br>a、物理备份：直接备份数据库文件，常用的有 LVM 逻辑卷备份，或者直接拷贝压缩数据库数据目录<br>b、逻辑备份：使用备份工具将数据库中的数据导出为数据库 sql 脚本或者数据文件<br>（2）按照是否停止数据库服务划分<br>a、冷备：备份期间需要停止数据库服务，会造成不可读不可写<br>b、温备：备份期间不需要停止数据库服务，但是需要锁表，故只能读，不可写<br>c、热备：备份期间，数据库服务完全不受影响，可读可写<br>（3）按照备份的周期和备份内容划分<br>a、完全备份：一次性备份数据库实例中的所有数据<br>b、增量备份：如果刚进行过一次完全备份，则增量备份就指的是全备之后到当前时间点之间增加的数据；<br>            如果上次为增量备份，则增量备份指的内容是上次增量之后到当前时间点之间增加的数据<br>c、差异备份：仅备份上次全量备份之后发生变化的数据，由于比增量备份耗费的磁盘空间更多，故用的比较少<br>2、备份策略<br>（1）全量备份 + 增量备份<br>（2）全量备份 + 差异备份<br>3、备份工具介绍<br>（1）mysqldump：基于 MySQL 客户端的一个逻辑备份工具，可实现温备，可以使用 -u，-p，-h 等选项备份远程数据库上的数据<br>（2）mysqlhotcopy：基于 MySQL 客户端的一个物理工具，只可冷备，备份过程中需指定 -u，-p，-h，-S 等基本参数，这些基本参数的含义和 mysql 命令对应的参数含义相同<br>（3）lvm2：基于 lvm 的物理备份工具，由于是通过对逻辑卷做快照来实现的，所以备份速度极快，可在瞬间完成，可粗略认为是热备<br>（4）xtrabackup：Percona 旗下的一块开源 MySQL 备份工具，可以实现在线热备和温备<br> 除此之外还有一些其他备份工具，如 mysqldumper，PhpMyAdmin 等，感兴趣可自己查资料学习。<br>4、mysqldump 逻辑备份基本操作 <br>（1）用法<br>mysqldump [OPTIONS] database [tables]<br>OR mysqldump [OPTIONS] –databases [OPTIONS] DB1 [DB2 DB3…]<br>OR mysqldump [OPTIONS] –all-databases [OPTIONS]<br>（2）常用参数选项 OPTIONS<br>-A,–all-databases：该选项表示备份实例中的所有数据库<br>-B,–databases：指定要备份的数据库名称，后面可以同时跟多个数据库<br>-E,–events：表示备份过程中包括数据库中的事件<br>-F,–flush-logs：表示备份完成之后刷新日志，滚动日志点，如果没有开启二进制日志，使用该选项会提示错误<br>–flush-privileges：表示备份最新的权限表数据<br>–hex-blob：表示备份过程中包括数据库中的二进制数据(BINARY,VARBINARY,BLOG)<br>-x,–lock-all-tables：该选项的作用是在备份过程中锁定所有的表，通常用于备份 MyISAM 存储引擎类型的表数据<br>–single-transaction：该选项表示备份过程中保证数据的一致性，使用事务隔离状态和一致性快照保证，目前只支持 InnoDB 类型的表<br>    注：–lock-all-tables 选项和–single-transaction 选项同时只能用一个<br>–master-data=N：该选项用来设置在导出的数据中是否包括对二进制日志文件和日志点的记录，常用的值有：1 和 2<br>    1：表示在导出的 sql 文件中包括了”change master to master_log_file=’’,master_log_pos=N”内容，用来做快速主从复制<br>    2：表示在导出的 sql 文件中不包括”change master to master_log_file=’’,master_log_pos=N”内容<br>-t,–no-create-info：表示只备份数据，不备份表的创建信息<br>-d,–no-data：表示只备份表结构，不备份任何数据<br>-R,–routines：表示备份中同时备份存储过程和函数<br>–tables：如果不需要备份整个库，只需要备份部分表，可以使用该选项指定<br>–triggers：表示备份中同时备份触发器<br>-u：指定完成备份操作的用户名<br>-p：指定完成备份操作的用户密码<br>-h：指定完成备份操作的域名或者 ip 地址<br>-P：指定完成备份操作的端口号。注意，是大写的 P<br>（3）示例<br> 示例 1：完成 127.0.0.1 服务器上 3306 数据库实例的全量备份<br>[root@WB-BLOG ~]# mkdir -pv /backup/<br>[root@WB-BLOG ~]# mysqldump -uroot -proot -h127.0.0.1 -P3306 -S /tmp/mysql.sock –all-databases –routines –triggers –single-transaction –events –master-data=2 | gzip &gt; /backup/full_db_<code>date +%F</code>.sql.gz</p>
+<p># 检查文件是否正常，这步很很很重要。有时候由于一些原因，备份文件生成了，但是打不开，所以务必检查 <br>[root@WB-BLOG ~]# gzip -d /backup/full_db_2018-06-18.sql.gz<br>[root@WB-BLOG ~]# less /backup/full_db_2018-06-18.sql<br> 示例 2：使用 root 用户备份 127.0.0.1 服务器上 3306 实例中的 test 库，并完成压缩放在 /backup 目录下<br>[root@WB-BLOG ~]# mysqldump -uroot -proot -h127.0.0.1 -P3306 -S /tmp/mysql.sock –databases test –routines –triggers –single-transaction –events –master-data=2 | gzip &gt; /backup/test-<code>date +%F</code>.sql.gz<br>[root@WB-BLOG ~]# ls /backup/test-2018-06-18.sql.gz </p>
+<p># 查看是否备份成功 <br>[root@WB-BLOG ~]# gzip -d /backup/test-2018-06-18.sql.gz<br>[root@WB-BLOG ~]# less /backup/test-2018-06-18.sql<br> 示例 3：备份 127.0.0.1 服务器上 3306 实例中的 test 库中的 user 表<br>[root@WB-BLOG ~]# mysqldump -uroot -proot -h127.0.0.1 -P3306 -S /tmp/mysql.sock –databases test –tables user –routines –triggers –master-data=2 –events| gzip &gt; /backup/Db-test_Tb-user_<code>date +%F</code>.sql.gz<br>[root@WB-BLOG ~]# ls /backup/Db-test_Tb-user_2018-06-18.sql.gz </p>
+<p># 查看是否备份成功 <br>[root@WB-BLOG ~]# gzip -d /backup/Db-test_Tb-user_2018-06-18.sql.gz<br>[root@WB-BLOG ~]# less /backup/Db-test_Tb-user_2018-06-18.sql<br> 示例 4：备份 127.0.0.1 服务器上 3306 实例中的 mysql 库的表结构，不备份数据<br>[root@WB-BLOG ~]# mysqldump -uroot -proot -h127.0.0.1 -S /tmp/mysql.sock -P3306 –databases mysql –no-data –triggers –routines –master-data=2 –events| gzip &gt; /backup/mysql_table_frame_<code>date +%F</code>.sql.gz</p>
+<p># 查看是否备份成功 <br>[root@WB-BLOG ~]# gzip -d /backup/mysql_table_frame_2018-06-18.sql.gz<br>[root@WB-BLOG ~]# less /backup/mysql_table_frame_2018-06-18.sql<br> 示例 5：备份 127.0.0.1 服务器上 3306 实例中的 test 库中所有表的数据，不备份表结构<br>[root@WB-BLOG ~]# mysqldump -uroot -proot -h127.0.0.1 -S /tmp/mysql.sock -P3306 –databases test –no-create-info –triggers –routines –master-data=2 –events| gzip &gt; /backup/test_table_data_<code>date +%F</code>.sql.gz</p>
+<p># 查看是否备份成功 <br>[root@WB-BLOG ~]# gzip -d /backup/test_table_data_2018-06-18.sql.gz<br>[root@WB-BLOG ~]# less /backup/test_table_data_2018-06-18.sql<br> 实例 6：在 windows 上远程备份 192.168.0.10 服务器上的 3306 数据库实例中的 mysql 数据库 <br> 前提：需要在 0.10 服务器上授予 windows 主机的远程连接权限，授权操作可查看之前文章，此处略<br>D:\SoftWare\mysql-5.7.21\bin&gt;mysqldump -uroot -proot -h127.0.0.1 -P3306 –databases mysql &gt; D:/remote_mysql.sql</p>
+<p># 查看 D 盘根目录，发现已经备份完成，查看备份文件也正常 <br> 至此，第一小节 MySQL 备份相关概念及 mysqldump 逻辑备份工具介绍完毕，下一篇文章将继续介绍 MySQL 的物理备份工具 Xtrabackup<br>第 12 章 MySQL 数据库运维之数据备份 02<br>上篇文章介绍了一下 MySQL 数据库逻辑备份第一部分 mysqldump 的使用，本篇文章将继续介绍 MySQL 数据库逻辑备份第二部分 Xtrabackup 工具的操作过程！<br>1、Xtrabackup 介绍<br>Xtrabackup 是有 Percona 公司发行的一款数据库物理备份工具，可以对 InnoDB 存储引擎的表实现在线热备，同时可以对数据库进行全备和增量备份以及增量恢复。<br>2、下载及安装<br>（1）下载地址：<a href="https://www.percona.com/downl.." target="_blank" rel="noopener">https://www.percona.com/downl..</a>. ，根据自身的操作系统选择版本，版本如果不对应，会安装失败，本人使用的是 CentOS6.9_X64 的操作系统，下载的版本为：percona-xtrabackup-24-2.4.8-1.el6.x86_64.rpm<br>（2）安装依赖库 perl-DBD-MySQL，如果已经安装，直接进入下一步</p>
+<p># 查看是否安装<br>[root@WB-BLOG ~]# rpm -qa | grep perl-DBD-MySQL</p>
+<p># 如果没有安装，使用下面的命令安装 perl-DBD-MySQL<br>[root@WB-BLOG ~]# yum install -y per-DBD-MySQL<br>（3）安装 libev 依赖库 <br>a、下载地址：在 <a href="http://rpmfind.net/" target="_blank" rel="noopener">http://rpmfind.net/</a> 直接搜索 libev，然后选择和自己操作系统对应的 rpm 安装包<br>b、注意：此处也需要注意版本，否则会安装失败，本人用的是 CentOS6.9_X64 的操作系统，下载的 rpm 安装包版本为：libev-4.04-2.el6.x86_64.rpm<br>c、安装：<br>[root@WB-BLOG ~]# rpm -ivh libev-4.04-2.el6.x86_64.rpm<br>（4）安装 perl-Digest-MD5 依赖库，否则在备份过程中会出现错误<br>[root@WB-BLOG ~]# yum -y install perl-Digest-MD5<br>（5）安装 Xtrabackup<br>[root@WB-BLOG ~]# rpm -ivh percona-xtrabackup-24-2.4.8-1.el6.x86_64.rpm<br>3、使用方法<br> 语法：innobackupex [OPTIONS] /path<br>常用参数 OPTIONS 说明:<br>—————————————基本备份参数———————————<br>–user：指定执行备份操作的用户名<br>–password：指定执行备份操作的用户密码<br>–host：指定数据库所在服务器的域名或者 IP 地址<br>–port：指定实例端口<br>–socket：指定 socket 文件，以便备份进程登陆 mysql<br>–databases：指定要备份的数据库，如果需要备份多个数据库，多个数据库之间使用空格隔开，如：–databases=”test1 test2”<br>–include：指定要备份的数据库，可以指定多个库”db1.<em>|db2.</em>“<br>           还可以指定要备份的表，可以指定多个表”db1.table01|db1.table02|db2.test”<br>–defaults-file：指定数据库实例的配置文件 my.cnf。注：如果用该参数，必须放在第一个参数位置，否则会提示错误<br>–apply-log：通过回滚未提交的事务及同步已经提交的事务至数据文件来保证数据文件处于一致性状态<br>–redo-only：用来保证全备和增量备份的数据文件在恢复前必须先将在重做日志文件中的已提交的事务重做，该参数将会合并全备和增量备份的数据文件，但不包括最后一次增量备份的数据文件<br>–copy-back：指定操作为数据的恢复，如果不是全备，不可用这个选项，这个选项用于全备的恢复<br>–slave-info：在主从库备份中使用，用来备份从库的”show slave status”信息<br>–stream：指定备份文件的输入格式，如：tar<br>–tmpdir：如果使用 stream=tar 的时候备份，xtrabackup_logfile 可能会放在临时目录 /tmp 下，如果此时数据库中数据写入量特别大的时候，这个文件会特别大，可能会将 /tmp 目录占满，使用这个参数可以指定 tmp 目录<br>–no-timestamp：该选项后面不用加值，用来指定备份的时候不适用默认的日期目录，而是使用指定好的目录</p>
+<p>—————————————增量备份参数———————————<br>–incremental：指定操作为增量备份操作 <br>–incremental-basedir：指定本次的增量备份是相对于之前的哪一次备份，指定之前备份数据的目录<br>–incremental-dir：指定增量备份恢复时，增量备份的目录<br> 其他更多参数，可以使用”innobackupex –help”命令查看。<br>4、备份及恢复示例 <br> 示例 1：全量备份 127.0.0.1 上 3306 实例中的所有数据，备份到 /backup 目录下，然后模拟数据丢失恢复 <br> 备份：<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –user=root –password=root –port=3306 –socket=/tmp/mysql.sock /backup/</p>
+<p># 上述命令执行完成之后，打印 completed ok. 然后查看是否备份成功，很重要 <br>[root@WB-BLOG ~]# ls /backup/<br> 恢复：</p>
+<p># 模拟故障，删除数据目录<br>[root@WB-BLOG ~]# rm -rf /mnt/mydata/data/*</p>
+<p># 杀掉 mysql 的服务进程<br>[root@WB-BLOG ~]# killall mysqld</p>
+<p># 应用 log 日志，目的是为了回滚未提交的事务及同步已经提交的事务至数据目录，保证数据的一致性<br>[root@WB-BLOG ~]# innobackupex –apply-log /backup/2018-05-29_10-27-53/</p>
+<p># 恢复数据，指定配置文件，xtrabackup 会将数据文件拷贝到原来的数据目录中<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –copy-back /backup/2018-05-29_10-27-53/</p>
+<p># 拷贝完成之后，权限会有问题，需要重新授权<br>[root@WB-BLOG ~]# chown -R mysql:mysql /mnt/mydata/data/</p>
+<p># 重新启动数据库来验证是否恢复正常 <br>[root@WB-BLOG ~]# service mysqld start<br> 示例 2：全量备份 127.0.0.1 服务器上 3306 实例的所有数据，并备份到目录 /backup/20180619 目录下，然后恢复 <br> 备份：<br>[root@WB-BLOG ~]# mkdir -pv /backup/20180619<br>[root@WB-BLOG ~]# innobackupex –user=root –password=root –host=127.0.0.1 –port=3306 –socket=/tmp/mysql.sock –no-timestamp /backup/20180619/<br>[root@WB-BLOG ~]# ls /backup/20180619/<br>恢复，处理过程和示例 1 相同，不再解释：<br>[root@WB-BLOG ~]# rm -rf /mnt/mydata/data/*<br>[root@WB-BLOG ~]# killall mysqld<br>[root@WB-BLOG ~]# innobackupex –apply-log /backup/20180619/<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –copy-back /backup/20180619/<br>[root@WB-BLOG ~]# chown -R mysql:mysql /mnt/mydata/data/<br>[root@WB-BLOG ~]# service mysqld start<br>示例 3：备份 127.0.0.1 服务器上 3306 实例中的 test1 和 test2 数据库，并备份到 /backup/part_db/ 目录下，然后恢复 <br> 备份：<br>[root@WB-BLOG ~]# mkdir -pv /backup/part_db<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –user=root –password=root –host=127.0.0.1 –port=3306 –socket=/tmp/mysql.sock –databases=”test1 test2” –no-timestamp /backup/part_db/<br>[root@WB-BLOG ~]# ls /backup/part_db/<br>恢复：</p>
+<p># 模拟数据库丢失<br>[root@WB-BLOG ~]# mysql -uroot -proot -h127.0.0.1 -P3306 -e “drop database test1”<br>[root@WB-BLOG ~]# mysql -uroot -proot -h127.0.0.1 -P3306 -e “drop database test2”</p>
+<p># 应用 log 日志，使未提交的事务回滚，已经提交的数据同步到数据目录中<br>[root@WB-BLOG ~]# innobackupex –apply-log /backup/part_db/</p>
+<p># 由于是部分数据库的恢复，所以不能使用–copy-back 选项，所以需要使用拷贝的方法<br>[root@WB-BLOG ~]# cp -r /backup/part_db/test{1,2}/ /mnt/mydata/data/</p>
+<p># 授权<br>[root@WB-BLOG ~]# chown -R mysql:mysql /mnt/mydata/data/test{1,2}</p>
+<p># 重启数据库 <br>[root@WB-BLOG ~]# servie mysqld restart<br> 示例 4：增量备份 127.0.0.1 服务器上 3306 实例中的所有库，第一次增量备份到目录 /backup/increment01，第二次增量备份到目录 /backup/increment02，全量备份到 /backup/allback 然后恢复 <br> 备份：</p>
+<p># 创建全量备份和增量备份目录<br>[root@WB-BLOG ~]# mkdir -pv /backup/allback<br>[root@WB-BLOG ~]# mkdir -pv /backup/increment{01,02}</p>
+<p># 完成一次全量备份<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –user=root –password=root –host=127.0.0.1 –port=3306 –socket=/tmp/mysql.sock –no-timestamp /backup/allback/</p>
+<p># 完成第一次增量备份，此时可能会有新数据写入<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –user=root –password=root –host=127.0.0.1 –port=3306 –socket=/tmp/mysql.sock –no-timestamp –incremental-basedir=/backup/allback/ –incremental /backup/increment01/</p>
+<p># 完成第二次全量备份，此时可能会有新数据写入<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –user=root –password=root –host=127.0.0.1 –port=3306 –socket=/tmp/mysql.sock –no-timestamp –incremental-basedir=/backup/increment01/ –incremental /backup/increment02/</p>
+<p># 查看两次备份的数据目录是否正常 <br>[root@WB-BLOG ~]# ls /backup/increment0{1,2}<br> 恢复：</p>
+<p># 模拟数据丢失<br>[root@WB-BLOG ~]# rm -rf /mnt/mydata/data/*<br>[root@WB-BLOG ~]# killall mysqld</p>
+<p># 完成全备的 log 日志应用<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –incremental –apply-log –redo-only /backup/allback/</p>
+<p># 完成第一次增量中 log 日志的应用<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –incremental –apply-log –redo-only /backup/allback/ –incremental-dir=/backup/increment01/</p>
+<p># 完成第二次增量中 log 日志的应用<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –incremental –apply-log –redo-only /backup/allback/ –incremental-dir=/backup/increment02/</p>
+<p># 两次增量都合并到全量中之后，再应用全量中的 log 日志<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –apply-log /backup/allback/</p>
+<p># 最后全量恢复全备文件夹中的数据<br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –copy-back /backup/allback/</p>
+<p># 重新授权<br>[root@WB-BLOG ~]# chown -R mysql:mysql /mnt/mydata/data/</p>
+<p># 然后启动数据库服务，然后验证数据是否正确 <br>[root@WB-BLOG ~]# service mysqld start<br> 示例 5：压缩备份 127.0.0.1 服务器上的 3306 实例中的 test1 库到 /backup/test1_data，然后恢复 <br> 备份：</p>
+<p># 创建备份目录<br>[root@WB-BLOG ~]# mkdir -pv /backup/test1_data</p>
+<p># 压缩备份 <br>[root@WB-BLOG ~]# innobackupex –defaults-file=/etc/my.cnf –user=root –password=root –host=127.0.0.1 –port=3306 –socket=/tmp/mysql.sock –compress –no-timestamp –databases=”test1” /backup/test1_data/<br> 恢复：</p>
+<p># 模拟删掉数据库 test1<br>[root@WB-BLOG ~]# mysql -uroot -proot -h127.0.0.1 -P3306 -e “drop database test1”</p>
+<p># 恢复，首先解压缩<br>[root@WB-BLOG ~]# innobackupex –decompress /backup/test1_data/</p>
+<p># 注意：如果提示如下错误，则需要安装 qpress 工具，下载地址：<a href="ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/AndreasStieger:/branches:/Archiving/CentOS_CentOS-6/x86_64/qpress-1.1-8.3.x86_64.rpm，使用 rpm 命令安装" target="_blank" rel="noopener">ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/AndreasStieger:/branches:/Archiving/CentOS_CentOS-6/x86_64/qpress-1.1-8.3.x86_64.rpm，使用 rpm 命令安装</a><br>    innobackupex version 2.4.8 based on MySQL server 5.7.13 Linux (x86_64) (revision id: 97330f7)<br>    180529 12:29:01 [01] decompressing ./ibdata1.qp<br>    sh: qpress: command not found<br>    cat: write error: Broken pipe<br>    Error: thread 0 failed.<br>[root@WB-BLOG ~]# innobackupex –apply-log /backup/test1_data</p>
+<p># 拷贝备份数据<br>[root@WB-BLOG ~]# cp -r /backup/test1_data/test1/ /mnt/mydata/data/<br>[root@WB-BLOG ~]# chown -R mysql:mysql /mnt/mydata/data/test1/</p>
+<p># 重启数据库然后验证数据是否正确<br>[root@WB-BLOG ~]# service mysqld restart</p>
+<p>至此，Xtrabackup 物理备份工具介绍完毕，常见的用法可以参考上述的示例。另外，该工具还有其他高级用法，使用较少，此处暂未介绍。<br>第 13 章 MySQL 数据库运维之数据备份 03<br>上篇文章介绍了一下 MySQL 的数据备份与恢复第二部分内容，即使用 Xtrabackup 完成 MySQL 数据库的物理备份与恢复，但是 Xtrabackup 主要是针对于 InnoDB 表引擎格式的备份，其他存储引擎并不适用。本篇文章将介绍使用 LVM 完成 MySQL 的数据备份和恢复！<br>一、LVM 简单介绍 <br>1、定义<br>LVM，全称为：Logical Volume Manager。意思是逻辑卷管理，是 Linux 环境下对磁盘分区进行管理的一种机制。早期的磁盘分区在分完区之后无法改变分区的大小，但是通常使用磁盘之前又不能对需要的磁盘容量进行准确评估，可能会造成磁盘不够用或者磁盘浪费等问题，而 LVM 可以动态创建和修改磁盘大小，可以有效地解决这个问题。<br>2、重要概念<br>（1）PV(Physical Volume)：表示物理卷，在逻辑卷管理系统最底层，可为整个物理硬盘或实际物理硬盘上的分区；<br>（2）VG(Volume Group)：表示卷组，建立在物理卷上，一个卷组中至少要包括一个物理卷，卷组建立后可动态的添加卷到卷组中，一个逻辑卷管理系统工程中可有多个卷组；<br>（3）LV(Logical Volume)：逻辑卷建立在卷组基础上，卷组中未分配空间可用于建立新的逻辑卷，逻辑卷建立后可以动态扩展和缩小空间；<br>（4）PE(Physical Extent)：物理区域是物理卷中可用于分配的最小存储单元，物理区域大小在建立卷组时指定，一旦确定不能更改，同一卷组所有物理卷的物理区域大小需一致，新的 PV 加入到 VG 后，PE 的大小自动更改为 VG 中定义的 PE 大小；<br>（5）LE(Logical Extent)：逻辑区域是逻辑卷中可用于分配的最小存储单元，逻辑区域的大小取决于逻辑卷所在卷组中的物理区域的大小；<br> 更多内容可以参考工具书《鸟哥的 Linux 私房菜》，里面有详细介绍。<br>3、各部分组成结构</p>
+<p>二、创建逻辑卷并备份<br>1、备份前提<br>（1）待备份的 MySQL 数据必须在在逻辑卷上<br>（2）如果是 InnoDB 存储引擎表，为了保证备份之后的数据一致性，需要事务日志和数据都在同一个卷上，因为同一时刻只能对一个逻辑卷做快照<br>2、备份过程<br>（1）首先需要准备一块磁盘或者一个分区，此处演示使用 VMware 新加磁盘的办法，首先关闭 Vmware，具体操作过程如下</p>
+<p>到此，磁盘添加完毕，启动 Vmware 虚拟机。<br>（2）使用如下命令查看新添加的磁盘<br>[root@WB-BLOG ~]# fdisk -l</p>
+<p>（3）使用刚才添加的磁盘来创建物理卷<br>[root@WB-BLOG ~]# pvcreate /dev/sdb<br>    Physical volume “/dev/sdb” successfully created</p>
+<p># 查看创建的物理卷 <br>[root@WB-BLOG ~]# pvdisplay<br>    “/dev/sdb” is a new physical volume of “10.00 GiB”<br>      — NEW Physical volume —<br>      PV Name               /dev/sdb<br>      …<br>（4）根据物理卷来创建卷组<br>[root@WB-BLOG ~]# vgcreate mygroup /dev/sdb<br>  Volume group “mygroup” successfully created<br> 参数解释：<br>    mygroup：表示卷组的名称<br>    /dev/sdb：表示使用哪个物理卷来创建卷组</p>
+<p># 查看创建的卷组 <br>[root@WB-BLOG ~]# vgdisplay<br>  — Volume group —<br>  VG Name               mygroup<br>  …<br>（5）根据上一步创建的卷组来创建逻辑卷<br>[root@WB-BLOG ~]# lvcreate -n mysqldata –size 3G mygroup<br>  Logical volume “mysqldata” created.<br> 参数解释：<br>    -n：表示要创建的逻辑卷的名称<br>    –size：表示要创建的逻辑卷的大小<br>    mygroup：表示使用哪个卷组来创建逻辑卷</p>
+<p># 查看创建的逻辑卷<br>[root@WB-BLOG ~]# lvdisplay<br>  — Logical volume —<br>  LV Path                /dev/mygroup/mysqldata<br>  LV Name                mysqldata<br>  VG Name                mygroup<br>  LV UUID                qHJyK4-eMUF-gQku-ojkC-j7Tr-hayA-UFsq5J<br>（6）格式化刚才创建的逻辑卷，创建完逻辑卷之后，逻辑卷的默认磁盘路径为 /dev/ 卷组名称 / 逻辑卷名称，通过 lvdisplay 命令输出结果中的”LV Path”也可以看到<br>[root@WB-BLOG ~]# mkfs.ext4 /dev/mygroup/mysqldata<br>（7）挂载逻辑卷到一个目录上</p>
+<p># 使用 blkid 查看设备的 UUID 编号<br>[root@WB-BLOG ~]# blkid /dev/mygroup/mysqldata<br>  /dev/mygroup/mysqldata: UUID=”46483472-1c46-4af5-8844-d39fd653d57d” TYPE=”ext4”</p>
+<p># 上述输出的 UUID 为设备的 UUID 号，可以使用该 ID 编号将这个逻辑卷挂载到某个目录上<br>[root@WB-BLOG ~]# mkdir -pv /mnt/<br>[root@WB-BLOG ~]# vim /etc/fstab </p>
+<p># 在末尾加入如下一行，表示将 UUID 为 4648…的逻辑卷设备挂载到 /mnt 目录，然后保存退出<br>UUID=”46483472-1c46-4af5-8844-d39fd653d57d”     /mnt    ext4    defaults        0 0</p>
+<p># 让操作系统读取 fstab 文件内容，并从新执行挂载<br>[root@WB-BLOG ~]# mount -a</p>
+<p># 查看逻辑卷是否挂载成功，看到如下一行表示挂载成功<br>[root@WB-BLOG ~]# df -h<br>    /dev/mapper/mygroup-mysqldata 2.9G  4.5M  2.8G   1% /mnt<br>（8）在 /mnt 目录下创建 MySQL 的数据目录 data<br>[root@WB-BLOG ~]# mkdir -pv /mnt/mydata/data/<br>（9）修改 MySQL 配置文件和启动脚本中的 datadir 目录和 binlog 日志路径到 data 目录下<br>[root@WB-BLOG ~]# vim /etc/my.cnf</p>
+<p># 修改如下内容<br>    datadir = /mnt/mydata/data<br>    log_bin = /mnt/mydata/data/mysql-bin<br>    binlog_format = mixed<br>    log_bin_index = /mnt/mydata/data/mysql-bin-index<br>    …<br>[root@WB-BLOG ~]# vim /etc/init.d/mysqld</p>
+<p># 修改如下内容 <br>    datadir=/mnt/mydata/data<br>    …<br>（10）授权，并重新初始化 MySQL 数据库到 /mnt/mydata/data 目录下<br>[root@WB-BLOG ~]# chown -R mysql:mysql /mnt/mydata/data/<br>[root@WB-BLOG ~]# cd /usr/local/mysql-5.6.39/scripts/<br>[root@WB-BLOG scripts]# ./mysql_install_db –user=mysql –group=mysql –datadir=/mnt/mydata/data/ –basedir=/usr/local/mysql-5.6.39<br>（11）启动数据库，查看是否正常<br>[root@WB-BLOG scripts]# service mysqld start<br> 至此，MySQL 的数据目录已经在 LVM 逻辑卷上。<br>（12）假如实例已经使用了一段时间，新的数据已经在 LVM 逻辑卷中了，现在需要备份。则可以通过创建逻辑卷快照完成 MySQL 的数据备份<br>[root@WB-BLOG scripts]# lvcreate –snapshot /dev/mygroup/mysqldata -n data-snap –size 1G –permission r<br>  Logical volume “data-snap” created.</p>
+<p># 以上命令表示使用 /dev/mygroup/mysqldata 逻辑卷创建了一个名称为 data-snap 大小为 1G 的只读快照 <br> 参数解释：<br>    –snapshot：表示创建逻辑卷快照<br>    -n：指定快照名称<br>    –size：指定快照的大小<br>    –permission：指定快照对使用者的操作权限，上述权限为只读</p>
+<p># 查看是否备份成功，需要将这个快照卷挂载到某个目录上查看<br>[root@WB-BLOG scripts]# mount /dev/mygroup/mysqldata /tmp/<br>[root@WB-BLOG scripts]# ls /tmp/mydata/data/<br>（13）备份完成之后，可以将备份的数据打包压缩，然后移除逻辑卷快照</p>
+<p># 打包数据<br>[root@WB-BLOG scripts]# tar zcvf mysql_data_<code>date +%F</code>.tar.gz /tmp/mydata/data/</p>
+<p># 移除逻辑卷快照，可以使用 lvdisplay 命令查看到刚才创建的逻辑卷快照的名称<br>[root@WB-BLOG scripts]# lvremove /dev/mygroup/data-snap<br>    Do you really want to remove active logical volume data-snap? [y/n]: y<br>      Logical volume “data-snap” successfully removed<br>（14）数据恢复，使用刚才打包的备份文件完成数据的恢复</p>
+<p># 模拟数据丢失（删库！注意千万不要正式环境尝试…）<br>[root@WB-BLOG scripts]# rm -rf /mnt/mydata/data/*</p>
+<p># 停止 mysqld 进程<br>[root@WB-BLOG scripts]# killall mysqld<br>[root@WB-BLOG scripts]# tar xf mysql_data_2018-05-30.tar.gz</p>
+<p># 移动数据并授权<br>[root@WB-BLOG scripts]# mv tmp/mydata/data/* /mnt/mydata/data/<br>[root@WB-BLOG scripts]# chown -R mysql:mysql /mnt/mydata/data/</p>
+<p># 启动数据库 <br>[root@WB-BLOG scripts]# service mysqld start<br>（15）登录之后检查数据是否还原<br> 至此，基于 LVM 的 MySQL 数据备份与恢复介绍完毕，下片文章开始将结合 MySQL 的二进制日志介绍数据的全量和增量恢复 <br> 来源链接：<a href="https://segmentfault.com/u/xiarihanbing/articles" target="_blank" rel="noopener">https://segmentfault.com/u/xiarihanbing/articles</a><br>第 14 章 关于 MySQL 的知识点与面试常见问题 <br>14.1 书籍推荐<br>《高性能 MySQL : 第 3 版》<br>14.2 文字教程推荐<br>MySQL 教程（菜鸟教程）<br>MySQL 教程（易百教程）<br>14.3 视频教程推荐<br> 基础入门： 与 MySQL 的零距离接触 - 慕课网 <br>Mysql 开发技巧： MySQL 开发技巧（一）　　MySQL 开发技巧（二）　　MySQL 开发技巧（三）<br>Mysql5.7 新特性及相关优化技巧： MySQL5.7 版本新特性　　性能优化之 MySQL 优化<br>MySQL 集群（PXC）入门　　MyCAT 入门及应用<br>14.4 常见问题总结<br>•    ①存储引擎<br>MySQL 常见的两种存储引擎：MyISAM 与 InnoDB 的爱恨情仇<br>•    ②字符集及校对规则<br> 字符集指的是一种从二进制编码到某类字符符号的映射。校对规则则是指某种字符集下的排序规则。Mysql 中每一种字符集都会对应一系列的校对规则。<br>Mysql 采用的是类似继承的方式指定字符集的默认值，每个数据库以及每张数据表都有自己的默认值，他们逐层继承。比如：某个库中所有表的默认字符集将是该数据库所指定的字符集（这些表在没有指定字符集的情况下，才会采用默认字符集） PS：整理自《Java 工程师修炼之道》<br>详细内容可以参考： MySQL 字符集及校对规则的理解 <br>•    ③索引相关的内容（数据库使用中非常关键的技术，合理正确的使用索引可以大大提高数据库的查询性能）<br>　　Mysql 索引使用的数据结构主要有 BTree 索引 和 哈希索引 。对于哈希索引来说，底层的数据结构就是哈希表，因此在绝大多数需求为单条记录查询的时候，可以选择哈希索引，查询性能最快；其余大部分场景，建议选择 BTree 索引。<br>　　Mysql 的 BTree 索引使用的是 B 数中的 B+Tree，但对于主要的两种存储引擎的实现方式是不同的。<br>　　MyISAM: B+Tree 叶节点的 data 域存放的是数据记录的地址。在索引检索的时候，首先按照 B+Tree 搜索算法搜索索引，如果指定的 Key 存在，则取出其 data 域的值，然后以 data 域的值为地址读取相应的数据记录。这被称为“非聚簇索引”。<br>　　InnoDB: 其数据文件本身就是索引文件。相比 MyISAM，索引文件和数据文件是分离的，其表数据文件本身就是按 B+Tree 组织的一个索引结构，树的叶节点 data 域保存了完整的数据记录。这个索引的 key 是数据表的主键，因此 InnoDB 表数据文件本身就是主索引。这被称为“聚簇索引（或聚集索引）”。而其余的索引都作为辅助索引，辅助索引的 data 域存储相应记录主键的值而不是地址，这也是和 MyISAM 不同的地方。在根据主索引搜索时，直接找到 key 所在的节点即可取出数据；在根据辅助索引查找时，则需要先取出主键的值，在走一遍主索引。 因此，在设计表的时候，不建议使用过长的字段作为主键，也不建议使用非单调的字段作为主键，这样会造成主索引频繁分裂。 PS：整理自《Java 工程师修炼之道》<br> 详细内容可以参考：<br>干货：mysql 索引的数据结构 <br>MySQL 优化系列（三）–索引的使用、原理和设计优化<br>•    ④查询缓存的使用<br>my.cnf 加入以下配置，重启 Mysql 开启查询缓存<br>query_cache_type=1<br>query_cache_size=600000<br>Mysql 执行以下命令也可以开启查询缓存<br>set global  query_cache_type=1;<br>set global  query_cache_size=600000;<br> 如上，开启查询缓存后在同样的查询条件以及数据情况下，会直接在缓存中返回结果。这里的查询条件包括查询本身、当前要查询的数据库、客户端协议版本号等一些可能影响结果的信息。因此任何两个查询在任何字符上的不同都会导致缓存不命中。此外，如果查询中包含任何用户自定义函数、存储函数、用户变量、临时表、Mysql 库中的系统表，其查询结果也不会被缓存。<br>缓存建立之后，Mysql 的查询缓存系统会跟踪查询中涉及的每张表，如果这些表（数据或结构）发生变化，那么和这张表相关的所有缓存数据都将失效。<br>缓存虽然能够提升数据库的查询性能，但是缓存同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。 因此，开启缓存查询要谨慎，尤其对于写密集的应用来说更是如此。如果开启，要注意合理控制缓存空间大小，一般来说其大小设置为几十 MB 比较合适。此外，还可以通过 sql_cache 和 sql_no_cache 来控制某个查询语句是否需要缓存：<br>select sql_no_cache count(*) from usr;<br>•    ⑤事务机制 <br> 关系性数据库需要遵循 ACID 规则，具体内容如下：</p>
+<ol>
+<li>原子性： 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；</li>
+<li>一致性： 执行事务前后，数据保持一致；</li>
+<li>隔离性： 并发访问数据库时，一个用户的事物不被其他事物所干扰，各并发事务之间数据库是独立的；</li>
+<li>持久性: 一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库 发生故障也不应该对其有任何影响。<br>为了达到上述事务特性，数据库定义了几种不同的事务隔离级别：<br>•    READ_UNCOMMITTED（未授权读取）: 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读 <br>•    READ_COMMITTED（授权读取）: 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生<br>•    REPEATABLE_READ（可重复读）: 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。<br>•    SERIALIZABLE（串行）: 最高的隔离级别，完全服从 ACID 的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。<br> 这里需要注意的是：Mysql 默认采用的 REPEATABLE_READ 隔离级别 Oracle 默认采用的 READ_COMMITTED 隔离级别.<br>事务隔离机制的实现基于锁机制和并发调度。其中并发调度使用的是 MVVC（多版本并发控制），通过保存修改的旧版本信息来支持并发一致性读和回滚等特性。<br>详细内容可以参考： 可能是最漂亮的 Spring 事务管理详解 <br>•    ⑥锁机制与 InnoDB 锁算法<br>MyISAM 和 InnoDB 存储引擎使用的锁：<br>o    MyISAM 采用表级锁(table-level locking)。<br>o    InnoDB 支持行级锁(row-level locking) 和表级锁, 默认为行级锁 <br> 表级锁和行级锁对比：<br>o<br>    表级锁： Mysql 中锁定 粒度最大 的一种锁，对当前操作的整张表加锁，实现简单，资源消耗也比较少，加锁快，不会出现死锁。其锁定粒度最大，触发锁冲突的概率最高，并发度最低，MyISAM 和 InnoDB 引擎都支持表级锁。<br>    行级锁： Mysql 中锁定 粒度最小 的一种锁，只针对当前操作的行进行加锁。 行级锁能大大减少数据库操作的冲突。其加锁粒度最小，并发度高，但加锁的开销也最大，加锁慢，会出现死锁。<br>详细内容可以参考：<br>Mysql 锁机制简单了解一下 <br>InnoDB 存储引擎的锁的算法有三种：<br>•    Record lock：单个行记录上的锁<br>•    Gap lock：间隙锁，锁定一个范围，不包括记录本身<br>•    Next-key lock：record+gap 锁定一个范围，包含记录本身<br> 相关知识点：</li>
+<li>innodb 对于行的查询使用 next-key lock</li>
+<li>Next-locking keying 为了解决 Phantom Problem 幻读问题</li>
+<li>当查询的索引含有唯一属性时，将 next-key lock 降级为 record key</li>
+<li>Gap 锁设计的目的是为了阻止多个事务将记录插入到同一范围内，而这会导致幻读问题的产生</li>
+<li>有两种方式显式关闭 gap 锁：（除了外键约束和唯一性检查外，其余情况仅使用 record lock） A. 将事务隔离级别设置为 RC B. 将参数 innodb_locks_unsafe_for_binlog 设置为 1<br>•    ⑦大表优化 <br> 当 MySQL 单表记录数过大时，数据库的 CRUD 性能会明显下降，一些常见的优化措施如下：</li>
+<li>限定数据的范围： 务必禁止不带任何限制数据范围条件的查询语句。比如：我们当用户在查询订单历史的时候，我们可以控制在一个月的范围内。；</li>
+<li>读 / 写分离： 经典的数据库拆分方案，主库负责写，从库负责读；</li>
+<li>缓存： 使用 MySQL 的缓存，另外对重量级、更新少的数据可以考虑使用应用级别的缓存；</li>
+<li>垂直分区：<br>根据数据库里面数据表的相关性进行拆分。 例如，用户表中既有用户的登录信息又有用户的基本信息，可以将用户表拆分成两个单独的表，甚至放到单独的库做分库。<br>简单来说垂直拆分是指数据表列的拆分，把一张列比较多的表拆分为多张表。 如下图所示，这样来说大家应该就更容易理解了。</li>
+</ol>
+<p>垂直拆分的优点： 可以使得行数据变小，在查询时减少读取的 Block 数，减少 I/O 次数。此外，垂直分区可以简化表的结构，易于维护。<br>垂直拆分的缺点： 主键会出现冗余，需要管理冗余列，并会引起 Join 操作，可以通过在应用层进行 Join 来解决。此外，垂直分区会让事务变得更加复杂；</p>
+<ol start="5">
+<li>水平分区：<br>保持数据表结构不变，通过某种策略存储数据分片。这样每一片数据分散到不同的表或者库中，达到了分布式的目的。 水平拆分可以支撑非常大的数据量。<br>水平拆分是指数据表行的拆分，表的行数超过 200 万行时，就会变慢，这时可以把一张的表的数据拆成多张表来存放。举个例子：我们可以将用户信息表拆分成多个用户信息表，这样就可以避免单一表数据量过大对性能造成影响。</li>
+</ol>
+<p>水平拆分可以支持非常大的数据量。需要注意的一点是: 分表仅仅是解决了单一表数据过大的问题，但由于表的数据还是在同一台机器上，其实对于提升 MySQL 并发能力没有什么意义，所以 水品拆分最好分库 。<br>水平拆分能够 支持非常大的数据量存储，应用端改造也少，但 分片事务难以解决 ，跨界点 Join 性能较差，逻辑复杂。《Java 工程师修炼之道》的作者推荐 尽量不要对数据进行分片，因为拆分会带来逻辑、部署、运维的各种复杂度 ，一般的数据表在优化得当的情况下支撑千万以下的数据量是没有太大问题的。如果实在要分片，尽量选择客户端分片架构，这样可以减少一次和中间件的网络 I/O。<br>下面补充一下数据库分片的两种常见方案：<br>    客户端代理： 分片逻辑在应用端，封装在 jar 包中，通过修改或者封装 JDBC 层来实现。 当当网的 Sharding-JDBC 、阿里的 TDDL 是两种比较常用的实现。<br>    中间件代理： 在应用和数据中间加了一个代理层。分片逻辑统一维护在中间件服务中。 我们现在谈的 Mycat 、360 的 Atlas、网易的 DDB 等等都是这种架构的实现。<br>详细内容可以参考：<br>MySQL 大表优化方案</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏是最好的支持与鼓励！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Hai Yang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Hai Yang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hai Yang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yhaing.github.io/2017/04/19/MySQL基础知识梳理/" title="MySQL 基础知识梳理">https://yhaing.github.io/2017/04/19/MySQL基础知识梳理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://yhaing.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+     
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     
+    </div>	
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/23/Jenkins 自动化部署上线/" rel="next" title="Jenkins 自动化部署上线">
+                <i class="fa fa-chevron-left"></i> Jenkins 自动化部署上线
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/29/ZABBIX 忘记登录密码/" rel="prev" title="ZABBIX 忘记登录密码">
+                ZABBIX 忘记登录密码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+	  
+	  <h3> 相关文章：</h3><ul class="related-posts"><li><a href="/2017/08/19/MySQL 闪回工具之 binlog2sql/">MySQL 闪回工具之 binlog2sql</a></li></ul>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTk3MS8xNjQ5OA=="></div>
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hai Yang" />
+            
+              <p class="site-author-name" itemprop="name">Hai Yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yhaing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yh198812@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.cnblogs.com/yhaing/" target="_blank" title="cnblogs">
+                      
+                        <i class="fa fa-fw fa-globe"></i>cnblogs</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5b6256396fb9a04fbf2729fb/collections" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-globe"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("01/19/2015 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第 1 章 -MySQL 常见安装方式"><span class="nav-number">1.</span> <span class="nav-text">第 1 章 MySQL 常见安装方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、rpm 安装"><span class="nav-number">1.1.</span> <span class="nav-text">一、rpm 安装 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、通用二进制安装"><span class="nav-number">1.2.</span> <span class="nav-text">二、通用二进制安装 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、源码编译安装 mysql"><span class="nav-number">1.3.</span> <span class="nav-text">三、源码编译安装 mysql</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第 2 章 -MySQL 基本操作之—建库，建表，删库，删表"><span class="nav-number">2.</span> <span class="nav-text">第 2 章 MySQL 基本操作之—建库，建表，删库，删表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、基本操作之建库（非图形界面工具操作）"><span class="nav-number">2.1.</span> <span class="nav-text">一、基本操作之建库（非图形界面工具操作）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第 3 章 -MySQL 基本操作之 -DDL，DML，DQL，DCL"><span class="nav-number">3.</span> <span class="nav-text">第 3 章 MySQL 基本操作之 -DDL，DML，DQL，DCL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、DDL–数据定义语言"><span class="nav-number">3.1.</span> <span class="nav-text">一、DDL–数据定义语言 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、DML–数据操纵语言"><span class="nav-number">3.2.</span> <span class="nav-text">二、DML–数据操纵语言 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、DQL–数据查询语言"><span class="nav-number">3.3.</span> <span class="nav-text">三、DQL–数据查询语言 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、DCL–数据控制语言"><span class="nav-number">3.4.</span> <span class="nav-text">四、DCL–数据控制语言 </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第 4 章 -MySQL 数据库 DDL 之触发器应用"><span class="nav-number">4.</span> <span class="nav-text">第 4 章 MySQL 数据库 DDL 之触发器应用 </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">海阔天空</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+          
+	  <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '', 
+            clientSecret: '',
+            id: window.location.pathname,
+            repo: 'blog-comments', 
+            owner: 'yhaing', 
+            admin: 'yhaing', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("lqrgOagiVRiVKqSOcWFByltw-gzGzoHsz", "SrztAlVOv0tQL8ElsORuxXG8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+
+<!-- 添加背景图片 -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  <script>
+    $("body").backstretch("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538127512866&di=2f9d3ddd0c3a21af7c277add296ec5ea&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F56dfebba2e60b.jpg");
+  </script>
+   -->
+</body>
+</html>

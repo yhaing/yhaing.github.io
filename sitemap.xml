@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://yhaing.github.io/2017/08/19/MySQL%20%E9%97%AA%E5%9B%9E%E5%B7%A5%E5%85%B7%E4%B9%8B%20binlog2sql/</loc>
+    <loc>https://yhaing.github.io/2018/11/02/Windows%20server%202008%20R2%E7%BB%95%E8%BF%87Raid%205%E9%87%8D%E7%BD%AE%E5%BC%80%E6%9C%BA%E5%AF%86%E7%A0%81/</loc>
     
-    <lastmod>2018-10-20T02:09:33.454Z</lastmod>
+    <lastmod>2018-11-03T02:27:54.874Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yhaing.github.io/2017/04/19/MySQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/</loc>
+    
+    <lastmod>2018-10-22T09:29:19.836Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://yhaing.github.io/0201/07/19/%E5%AD%A6%E4%BC%9A%E8%BF%9915%E7%82%B9%EF%BC%8C%E8%AE%A9%E4%BD%A0%E5%88%86%E5%88%86%E9%92%9F%E6%8B%BF%E4%B8%8BRedis%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     
-    <lastmod>2018-10-19T02:11:07.956Z</lastmod>
+    <lastmod>2018-10-22T09:00:57.224Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yhaing.github.io/2017/08/19/MySQL%20%E9%97%AA%E5%9B%9E%E5%B7%A5%E5%85%B7%E4%B9%8B%20binlog2sql/</loc>
+    
+    <lastmod>2018-10-20T02:09:33.454Z</lastmod>
     
   </url>
   
